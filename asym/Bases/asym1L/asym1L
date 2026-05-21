@@ -1,0 +1,80 @@
+BasisDirectory[asym1L] = StringDrop[DirectoryName[$Input], -1]
+asym1L /: BasisSectors[asym1L] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/BasisSectors[asym1L]"]]
+asym1L /: CurrentState[asym1L] := <|NewDsBasis -> True, GenerateIBP -> True, 
+   AnalyzeSectors -> True, FindSymmetries -> False|>
+asym1L /: CutDs[asym1L] := {0, 0}
+asym1L /: Definitions[asym1L] := {Hold[MetricTensor[] === d, SetDim[d]], 
+   Hold[VecQ[l1], Declare[l1, Vector]], Hold[VecQ[p], Declare[p, Vector]], 
+   Hold[LiteRed`Private`ExpresionType[p] === LiteRed`Private`ExpresionType[
+      p], Declare[p, LiteRed`Private`ExpresionType[p]]], 
+   Hold[LiteRed`Private`ExpresionType[u] === LiteRed`Private`ExpresionType[
+      u], Declare[u, LiteRed`Private`ExpresionType[u]]], 
+   Hold[sp[p, p] === u, sp[p, p] = u]}
+asym1L /: Ds[asym1L] := {sp[l1, l1], sp[l1 - p, l1 - p]}
+asym1L /: DsBasisQ[asym1L] := True
+asym1L /: EMs[asym1L] := {p}
+asym1L /: ExtMappedSectors[asym1L] := {}
+asym1L /: ExtSectorsMappings[asym1L] := {}
+asym1L /: IBP[asym1L] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/IBP[asym1L]"]]
+asym1L /: Information[asym1L] := 
+  (If[ValueQ[asym1L::usage], Information[asym1L, LongForm -> False]]; 
+   Print[Grid[Partition[Union[Replace[Replace[First /@ UpValues[asym1L] /. 
+          HoldPattern -> HoldForm, 
+         {HoldPattern[HoldForm[(LiteRed`Private`f$_)[asym1L, __]]] :> 
+           HoldForm[LiteRed`Private`f$[asym1L, "\[Ellipsis]"]]}, {1}], 
+        {HoldPattern[LiteRed`Private`x$:HoldForm[(LiteRed`Private`f$_)[
+              asym1L, ___]]] :> Button[LiteRed`Private`x$, 
+           (SelectionMove[ButtonNotebook[], All, GeneratedCell]; 
+             NotebookDelete[]; Information[Evaluate[LiteRed`Private`x$[[1,
+                0]]], LongForm -> False]; Print[TableForm[Cases[UpValues[
+                  asym1L], HoldPattern[LiteRed`Private`a$_ :> 
+                    LiteRed`Private`b$_] /; MatchQ[LiteRed`Private`a$[[1,0]], 
+                   LiteRed`Private`x$[[1,0]]]] /. HoldPattern -> 
+                 HoldForm]]) & , Appearance -> "Frameless", 
+           BaseStyle -> "InformationLink"]}, {1}]], 5], 
+     DefaultBaseStyle -> "InfoGrid"]])
+asym1L /: jRules[asym1L, 1, 1] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/jRules[asym1L, 1, 1]"]]
+asym1L /: jsOrder[asym1L] := {"np", "cp", "-ds", "-ns"}
+asym1L /: jsOrder[asym1L, 0, 1] := {{-1, 1}, {-1, 0}}
+asym1L /: jsOrder[asym1L, 1, 1] := {{1, 1}, {-1, 0}}
+asym1L /: jSymmetries[asym1L, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym1L], "/jSymmetries[asym1L, 1, 1]"]]
+asym1L /: LI[asym1L] := Get[StringJoin[BasisDirectory[asym1L], "/LI[asym1L]"]]
+asym1L /: LMs[asym1L] := {l1}
+asym1L /: MappedSectors[asym1L] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/MappedSectors[asym1L]"]]
+asym1L /: MIs[asym1L] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/MIs[asym1L]"]]
+asym1L /: NDs[asym1L] := 2
+asym1L /: NonZeroSectors[asym1L] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/NonZeroSectors[asym1L]"]]
+asym1L /: Parameters[asym1L] := {u, d}
+asym1L /: PowerShifts[asym1L] := {0, 0}
+asym1L /: SectorsMappings[asym1L] := {}
+asym1L /: SectorsPattern[asym1L] := {___}
+asym1L /: SimpleSectors[asym1L] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/SimpleSectors[asym1L]"]]
+asym1L /: SPs[asym1L] := {sp[l1, l1], sp[l1, p]}
+asym1L /: SR[asym1L] := Get[StringJoin[BasisDirectory[asym1L], "/SR[asym1L]"]]
+asym1L /: Toj[asym1L] := {sp[l1, l1] -> j[asym1L, -1, 0], 
+   sp[l1, p] -> (u + j[asym1L, -1, 0] - j[asym1L, 0, -1])/2}
+asym1L /: UniqueSectors[asym1L] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/UniqueSectors[asym1L]"]]
+asym1L /: ZerojRule[asym1L] := LiteRed`Private`jjj:j[asym1L, __] :> 
+   0 /; Module[{LiteRed`Private`jjs = 
+       Rest[List @@ jSector[LiteRed`Private`jjj]]}, 
+     Or @@ (BitOr[LiteRed`Private`jjs, #1] === #1 & ) /@ {{1, 0}, {0, 1}}]
+asym1L /: ZeroSectors[asym1L] := Get[StringJoin[BasisDirectory[asym1L], 
+    "/ZeroSectors[asym1L]"]]
+asym1L /: SectorsMappings[asym1L, LiteRed`Private`ns$:(0 | 1)..] := 
+  Cases[SectorsMappings[asym1L], HoldPattern[
+    js[asym1L, LiteRed`Private`ns$] -> _]]
+asym1L::usage = "1-loop basis with 1 external momenta.\nUse \
+Information[asym1L] to get basis summary.\nThis string can be redefined by \
+setting asym1L::usage=\"\[Ellipsis]\""; Information[asym1L, 
+  LongForm -> False]; 
+LiteRed`Private`CheckDefs[asym1L]
+BasisDirectory[asym1L]

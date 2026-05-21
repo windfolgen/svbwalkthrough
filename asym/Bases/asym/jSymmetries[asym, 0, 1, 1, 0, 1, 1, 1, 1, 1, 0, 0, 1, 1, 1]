@@ -1,0 +1,56 @@
+{{j[asym, (n1_)?NonPositive, (n2_)?Positive, (n3_)?Positive, 
+    (n4_)?NonPositive, (n5_)?Positive, (n6_)?Positive, (n7_)?Positive, 
+    (n8_)?Positive, (n9_)?Positive, (n10_)?NonPositive, (n11_)?NonPositive, 
+    (n12_)?Positive, (n13_)?Positive, (n14_)?Positive] :> 
+   Expand[j[asym, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, 
+     n14]]}, {j[asym, (n1_)?NonPositive, (n2_)?Positive, (n3_)?Positive, 
+    (n4_)?NonPositive, (n5_)?Positive, (n6_)?Positive, (n7_)?Positive, 
+    (n8_)?Positive, (n9_)?Positive, (n10_)?NonPositive, (n11_)?NonPositive, 
+    (n12_)?Positive, (n13_)?Positive, (n14_)?Positive] :> 
+   Expand[j[asym, 0, n9, n3, n4, n5, n6, n7, n8, n2, 0, 0, n12, n13, n14]/
+     ((j[asym, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0])^n10*
+      (j[asym, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0])^n11*
+      (-j[asym, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0] + 
+        u*j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])^n1)]}, 
+ {j[asym, (n1_)?NonPositive, (n2_)?Positive, (n3_)?Positive, 
+    (n4_)?NonPositive, (n5_)?Positive, (n6_)?Positive, (n7_)?Positive, 
+    (n8_)?Positive, (n9_)?Positive, (n10_)?NonPositive, (n11_)?NonPositive, 
+    (n12_)?Positive, (n13_)?Positive, (n14_)?Positive] :> 
+   Expand[j[asym, n1, n2, n3, n4, n7, n8, n5, n6, n9, n11, n10, n13, n12, 
+     n14]]}, {j[asym, (n1_)?NonPositive, (n2_)?Positive, (n3_)?Positive, 
+    (n4_)?NonPositive, (n5_)?Positive, (n6_)?Positive, (n7_)?Positive, 
+    (n8_)?Positive, (n9_)?Positive, (n10_)?NonPositive, (n11_)?NonPositive, 
+    (n12_)?Positive, (n13_)?Positive, (n14_)?Positive] :> 
+   Expand[j[asym, 0, n9, n3, n4, n7, n8, n5, n6, n2, 0, 0, n13, n12, n14]/
+     ((j[asym, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0])^n11*
+      (j[asym, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0])^n10*
+      (-j[asym, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] - 
+        j[asym, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + 
+        j[asym, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0] + 
+        u*j[asym, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])^n1)]}}

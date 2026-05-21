@@ -1,0 +1,569 @@
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+**************** LiteRed v2.025β ********************
+Author: Roman N. Lee, Budker Institute of Nuclear Physics, Novosibirsk.
+Release Date: ????-??-??
+Timestamp: Tue 25 Feb 2025 15:30:30
+Read from:/Users/windfolgen/GitRepos/LiteRed2/Source/LiteRed2025.m (CRC32:2205507540,{2340977437, 3317197336, 1063727846})
+
+LiteRed stands for Loop integrals Reduction.
+The package is designed for the search and application of the Integration-By-Part reduction rules. It also contains some other useful tools.
+
+See ?LiteRed`* for a list of functions. 
+Executing
+HoldForm[sp[p, p] = u; ]
+=== Running Parallel Expansion for I3Lhard with 6 permutations ===
+(kernel 1):
+I3Lhard1234: no tensor reduced results found. Starting reduction...
+
+(kernel 2):
+I3Lhard1324: no tensor reduced results found. Starting reduction...
+
+(kernel 3):
+I3Lhard2134: no tensor reduced results found. Starting reduction...
+
+(kernel 4):
+I3Lhard2314: no tensor reduced results found. Starting reduction...
+
+(kernel 5):
+I3Lhard3124: no tensor reduced results found. Starting reduction...
+
+(kernel 6):
+I3Lhard3214: no tensor reduced results found. Starting reduction...
+
+(kernel 1):
+set 1 to 0, 4 to infinity.
+
+(kernel 2):
+set 1 to 0, 4 to infinity.
+
+(kernel 3):
+set 1 to 0, 4 to infinity.
+
+(kernel 4):
+set 1 to 0, 4 to infinity.
+
+(kernel 5):
+set 1 to 0, 4 to infinity.
+
+(kernel 6):
+set 1 to 0, 4 to infinity.
+
+(kernel 1):
+performing region expansion...
+
+(kernel 2):
+performing region expansion...
+
+(kernel 3):
+performing region expansion...
+
+(kernel 4):
+performing region expansion...
+
+(kernel 5):
+performing region expansion...
+
+(kernel 6):
+performing region expansion...
+
+(kernel 1):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into
+
+(kernel 2):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into
+
+(kernel 3):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into
+
+(kernel 4):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into
+
+(kernel 5):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into
+
+(kernel 6):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into
+
+(kernel 1):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 2):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 3):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 4):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 5):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 6):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 1):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 2):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 3):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 4):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 5):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 6):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]}
+
+(kernel 1):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 2):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 3):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 4):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 5):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 6):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 1):
+classifying topologies: 
+
+(kernel 2):
+classifying topologies: 
+
+(kernel 3):
+classifying topologies: 
+
+(kernel 4):
+classifying topologies: 
+
+(kernel 5):
+classifying topologies: 
+
+(kernel 6):
+classifying topologies: 
+
+(kernel 1):
+region 1: total terms 35
+
+(kernel 2):
+region 1: total terms 35
+
+(kernel 3):
+region 1: total terms 35
+
+(kernel 4):
+region 1: total terms 35
+
+(kernel 5):
+region 1: total terms 35
+
+(kernel 6):
+region 1: total terms 35
+
+(kernel 1):
+region 2: total terms 84
+
+(kernel 2):
+region 2: total terms 275
+
+(kernel 3):
+region 2: total terms 84
+
+(kernel 4):
+region 2: total terms 156
+
+(kernel 5):
+region 2: total terms 275
+
+(kernel 6):
+region 2: total terms 156
+
+(kernel 1):
+region 3: total terms 84
+
+(kernel 2):
+region 3: total terms 84
+
+(kernel 3):
+region 3: total terms 84
+
+(kernel 4):
+region 3: total terms 84
+
+(kernel 5):
+region 3: total terms 84
+
+(kernel 6):
+region 3: total terms 84
+
+(kernel 1):
+region 4: total terms 35
+
+(kernel 3):
+region 4: total terms 35
+
+(kernel 4):
+region 4: total terms 84
+
+(kernel 6):
+region 4: total terms 84
+
+(kernel 1):
+region 5: total terms 165
+
+(kernel 2):
+region 4: total terms 165
+
+(kernel 3):
+region 5: total terms 165
+
+(kernel 4):
+region 5: total terms 84
+
+(kernel 6):
+region 5: total terms 84
+
+(kernel 1):
+region 6: total terms 84
+
+(kernel 3):
+region 6: total terms 84
+
+(kernel 5):
+region 4: total terms 165
+
+(kernel 6):
+region 6: total terms 84
+
+(kernel 4):
+region 6: total terms 84
+
+(kernel 3):
+region 7: total terms 275
+
+(kernel 1):
+region 7: total terms 275
+
+(kernel 2):
+region 5: total terms 35
+
+(kernel 4):
+region 7: total terms 156
+
+(kernel 6):
+region 7: total terms 156
+
+(kernel 2):
+region 6: total terms 84
+
+(kernel 5):
+region 5: total terms 35
+
+(kernel 5):
+region 6: total terms 84
+
+(kernel 2):
+region 7: total terms 84
+
+(kernel 4):
+region 8: total terms 35
+
+(kernel 6):
+region 8: total terms 35
+
+(kernel 3):
+region 8: total terms 35
+
+(kernel 4):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 5):
+region 7: total terms 84
+
+(kernel 6):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 1):
+region 8: total terms 35
+
+(kernel 2):
+region 8: total terms 35
+
+(kernel 3):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 4):
+classifying topologies: 
+
+(kernel 6):
+classifying topologies: 
+
+(kernel 1):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 2):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 3):
+classifying topologies: 
+
+(kernel 4):
+region 1: total terms 35
+
+(kernel 5):
+region 8: total terms 35
+
+(kernel 6):
+region 1: total terms 35
+
+(kernel 1):
+classifying topologies: 
+
+(kernel 2):
+classifying topologies: 
+
+(kernel 3):
+region 1: total terms 35
+
+(kernel 4):
+region 2: total terms 156
+
+(kernel 5):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are totally 8 regions.
+
+(kernel 6):
+region 2: total terms 156
+
+(kernel 1):
+region 1: total terms 35
+
+(kernel 2):
+region 1: total terms 35
+
+(kernel 3):
+region 2: total terms 84
+
+(kernel 5):
+classifying topologies: 
+
+(kernel 1):
+region 2: total terms 84
+
+(kernel 2):
+region 2: total terms 275
+
+(kernel 4):
+region 3: total terms 84
+
+(kernel 5):
+region 1: total terms 35
+
+(kernel 6):
+region 3: total terms 84
+
+(kernel 1):
+region 3: total terms 165
+
+(kernel 3):
+region 3: total terms 165
+
+(kernel 5):
+region 2: total terms 275
+
+(kernel 4):
+region 4: total terms 84
+
+(kernel 6):
+region 4: total terms 84
+
+(kernel 2):
+region 3: total terms 35
+
+(kernel 3):
+region 4: total terms 84
+
+(kernel 4):
+region 5: total terms 84
+
+(kernel 5):
+region 3: total terms 35
+
+(kernel 1):
+region 4: total terms 84
+
+(kernel 6):
+region 5: total terms 84
+
+(kernel 2):
+region 4: total terms 84
+
+(kernel 5):
+region 4: total terms 84
+
+(kernel 3):
+region 5: total terms 84
+
+(kernel 4):
+region 6: total terms 84
+
+(kernel 6):
+region 6: total terms 84
+
+(kernel 1):
+region 5: total terms 84
+
+(kernel 2):
+region 5: total terms 84
+
+(kernel 3):
+region 6: total terms 35
+
+(kernel 5):
+region 5: total terms 84
+
+(kernel 1):
+region 6: total terms 35
+
+(kernel 4):
+region 7: total terms 156
+
+(kernel 6):
+region 7: total terms 156
+
+(kernel 2):
+region 6: total terms 165
+
+(kernel 3):
+region 7: total terms 275
+
+(kernel 1):
+region 7: total terms 275
+
+(kernel 5):
+region 6: total terms 165
+
+(kernel 4):
+region 8: total terms 35
+
+(kernel 6):
+region 8: total terms 35
+
+(kernel 2):
+region 7: total terms 84
+
+(kernel 5):
+region 7: total terms 84
+
+(kernel 1):
+region 8: total terms 35
+
+(kernel 3):
+region 8: total terms 35
+
+(kernel 2):
+region 8: total terms 35
+
+(kernel 5):
+region 8: total terms 35
+
+(kernel 1):
+projecting the tensor structure and performing the contraction...
+
+(kernel 1):
+total length: 290 split into number of chunks: 1
+
+(kernel 3):
+projecting the tensor structure and performing the contraction...
+
+(kernel 3):
+total length: 290 split into number of chunks: 1
+
+(kernel 4):
+projecting the tensor structure and performing the contraction...
+
+(kernel 2):
+projecting the tensor structure and performing the contraction...
+
+(kernel 4):
+total length: 434 split into number of chunks: 1
+
+(kernel 5):
+projecting the tensor structure and performing the contraction...
+
+(kernel 6):
+projecting the tensor structure and performing the contraction...
+
+(kernel 2):
+total length: 362 split into number of chunks: 1
+
+(kernel 5):
+total length: 362 split into number of chunks: 1
+
+(kernel 6):
+total length: 434 split into number of chunks: 1
+
+(kernel 3):
+I3Lhard2134: tensor reduction finished!
+
+(kernel 1):
+I3Lhard1234: tensor reduction finished!
+
+(kernel 2):
+I3Lhard1324: tensor reduction finished!
+
+(kernel 5):
+I3Lhard3124: tensor reduction finished!
+
+(kernel 6):
+I3Lhard3214: tensor reduction finished!
+
+(kernel 4):
+I3Lhard2314: tensor reduction finished!
+
+basischange loaded!
+reduced results loaded!
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+MIs: {}
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+General::stop: Further output of FrontEndObject::notavail will be suppressed during this calculation.
+MIs: {j[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 0], j[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 0], j[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1], j[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0]}
+MIs: {j[asym2L, 1, 1, 1, 1, 0]}
+MIs: {}
+target integrals reduced! time: 8.254362`7.067198509036221
+(kernel 1):
+I3Lhard1234: series expansion finished!
+
+(kernel 3):
+I3Lhard2134: series expansion finished!
+
+(kernel 4):
+I3Lhard2314: series expansion finished!
+
+(kernel 6):
+I3Lhard3214: series expansion finished!
+
+(kernel 5):
+I3Lhard3124: series expansion finished!
+
+(kernel 2):
+I3Lhard1324: series expansion finished!
+
+=== Done Parallel Expansion! time: 23.719202`7.525615071528162 ===

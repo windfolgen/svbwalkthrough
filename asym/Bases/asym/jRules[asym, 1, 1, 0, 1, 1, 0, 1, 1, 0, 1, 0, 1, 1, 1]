@@ -1,0 +1,6 @@
+{j[asym, (n1_)?Positive, (n2_)?Positive, (n3_)?NonPositive, (n4_)?Positive, 
+   (n5_)?Positive, (n6_)?NonPositive, (n7_)?Positive, (n8_)?Positive, 
+   (n9_)?NonPositive, (n10_)?Positive, (n11_)?NonPositive, (n12_)?Positive, 
+   (n13_)?Positive, (n14_)?Positive] :> 
+  Expand[j[asym, n3, n4, n5, n6, n1, n2, n7, n8, n12, n9, n13, n10, n14, 
+    n11]]}

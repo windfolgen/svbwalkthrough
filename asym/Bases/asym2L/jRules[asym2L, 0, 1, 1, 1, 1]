@@ -1,0 +1,8 @@
+Last[{{{-1, 1, 1, 1, 1}, {-1, 0, 0, 0, 0}, {0, -1, 0, 0, 0}, 
+   {0, 0, -1, 0, 0}, {0, 0, 0, -1, 0}}, 
+  {j[asym2L, (n1_)?NonPositive, (n2_)?Positive, (n3_)?Positive, 
+      (n4_)?Positive, (n5_)?Positive] /; True :> 
+    (n2*j[asym2L, n1, 1 + n2, n3, -1 + n4, n5])/(-d + n1 + n2 + 2*n5) - 
+     (n2*j[asym2L, n1, 1 + n2, n3, n4, -1 + n5])/(-d + n1 + n2 + 2*n5) + 
+     (n1*j[asym2L, 1 + n1, n2, -1 + n3, n4, n5])/(-d + n1 + n2 + 2*n5) - 
+     (n1*j[asym2L, 1 + n1, n2, n3, n4, -1 + n5])/(-d + n1 + n2 + 2*n5)}}]

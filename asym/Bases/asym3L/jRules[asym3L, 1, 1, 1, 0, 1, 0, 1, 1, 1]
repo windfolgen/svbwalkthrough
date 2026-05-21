@@ -1,0 +1,3 @@
+{j[asym3L, (n1_)?Positive, (n2_)?Positive, (n3_)?Positive, (n4_)?NonPositive, 
+   (n5_)?Positive, (n6_)?NonPositive, (n7_)?Positive, (n8_)?Positive, 
+   (n9_)?Positive] :> Expand[j[asym3L, n6, n5, n4, n3, n2, n1, n9, n8, n7]]}
