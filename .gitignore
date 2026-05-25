@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Mathematica cache
+*.mx
+*.mx.bak
+
+# Wolfram package index
+*.wl.i
+
+# Editor temp files
+*~
+*.swp
+
+# Large data archives
+*.tar.gz
+*.zip

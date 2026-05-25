@@ -290,7 +290,7 @@ MPartition[olist_, tag_] := Module[
   Return[tem1]
 ];
 
-Options[GenTensorProjection] = {"krep" -> {}, "outputrank" -> 20};
+Options[GenTensorProjection] = {"krep" -> {}, "outputrank" -> 0};
 GenTensorProjection[indexlist_, tagp_, OptionsPattern[]] := Module[
   {tensor, l, b, bv, rep, c, cv, sys, sol, start},
   start = SessionTime[];
@@ -371,9 +371,9 @@ SpecialMultiply[temlist_, h_, rep_] := Module[
 ];
 
 
-Options[ProjectTensor] = {"krep" -> {}, deBug -> False, "check" -> False, "chunksize" -> 1000, "dir" -> filepath<>"tmp/"};
+Options[ProjectTensor] = {"krep" -> {}, deBug -> False, "check" -> False, "chunksize" -> 1000, "dir" -> filepath<>"tmp/", "profile" -> False};
 ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] := 
-  Module[{vclist, tem1, tem2, tp, record, flag, top, k, check, start, end, len, fresult, glist = {}, gtotal = {}, rep = Association[{}], revrep, tensor},
+  Module[{vclist, tem1, tem2, tp, record, flag, top, k, check, start, end, len, fresult, glist = {}, gtotal = {}, rep = Association[{}], revrep, tensor, t0, tGen, tExp, tClass, tCont, tMult},
    Print["projecting the tensor structure and performing the contraction..."];
    top = {top1, top2};
    record = {};(*record known tensor reduction*)
@@ -383,15 +383,18 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
    Do[
     start = 1 + (mm - 1)*OptionValue["chunksize"];
     end = Min[start + OptionValue["chunksize"] - 1, len];
-    Block[{result, tem, temp, temlist},
+    Print["--- ProjectTensor Chunk ", mm, "/", Quotient[len, OptionValue["chunksize"]] + 1, " (Terms ", start, "-", end, ") Time: ", SessionTime[] - 0., " ---"];
+    Block[{result, tem, temp, temlist, t0, dt},
      result = Reap[
         Do[
+          If[Mod[k, 100] == 0, Print["    Working on Term ", k, "/", len]];
           temlist = Take[list[[k]], 3];(*each element is {const,top1,top2}*)
           
           vclist = {Cases[{list[[k, 2]]}, vc[__], Infinity] // DeleteDuplicates, Cases[{list[[k, 3]]}, vc[__], Infinity] // DeleteDuplicates};(*extract tensor in two topologies*)
           
           If[OptionValue[deBug], Print["tensor structure: ", vclist]];
           Do[(*for every topology*)
+           t0 = SessionTime[];
            If[vclist[[i]] === {},
             
             glist = Complement[Cases[{list[[k, i + 1]]}, _G, Infinity] // DeleteDuplicates, gtotal];
@@ -399,6 +402,7 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
             If[glist =!= {}, rep = Join[rep, AssociationMap[h[Hash[#]] &, glist]]];
             gtotal = Join[gtotal, glist];
             temlist[[i + 1]] = {temlist[[i + 1]] /. rep};
+            If[OptionValue["profile"] && (dt = SessionTime[] - t0) > 0.5, Print["    [SLOW] NoTensor Setup took ", dt, "s on term ", k, " top ", i]];
             Continue[]
             ];(*no tensor to reduce*)
            
@@ -414,11 +418,16 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
            If[i == 2, tp = tp /. {u -> 1, tagp -> 3}, tp = tp /. {tagp -> 2}];
            
            If[OptionValue[deBug], Print["tp: ", tp]];(*in the second topology, the external legs are set to x13^2=1*)
+           If[OptionValue["profile"] && (dt = SessionTime[] - t0) > 0.5, Print["    [SLOW] GenTensor took ", dt, "s on term ", k, " top ", i]];
            
+           t0 = SessionTime[];
            tem = (list[[k, i + 1]]*tp[[2]] /. {tagp -> (i + 1)} // Expand) /. {d[a_, b_] :> (d2[1, a] + d2[1, b] - d2[a, b])/2} /. {d2[1, 3] -> 1, d2[1, 2] -> u, d2[2, 3] -> v, d[a_, 1] :> 0} /. {G[i, a_] :> Times @@ (Thread@Power[top[[i]], -a])} // Expand;
            (*classify topology for every term*)
            
            If[Not@FreeQ[tem, vc | d], Print["something is wrong in the reduction!", list[[k, i + 1]], " tensor: ", tp[[2]]]];(*check the result*)
+           If[OptionValue["profile"] && (dt = SessionTime[] - t0) > 0.5, Print["    [SLOW] Expansion took ", dt, "s on term ", k, " top ", i]];
+           
+           t0 = SessionTime[];
            temp = Reap[
               Do[
                tem1 = tem[[j]] // Expand;
@@ -452,7 +461,9 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
             ][[2, 1]];
            
            If[OptionValue[deBug], Print["tensor projection temp: ", temp]];
+           If[OptionValue["profile"] && (dt = SessionTime[] - t0) > 0.5, Print["    [SLOW] ClassifyTopology took ", dt, "s on term ", k, " top ", i]];
            
+           t0 = SessionTime[];
            glist = Complement[Cases[{temp}, _G, Infinity] // DeleteDuplicates, gtotal];
            
            If[glist =!= {}, rep = Join[rep, AssociationMap[h[Hash[#]] &, glist]]];
@@ -461,14 +472,18 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
            tensor = Variables[tp[[1]]] // DeleteCases[#, _?((Head[#] =!= vc && Head[#] =!= g) &)] &;
            
            temlist[[i + 1]] = (temp /. rep) . tp[[1]] // MonomialList[#, tensor] &;(*tensor reduction finished for one topology, replace G in order to reduce the memory consuming*)
+           If[OptionValue["profile"] && (dt = SessionTime[] - t0) > 0.5, Print["    [SLOW] Contraction took ", dt, "s on term ", k, " top ", i]];
            , {i, 1, 2}];
           
           If[OptionValue[deBug], Print["tensor projection result: ", temlist]];
           (*the multiplication between two topologies may involve huge terms of tensor products, we tackle it in a specific way*)
           
+          t0 = SessionTime[];
           Sow[(SpecialMultiply[temlist, h, {d2[1, 3] -> 1, d2[2, 1] -> u, d2[2, 3] -> 1 - Y, d[a_, 1] :> 0, d[2, 3] -> (u + Y)/2, v -> 1 - Y}])]
+          If[OptionValue["profile"] && (dt = SessionTime[] - t0) > 0.5, Print["    [SLOW] SpecialMultiply took ", dt, "s on term ", k]];
           , {k, start, end}]
         ][[2]];
+        
      If[result =!= {}, result = result[[1]] // Total // Collect[#, _h, Factor] &];
      If[DirectoryQ[OptionValue["dir"]],
       Export[OptionValue["dir"] <> "tensor_" <> ToString[mm] <> ".mx", result],
@@ -514,13 +529,14 @@ CheckEpsOrder[olist_, gtransform_, Grep_, basischange_, masterrep_, order_, Opti
        If[aexp[[-2]] > 0, Series[(aexp // Normal), {u, 0, 0}, {Y, 0, order}] // Normal, Null], aexp]
       ], {i, 1, Length[tem]}];
    CloseKernels[];(*close kernels to avoid memory consuming*)
-   If[Not@FreeQ[result, Null],
-    Print[Style["the order of epsilon is not enough!", Red]];
-    pos = Position[result, Null, 1] // Flatten;
-    Print["the following terms require higher order of epsilon: ", Short[tem[[pos]], 40]];
-    Return[{}],
-    Return[result];
-    ]
+    If[Not@FreeQ[result, Null],
+     Print[Style["the order of epsilon is not enough!", Red]];
+     pos = Position[result, Null, 1] // Flatten;
+     Print["the following terms require higher order of epsilon: ", Short[tem[[pos]], 40]];
+     Return[{}],
+     Print[Style["SUCCESS: The epsilon order is completely sufficient for all regions!", Green]];
+     Return[result];
+     ]
 ];
 
 (* RunAsymExpansion[intname, integrand, perm, order, loops]
@@ -556,7 +572,7 @@ RunAsymExpansion[intname_String, integrand_, perm_List, order_Integer:3, loops_L
         Print["region expansion of integrand finished! ", "time: ", SessionTime[] - starttime];
         {top, top1, top2} = exp[[1]];
         result = Flatten[ToTensorProduct[#, top, top1, top2, "check" -> True] & /@ (exp[[2]]), 1];
-        test = ProjectTensor[result, p, top1, top2, "check" -> True];
+        test = ProjectTensor[result, p, top1, top2, "check" -> True, "profile" -> True];
         Export[filepath <> "tmp/tensor_" <> name <> "_order" <> ToString[order] <> "_results.m", {{top, top1, top2}, test}];
         Print["tensor reduction finished! ", "time: ", SessionTime[] - starttime];
     ];
@@ -732,4 +748,60 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
     
     Print["=== Done Parallel Expansion! time: ", SessionTime[] - starttime, " ==="];
     fresults
+];
+
+(* RunAsymExpansionTest[intname, integrand, perm, order, loops]
+   Tests whether the epsilon expansion order is sufficient for the given integral.
+*)
+RunAsymExpansionTest[intname_String, integrand_, perm_List, order_Integer:3, loops_List:{5, 6, 7, 8}] := Module[
+    {name, int, starttime, test, top, top1, top2, grep, glist, gtransform, basischange,
+     trep, reducedg, target4L, target3L, target2L, target1L,
+     trep4L, trep3L, trep2L, trep1L, trep1, trep2, Grep,
+     Gmasterrep4L, Gmasterrep3L, Gmasterrep2L, Gmasterrep1L, Gmasterrep},
+
+    name = intname <> StringJoin[ToString /@ perm];
+    Print["=== Running Eps Order Test for ", name, " ==="];
+
+    If[FileExistsQ[filepath <> "tmp/tensor_" <> name <> "_order" <> ToString[order] <> "_results.m"],
+        test = Import[filepath <> "tmp/tensor_" <> name <> "_order" <> ToString[order] <> "_results.m"];
+        {top, top1, top2} = test[[1]];
+        test = test[[2]];
+        Print["tensor reduction results loaded! "],
+        Print["no tensor reduced results found. Please run RunAsymExpansion first!"];
+        Return[$Failed];
+    ];
+
+    {grep, glist} = ClassifyGs[test, top1];
+    gtransform = Join[grep /. {G[a__] :> G[1, {a}]}, grep /. {G[a__] :> G[2, {a}]}] // Dispatch;
+    basischange = Import[filepath <> "asym4LbasisChange.m"] // Dispatch;
+
+    If[FileExistsQ[filepath <> "tmp/targetIntegrals_reduced.m"],
+        trep = Import[filepath <> "tmp/targetIntegrals_reduced.m"];
+        reducedg = Keys[trep],
+        trep = {};
+        reducedg = {};
+    ];
+    target4L = FirstCase[glist, lst_ /; lst =!= {} && Length[First[lst]] == 14, {}] /. {G[a__] :> j[asym, a]};
+    target3L = FirstCase[glist, lst_ /; lst =!= {} && Length[First[lst]] == 9,  {}] /. {G[a__] :> j[asym3L, a]};
+    target2L = FirstCase[glist, lst_ /; lst =!= {} && Length[First[lst]] == 5,  {}] /. {G[a__] :> j[asym2L, a]};
+    target1L = FirstCase[glist, lst_ /; lst =!= {} && Length[First[lst]] == 2,  {}] /. {G[a__] :> j[asym1L, a]};
+
+    trep4L = Thread@Rule[#, IBPReduce[#]] &[Complement[target4L, reducedg]];
+    trep3L = Thread@Rule[#, IBPReduce[#]] &[Complement[target3L, reducedg]];
+    trep2L = Thread@Rule[#, IBPReduce[#]] &[Complement[target2L, reducedg]];
+    trep1L = Thread@Rule[#, IBPReduce[#]] &[Complement[target1L, reducedg]];
+    trep = Join[trep, trep4L, trep3L, trep2L, trep1L];
+    Export[filepath <> "tmp/targetIntegrals_reduced.m", trep];
+    trep1 = trep /. {j[_, a__] :> G[1, {a}]} /. {d -> 4 - 2 ep};
+    trep2 = trep /. {j[_, a__] :> G[2, {a}]} /. {u -> 1} /. {d -> 4 - 2 ep};
+    Grep = Join[trep1, trep2] // Dispatch;
+
+    Gmasterrep4L = Import[filepath <> "Gmaterrep4L.m"];
+    Gmasterrep3L = Import[filepath <> "Gmaterrep3L.m"];
+    Gmasterrep2L = Import[filepath <> "Gmaterrep2L.m"];
+    Gmasterrep1L = Import[filepath <> "Gmaterrep1L.m"];
+    Gmasterrep = Join[Gmasterrep4L, Gmasterrep3L, Gmasterrep2L, Gmasterrep1L] // Dispatch;
+    
+    Print["Testing order of epsilon for regions..."];
+    CheckEpsOrder[{test, {}}, gtransform, Grep, basischange, Gmasterrep, order]
 ];

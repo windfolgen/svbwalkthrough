@@ -3,213 +3,579 @@
 ## Overview
 This Mathematica notebook implements a **bootstrap method for computing multi-loop Feynman integrals** via leading singularities. The core workflow is: (1) compute leading singularities of an integrand, (2) construct an ansatz from a basis of transcendental functions, (3) fix the ansatz coefficients by matching to the leading singularities.
 
----
-
-## 1. Basic Algebraic Infrastructure
-
-### 1.1 Position Coordinates
-- Define coordinates `x[a, b]` with properties:
-  - `x[a, a] = 0`
-  - `x[a] - x[b] := x[a, b]`
-  - Antisymmetry: if `!OrderedQ[{a,b}]`, then `x[a,b] = -x[b,a]`
-  - Additivity: `x[a,b] + x[b,c] = x[a,c]`
-
-### 1.2 Vector Algebra (V, V2, VD, SD)
-- `V[a]` represents a vector
-- `VD[a, b] := V[a] * V[b]` (orderless)
-- `V2[a] := V[a]^2` (squared norm)
-- Special rules for dot products when differences are position coordinates:
-  - If `a - b == x[__]`, then `VD[a,b] = -1/2*(V2[a-b] - V2[a] - V2[b])`
-  - If `a + b == x[__]`, then similar rule with `+1/2`
-- `SD[a,b]` is the fallback symbol for generic scalar products
-
-### 1.3 Utility Functions
-- **`ShowV2[exp]`**: Display `V2[x[a,b]]` as `Subscript[x, a,b]^2`
-- **`PerfectSquareOut[expr]`**: Factor out perfect squares from square roots, returns `{square_part, remaining_radical}`
-- **`Jacob[list, var]`**: Compute the Jacobian determinant for cutting 4 conditions on a loop variable `var`
-- **`AdmissibleCutQ[cut, var, replambda]`**: Check if a cut set provides at least 4 independent conditions
-- **`ResolveCondition[list, var]`**: Handle quadratic polynomials by replacing with derivative + discriminant
-- **`ReOrganize[tem2]`**: Reorganize square roots from multiple cut cases
+**Input to the workflow**: the integrand, the leading singularities, and the integral ansatz for each leading singularity.
+**Output of the workflow**: the coefficients before the ansatz.
 
 ---
 
-## 2. Leading Singularity Computation (`LeadingSingularities`)
+## 0. Skill 0: Master Orchestrator
+
+### 0.1 Directory Structure
+Each skill operates in its own working directory. Output files are written to the skill's directory so that they are automatically discoverable by downstream skills.
+
+```
+.                           (project root)
+├── master_agent.wl          — Skill 0: orchestrator
+├── review_agent.wl          — Review facade (gateway to audit)
+├── ConformalWeight.m        — conformal weight calculator (shared)
+├── series_agent/
+│   └── series_agent.wl      — Skill 1: ansatz series expansion
+├── asym/
+│   ├── asym_new.wl          — asymptotic expansion engine (shared)
+│   ├── Bases/               — LiteRed2 IBP bases
+│   ├── tmp/                 — cached tensor reduction / IBP results (reusable)
+│   └── boundary_agent/
+│       └── boundary_agent.wl — Skill 2: boundary condition calculation
+├── solve_agent/
+│   └── solve_agent.wl        — Skill 3: coefficient solving
+├── audit_agent/
+│   ├── audit_agent.wl        — Skill 4: stage review checks (when loaded)
+│   └── reports/              — audit report output (.m + .md)
+└── project_skills/
+    └── ansatz_basis/          — Documentation for ansatz construction
+        ├── SKILL.md
+        └── references/
+            ├── benchmark_files.md
+            ├── construction_workflow.md
+            └── parity_rules.md
+```
+
+### 0.2 Orchestrator (`master_agent.wl`)
+`RunSVBPipeline[rootDir, label, poleType, lsAddPole, order_:3, yOrder_:4, opts]`
+
+- `poleOrder` is automatically derived from `poleType`: `"simple" → 1`, `"double" → 2`
+
+Set these **globals** before calling:
+- `$Integrand` — the integrand expression
+- `$Perms` — solving order: `{{1,2,3,4},{2,1,3,4},{1,3,2,4},{2,3,1,4},{3,1,2,4},{3,2,1,4}}`
+- `ansatzExpr`, `basisSV`, `basisMPL`, `targetData` — for Skill 3
+
+**Options:**
+- `"Audit" -> True` (default) — run `ReviewGate` after each stage
+- `"AuditReportDir" -> path` — where to write audit reports
+- `"StopOnAuditFailure" -> False` — halt pipeline on FAIL
+
+1. Loads `ConformalWeight.m` → computes `weightN` from `$Integrand`.
+2. Calls **Skill 2** → **Skill 1** → **Skill 3** in sequence.
+3. Records `DateObject[]` timings for each stage.
+4. Optionally calls `ReviewGate[rootDir, label, stage]` after each stage.
+
+### 0.3 File Dependencies and Loading
+All three skills share a single `label` (one integrand, one leading singularity). Each agent accesses files relative to `$RootDir`:
+
+| Agent | Reads from | Writes to |
+|-------|-----------|-----------|
+| `series_agent.wl` | `root/allsvliste*_uptow8.txt`, `root/allsvlistmpl_threeloopharde*.txt`, `root/ConformalWeight.m` | `root/series_agent/<label>_svlist*.m` (SVHPL), `root/series_agent/<label>_svlistmpl*.m` (MPL) |
+| `boundary_agent.wl` | `root/asym/asym_new.wl`, `root/asym/Bases/`, `root/asym/tmp/` (reused across runs), optionally `root/runs/<label>/boundaries/` (via `"InputDir"`) | `root/asym/boundary_agent/<label>*_asyexp.m` |
+| `solve_agent.wl` | `root/series_agent/<label>_svlist*.m`, `root/asym/boundary_agent/<label>*_asyexp.m`, ansatz and basis `.m` files | `root/solve_agent/<label>_sol.m` |
+| `review_agent.wl` | `root/audit_agent/audit_agent.wl` (when loaded) | `root/audit_agent/reports/` (when writing) |
+
+### 0.4 Review Gate (`review_agent.wl`)
+Thin facade providing `LoadReviewAgent[rootDir]` and `ReviewGate[rootDir, label, stage]`. When the full audit agent is loaded, `ReviewGate` delegates to `RunReviewGate`. If the audit agent cannot be loaded, the gate returns `"PASS"` (no-op) to avoid blocking the pipeline.
+
+### 0.5 Runtime Safety
+**Missing files:** if any required file is not found at runtime, immediately stop all calculations, kill all stale Mathematica processes (`ps aux | grep -i wolfram | awk '{print $2}' | xargs kill -9`), verify with `ps aux | grep -i wolfram | grep -v grep | wc -l` that the count is 0, and notify the user. Do not create or guess missing files — ask the user to provide them.
+
+---
+
+## 1. Skill 1: Ansatz Series Expansion
+
+### 1.1 Input
+Each `.txt` file contains the series expansion of a corresponding basis `.m` file:
+
+| Basis file (list of elements) | Expansion files (series at singular points) |
+|------|------|
+| `allsvlist_fourloop.m` (SVHPL basis) | `allsvliste0_uptow8.txt` (z→0), `allsvliste1_uptow8.txt` (z→1), `allsvlisteinf_uptow8.txt` (z→∞) |
+| `allsvlistmpl_threeloop.m` (MPL basis) | `allsvlistmpl_threeloopharde0.txt` (z→0), `allsvlistmpl_threeloopharde1.txt` (z→1), `allsvlistmpl_threeloophardeinf.txt` (z→∞) |
+
+**Reuse:** If the leading singularity (and thus the `additional` prefactor) is unchanged from a previous run, the series expansions do not need to be recomputed — load the existing `.m` files from `series_agent/`.
+
+### 1.2 SeriesExpansion Functions
+All 12 `SeriesExpansion*` functions and 6 `zrep` definitions are **hard-coded** in `series_agent/series_agent.wl` — no notebook dependency. Each function takes an `additional` prefactor option and internally divides by the Jacobian / measure factor.
+
+**Functions and their internal denominators:**
+- `SeriesExpansion0` / `SeriesExpansion0P`: divide by `-(z-zz)` (simple pole at z=0)
+- `SeriesExpansion1` / `SeriesExpansion1P`: divide by `-(z-zz)` (simple pole at z=1)
+- `SeriesExpansionInf` / `SeriesExpansionInfP`: divide by `-(z-zz)` (simple pole at z=∞)
+- `SeriesExpansion20` / `SeriesExpansion20P`: divide by `(z-zz)²` (double pole at z=0)
+- `SeriesExpansion21` / `SeriesExpansion21P`: divide by `(z-zz)²` (double pole at z=1)
+- `SeriesExpansion2Inf` / `SeriesExpansion2InfP`: divide by `(z-zz)²` (double pole at z=∞)
+
+**Coordinate mappings:**
+- Straight (`uv`): standard cross-ratios `u = z·zz`, `v = (1-z)(1-zz)`.
+- Permuted (`uvp`): permuted cross-ratios.
+
+### 1.3 Prefactor Logic via Conformal Weight (Safe Method)
+The safest way to determine the prefactor is to compute the **conformal weight** of each external point in the integrand.
+
+**Definition:** The conformal weight of a point `p` in an integrand is:
+```
+weight(p) = (# of x[__] containing p in each numerator monomial) - (# of x[__] containing p in denominator)
+```
+where `x[__]^n` counts as `n` copies. For a valid DCI integrand, all monomials in the numerator must have the same conformal weight.
+
+**Rule:**
+- Compute `ConformalWeight[integrand, p]` for `p = 1, 2, 3, 4`.
+- **If weight == 0** for all external points: the integrand is **not** normalized with any power of `x[1,3]x[2,4]`. Add the prefactor in the normal way based on the leading singularity.
+- **If weight == −n** (negative integer) for all external points: the integrand **is** normalized with `x[1,3]^n x[2,4]^n`. The normalization factor has been absorbed into the measure.
+
+**General formula:**
+
+Decompose the leading singularity into the **primary pole** and the **additional pole**:
+```
+LS = [primary pole] · [additional pole]
+```
+- **Primary pole** (`1/(z−zz)` or `1/(z−zz)²`): handled internally by the `SeriesExpansion*` function — do **not** include in `base`. Under permutation the primary pole absorbs **k** powers of `F` where `k` is the pole order (`k=1` for simple, `k=2` for double).
+- **Additional pole** (e.g., `1/(1−u)`, `1/(1−v)`, etc.): this is `base`, the quantity you transform and the only thing entering `base_transformed`.
+- **Normalization** `x[1,3]^n x[2,4]^n`: under permutation transforms to `F^n·x[1,3]^n x[2,4]^n`, contributing `F^n` to the measure denominator that must be removed from the prefactor.
+
+**Net effect** for any non-identity permutation:
+```
+additional = base_transformed · (1/F^n) / (1/F^k)  =  base_transformed / F^(n−k)
+```
+The factor `1/F^k` from the primary pole cancels k powers of `F` from the normalization, leaving `n−k` powers in the divisor.
+
+- For `k=1` (simple pole, e.g. `1/(z−zz)`):  `additional = base_transformed / F^(n−1)`.
+- For `k=2` (double pole, e.g. `1/(z−zz)²`): `additional = base_transformed / F^(n−2)`.
+- For `n=k`: `additional = base_transformed` (no division).
+
+**Normalization factor F for each permutation** (in straight z=0 coordinates):
+The permutation transforms `x[1,3]x[2,4] → x[σ(1),σ(3)] x[σ(2),σ(4)]`. The ratio F = [transformed] / [original] is:
+
+| Permutation | Rule | Transformation of `x[1,3]x[2,4]` | F |
+|-------------|------|----------------------------------|---|
+| `{1,2,3,4}` | identity | `x[1,3]x[2,4]` | **1** |
+| `{2,1,3,4}` | `{1→2, 2→1}` | `x[2,3]x[1,4]` | **v** |
+| `{3,2,1,4}` | `{1→3, 3→1}` | `x[3,1]x[2,4]` = `x[1,3]x[2,4]` | **1** |
+| `{1,3,2,4}` | `{2→3, 3→2}` | `x[1,2]x[3,4]` | **u** |
+| `{2,3,1,4}` | `{1→2, 2→3, 3→1}` | `x[2,1]x[3,4]` = `x[1,2]x[3,4]` | **u** |
+| `{3,1,2,4}` | `{1→3, 3→2, 2→1}` | `x[3,2]x[1,4]` = `x[2,3]x[1,4]` | **v** |
+
+where `u = x[1,2]x[3,4] / (x[1,3]x[2,4])` and `v = x[1,4]x[2,3] / (x[1,3]x[2,4])`.
+
+**Complete six-expansion table** (leading singularity `1/((z−zz)(1−u))`, weight `−n`):
+Base = `1/(1−u)` (additional pole only). All non-identity limits divide by `F^(n−1)`.
+
+| # | Perm | SeriesExpansion | F | n=1 Prefactor | n=2 Prefactor |
+|---|------|----------------|---|---|--------------|--------------|
+| 1 | `{1,2,3,4}` | `SeriesExpansion0` | 1 | `1/(1−u)` | `1/(1−u)` |
+| 2 | `{2,1,3,4}` | `SeriesExpansion0P` | v | `v/(v−u)` | `1/(v−u)` |
+| 3 | `{1,3,2,4}` | `SeriesExpansionInf` | u | `u/(u−1)` | `1/(u−1)` |
+| 4 | `{2,3,1,4}` | `SeriesExpansionInfP` | u | `u/(u−v)` | `1/(u−v)` |
+| 5 | `{3,1,2,4}` | `SeriesExpansion1` | v | `v/(v−1)` | `1/(v−1)` |
+| 6 | `{3,2,1,4}` | `SeriesExpansion1P` | 1 | `1/(1−v)` | `1/(1−v)` |
+
+**Note:** This is the solving order. Rows 3-6 (infinity and z=1 limits) all divide by `F^(n−1)` because all involve non-identity permutations. There is no "straight vs permuted" distinction for the divisor — only the identity permutation uses `F^0=1`.
+
+**Consistency check — integrand vs. ansatz:**
+The series expansion of the **ansatz** (Skill 1) must match the series expansion of the **integrand** (Skill 2). Both derive their `additional` prefactor from the same logic: compute conformal weight → `n`, decompose LS into primary pole (order `k`) + additional pole → `base`, transform `base` under each permutation → `base_transformed`, then apply `additional = base_transformed / F^(n−k)` for all non-identity limits. `poleOrder = k` is derived from `poleType`: `"simple" → 1`, `"double" → 2`.
+
+**Mathematica implementation** (see `ConformalWeight.m`):
+```mathematica
+ConformalWeight[integrand_, point_] := Module[
+  {num, den, monomials, monoWeights, numWeight, denTerms, denWeight},
+  num = Numerator[integrand];
+  den = Denominator[integrand];
+  
+  (* Expand numerator into monomials *)
+  monomials = MonomialList[num];
+  If[monomials === {}, monomials = {num}];
+  
+  (* For each monomial, count x[a,b] factors containing the point *)
+  monoWeights = Table[
+    Module[{terms},
+      terms = Cases[mono, x[a_, b_] :> {a, b}, {0, Infinity}];
+      terms = Join[terms, Flatten[Cases[mono, x[a_, b_]^n_ :> Table[{a, b}, n], {0, Infinity}], 1]];
+      Count[Flatten[terms], point]
+    ],
+    {mono, monomials}
+  ];
+  
+  (* Check that all monomials have the same weight *)
+  If[Length[Union[monoWeights]] > 1,
+    Print["Warning: Monomials have different conformal weights for point ", point, ": ", monoWeights];
+  ];
+  
+  (* Numerator weight is the common weight *)
+  numWeight = monoWeights[[1]];
+  
+  (* Count x[a,b] factors in denominator containing the point *)
+  denTerms = Cases[den, x[a_, b_] :> {a, b}, {0, Infinity}];
+  denTerms = Join[denTerms, Flatten[Cases[den, x[a_, b_]^n_ :> Table[{a, b}, n], {0, Infinity}], 1]];
+  denWeight = Count[Flatten[denTerms], point];
+  
+  (* Total conformal weight *)
+  numWeight - denWeight
+];
+```
+
+**Tested example:**
+```mathematica
+integrand = (x[1,3] x[2,4] (x[3,6] x[4,5] + x[3,5] x[4,6]))/
+  (x[1,5] x[1,6] x[2,5] x[2,6] x[3,5] x[3,6] x[3,7] x[4,5] x[4,6] x[4,7] x[5,7] x[6,7]);
+
+Table[{p, ConformalWeight[integrand, p]}, {p, 1, 7}]
+(* Returns:
+   {{1, -1}, {2, -1}, {3, -1}, {4, -1},
+    {5, -4}, {6, -4}, {7, -4}}
+*)
+```
+
+**Examples:**
+- Integrand `1/(x[1,5]x[2,5]x[3,5]x[4,5])` has weight `-1` for all external points (normalized with implicit `x[1,3]x[2,4]`).
+- Integrand `x[1,3]x[2,4]/(x[1,5]x[2,5]x[3,5]x[4,5])` has weight `0` for all external points (not normalized, explicit factor in numerator).
+
+**Decomposition examples:**
+- Simple pole: `LS = 1/(z−zz)` → primary pole = `1/(z−zz)`, additional pole = `1` → base = `1`
+- `LS = 1/((z−zz)(1−u))` → primary pole = `1/(z−zz)`, additional pole = `1/(1−u)` → base = `1/(1−u)`
+- `LS = 1/((z−zz)(1−v))` → primary pole = `1/(z−zz)`, additional pole = `1/(1−v)` → base = `1/(1−v)`
+- Double pole: `LS = 1/(z−zz)²` → primary pole = `1/(z−zz)²` (use `SeriesExpansion20*`), additional pole = `1` → base = `1`
+- **Triple pole**: `LS = v/(z−zz)³` → primary pole = `1/(z−zz)` (use `SeriesExpansion0*`), additional pole = `v/(z−zz)²` → base = `v/((1+u−v)² − 4u)`
+  - Note: `(1+u−v)² − 4u = (u+v−1)² − 4uv` (same denominator)
+  - Proven run: `threeloopI8` (odd ansatz, 30 coefficients → 10 non-zero)
+
+### 1.4 Permutation Transformation Rules
+The six permutations of external legs correspond to the anharmonic group acting on the cross-ratio `z`. The mapping rules are:
+
+| Permutation | Rule notation | z transformation | u transformation | v transformation |
+|-------------|---------------|------------------|------------------|------------------|
+| `{1,2,3,4}` | identity | `z -> z` | `u -> u` | `v -> v` |
+| `{3,2,1,4}` | `{1->3, 3->1}` | `z -> 1-z` | `u -> v` | `v -> u` |
+| `{1,3,2,4}` | `{2->3, 3->2}` | `z -> 1/z` | `u -> 1/u` | `v -> v/u` |
+| `{3,1,2,4}` | `{1->3, 3->2, 2->1}` | `z -> 1/(1-z)` | `u -> 1/v` | `v -> u/v` |
+| `{2,3,1,4}` | `{1->2, 2->3, 3->1}` | `z -> 1-1/z` | `u -> v/u` | `v -> 1/u` |
+| `{2,1,3,4}` | `{1->2, 2->1}` | `z -> z/(z-1)` | `u -> u/v` | `v -> 1/v` |
+
+In Mathematica rule notation:
+```mathematica
+{{1->3, 3->1}, z->1-z, u->v, v->u}
+{{2->3, 3->2}, z->1/z, u->1/u, v->v/u}
+{{1->3, 3->2, 2->1}, z->1/(1-z), u->1/v, v->u/v}
+{{1->2, 2->3, 3->1}, z->1-1/z, u->v/u, v->1/u}
+{{1->2, 2->1}, z->z/(z-1), u->u/v, v->1/v}
+```
+
+### 1.5 Process
+1. **Import Data**: Read the `.txt` files as strings, trim brackets, and convert to Mathematica expressions via `ToExpression`. This yields the series expansions of MPL basis elements `I[z, a1, a2, ..., an]` at the three singular points.
+2. **Coordinate Transformation**: Apply `zrep` rules to map powers of `z` and `zz` into algebraic expressions in `u` and `Y` (where `Y = 1 - v`), using `Solve` to invert the cross-ratio relations.
+3. **Six Expansions**: For each singular point (e0, e1, einf), perform two coordinate mappings (straight and permuted) using the appropriate `SeriesExpansion*` function.
+4. **Apply Prefactor**: Set the `additional` option based on the leading singularity and normalization convention (see Section 1.3).
+5. **Symbol Mapping**: Map special symbols:
+   - `f[3]` → `Zeta[3]`, `f[5]` → `Zeta[5]`, `f[7]` → `Zeta[7]`
+   - `P[0]` → `-Log[u]` or `-Log[u/v]` depending on the limit
+   - `I[z, 0, 0]` → `Log[u]` or `Log[u/v]` depending on the limit
+
+### 1.6 Output
+Six `.m` files per singular point (one `svlist` and one `svlistmpl` per coordinate mapping), plus six permuted-coordinate variants. **Naming convention:** the suffix encodes the leading singularity. Each distinct leading singularity (primary pole × additional pole) requires its own set of files, named with a label identifying that singularity.
+
+| Limit | Straight files | Permuted files |
+|-------|---------------|----------------|
+| z→0 | `<label>_svliste0uv.m`, `<label>_svlistmple0uv.m` | `<label>_svliste0uvp.m`, `<label>_svlistmple0uvp.m` |
+| z→1 | `<label>_svliste1uv.m`, `<label>_svlistmple1uv.m` | `<label>_svliste1uvp.m`, `<label>_svlistmple1uvp.m` |
+| z→∞ | `<label>_svlisteinfuv.m`, `<label>_svlistmpleinfuv.m` | `<label>_svlisteinfuvp.m`, `<label>_svlistmpleinfuvp.m` |
+
+**Example** (notebook labels): for the two leading singularities of the hard topology:
+- `1/(z−zz)²` → label `threeloophard1` → files: `threeloophard1_svliste0uv.m`, etc.
+- `1/((z−zz)(1−u))` → label `threeloophard2` → files: `threeloophard2_svliste0uv.m`, etc.
+
+---
+
+## 2. Skill 2: Boundary Condition Calculation
 
 ### 2.1 Input
-- An integrand as a rational function with denominator being a product of propagators `x[a,b]`
-- Optional: external vertices (default `{1,2,3,4}`)
+- An integrand as a rational function with denominator being a product of propagators `x[a,b]`.
+- A permutation of external legs (e.g., `{1,2,3,4}`, `{1,3,2,4}`, `{2,1,3,4}`, `{2,3,1,4}`, `{3,1,2,4}`, `{3,2,1,4}`).
 
-### 2.2 Graph Construction
-- Build graph from denominator edges (solid) and numerator edges (dashed)
-- Identify loop variables as non-external vertices
-- Check vertex degree: each loop must have degree >= 4
+**Skip behavior:** Before any computation, `RunBoundaryConditions` checks whether the 6 expected output files already exist. If they are found in `asym/boundary_agent/` (or the optional `"InputDir"`, e.g., `runs/<label>/boundaries/`), the entire IBP/tensor-reduction/series steps are skipped and the existing files are reused. Files found in `"InputDir"` are automatically copied to `asym/boundary_agent/` for downstream access.
 
-### 2.3 Step 1: Direct Integration ("Easy" Loops)
-- Find loops with exactly degree 4 (directly integrable)
-- If multiple such loops exist, order them by connectivity in the subgraph without external points
-- For each directly integrable loop:
-  - Cut its 4 propagators (set to zero)
-  - Compute Jacobian factor
-  - Add Jacobian to `replambda` abbreviation rules
-  - Remove cut propagators from the cutlist
-  - Factor and flatten remaining propagators
+### 2.2 Process (exact syntax from `run_I3Lhard_parallel.wl`)
+The agent strictly follows the template. Only the integrand expression varies per problem.
 
-### 2.4 Step k (k >= 2): Iterative Cutting
-- For each remaining branch in the cutlist:
-  - Count how many propagators involve each remaining loop variable
-  - If a loop has exactly 4 propagators: cut that loop
-  - If no loop has 4 propagators: use `ResolveOrder` to determine best loop to cut next
-- **`CutOneLoop[cutlist, numlist, var, replambda, remain]`**: Main cutting engine
-  - Select propagators involving `var`
-  - Find all 4-element subsets that are admissible cuts
-  - For each subset case:
-    1. Separate integer propagators from square-root-related ones (`lambda`)
-    2. Solve the linear system of 4 cut conditions
-    3. If solution has < 4 variables, iterate by substituting into square roots
-    4. Check for double poles and record `checksol` for numerator cancellation
-    5. Handle higher poles by requiring numerator cancellation
-    6. If quadratic conditions exist, resolve via `ResolveCondition`
-    7. Further split the 4 conditions into all 4-element subsets
-    8. Compute Jacobian for each subset
-    9. Build remaining denominator and numerator
-    10. Sow `{den1, num1, replam, remain}` for next iteration
+1. **Load LiteRed2 and set kinematics**:
+   ```mathematica
+   Get["LiteRed2`"];
+   SetDim[d];
+   Declare[{l1, l2, l3, l4, p}, Vector, {u}, Number];
+   SetConstraints[{p}, sp[p, p] = u];
+   ```
+2. **Load LiteRed2 bases** from `asym/Bases/asym`, `asym3L`, `asym2L`, `asym1L`.
+3. **Launch parallel kernels**: `LaunchKernels[6]`.
+4. **Load asymptotic expansion engine** and broadcast it:
+   ```mathematica
+   Get["./asym/asym_new.wl"];
+   ParallelEvaluate[Get["./asym/asym_new.wl"]];
+   ```
+5. **Define global integrand and permutations** (`$Integrand`, `$Perms`).
+6. **Run parallel expansion**: `RunAsymExpansionParallel[label, $Integrand, $Perms, 3, {5, 6, 7}]`.
 
-### 2.5 Final Step: Express in Cross-Ratios (u, v)
-- After all loops are cut, express the result using:
-  - `u = V2[x[1,2]]*V2[x[3,4]] / (V2[x[1,3]]*V2[x[2,4]])`
-  - `v = V2[x[1,4]]*V2[x[2,3]] / (V2[x[1,3]]*V2[x[2,4]])`
-- Apply `PerfectSquareOut` to all lambda replacements
-- Return the list of leading singularities as rational functions in `u`, `v`, and lambda symbols
+Temporary results in `asym/tmp/` (e.g., `targetIntegrals_reduced.m`) are reused across bootstrap problems.
 
-### 2.6 Output Levels
-- `outputlevel == 1`: Return `{cutlist, numlist, replambda}`
-- `outputlevel == 2`: Return leading singularities list
-- `outputlevel == 3`: Return `{ls, cutlist[[All,3]]}` with lambda replacements
+### 2.3 Output
+`RunAsymExpansionParallel` saves 6 files to `asym/boundary_agent/`:
 
----
-
-## 3. Canonical DCI Integrals (`CanonicalDCI`)
-
-### 3.1 Binary Word to Integrand
-- Input: a binary word (list of 0s and 1s, or string)
-- Output: a DCI (Dual Conformal Invariant) integrand
-- Rules:
-  - Start with `1/(x[1,5]*x[2,5]*x[3,5]*x[4,5])`
-  - For each subsequent bit (starting from position 2):
-    - If `0`: replace one external leg pattern, multiply by `x[2,4]/(x[count,2]*x[count,4])/x[1,count]`
-    - If `1`: multiply by `x[1,2]/x[2,4]`, then replace `4 -> count`, divide by `x[4,count]*x[1,count]`
-  - Increment `count` each step
-
-### 3.2 Graph Drawing (`drawGraph`)
-- Visualize the integrand as a graph
-- Options: `withoutnum`, `planar`, `output`, `id`
-
----
-
-## 4. Ansatz Construction
-
-### 4.1 Basis Elements
-- Multiple polylogarithms denoted `I[z, a1, a2, ..., an]` with weights up to some maximum
-- Even/odd classification under parity
-- Building blocks:
-  - `f[3]`, `f[5]`, etc. (presumably certain prefactors or form factors)
-  - `I[z, zz, ...]` terms with `zz` as a special symbol
-
-### 4.2 Ansatz Files
-- `allsvlistmpl_threeloop.m`: List of all MPL basis elements for 3-loop
-- `svmplevenansatz_threeloop.m`: Even parity ansatz (linear combinations of basis)
-- `svmploddansatz_threeloop.m`: Odd parity ansatz
-- `allsvlistevenans.m`, `allsvlistoddans.m`: Even/odd singular value lists
-
-### 4.3 Ansatz Structure
-Each ansatz element is a linear combination:
 ```
-c[1]*basis[1] + c[2]*basis[2] + ... + c[n]*basis[n]
+<label><perm>_order<order>_asyexp.m
 ```
-where coefficients are rational numbers determined by matching.
+
+where `<perm>` is the concatenated digit string (e.g., `1234`). These are exactly the files listed in Section 3.1's `targetData` table.
 
 ---
 
-## 5. Solution Fitting and Result
+## 3. Skill 3: Coefficient Solving
 
-### 5.1 Coefficient Solving
-- Given leading singularities computed from integrands
-- Match against ansatz evaluated at singular points
-- Solve linear system for coefficients `c[i]`
+### 3.1 Input
+- `ansatzExpr`: The complete `testansatz` expression (`Join[svhplansatz, svmplbasis]`).
+- `basisSV` (`allsvlist_fourloop.m`): SVHPL basis list.
+- `basisMPL` (`allsvlistmpl_threeloop.m`): MPL basis list.
+- Pre-computed series expansions from **Skill 1** (`series_agent/<label>_svlist*.m`, `series_agent/<label>_svlistmpl*.m`).
+- `targetData` — a list of 6 boundary condition expressions. Construct by loading the output files from Skill 2 in this **exact order**:
 
-### 5.2 Solution Files
-- `threeloophard1_ans.m`, `threeloophard2_ans.m`: Ansatz with symbolic coefficients
-- `threeloophard1_sol.m`, `threeloophard2_sol.m`: Solved coefficient values
-- `resulthard3L.m`: Final combined result expressed in terms of basis functions
+| Position | Permutation | Limit | File to load |
+|----------|-------------|-------|-------------|
+| 1 | `{1,2,3,4}` | e0uv | `<label>1234_order<order>_asyexp.m` |
+| 2 | `{2,1,3,4}` | e0uvp | `<label>2134_order<order>_asyexp.m` |
+| 3 | `{1,3,2,4}` | einfuv | `<label>1324_order<order>_asyexp.m` |
+| 4 | `{2,3,1,4}` | einfuvp | `<label>2314_order<order>_asyexp.m` |
+| 5 | `{3,1,2,4}` | e1uv | `<label>3124_order<order>_asyexp.m` |
+| 6 | `{3,2,1,4}` | e1uvp | `<label>3214_order<order>_asyexp.m` |
 
-### 5.3 Final Result Format
-- Rational function in `(z - zz)` and `(1 - v)` denominators
-- Numerator: linear combination of `I[z, ...]` and `f[...]` terms with integer/rational coefficients
+### 3.2 Process (exact notebook syntax)
+The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only file paths and ansatz construction vary per integrand.
+
+1. **Load basis and ansatz**:
+   ```mathematica
+   allsvlist    = basisSV;
+   allsvlistmpl = basisMPL;
+   testansatz   = ansatzExpr;
+   $LEN         = Length[testansatz];
+   $Order       = order;
+   ```
+
+2. **Build svrep for each limit** (import series expansions, apply `Series` to `$Order`):
+   ```mathematica
+   svrep = Join[
+     Thread @ Rule[allsvlist,    ((Series[#, {Y, 0, $Order}] // Normal) &) /@ svliste],
+     Thread @ Rule[allsvlistmpl, ((Series[#, {Y, 0, $Order}] // Normal) &) /@ svlistmple]
+   ];
+   ```
+
+3. **Build setup** (substitutes partial solution from previous limits):
+   ```mathematica
+   setup = ((c /@ Range[$LEN]) . testansatz) /. solt /. svrep;
+   ```
+   After each limit is solved, `solt` carries the known coefficients forward so that subsequent limits work with the *remaining* unknowns.
+
+4. **Compute temp** (difference with target, replace f→Zeta). Uses `Normal[...]` to avoid SeriesData/polynomial mixing:
+   ```mathematica
+   temp = MonomialList[
+     Normal[setup - targetData[[i]]] /. {
+       f[3, 3] -> Zeta[3]^2 / 2,
+       f[3, 5] -> Zeta[3] Zeta[5] - f[5, 3],
+       f[a_] :> Zeta[a]
+     },
+     {Log[u]}
+   ] // DeleteCases[#, 0] &;
+   ```
+   **If `temp === {}`**: this limit provides no constraints — skip to the next limit.
+
+5. **Extract coefficients** (`temp1`, **FIXED** — lifted verbatim from notebook, never changes): replace `Log[u]→1`, handle negative powers of `Y` and `u` via `invY`/`invu`, then `MonomialList` in `{u, Y, invY, invu}`, restore `Y→1, invY→1, invu→1`.
+
+6. **Build equations** (`sys1`, **FIXED** — lifted verbatim from notebook, never changes): replace `Zeta[n]→zn`, `Pi→pi`, take `MonomialList` in `{z3, z5, z7, f[5,3], pi}`, restore `zn→1`, then `Thread@Equal[..., 0]`, flatten, delete `True`, `False`, and `0`.
+
+7. **Incremental join and solve**:
+   ```mathematica
+   cVars = Select[Variables[sys[[All, 1]]],
+     MatchQ[#, _[_]] && StringMatchQ[SymbolName[Head[#]], "c*"] &];
+   solt = Solve[sys, cVars][[1]];
+   ```
+   Only `c[i]`-like symbols are passed to `Solve`; `I[z,...]`, `u`, `Y`, `Log[u]` are excluded.
+
+8. **Verify**: substitute `solt` back into `setup` for each limit and check `temp === 0`.
+
+### 3.3 Output
+- `solve_agent/<label>_sol.m`: Solved numeric values for all coefficients `c[i]`.
 
 ---
 
-## 6. Key Data Files
+## 4. Key Data Files
 
 | File | Purpose |
 |------|---------|
+| `master_agent.wl` | Skill 0 orchestrator |
+| `series_agent/series_agent.wl` | Skill 1: ansatz series expansion |
+| `asym/boundary_agent/boundary_agent.wl` | Skill 2: boundary condition calculation |
+| `solve_agent/solve_agent.wl` | Skill 3: coefficient solving |
+| `ConformalWeight.m` | Conformal weight calculator (shared) |
 | `svbwalkthrough.nb` | Main notebook with all algorithms |
-| `allsvlistmpl_threeloop.m` | Complete MPL basis for 3-loop |
-| `svmplevenansatz_threeloop.m` | Even parity ansatz |
-| `svmploddansatz_threeloop.m` | Odd parity ansatz |
-| `threeloophard1_ans.m`, `threeloophard2_ans.m` | Hard topology ansatz |
-| `threeloophard1_sol.m`, `threeloophard2_sol.m` | Solved coefficients |
-| `resulthard3L.m` | Final 3-loop hard result |
-| `threeloophard_svliste*uv*.m` | Singular value lists at various limits (e0, e1, eInf, u, v, up, vp) |
+| `allsvlist_fourloop.m` | SVHPL basis (list of elements) |
+| `allsvliste0_uptow8.txt` | Series expansion of SVHPL basis at z→0 |
+| `allsvliste1_uptow8.txt` | Series expansion of SVHPL basis at z→1 |
+| `allsvlisteinf_uptow8.txt` | Series expansion of SVHPL basis at z→∞ |
+| `allsvlistmpl_threeloop.m` | Complete MPL basis for 3-loop (82 elements) |
+| `allsvlistmpl_threeloopharde0.txt` | Series expansion of MPL basis at z→0 |
+| `allsvlistmpl_threeloopharde1.txt` | Series expansion of MPL basis at z→1 |
+| `allsvlistmpl_threeloophardeinf.txt` | Series expansion of MPL basis at z→∞ |
+| `svmplevenansatz_threeloop.m` | Even parity ansatz components |
+| `svmploddansatz_threeloop.m` | Odd parity ansatz components |
+| `runs/<label>/threeloophard1_ans.m` | Even-ansatz for hard topology (runs/threeloophard1/) |
+| `runs/<label>/threeloophard2_ans.m` | Even-ansatz for hard topology (runs/threeloophard2/) |
+| `runs/<label>/threeloopoddansatz.m` | Odd-ansatz (runs/threeloopI5/, threeloopI8/, fourloopI6boxing/) |
+| `runs/<label>/result.m` | Solved final result written to run directory |
+| `solve_agent/<label>_sol.m` | Solved coefficient values |
+| `review_agent.wl` | Review facade (gateway to audit agent) |
+| `audit_agent/audit_agent.wl` | Skill 4: stage review checks |
+| `project_skills/ansatz_basis/SKILL.md` | Ansatz construction documentation |
+| `asym/asym_new.wl` | Core asymptotic expansion engine |
+| `asym/boundary_agent/<label>*_asyexp.m` | Boundary condition outputs (SeriesData in Y) |
+| `asym/tmp/targetIntegrals_reduced.m` | Shared target integrals cache (always keep) |
 
 ---
 
-## 7. Workflow Diagram
+## 5. Workflow Diagram
 
 ```
-Input: Integrand (denominator + numerator)
+Skill 0 (master_agent.wl): orchestrates the pipeline
+  |
+  ├─ ConformalWeight.m → determines weightN = n
+  ├─ review_agent.wl   → ReviewGate after each stage (when Audit→True)
+  |
+  ├─ Skill 2 (asym/boundary_agent/boundary_agent.wl)  [SKIPPED if boundary files exist]
+  |    |  - Check asym/boundary_agent/ and optional "InputDir" for existing files
+  |    |  - If found: skip computation and reuse existing files
+  |    |  - If not found: RunAsymExpansionParallel for 6 permutations
+  |    |  - RegionExpand, TensorReduce, IBPReduce
+  |    |  - Series expansion in {u, 0} and {Y, 0, order}
+  |    |  - Caches intermediate results in asym/tmp/ for reuse
+  |    v
+  |  Output: asym/boundary_agent/<label>*_asyexp.m
+  |
+  ├─ Skill 1 (series_agent/series_agent.wl)
+  |    |  - poleOrder = poleType /. {"simple"→1, "double"→2}
+  |    |  - additional = base_transformed / F^(weightN − poleOrder)
+  |    |  - 6 expansions (e0uv, e0uvp, einfuv, einfuvp, e1uv, e1uvp)
+  |    v
+  |  Output: series_agent/<label>_svlist*.m
+  |
+  ├─ Skill 3 (solve_agent/solve_agent.wl)
+  |    |  - Load series expansions + boundary conditions
+  |    |  - setup = (c[i]).ansatz /. solt /. svrep
+  |    |  - Incremental solve across 6 limits
+  |    v
+  |  Output: solve_agent/<label>_sol.m
   |
   v
-Graph Analysis --> Identify loop variables
-  |
-  v
-Step 1: Cut "easy" loops (degree == 4)
-  |
-  v
-Step k: Iteratively cut remaining loops
-  |         - Select 4 conditions
-  |         - Solve linear system
-  |         - Handle square roots
-  |         - Compute Jacobians
-  |         - Branch on cases
-  |
-  v
-Last Step: Express in u, v cross-ratios
-  |
-  v
-Output: Leading singularities (list of rational functions)
-  |
-  v
-Match against Ansatz (I[z,...] + f[...] basis)
-  |
-  v
-Solve for coefficients c[i]
-  |
-  v
-Output: Fitted result (linear combination of basis)
+Output: Solved coefficients c[i]
+
+project_skills/ansatz_basis/ — separate documentation-only skill
+  Teaches an agent how to construct parity-even/odd ansatz bases.
 ```
 
 ---
 
-## 8. Skill Prototype Requirements
+## 6. Run Convention
 
-To automate this workflow, a skill would need:
+Each bootstrap run lives in its own directory under `runs/<label>/`:
 
-1. **Input Parser**: Accept integrand as product of `x[a,b]` propagators
-2. **Graph Analyzer**: Build graph, identify loops, check degrees
-3. **Cut Engine**: Implement `CutOneLoop` logic with case branching
-4. **Jacobian Calculator**: Compute determinant of cut conditions
-5. **Square Root Handler**: `PerfectSquareOut`, `ReOrganize`, discriminant resolution
-6. **Cross-Ratio Converter**: Express final result in `u`, `v`
-7. **Ansatz Manager**: Load basis, construct ansatz, evaluate at singular points
-8. **Solver**: Linear algebra to fit coefficients
-9. **Output Formatter**: Write result in standard notation
+```
+runs/<label>/
+  input.wl    — integrand, leading singularity, ansatz path
+  run.wl      — run script (bottom-up integration of Skills 1-3)
+  result.m    — final result (c[i] × ansatz, expanded)
+```
+
+The run script:
+1. Computes `rootDir = ParentDirectory[ParentDirectory[runDir]]`
+2. Loads ansatz + basis files
+3. Pre-filters basis to ansatz-only indices (4× speedup)
+4. Sequentially calls Skill 2 → Skill 1 → Skill 3
+5. Saves final result and solved coefficients
+
+### Proven run: `threeloophard1`
+- Integrand: `(x[5,6]*x[3,4]−x[3,6]x[4,5]−x[3,5]x[4,6])/12p`
+- LS: `1/(z−zz)²`, n=2, poleType=`"double"`, k=2
+- Ansatz: `threeloophard1_ans.m` (57 elements, even parity)
+- Result: 57-term combination with 26 non-zero coefficients
+
+### Proven run: `threeloophard2`
+- Integrand: `(x[3,6]x[4,5]+x[3,5]x[4,6])/12p`
+- LS: `1/((z−zz)(1−v))`, n=2, poleType=`"simple"`, k=1
+- Ansatz: `threeloophard2_ans.m` (43 elements, even parity)
+- Result: 43-term `I[z,...]` combination (30 non-zero)
+
+### Proven run: `threeloopI5`
+- Integrand: `1/10p`
+- LS: `1/((z−zz)(1−v))`, n=2, poleType=`"simple"`, k=1
+- Ansatz: `threeloopoddansatz.m` (30 elements, odd parity)
+- Result: 30-term combination with 19 non-zero coefficients
+
+### Proven run: `threeloopI8`
+- Integrand: `(x[1,4]x[2,3])/12p`
+- LS: `v/(z−zz)³`, n=2, poleType=`"simple"`, k=1, base=`v/((1+u−v)²−4u)`
+- Ansatz: `threeloopoddansatz.m` (30 elements, odd parity)
+- Result: 30-term `I[z,...]` combination (10 non-zero)
+
+### Proven run: `fourloopI6boxing`
+- Integrand: 4-loop boxing (reduced to 3-loop equivalent)
+- LS: `u·v/(z−zz)`, n=0, poleType=`"simple"`, k=1
+- Ansatz: `threeloopoddansatz.m` (30 elements, odd parity)
+- Result: unsolved (ansatz/boundary mismatch, investigation pending)
+
+### Key fixes baked into the pipeline
+| Fix | Where |
+|-----|-------|
+| `add = transformed / F^(weightN − poleOrder)` with `k=poleOrder` | Skill 1 |
+| `poleOrder` auto-derived from `poleType` ("simple"→1, "double"→2) | Skill 0, Skill 1 |
+| `Variables` + `Exponent` counting (fixes `x[a,b]^n` double-count) | ConformalWeight |
+| Boundary skip: detect existing files in `asym/boundary_agent/` or `"InputDir"` | Skill 2 |
+| `Normal[...]` in `temp` computation (SeriesData vs Normal subtraction) | Skill 3 |
+| Basis pre-filtering to ansatz indices (4–8× speedup) | Run script |
+| MPL-empty handling: set `svlistmple*` to `{}` when `mplIndices={}` | Skill 1 |
+| Empty `temp` skip (don't build equations from vanishing limits) | Skill 3 |
+| `//Normal` on boundary import (SeriesData → polynomial) | Run script |
+| Incremental solve only updates `sys`/`solt` when real equations found | Skill 3 |
+| `cVars` extraction: `Select[allVars, _[_] && StringMatchQ[SymbolName[Head[#]], "c*"] &]` | Skill 3 |
+| Filter `False` from `sys1` (`DeleteCases[#, True \| False] &`) | Skill 3 |
+| Clean `c[i]` export via `Symbol["c"]` | Skill 3 |
+| `asym4LbasisChange.m` required for boundary agent | Boundary agent |
+| `order` forwarding from orchestrator to boundary agent | Skill 0, Skill 2 |
+| 12 SeriesExpansion functions verbatim from `svbwalkthrough.wl` | Skill 1 |
+| 6 `zrep` definitions per limit | Skill 1 |
+| `filepath` shadowing removed from `boundary_agent.wl` | Skill 2 |
+
+---
+
+## 7. Cache Cleanup for Fresh Runs
+
+When restarting a bootstrap run from scratch, all cached outputs of prior runs must be removed:
+
+### Files to remove for a given `<label>`:
+
+| Directory | Pattern | Description |
+|-----------|---------|-------------|
+| `asym/boundary_agent/` | `<label>*_order*_asyexp.m` | Boundary condition output (6 files) |
+| `asym/tmp/` | `tensor_<label>*` | Tensor reduction cache (6 `.m` + 6 subdirectories) |
+| `series_agent/` | `<label>_svlist*` | Series expansion output (12 files: 6 svliste + 6 svlistmple) |
+| `solve_agent/` | `<label>_sol.m` | Solved coefficients (1 file) |
+
+### Files to KEEP:
+
+| Directory | File | Reason |
+|-----------|------|--------|
+| `asym/tmp/` | `targetIntegrals_reduced.m` | Shared across all runs — contains pre-reduced target integrals |
+
+### Example — clean `threeloophard2`:
+
+```bash
+rm asym/boundary_agent/threeloophard2*_order*_asyexp.m
+rm -rf asym/tmp/tensor_threeloophard2*
+rm series_agent/threeloophard2_svlist*
+rm solve_agent/threeloophard2_sol.m
+```
+
+### Verification:
+
+```bash
+find . -name "*<label>*" -not -path "*/.git/*" -not -path "*/runs/<label>/*"
+```
+
+Only the run directory and project-root files (e.g., `<label>_ans.m`) should remain. If any cache files appear, they must be removed before a fresh run.
