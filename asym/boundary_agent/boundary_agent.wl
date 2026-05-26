@@ -26,11 +26,11 @@
 (* =================================================================== *)
 
 ClearAll[RunBoundaryConditions];
-Options[RunBoundaryConditions] = {"InputDir" -> None};
+Options[RunBoundaryConditions] = {"InputDir" -> None, "IBPDir" -> "/Users/windfolgen/Documents/aether/svbwalkthrough_ibp"};
 
-RunBoundaryConditions[rootDir_, label_, order_:3, opts : OptionsPattern[]] := Module[
+RunBoundaryConditions[rootDir_, label_, order_:3, loopPoints_:{5,6,7}, opts : OptionsPattern[]] := Module[
   {asymDir, tmpDir, boundaryDir, expectedFiles, altDir, altFiles,
-   fullIntegrand, results, i, j, perm, permStr},
+   fullIntegrand, results, i, j, perm, permStr, ibpDir, origDir},
 
   asymDir  = FileNameJoin[{rootDir, "asym"}];
 
@@ -86,10 +86,20 @@ RunBoundaryConditions[rootDir_, label_, order_:3, opts : OptionsPattern[]] := Mo
   Get[FileNameJoin[{asymDir, "asym_new.wl"}]];
   ParallelEvaluate[Get[FileNameJoin[{asymDir, "asym_new.wl"}]]];
 
+  (* redirect IBP reduction output to external directory *)
+  ibpDir = OptionValue["IBPDir"];
+  If[!DirectoryQ[ibpDir], CreateDirectory[ibpDir]];
+  origDir = Directory[];
+  SetDirectory[ibpDir];
+  Print["IBP output redirected to: ", ibpDir];
+
   (* run parallel asymptotic expansion for all 6 permutations *)
   (* RunAsymExpansionParallel saves results to asym/check<label><perm>_order<order>_asyexp.m *)
   (* We relocate them to asym/boundary_agent/ and strip the "check" prefix *)
-  RunAsymExpansionParallel[label, $Integrand, $Perms, order, {5, 6, 7}];
+  RunAsymExpansionParallel[label, $Integrand, $Perms, order, loopPoints];
+
+  (* restore original working directory *)
+  SetDirectory[origDir];
 
   (* relocate output files *)
   Table[

@@ -16,7 +16,9 @@ Each skill operates in its own working directory. Output files are written to th
 ```
 .                           (project root)
 ├── master_agent.wl          — Skill 0: orchestrator
+├── review_agent.wl          — Review facade (gateway to audit)
 ├── ConformalWeight.m        — conformal weight calculator (shared)
+├── .aetherignore            — exclude large intermediate files from AI indexing
 ├── series_agent/
 │   └── series_agent.wl      — Skill 1: ansatz series expansion
 ├── asym/
@@ -25,59 +27,99 @@ Each skill operates in its own working directory. Output files are written to th
 │   ├── tmp/                 — cached tensor reduction / IBP results (reusable)
 │   └── boundary_agent/
 │       └── boundary_agent.wl — Skill 2: boundary condition calculation
+├── solve_agent/
+│   └── solve_agent.wl        — Skill 3: coefficient solving
 ├── audit_agent/
-│   └── audit_agent.wl       — Skill 4: post-step audit and benchmark checks
-└── solve_agent/
-    └── solve_agent.wl        — Skill 3: coefficient solving
+│   ├── audit_agent.wl        — Skill 4: pre-flight and post-stage audit checks
+│   └── reports/              — audit report output (.m + .md)
+└── project_skills/
+    └── ansatz_basis/          — Documentation for ansatz construction
+        ├── SKILL.md
+        └── references/
+            ├── benchmark_files.md
+            ├── construction_workflow.md
+            └── parity_rules.md
 ```
 
 ### 0.2 Orchestrator (`master_agent.wl`)
-`RunSVBPipeline[rootDir, label, poleType, lsAddPole]`
+`RunSVBPipeline[rootDir, label, poleType, lsAddPole, order_:3, yOrder_:4, opts]`
+
+- `poleOrder` is automatically derived from `poleType`: `"simple" → 1`, `"double" → 2`
 
 Set these **globals** before calling:
 - `$Integrand` — the integrand expression
-- `$Perms` — `{{1,2,3,4},{1,3,2,4},{2,1,3,4},{2,3,1,4},{3,1,2,4},{3,2,1,4}}`
+- `$Perms` — solving order: `{{1,2,3,4},{2,1,3,4},{1,3,2,4},{2,3,1,4},{3,1,2,4},{3,2,1,4}}`
 - `ansatzExpr`, `basisSV`, `basisMPL`, `targetData` — for Skill 3
 
-Each integrand has **exactly one** leading singularity (one primary pole + one additional pole).
-
-Optional audit settings:
-```mathematica
-"Audit" -> True                 (* run audit checks after each stage *)
-"AuditReport" -> True           (* write audit_agent/reports/*.md and *.m *)
-"StopOnAuditFailure" -> True    (* stop immediately on FAIL *)
-"AuditResiduals" -> True        (* solve-stage residual substitution check *)
-```
+**Options:**
+- `"Audit" -> True` (default) — run `ReviewGate` after each stage
+- `"AuditReportDir" -> path` — where to write audit reports
+- `"StopOnAuditFailure" -> False` — halt pipeline on FAIL
 
 1. Loads `ConformalWeight.m` → computes `weightN` from `$Integrand`.
-2. If auditing is enabled, runs **preflight audit** on source contracts and input consistency.
-3. Calls **Skill 2** (`RunBoundaryConditions`) — uses `$Integrand` and `$Perms` as globals, matching `run_I3Lhard_parallel.wl`; then audits boundary files and freshness.
-4. Calls **Skill 1** (`RunSeriesExpansion`) with `additional = base_transformed / F^(n−1)`; then audits the 12 series files, basis lengths, and freshness.
-5. Calls **Skill 3** (`RunCoefficientSolving`) — uses `ansatzExpr`, `basisSV`, `basisMPL`, `targetData` as globals; then audits coefficient coverage and optionally residuals.
-6. Writes a combined pipeline audit report if `"AuditReport" -> True`.
-7. All file paths are resolved relative to `$RootDir`.
+2. Runs **pre-flight check** (`ReviewGate[rootDir, label, "preflight"]`) — verifies all required source files exist.
+3. Runs **pre-boundary check** (`ReviewGate[rootDir, label, "preboundary"]`) — verifies LiteRed2 bases, asym engine, Gmaterrep files.
+4. Calls **Skill 2** → **Skill 1** → **Skill 3** in sequence, with pre-checks before each:
+   - Before Skill 1: **pre-series check** (`"preseries"`) — verifies SVHPL .txt and MPL .m/.txt file format and parseability.
+   - Before Skill 3: **pre-solve check** (`"presolve"`) — verifies boundary files and series expansion files exist.
+5. After each skill, runs a **post-stage audit** (`ReviewGate[rootDir, label, "boundary"|"series"|"solve"]`).
+6. Records `DateObject[]` timings for each stage.
 
 ### 0.3 File Dependencies and Loading
 All three skills share a single `label` (one integrand, one leading singularity). Each agent accesses files relative to `$RootDir`:
 
 | Agent | Reads from | Writes to |
 |-------|-----------|-----------|
-| `series_agent.wl` | `root/allsvliste*_uptow8.txt`, `root/allsvlistmpl_threeloopharde*.txt`, `root/ConformalWeight.m` | `root/series_agent/<label>_svlist*.m` (SVHPL), `root/series_agent/<label>_svlistmpl*.m` (MPL) |
-| `boundary_agent.wl` | `root/asym/asym_new.wl`, `root/asym/Bases/`, `root/asym/tmp/` (reused across runs) | `root/asym/boundary_agent/<label>*_asyexp.m` |
+| `series_agent.wl` | `root/allsvliste*_uptow8.txt`, `root/allsvlistmpl_*e*.{m,txt}` (auto-detected via `mplBasisFile`), `root/ConformalWeight.m` | `root/series_agent/<label>_svlist*.m` (SVHPL), `root/series_agent/<label>_svlistmpl*.m` (MPL) |
+| `boundary_agent.wl` | `root/asym/asym_new.wl`, `root/asym/Bases/`, `root/asym/tmp/` (reused across runs), optionally `root/runs/<label>/boundaries/` (via `"InputDir"`) | `root/asym/boundary_agent/<label>*_asyexp.m`; LiteRed2 IBP .mx caches to `"IBPDir"` (external) |
 | `solve_agent.wl` | `root/series_agent/<label>_svlist*.m`, `root/asym/boundary_agent/<label>*_asyexp.m`, ansatz and basis `.m` files | `root/solve_agent/<label>_sol.m` |
-| `audit_agent.wl` | Agent source files, boundary/series/solve outputs, optional benchmark targets | `root/audit_agent/reports/<label>_audit_report.{m,md}` |
+| `review_agent.wl` | `root/audit_agent/audit_agent.wl` (when loaded) | `root/audit_agent/reports/` (when writing) |
+
+### 0.4 Review Gate (`review_agent.wl`)
+Thin facade providing `LoadReviewAgent[rootDir]` and `ReviewGate[rootDir, label, stage]`. When the full audit agent is loaded, `ReviewGate` delegates to `RunReviewGate`. If the audit agent cannot be loaded, the gate returns `"PASS"` (no-op) to avoid blocking the pipeline.
+
+**Stages recognized** by `RunReviewGate`:
+
+| Stage | Checker | When | Purpose |
+|-------|---------|------|---------|
+| `"preflight"` | `AuditPreflight` | Before any computation | Verify required source files (ConformalWeight.m, SVHPL .txt, MPL .txt) exist |
+| `"preboundary"` | `AuditPreBoundary` | Before Skill 2 | Verify LiteRed2 bases, asym_new.wl, Gmaterrep files, tmp dir |
+| `"boundary"` | `AuditBoundaryStage` | After Skill 2 | Check 6 boundary .m files exist and import correctly |
+| `"preseries"` | `AuditPreSeries` | Before Skill 1 | Verify SVHPL .txt parse correctly; verify MPL expansion files (.m or .txt) load as valid lists; record format convention detected |
+| `"series"` | `AuditSeriesStage` | After Skill 1 | Check 12 series expansion .m files exist and are valid lists |
+| `"presolve"` | `AuditPreSolve` | Before Skill 3 | Verify boundary files and series expansion files all exist |
+| `"solve"` | `AuditSolveStage` | After Skill 3 | Check solution file exists and contains valid rules |
+| `"pipeline"` | `AuditPipeline` | End of run | Combined report of all stages |
+
+**Abort behavior:** On any FAIL, the pipeline prints `[ABORT] <stage> FAIL` with details and returns `$Failed`.
+
+### 0.5 Runtime Safety
+**Missing files:** if any required file is not found at runtime, immediately stop all calculations, kill all stale Mathematica processes (`pkill -9 -f -i "Math\|Wolfram\|mathkernel"`), verify with `ps aux | grep -i wolfram | grep -v grep | wc -l` that the count is 0, and notify the user. Do not create or guess missing files — ask the user to provide them.
+
+**Large intermediate data:** IBP reduction tables from LiteRed2 should be directed to an external directory (`"IBPDir"` option) to keep the workspace lean. IBP caches in `asym/tmp/` and the external `"IBPDir"` are reusable across runs — do not delete `targetIntegrals_reduced.m`.
 
 ---
 
 ## 1. Skill 1: Ansatz Series Expansion
 
 ### 1.1 Input
-Each `.txt` file contains the series expansion of a corresponding basis `.m` file:
+Each expansion file contains the series expansion of a corresponding basis `.m` file:
 
 | Basis file (list of elements) | Expansion files (series at singular points) |
 |------|------|
 | `allsvlist_fourloop.m` (SVHPL basis) | `allsvliste0_uptow8.txt` (z→0), `allsvliste1_uptow8.txt` (z→1), `allsvlisteinf_uptow8.txt` (z→∞) |
-| `allsvlistmpl_threeloop.m` (MPL basis) | `allsvlistmpl_threeloopharde0.txt` (z→0), `allsvlistmpl_threeloopharde1.txt` (z→1), `allsvlistmpl_threeloophardeinf.txt` (z→∞) |
+| `allsvlistmpl_*.m` (MPL basis, auto-detected) | `allsvlistmpl_*e0.{m,txt}` (z→0), `allsvlistmpl_*e1.{m,txt}` (z→1), `allsvlistmpl_*einf.{m,txt}` (z→∞) |
+
+**MPL expansion file format convention:** Two formats are supported, detected at load time:
+
+| Extension | Format | Loading method | Example |
+|-----------|--------|---------------|---------|
+| `.m` | Mathematica expression list — no parsing needed | `Import[path]` → directly usable as list | `{I[z,0,1,0] + ..., ...}` |
+| `.txt` | String-wrapped list — needs parsing | `Import[path, "String"]` → `StringTrim` → `ToExpression` → list | `"[I[z,0,1,0] + ..., ...]"` |
+
+The loader (`series_agent.wl`) tries `.txt` first, falls back to `.m`. The pre-series audit (`AuditPreSeries`) records which format was detected and verifies each file loads correctly.
+
+SVHPL expansion files are always `.txt` format (string-wrapped lists).
 
 **Reuse:** If the leading singularity (and thus the `additional` prefactor) is unchanged from a previous run, the series expansions do not need to be recomputed — load the existing `.m` files from `series_agent/`.
 
@@ -116,18 +158,19 @@ Decompose the leading singularity into the **primary pole** and the **additional
 ```
 LS = [primary pole] · [additional pole]
 ```
-- **Primary pole** (`1/(z−zz)` or `1/(z−zz)²`): handled internally by the `SeriesExpansion*` function — do **not** include in `base`. Under permutation it contributes a factor of `1/F` that the function already absorbs.
+- **Primary pole** (`1/(z−zz)` or `1/(z−zz)²`): handled internally by the `SeriesExpansion*` function — do **not** include in `base`. Under permutation the primary pole absorbs **k** powers of `F` where `k` is the pole order (`k=1` for simple, `k=2` for double).
 - **Additional pole** (e.g., `1/(1−u)`, `1/(1−v)`, etc.): this is `base`, the quantity you transform and the only thing entering `base_transformed`.
 - **Normalization** `x[1,3]^n x[2,4]^n`: under permutation transforms to `F^n·x[1,3]^n x[2,4]^n`, contributing `F^n` to the measure denominator that must be removed from the prefactor.
 
 **Net effect** for any non-identity permutation:
 ```
-additional = base_transformed · (1/F^n) / (1/F)  =  base_transformed / F^(n−1)
+additional = base_transformed · (1/F^n) / (1/F^k)  =  base_transformed / F^(n−k)
 ```
-The factor `1/F` from the primary pole cancels one power of `F` from the normalization, leaving `n−1` powers in the divisor.
+The factor `1/F^k` from the primary pole cancels k powers of `F` from the normalization, leaving `n−k` powers in the divisor.
 
-- For `n = 1` (weight −1): `additional = base_transformed` (no division).
-- For `n = 2` (weight −2): `additional = base_transformed / F`.
+- For `k=1` (simple pole, e.g. `1/(z−zz)`):  `additional = base_transformed / F^(n−1)`.
+- For `k=2` (double pole, e.g. `1/(z−zz)²`): `additional = base_transformed / F^(n−2)`.
+- For `n=k`: `additional = base_transformed` (no division).
 
 **Normalization factor F for each permutation** (in straight z=0 coordinates):
 The permutation transforms `x[1,3]x[2,4] → x[σ(1),σ(3)] x[σ(2),σ(4)]`. The ratio F = [transformed] / [original] is:
@@ -158,7 +201,7 @@ Base = `1/(1−u)` (additional pole only). All non-identity limits divide by `F^
 **Note:** This is the solving order. Rows 3-6 (infinity and z=1 limits) all divide by `F^(n−1)` because all involve non-identity permutations. There is no "straight vs permuted" distinction for the divisor — only the identity permutation uses `F^0=1`.
 
 **Consistency check — integrand vs. ansatz:**
-The series expansion of the **ansatz** (Skill 1) must match the series expansion of the **integrand** (Skill 2). Both derive their `additional` prefactor from the same logic: compute conformal weight → `n`, decompose LS into primary pole + additional pole → `base`, transform `base` under each permutation → `base_transformed`, then apply `additional = base_transformed / F^(n−1)` for all non-identity limits. The same leading singularity with a different normalization power `n` changes the prefactor by `1/F^(n−1)` on every non-identity limit.
+The series expansion of the **ansatz** (Skill 1) must match the series expansion of the **integrand** (Skill 2). Both derive their `additional` prefactor from the same logic: compute conformal weight → `n`, decompose LS into primary pole (order `k`) + additional pole → `base`, transform `base` under each permutation → `base_transformed`, then apply `additional = base_transformed / F^(n−k)` for all non-identity limits. `poleOrder = k` is derived from `poleType`: `"simple" → 1`, `"double" → 2`.
 
 **Mathematica implementation** (see `ConformalWeight.m`):
 ```mathematica
@@ -220,6 +263,9 @@ Table[{p, ConformalWeight[integrand, p]}, {p, 1, 7}]
 - `LS = 1/((z−zz)(1−u))` → primary pole = `1/(z−zz)`, additional pole = `1/(1−u)` → base = `1/(1−u)`
 - `LS = 1/((z−zz)(1−v))` → primary pole = `1/(z−zz)`, additional pole = `1/(1−v)` → base = `1/(1−v)`
 - Double pole: `LS = 1/(z−zz)²` → primary pole = `1/(z−zz)²` (use `SeriesExpansion20*`), additional pole = `1` → base = `1`
+- **Triple pole**: `LS = v/(z−zz)³` → primary pole = `1/(z−zz)` (use `SeriesExpansion0*`), additional pole = `v/(z−zz)²` → base = `v/((1+u−v)² − 4u)`
+  - Note: `(1+u−v)² − 4u = (u+v−1)² − 4uv` (same denominator)
+  - Proven run: `threeloopI8` (odd ansatz, 30 coefficients → 10 non-zero)
 
 ### 1.4 Permutation Transformation Rules
 The six permutations of external legs correspond to the anharmonic group acting on the cross-ratio `z`. The mapping rules are:
@@ -261,9 +307,22 @@ Six `.m` files per singular point (one `svlist` and one `svlistmpl` per coordina
 | z→1 | `<label>_svliste1uv.m`, `<label>_svlistmple1uv.m` | `<label>_svliste1uvp.m`, `<label>_svlistmple1uvp.m` |
 | z→∞ | `<label>_svlisteinfuv.m`, `<label>_svlistmpleinfuv.m` | `<label>_svlisteinfuvp.m`, `<label>_svlistmpleinfuvp.m` |
 
-**Example** (notebook labels): for the two leading singularities of the hard topology:
-- `1/(z−zz)²` → label `threeloophard1` → files: `threeloophard1_svliste0uv.m`, etc.
-- `1/((z−zz)(1−u))` → label `threeloophard2` → files: `threeloophard2_svliste0uv.m`, etc.
+### 1.7 Interactive Overwrite Guard
+
+Before starting the 6 series expansions, `RunSeriesExpansion` checks whether any of the 12 output `.m` files already exist under `series_agent/<label>_*`. If any are found:
+
+```
+[Skill 1] WARNING: 12 existing series expansion files will be overwritten:
+  - .../series_agent/threeloophard2_svliste0uv.m
+  - .../series_agent/threeloophard2_svlistmple0uv.m
+  - ...
+[Skill 1] Proceed and overwrite? (y/n)
+```
+
+- `y` / `Y` / `yes` / `Yes` — replaces all existing files and proceeds
+- Anything else — prints `ABORTED by user — existing files preserved.` and returns `$Failed`
+
+This prevents accidental corruption of cached series expansions when re-running with different parameters.
 
 ---
 
@@ -272,6 +331,8 @@ Six `.m` files per singular point (one `svlist` and one `svlistmpl` per coordina
 ### 2.1 Input
 - An integrand as a rational function with denominator being a product of propagators `x[a,b]`.
 - A permutation of external legs (e.g., `{1,2,3,4}`, `{1,3,2,4}`, `{2,1,3,4}`, `{2,3,1,4}`, `{3,1,2,4}`, `{3,2,1,4}`).
+
+**Skip behavior:** Before any computation, `RunBoundaryConditions` checks whether the 6 expected output files already exist. If they are found in `asym/boundary_agent/` (or the optional `"InputDir"`, e.g., `runs/<label>/boundaries/`), the entire IBP/tensor-reduction/series steps are skipped and the existing files are reused. Files found in `"InputDir"` are automatically copied to `asym/boundary_agent/` for downstream access.
 
 ### 2.2 Process (exact syntax from `run_I3Lhard_parallel.wl`)
 The agent strictly follows the template. Only the integrand expression varies per problem.
@@ -294,6 +355,16 @@ The agent strictly follows the template. Only the integrand expression varies pe
 6. **Run parallel expansion**: `RunAsymExpansionParallel[label, $Integrand, $Perms, 3, {5, 6, 7}]`.
 
 Temporary results in `asym/tmp/` (e.g., `targetIntegrals_reduced.m`) are reused across bootstrap problems.
+
+### 2.4 IBP Output Redirection
+`RunBoundaryConditions` supports a `"IBPDir"` option (default: `"/Users/<user>/Documents/aether/svbwalkthrough_ibp"`) to redirect LiteRed2 IBP reduction tables out of the workspace. Before `RunAsymExpansionParallel` runs, the working directory is temporarily changed to `"IBPDir"` so that LiteRed2's `IBPReduce` writes its `.mx` caches there instead of creating `IBPReduction*/` directories in the project root.
+
+```mathematica
+RunBoundaryConditions[rootDir, label, order, loopPoints,
+  "IBPDir" -> "/Users/me/Documents/aether/svbwalkthrough_ibp"]
+```
+
+The external directory is gitignored and aetherignored, while `asym/tmp/` (tensor reduction and target integral caches) remains in-workspace.
 
 ### 2.3 Output
 `RunAsymExpansionParallel` saves 6 files to `asym/boundary_agent/`:
@@ -350,10 +421,10 @@ The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only fil
    ```
    After each limit is solved, `solt` carries the known coefficients forward so that subsequent limits work with the *remaining* unknowns.
 
-4. **Compute temp** (difference with target, replace f→Zeta):
+4. **Compute temp** (difference with target, replace f→Zeta). Uses `Normal[...]` to avoid SeriesData/polynomial mixing:
    ```mathematica
    temp = MonomialList[
-     (setup - targetData[[i]]) /. {
+     Normal[setup - targetData[[i]]] /. {
        f[3, 3] -> Zeta[3]^2 / 2,
        f[3, 5] -> Zeta[3] Zeta[5] - f[5, 3],
        f[a_] :> Zeta[a]
@@ -365,13 +436,15 @@ The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only fil
 
 5. **Extract coefficients** (`temp1`, **FIXED** — lifted verbatim from notebook, never changes): replace `Log[u]→1`, handle negative powers of `Y` and `u` via `invY`/`invu`, then `MonomialList` in `{u, Y, invY, invu}`, restore `Y→1, invY→1, invu→1`.
 
-6. **Build equations** (`sys1`, **FIXED** — lifted verbatim from notebook, never changes): replace `Zeta[n]→zn`, `Pi→pi`, take `MonomialList` in `{z3, z5, z7, f[5,3], pi}`, restore `zn→1`, then `Thread@Equal[..., 0]`, flatten, delete `True` and `0`.
+6. **Build equations** (`sys1`, **FIXED** — lifted verbatim from notebook, never changes): replace `Zeta[n]→zn`, `Pi→pi`, take `MonomialList` in `{z3, z5, z7, f[5,3], pi}`, restore `zn→1`, then `Thread@Equal[..., 0]`, flatten, delete `True`, `False`, and `0`.
 
-7. **Incremental join and solve** (exact notebook syntax):
+7. **Incremental join and solve**:
    ```mathematica
-   syst = Join[sys, sys1];
-   solt = Solve[syst, Variables[syst[[All, 1]]]][[1]];
+   cVars = Select[Variables[sys[[All, 1]]],
+     MatchQ[#, _[_]] && StringMatchQ[SymbolName[Head[#]], "c*"] &];
+   solt = Solve[sys, cVars][[1]];
    ```
+   Only `c[i]`-like symbols are passed to `Solve`; `I[z,...]`, `u`, `Y`, `Log[u]` are excluded.
 
 8. **Verify**: substitute `solt` back into `setup` for each limit and check `temp === 0`.
 
@@ -380,160 +453,250 @@ The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only fil
 
 ---
 
-## 4. Skill 4: Audit Agent
-
-`audit_agent/audit_agent.wl` is a read-only verification layer. It should be called after each stage, or once at the end of a pipeline run. It checks source-level contracts, output existence, file freshness, permutation order, expression shape, basis lengths, coefficient coverage, and optional residual matching.
-
-When `"Audit" -> True`, `master_agent.wl` calls this audit layer automatically after preflight, boundary, series, and solve. A stage with `FAIL` stops the pipeline by default; `WARN` is reported but does not stop execution.
-
-Current review-gate entrypoints:
-
-```mathematica
-RunReviewGate[root, label, "preflight", ...]
-RunReviewGate[root, label, "boundary", ...]
-RunReviewGate[root, label, "series", ...]
-RunReviewGate[root, label, "solve", ...]
-RunReviewGate[root, label, "pipeline", ...]
-AuditAnsatzBenchmark[root, candidate, "Parity" -> "even" (* or "odd" *)]
-AuditHardBenchmarkWorkspace[root]
-```
-
-Non-interactive workspace runner:
-
-```bash
-/Applications/Wolfram.app/Contents/MacOS/wolframscript -file audit_agent/run_hard_benchmark_review.wl
-```
-
-### 4.1 Main functions
-
-```mathematica
-Get[FileNameJoin[{root, "audit_agent", "audit_agent.wl"}]];
-
-AuditSourceContracts[root]
-AuditPipelineInput[root, integrand, poleType, lsBase, ansatzExpr, basisSV, basisMPL]
-AuditBoundaryStep[root, label, order]
-AuditSeriesStep[root, label, basisSV, basisMPL, "LSBase" -> lsBase, "WeightN" -> n]
-AuditSolveStep[root, label, ansatzExpr, basisSV, basisMPL, "TargetData" -> targetData]
-AuditFullPipeline[root, label, integrand, poleType, lsBase, ansatzExpr, basisSV, basisMPL]
-```
-
-Each function returns an association:
-
-```mathematica
-<|
-  "Status" -> "PASS" | "WARN" | "FAIL",
-  "Summary" -> <|"PASS" -> ..., "WARN" -> ..., "FAIL" -> ...|>,
-  "Checks" -> {...}
-|>
-```
-
-Reports can be written with:
-
-```mathematica
-SVBAuditWriteReport[root, label, report]
-```
-
-### 4.2 Checks performed
-
-| Stage | Checks |
-|-------|--------|
-| Source contracts | Required source files exist; master calls boundary, series, solve in order; series has all 12 expansion functions; boundary uses `RunAsymExpansionParallel`; solve uses the accumulated `sys` equations. |
-| Input | Root and required files exist; `poleType` is `simple` or `double`; `lsBase` contains only cross-ratio variables; external conformal weights are consistent; ansatz and bases are non-empty lists. |
-| Boundary | Six expected permutation files are present; permutation order is compatible with solve order; files import cleanly; each result is either `0` or `SeriesData` in `Y`; optional freshness check verifies files were produced after a given run start time. |
-| Series | Twelve expected files are present; SV and MPL series lengths match `basisSV` and `basisMPL`; expressions import cleanly; z-like variables are not left over; optional prefactor table is recorded. |
-| Solve | Solution imports as `{c[i] -> value, ...}`; no duplicate coefficients; every ansatz coefficient is solved; values contain no failed or infinite expressions; optional residual check substitutes the solution back into all six limits. |
-
-### 4.3 Benchmark usage
-
-For existing hard benchmark files:
-
-```mathematica
-root = "/path/to/workspace";
-Get[FileNameJoin[{root, "audit_agent", "audit_agent.wl"}]];
-basisSV = Import[FileNameJoin[{root, "allsvlist_fourloop.m"}]];
-basisMPL = Import[FileNameJoin[{root, "allsvlistmpl_threeloop.m"}]];
-ans1 = Import[FileNameJoin[{root, "threeloophard1_ans.m"}]];
-ans2 = Import[FileNameJoin[{root, "threeloophard2_ans.m"}]];
-
-AuditBoundaryStep[root, "I3Lhard", 3]
-AuditBoundaryStep[root, "I3Lhardr", 3]
-AuditBoundaryStep[root, "I3Lhardt", 3]
-
-AuditSeriesStep[root, "threeloophard1", basisSV, basisMPL]
-AuditSeriesStep[root, "threeloophard2", basisSV, basisMPL]
-
-AuditSolveStep[root, "threeloophard1", ans1, basisSV, basisMPL, "VerifyResiduals" -> False]
-AuditSolveStep[root, "threeloophard2", ans2, basisSV, basisMPL, "VerifyResiduals" -> False]
-```
-
-The audit agent supports the legacy benchmark names `threeloophard_svliste0uv.m` and `threeloophard_svliste0uv_2.m` when called with labels `threeloophard1` and `threeloophard2`.
-
----
-
-## 5. Key Data Files
+## 4. Key Data Files
 
 | File | Purpose |
 |------|---------|
 | `master_agent.wl` | Skill 0 orchestrator |
-| `review_agent.wl` | Thin public wrapper for the review gate |
 | `series_agent/series_agent.wl` | Skill 1: ansatz series expansion |
 | `asym/boundary_agent/boundary_agent.wl` | Skill 2: boundary condition calculation |
 | `solve_agent/solve_agent.wl` | Skill 3: coefficient solving |
-| `audit_agent/audit_agent.wl` | Skill 4: post-step auditing and report generation |
-| `audit_agent/run_hard_benchmark_review.wl` | One-shot runner for the hard benchmark review suite |
-| `project_skills/ansatz_basis/SKILL.md` | Workspace-local skill for parity-even/odd ansatz basis construction |
 | `ConformalWeight.m` | Conformal weight calculator (shared) |
 | `svbwalkthrough.nb` | Main notebook with all algorithms |
 | `allsvlist_fourloop.m` | SVHPL basis (list of elements) |
 | `allsvliste0_uptow8.txt` | Series expansion of SVHPL basis at z→0 |
 | `allsvliste1_uptow8.txt` | Series expansion of SVHPL basis at z→1 |
 | `allsvlisteinf_uptow8.txt` | Series expansion of SVHPL basis at z→∞ |
-| `allsvlistmpl_threeloop.m` | Complete MPL basis for 3-loop (82 elements) |
-| `allsvlistmpl_threeloopharde0.txt` | Series expansion of MPL basis at z→0 |
-| `allsvlistmpl_threeloopharde1.txt` | Series expansion of MPL basis at z→1 |
-| `allsvlistmpl_threeloophardeinf.txt` | Series expansion of MPL basis at z→∞ |
+| `allsvlistmpl_*.m` files | Auto-detected: scanned for best ansatz element coverage |
+| SVHPL basis | `allsvlist_fourloop.m` (fixed, all runs share it) |
+
+### MPL basis auto-detection
+
+The pipeline scans `allsvlistmpl_*.m` files in the project root. For each candidate, it counts how many ansatz `_I` and `_f` elements it contains. The basis with the best coverage is selected as `mplBasisFile`.
+
+The corresponding expansion files must follow the naming convention and can be in either format:
+```
+allsvlistmpl_<name>.m          ← basis file
+allsvlistmpl_<name>e0.{m,txt}  ← expansion at z→0  (.m = expression, .txt = string)
+allsvlistmpl_<name>e1.{m,txt}  ← expansion at z→1
+allsvlistmpl_<name>einf.{m,txt} ← expansion at z→∞
+```
+
+For a new problem type, drop in `<name>.m` and `<name>e{0,1,inf}.{m,txt}` — no code changes needed.
+
+### Workspace exclusion files
+
+| File | Purpose |
+|------|---------|
+| `.aetherignore` | Exclude large intermediate data (`IBPReduction*/`, `asym/tmp/`, `asym/Bases/`, `asym/logs/`, `*.mx`) from AI indexing |
+| `.gitignore` | Exclude same patterns from git tracking |
+| `allsvlistmpl_threeloope0.txt` | Series expansion of MPL basis at z→0 |
+| `allsvlistmpl_threeloope1.txt` | Series expansion of MPL basis at z→1 |
+| `allsvlistmpl_threeloopeinf.txt` | Series expansion of MPL basis at z→∞ |
 | `svmplevenansatz_threeloop.m` | Even parity ansatz components |
 | `svmploddansatz_threeloop.m` | Odd parity ansatz components |
-| `threeloophard1_ans.m`, `threeloophard2_ans.m` | Hard topology ansatz with symbolic `c[i]` |
-| `threeloophard1_sol.m`, `threeloophard2_sol.m` | Solved coefficient values |
-| `resulthard3L.m` | Final 3-loop hard result |
+| `runs/<label>/threeloophard1_ans.m` | Even-ansatz for hard topology (runs/threeloophard1/) |
+| `runs/<label>/threeloophard2_ans.m` | Even-ansatz for hard topology (runs/threeloophard2/) |
+| `runs/<label>/threeloopoddansatz.m` | Odd-ansatz (runs/threeloopI5/, threeloopI8/, fourloopI6boxing/) |
+| `runs/<label>/result.m` | Solved final result written to run directory |
+| `solve_agent/<label>_sol.m` | Solved coefficient values |
+| `review_agent.wl` | Review facade (gateway to audit agent) |
+| `audit_agent/audit_agent.wl` | Skill 4: stage review checks |
+| `project_skills/ansatz_basis/SKILL.md` | Ansatz construction documentation |
 | `asym/asym_new.wl` | Core asymptotic expansion engine |
-| `checkI3Lhard*_order3_asyexp.m` | Boundary condition outputs (SeriesData in Y) |
+| `asym/boundary_agent/<label>*_asyexp.m` | Boundary condition outputs (SeriesData in Y) |
+| `asym/tmp/targetIntegrals_reduced.m` | Shared target integrals cache (always keep) |
 
 ---
 
-## 6. Workflow Diagram
+## 5. Workflow Diagram
 
 ```
-Skill 0 (master_agent.wl): orchestrates the pipeline (one integrand, one LS)
-
-Input: Integrand + leading singularity + Ansatz (basis with symbolic c[i])
+Skill 0 (master_agent.wl): orchestrates the pipeline
   |
   ├─ ConformalWeight.m → determines weightN = n
+  ├─ review_agent.wl   → ReviewGate at 8 checkpoints (4 pre, 4 post)
   |
-  ├─ Skill 2 (asym/boundary_agent/boundary_agent.wl)
-  |    |  - RunAsymExpansion for 6 permutations
+  ├─ [PRE-FLIGHT]    ReviewGate[rootDir, label, "preflight"]
+  |    Checks: ConformalWeight.m, SVHPL .txt, MPL source files exist
+  |
+  ├─ [PRE-BOUNDARY]  ReviewGate[rootDir, label, "preboundary"]
+  |    Checks: LiteRed2 bases, asym_new.wl, Gmaterrep files, tmp dir
+  |
+  ├─ Skill 2 (asym/boundary_agent/boundary_agent.wl)  [SKIPPED if boundary files exist]
+  |    |  - Check asym/boundary_agent/ and optional "InputDir" for existing files
+  |    |  - If found: skip computation and reuse existing files
+  |    |  - If not found: redirect CWD to "IBPDir" for LiteRed2 IBP output
+  |    |  - RunAsymExpansionParallel for 6 permutations
   |    |  - RegionExpand, TensorReduce, IBPReduce
   |    |  - Series expansion in {u, 0} and {Y, 0, order}
   |    |  - Caches intermediate results in asym/tmp/ for reuse
+  |    |  - Restore CWD
   |    v
   |  Output: asym/boundary_agent/<label>*_asyexp.m
   |
+  ├─ [BOUNDARY]     ReviewGate[rootDir, label, "boundary"]
+  |
+  ├─ [PRE-SERIES]   ReviewGate[rootDir, label, "preseries"]
+  |    Checks: SVHPL .txt parse OK; MPL .m files load as lists (no parsing)
+  |             or MPL .txt files parse as lists (string-wrapped); records format
+  |
   ├─ Skill 1 (series_agent/series_agent.wl)
-  |    |  - Load pre-computed .txt files
-  |    |  - Compute additional = base_transformed / F^(n-1)
-  |    |  - 6 expansions (e0, e1, einf × straight/permuted)
+  |    |  - poleOrder = poleType /. {"simple"→1, "double"→2}
+  |    |  - additional = base_transformed / F^(weightN − poleOrder)
+  |    |  - 6 expansions (e0uv, e0uvp, einfuv, einfuvp, e1uv, e1uvp)
+  |    |  - MPL loader: .m → expression (no parse), .txt → string → parse
   |    v
   |  Output: series_agent/<label>_svlist*.m
   |
+  ├─ [SERIES]       ReviewGate[rootDir, label, "series"]
+  |
+  ├─ [PRE-SOLVE]    ReviewGate[rootDir, label, "presolve"]
+  |    Checks: boundary files exist (6), series expansion files exist (12)
+  |
   ├─ Skill 3 (solve_agent/solve_agent.wl)
   |    |  - Load series expansions + boundary conditions
-  |    |  - setup = (c[i]).ansatz /. svrep
-  |    |  - Build linear system, solve incrementally
-  |    |  - Verify consistency
+  |    |  - setup = (c[i]).ansatz /. solt /. svrep
+  |    |  - Incremental solve across 6 limits
   |    v
   |  Output: solve_agent/<label>_sol.m
   |
+  ├─ [SOLVE]        ReviewGate[rootDir, label, "solve"]
+  |
   v
 Output: Solved coefficients c[i]
+
+project_skills/ansatz_basis/ — separate documentation-only skill
+  Teaches an agent how to construct parity-even/odd ansatz bases.
 ```
+
+---
+
+## 6. Run Convention
+
+Each bootstrap run lives in its own directory under `runs/<label>/`:
+
+```
+runs/<label>/
+  input.wl    — integrand, leading singularity, ansatz path
+  run.wl      — run script (bottom-up integration of Skills 1-3)
+  result.m    — final result (c[i] × ansatz, expanded)
+```
+
+The run script:
+1. Computes `rootDir = ParentDirectory[ParentDirectory[runDir]]`
+2. Loads ansatz + basis files
+3. Pre-filters basis to ansatz-only indices (4× speedup)
+4. Loads `review_agent.wl` and `audit_agent.wl`
+5. Runs 4 pre-checks (preflight, preboundary, preseries, presolve) before each stage, aborting on FAIL
+6. Sequentially calls Skill 2 → Skill 1 → Skill 3, each followed by a post-stage audit
+7. Saves final result and solved coefficients
+
+### Proven run: `threeloophard1`
+- Integrand: `(x[5,6]*x[3,4]−x[3,6]x[4,5]−x[3,5]x[4,6])/12p`
+- LS: `1/(z−zz)²`, n=2, poleType=`"double"`, k=2
+- Ansatz: `threeloophard1_ans.m` (57 elements, even parity)
+- Result: 57-term combination with 26 non-zero coefficients
+
+### Proven run: `threeloophard2`
+- Integrand: `(x[3,6]x[4,5]+x[3,5]x[4,6])/12p`
+- LS: `1/((z−zz)(1−v))`, n=2, poleType=`"simple"`, k=1
+- Ansatz: `threeloophard2_ans.m` (43 elements, even parity)
+- Result: 43-term `I[z,...]` combination (30 non-zero)
+
+### Proven run: `threeloopI5`
+- Integrand: `1/10p`
+- LS: `1/((z−zz)(1−v))`, n=2, poleType=`"simple"`, k=1
+- Ansatz: `threeloopoddansatz.m` (30 elements, odd parity)
+- Result: 30-term combination with 19 non-zero coefficients
+
+### Proven run: `threeloopI8`
+- Integrand: `(x[1,4]x[2,3])/12p`
+- LS: `v/(z−zz)³`, n=2, poleType=`"simple"`, k=1, base=`v/((1+u−v)²−4u)`
+- Ansatz: `threeloopoddansatz.m` (30 elements, odd parity)
+- Result: 30-term `I[z,...]` combination (10 non-zero)
+
+### Proven run: `fourloopI6boxing`
+- Integrand: 4-loop boxing (reduced to 3-loop equivalent)
+- LS: `u·v/(z−zz)`, n=0, poleType=`"simple"`, k=1
+- Ansatz: `threeloopoddansatz.m` (30 elements, odd parity)
+- Result: unsolved (ansatz/boundary mismatch, investigation pending)
+
+### Proven run: `fourloopI41`
+- Integrand: `(x[4,7]x[5,6] − x[4,5]x[6,7] − x[4,6]x[5,7]) / 14p`
+- LS: `1/((z−zz)(1−u))`, n=2, poleType=`"simple"`, k=1
+- Ansatz: `fourloopI41ansatz.m` (146 elements)
+- Basis: `allsvlist_fourloop.m` (510 SVHPL), `allsvlistmpl_fourloop_invzz.m` (280 MPL)
+- Result: 146-term combination, 105 non-zero coefficients
+- IBP output: redirected to `~/Documents/aether/svbwalkthrough_ibp/` via `"IBPDir"` option
+
+### Key fixes baked into the pipeline
+| Fix | Where |
+|-----|-------|
+| Pre-flight audit pipeline: preflight → preboundary → boundary → preseries → series → presolve → solve | audit_agent, master_agent, run.wl |
+| MPL .m vs .txt format convention: .m = expression (no parse), .txt = string (parse via StringTrim) | series_agent, audit_agent |
+| IBP output redirection via `"IBPDir"` option (LiteRed2 .mx caches to external dir) | boundary_agent |
+| `add = transformed / F^(weightN − poleOrder)` with `k=poleOrder` | Skill 1 |
+| `poleOrder` auto-derived from `poleType` ("simple"→1, "double"→2) | Skill 0, Skill 1 |
+| `Variables` + `Exponent` counting (fixes `x[a,b]^n` double-count) | ConformalWeight |
+| Boundary skip: detect existing files in `asym/boundary_agent/` or `"InputDir"` | Skill 2 |
+| `Normal[...]` in `temp` computation (SeriesData vs Normal subtraction) | Skill 3 |
+| Basis pre-filtering to ansatz indices (4–8× speedup) | Run script |
+| MPL-empty handling: set `svlistmple*` to `{}` when `mplIndices={}` | Skill 1 |
+| Empty `temp` skip (don't build equations from vanishing limits) | Skill 3 |
+| `//Normal` on boundary import (SeriesData → polynomial) | Run script |
+| Incremental solve only updates `sys`/`solt` when real equations found | Skill 3 |
+| `cVars` extraction: `Select[allVars, _[_] && StringMatchQ[SymbolName[Head[#]], "c*"] &]` | Skill 3 |
+| Filter `False` from `sys1` (`DeleteCases[#, True \| False] &`) | Skill 3 |
+| Clean `c[i]` export via `Symbol["c"]` | Skill 3 |
+| `asym4LbasisChange.m` required for boundary agent | Boundary agent |
+| `order` forwarding from orchestrator to boundary agent | Skill 0, Skill 2 |
+| 12 SeriesExpansion functions verbatim from `svbwalkthrough.wl` | Skill 1 |
+| 6 `zrep` definitions per limit | Skill 1 |
+| `filepath` shadowing removed from `boundary_agent.wl` | Skill 2 |
+
+### Loop-order convention
+
+| Loops | `$Order` (boundary + solve) | `yOrder` (series Y expansion) | Internal points |
+|-------|-----|------|----------------|
+| 3-loop | 3 | 4 | `{5,6,7}` |
+| 4-loop | 4 | 5 | `{5,6,7,8}` |
+
+---
+
+## 7. Cache Cleanup for Fresh Runs
+
+When restarting a bootstrap run from scratch, all cached outputs of prior runs must be removed:
+
+### Files to remove for a given `<label>`:
+
+| Directory | Pattern | Description |
+|-----------|---------|-------------|
+| `asym/boundary_agent/` | `<label>*_order*_asyexp.m` | Boundary condition output (6 files) |
+| `asym/tmp/` | `tensor_<label>*` | Tensor reduction cache (6 `.m` + 6 subdirectories) |
+| `series_agent/` | `<label>_svlist*` | Series expansion output (12 files: 6 svliste + 6 svlistmple) |
+| `solve_agent/` | `<label>_sol.m` | Solved coefficients (1 file) |
+
+### Files to KEEP:
+
+| Directory | File | Reason |
+|-----------|------|--------|
+| `asym/tmp/` | `targetIntegrals_reduced.m` | Shared across all runs — contains pre-reduced target integrals |
+| External `"IBPDir"` | `IBPReduction*/` (LiteRed2 .mx caches) | IBP reduction tables, reusable across runs; kept outside workspace |
+
+### Example — clean `threeloophard2`:
+
+```bash
+rm asym/boundary_agent/threeloophard2*_order*_asyexp.m
+rm -rf asym/tmp/tensor_threeloophard2*
+rm series_agent/threeloophard2_svlist*
+rm solve_agent/threeloophard2_sol.m
+```
+
+### Verification:
+
+```bash
+find . -name "*<label>*" -not -path "*/.git/*" -not -path "*/runs/<label>/*"
+```
+
+Only the run directory and project-root files (e.g., `<label>_ans.m`) should remain. If any cache files appear, they must be removed before a fresh run.

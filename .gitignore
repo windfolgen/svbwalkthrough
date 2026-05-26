@@ -13,6 +13,10 @@
 *~
 *.swp
 
+# Large intermediate data
+IBPReduction*/
+asym/
+
 # Large data archives
 *.tar.gz
 *.zip

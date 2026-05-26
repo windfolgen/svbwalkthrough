@@ -18,6 +18,7 @@ Each skill operates in its own working directory. Output files are written to th
 ├── master_agent.wl          — Skill 0: orchestrator
 ├── review_agent.wl          — Review facade (gateway to audit)
 ├── ConformalWeight.m        — conformal weight calculator (shared)
+├── .aetherignore            — exclude large intermediate files from AI indexing
 ├── series_agent/
 │   └── series_agent.wl      — Skill 1: ansatz series expansion
 ├── asym/
@@ -29,7 +30,7 @@ Each skill operates in its own working directory. Output files are written to th
 ├── solve_agent/
 │   └── solve_agent.wl        — Skill 3: coefficient solving
 ├── audit_agent/
-│   ├── audit_agent.wl        — Skill 4: stage review checks (when loaded)
+│   ├── audit_agent.wl        — Skill 4: pre-flight and post-stage audit checks
 │   └── reports/              — audit report output (.m + .md)
 └── project_skills/
     └── ansatz_basis/          — Documentation for ansatz construction
@@ -56,37 +57,69 @@ Set these **globals** before calling:
 - `"StopOnAuditFailure" -> False` — halt pipeline on FAIL
 
 1. Loads `ConformalWeight.m` → computes `weightN` from `$Integrand`.
-2. Calls **Skill 2** → **Skill 1** → **Skill 3** in sequence.
-3. Records `DateObject[]` timings for each stage.
-4. Optionally calls `ReviewGate[rootDir, label, stage]` after each stage.
+2. Runs **pre-flight check** (`ReviewGate[rootDir, label, "preflight"]`) — verifies all required source files exist.
+3. Runs **pre-boundary check** (`ReviewGate[rootDir, label, "preboundary"]`) — verifies LiteRed2 bases, asym engine, Gmaterrep files.
+4. Calls **Skill 2** → **Skill 1** → **Skill 3** in sequence, with pre-checks before each:
+   - Before Skill 1: **pre-series check** (`"preseries"`) — verifies SVHPL .txt and MPL .m/.txt file format and parseability.
+   - Before Skill 3: **pre-solve check** (`"presolve"`) — verifies boundary files and series expansion files exist.
+5. After each skill, runs a **post-stage audit** (`ReviewGate[rootDir, label, "boundary"|"series"|"solve"]`).
+6. Records `DateObject[]` timings for each stage.
 
 ### 0.3 File Dependencies and Loading
 All three skills share a single `label` (one integrand, one leading singularity). Each agent accesses files relative to `$RootDir`:
 
 | Agent | Reads from | Writes to |
 |-------|-----------|-----------|
-| `series_agent.wl` | `root/allsvliste*_uptow8.txt`, `root/allsvlistmpl_threeloopharde*.txt`, `root/ConformalWeight.m` | `root/series_agent/<label>_svlist*.m` (SVHPL), `root/series_agent/<label>_svlistmpl*.m` (MPL) |
-| `boundary_agent.wl` | `root/asym/asym_new.wl`, `root/asym/Bases/`, `root/asym/tmp/` (reused across runs), optionally `root/runs/<label>/boundaries/` (via `"InputDir"`) | `root/asym/boundary_agent/<label>*_asyexp.m` |
+| `series_agent.wl` | `root/allsvliste*_uptow8.txt`, `root/allsvlistmpl_*e*.{m,txt}` (auto-detected via `mplBasisFile`), `root/ConformalWeight.m` | `root/series_agent/<label>_svlist*.m` (SVHPL), `root/series_agent/<label>_svlistmpl*.m` (MPL) |
+| `boundary_agent.wl` | `root/asym/asym_new.wl`, `root/asym/Bases/`, `root/asym/tmp/` (reused across runs), optionally `root/runs/<label>/boundaries/` (via `"InputDir"`) | `root/asym/boundary_agent/<label>*_asyexp.m`; LiteRed2 IBP .mx caches to `"IBPDir"` (external) |
 | `solve_agent.wl` | `root/series_agent/<label>_svlist*.m`, `root/asym/boundary_agent/<label>*_asyexp.m`, ansatz and basis `.m` files | `root/solve_agent/<label>_sol.m` |
 | `review_agent.wl` | `root/audit_agent/audit_agent.wl` (when loaded) | `root/audit_agent/reports/` (when writing) |
 
 ### 0.4 Review Gate (`review_agent.wl`)
 Thin facade providing `LoadReviewAgent[rootDir]` and `ReviewGate[rootDir, label, stage]`. When the full audit agent is loaded, `ReviewGate` delegates to `RunReviewGate`. If the audit agent cannot be loaded, the gate returns `"PASS"` (no-op) to avoid blocking the pipeline.
 
+**Stages recognized** by `RunReviewGate`:
+
+| Stage | Checker | When | Purpose |
+|-------|---------|------|---------|
+| `"preflight"` | `AuditPreflight` | Before any computation | Verify required source files (ConformalWeight.m, SVHPL .txt, MPL .txt) exist |
+| `"preboundary"` | `AuditPreBoundary` | Before Skill 2 | Verify LiteRed2 bases, asym_new.wl, Gmaterrep files, tmp dir |
+| `"boundary"` | `AuditBoundaryStage` | After Skill 2 | Check 6 boundary .m files exist and import correctly |
+| `"preseries"` | `AuditPreSeries` | Before Skill 1 | Verify SVHPL .txt parse correctly; verify MPL expansion files (.m or .txt) load as valid lists; record format convention detected |
+| `"series"` | `AuditSeriesStage` | After Skill 1 | Check 12 series expansion .m files exist and are valid lists |
+| `"presolve"` | `AuditPreSolve` | Before Skill 3 | Verify boundary files and series expansion files all exist |
+| `"solve"` | `AuditSolveStage` | After Skill 3 | Check solution file exists and contains valid rules |
+| `"pipeline"` | `AuditPipeline` | End of run | Combined report of all stages |
+
+**Abort behavior:** On any FAIL, the pipeline prints `[ABORT] <stage> FAIL` with details and returns `$Failed`.
+
 ### 0.5 Runtime Safety
-**Missing files:** if any required file is not found at runtime, immediately stop all calculations, kill all stale Mathematica processes (`ps aux | grep -i wolfram | awk '{print $2}' | xargs kill -9`), verify with `ps aux | grep -i wolfram | grep -v grep | wc -l` that the count is 0, and notify the user. Do not create or guess missing files — ask the user to provide them.
+**Missing files:** if any required file is not found at runtime, immediately stop all calculations, kill all stale Mathematica processes (`pkill -9 -f -i "Math\|Wolfram\|mathkernel"`), verify with `ps aux | grep -i wolfram | grep -v grep | wc -l` that the count is 0, and notify the user. Do not create or guess missing files — ask the user to provide them.
+
+**Large intermediate data:** IBP reduction tables from LiteRed2 should be directed to an external directory (`"IBPDir"` option) to keep the workspace lean. IBP caches in `asym/tmp/` and the external `"IBPDir"` are reusable across runs — do not delete `targetIntegrals_reduced.m`.
 
 ---
 
 ## 1. Skill 1: Ansatz Series Expansion
 
 ### 1.1 Input
-Each `.txt` file contains the series expansion of a corresponding basis `.m` file:
+Each expansion file contains the series expansion of a corresponding basis `.m` file:
 
 | Basis file (list of elements) | Expansion files (series at singular points) |
 |------|------|
 | `allsvlist_fourloop.m` (SVHPL basis) | `allsvliste0_uptow8.txt` (z→0), `allsvliste1_uptow8.txt` (z→1), `allsvlisteinf_uptow8.txt` (z→∞) |
-| `allsvlistmpl_threeloop.m` (MPL basis) | `allsvlistmpl_threeloopharde0.txt` (z→0), `allsvlistmpl_threeloopharde1.txt` (z→1), `allsvlistmpl_threeloophardeinf.txt` (z→∞) |
+| `allsvlistmpl_*.m` (MPL basis, auto-detected) | `allsvlistmpl_*e0.{m,txt}` (z→0), `allsvlistmpl_*e1.{m,txt}` (z→1), `allsvlistmpl_*einf.{m,txt}` (z→∞) |
+
+**MPL expansion file format convention:** Two formats are supported, detected at load time:
+
+| Extension | Format | Loading method | Example |
+|-----------|--------|---------------|---------|
+| `.m` | Mathematica expression list — no parsing needed | `Import[path]` → directly usable as list | `{I[z,0,1,0] + ..., ...}` |
+| `.txt` | String-wrapped list — needs parsing | `Import[path, "String"]` → `StringTrim` → `ToExpression` → list | `"[I[z,0,1,0] + ..., ...]"` |
+
+The loader (`series_agent.wl`) tries `.txt` first, falls back to `.m`. The pre-series audit (`AuditPreSeries`) records which format was detected and verifies each file loads correctly.
+
+SVHPL expansion files are always `.txt` format (string-wrapped lists).
 
 **Reuse:** If the leading singularity (and thus the `additional` prefactor) is unchanged from a previous run, the series expansions do not need to be recomputed — load the existing `.m` files from `series_agent/`.
 
@@ -274,9 +307,22 @@ Six `.m` files per singular point (one `svlist` and one `svlistmpl` per coordina
 | z→1 | `<label>_svliste1uv.m`, `<label>_svlistmple1uv.m` | `<label>_svliste1uvp.m`, `<label>_svlistmple1uvp.m` |
 | z→∞ | `<label>_svlisteinfuv.m`, `<label>_svlistmpleinfuv.m` | `<label>_svlisteinfuvp.m`, `<label>_svlistmpleinfuvp.m` |
 
-**Example** (notebook labels): for the two leading singularities of the hard topology:
-- `1/(z−zz)²` → label `threeloophard1` → files: `threeloophard1_svliste0uv.m`, etc.
-- `1/((z−zz)(1−u))` → label `threeloophard2` → files: `threeloophard2_svliste0uv.m`, etc.
+### 1.7 Interactive Overwrite Guard
+
+Before starting the 6 series expansions, `RunSeriesExpansion` checks whether any of the 12 output `.m` files already exist under `series_agent/<label>_*`. If any are found:
+
+```
+[Skill 1] WARNING: 12 existing series expansion files will be overwritten:
+  - .../series_agent/threeloophard2_svliste0uv.m
+  - .../series_agent/threeloophard2_svlistmple0uv.m
+  - ...
+[Skill 1] Proceed and overwrite? (y/n)
+```
+
+- `y` / `Y` / `yes` / `Yes` — replaces all existing files and proceeds
+- Anything else — prints `ABORTED by user — existing files preserved.` and returns `$Failed`
+
+This prevents accidental corruption of cached series expansions when re-running with different parameters.
 
 ---
 
@@ -309,6 +355,16 @@ The agent strictly follows the template. Only the integrand expression varies pe
 6. **Run parallel expansion**: `RunAsymExpansionParallel[label, $Integrand, $Perms, 3, {5, 6, 7}]`.
 
 Temporary results in `asym/tmp/` (e.g., `targetIntegrals_reduced.m`) are reused across bootstrap problems.
+
+### 2.4 IBP Output Redirection
+`RunBoundaryConditions` supports a `"IBPDir"` option (default: `"/Users/<user>/Documents/aether/svbwalkthrough_ibp"`) to redirect LiteRed2 IBP reduction tables out of the workspace. Before `RunAsymExpansionParallel` runs, the working directory is temporarily changed to `"IBPDir"` so that LiteRed2's `IBPReduce` writes its `.mx` caches there instead of creating `IBPReduction*/` directories in the project root.
+
+```mathematica
+RunBoundaryConditions[rootDir, label, order, loopPoints,
+  "IBPDir" -> "/Users/me/Documents/aether/svbwalkthrough_ibp"]
+```
+
+The external directory is gitignored and aetherignored, while `asym/tmp/` (tensor reduction and target integral caches) remains in-workspace.
 
 ### 2.3 Output
 `RunAsymExpansionParallel` saves 6 files to `asym/boundary_agent/`:
@@ -411,10 +467,32 @@ The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only fil
 | `allsvliste0_uptow8.txt` | Series expansion of SVHPL basis at z→0 |
 | `allsvliste1_uptow8.txt` | Series expansion of SVHPL basis at z→1 |
 | `allsvlisteinf_uptow8.txt` | Series expansion of SVHPL basis at z→∞ |
-| `allsvlistmpl_threeloop.m` | Complete MPL basis for 3-loop (82 elements) |
-| `allsvlistmpl_threeloopharde0.txt` | Series expansion of MPL basis at z→0 |
-| `allsvlistmpl_threeloopharde1.txt` | Series expansion of MPL basis at z→1 |
-| `allsvlistmpl_threeloophardeinf.txt` | Series expansion of MPL basis at z→∞ |
+| `allsvlistmpl_*.m` files | Auto-detected: scanned for best ansatz element coverage |
+| SVHPL basis | `allsvlist_fourloop.m` (fixed, all runs share it) |
+
+### MPL basis auto-detection
+
+The pipeline scans `allsvlistmpl_*.m` files in the project root. For each candidate, it counts how many ansatz `_I` and `_f` elements it contains. The basis with the best coverage is selected as `mplBasisFile`.
+
+The corresponding expansion files must follow the naming convention and can be in either format:
+```
+allsvlistmpl_<name>.m          ← basis file
+allsvlistmpl_<name>e0.{m,txt}  ← expansion at z→0  (.m = expression, .txt = string)
+allsvlistmpl_<name>e1.{m,txt}  ← expansion at z→1
+allsvlistmpl_<name>einf.{m,txt} ← expansion at z→∞
+```
+
+For a new problem type, drop in `<name>.m` and `<name>e{0,1,inf}.{m,txt}` — no code changes needed.
+
+### Workspace exclusion files
+
+| File | Purpose |
+|------|---------|
+| `.aetherignore` | Exclude large intermediate data (`IBPReduction*/`, `asym/tmp/`, `asym/Bases/`, `asym/logs/`, `*.mx`) from AI indexing |
+| `.gitignore` | Exclude same patterns from git tracking |
+| `allsvlistmpl_threeloope0.txt` | Series expansion of MPL basis at z→0 |
+| `allsvlistmpl_threeloope1.txt` | Series expansion of MPL basis at z→1 |
+| `allsvlistmpl_threeloopeinf.txt` | Series expansion of MPL basis at z→∞ |
 | `svmplevenansatz_threeloop.m` | Even parity ansatz components |
 | `svmploddansatz_threeloop.m` | Odd parity ansatz components |
 | `runs/<label>/threeloophard1_ans.m` | Even-ansatz for hard topology (runs/threeloophard1/) |
@@ -437,24 +515,44 @@ The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only fil
 Skill 0 (master_agent.wl): orchestrates the pipeline
   |
   ├─ ConformalWeight.m → determines weightN = n
-  ├─ review_agent.wl   → ReviewGate after each stage (when Audit→True)
+  ├─ review_agent.wl   → ReviewGate at 8 checkpoints (4 pre, 4 post)
+  |
+  ├─ [PRE-FLIGHT]    ReviewGate[rootDir, label, "preflight"]
+  |    Checks: ConformalWeight.m, SVHPL .txt, MPL source files exist
+  |
+  ├─ [PRE-BOUNDARY]  ReviewGate[rootDir, label, "preboundary"]
+  |    Checks: LiteRed2 bases, asym_new.wl, Gmaterrep files, tmp dir
   |
   ├─ Skill 2 (asym/boundary_agent/boundary_agent.wl)  [SKIPPED if boundary files exist]
   |    |  - Check asym/boundary_agent/ and optional "InputDir" for existing files
   |    |  - If found: skip computation and reuse existing files
-  |    |  - If not found: RunAsymExpansionParallel for 6 permutations
+  |    |  - If not found: redirect CWD to "IBPDir" for LiteRed2 IBP output
+  |    |  - RunAsymExpansionParallel for 6 permutations
   |    |  - RegionExpand, TensorReduce, IBPReduce
   |    |  - Series expansion in {u, 0} and {Y, 0, order}
   |    |  - Caches intermediate results in asym/tmp/ for reuse
+  |    |  - Restore CWD
   |    v
   |  Output: asym/boundary_agent/<label>*_asyexp.m
+  |
+  ├─ [BOUNDARY]     ReviewGate[rootDir, label, "boundary"]
+  |
+  ├─ [PRE-SERIES]   ReviewGate[rootDir, label, "preseries"]
+  |    Checks: SVHPL .txt parse OK; MPL .m files load as lists (no parsing)
+  |             or MPL .txt files parse as lists (string-wrapped); records format
   |
   ├─ Skill 1 (series_agent/series_agent.wl)
   |    |  - poleOrder = poleType /. {"simple"→1, "double"→2}
   |    |  - additional = base_transformed / F^(weightN − poleOrder)
   |    |  - 6 expansions (e0uv, e0uvp, einfuv, einfuvp, e1uv, e1uvp)
+  |    |  - MPL loader: .m → expression (no parse), .txt → string → parse
   |    v
   |  Output: series_agent/<label>_svlist*.m
+  |
+  ├─ [SERIES]       ReviewGate[rootDir, label, "series"]
+  |
+  ├─ [PRE-SOLVE]    ReviewGate[rootDir, label, "presolve"]
+  |    Checks: boundary files exist (6), series expansion files exist (12)
   |
   ├─ Skill 3 (solve_agent/solve_agent.wl)
   |    |  - Load series expansions + boundary conditions
@@ -462,6 +560,8 @@ Skill 0 (master_agent.wl): orchestrates the pipeline
   |    |  - Incremental solve across 6 limits
   |    v
   |  Output: solve_agent/<label>_sol.m
+  |
+  ├─ [SOLVE]        ReviewGate[rootDir, label, "solve"]
   |
   v
 Output: Solved coefficients c[i]
@@ -487,8 +587,10 @@ The run script:
 1. Computes `rootDir = ParentDirectory[ParentDirectory[runDir]]`
 2. Loads ansatz + basis files
 3. Pre-filters basis to ansatz-only indices (4× speedup)
-4. Sequentially calls Skill 2 → Skill 1 → Skill 3
-5. Saves final result and solved coefficients
+4. Loads `review_agent.wl` and `audit_agent.wl`
+5. Runs 4 pre-checks (preflight, preboundary, preseries, presolve) before each stage, aborting on FAIL
+6. Sequentially calls Skill 2 → Skill 1 → Skill 3, each followed by a post-stage audit
+7. Saves final result and solved coefficients
 
 ### Proven run: `threeloophard1`
 - Integrand: `(x[5,6]*x[3,4]−x[3,6]x[4,5]−x[3,5]x[4,6])/12p`
@@ -520,9 +622,20 @@ The run script:
 - Ansatz: `threeloopoddansatz.m` (30 elements, odd parity)
 - Result: unsolved (ansatz/boundary mismatch, investigation pending)
 
+### Proven run: `fourloopI41`
+- Integrand: `(x[4,7]x[5,6] − x[4,5]x[6,7] − x[4,6]x[5,7]) / 14p`
+- LS: `1/((z−zz)(1−u))`, n=2, poleType=`"simple"`, k=1
+- Ansatz: `fourloopI41ansatz.m` (146 elements)
+- Basis: `allsvlist_fourloop.m` (510 SVHPL), `allsvlistmpl_fourloop_invzz.m` (280 MPL)
+- Result: 146-term combination, 105 non-zero coefficients
+- IBP output: redirected to `~/Documents/aether/svbwalkthrough_ibp/` via `"IBPDir"` option
+
 ### Key fixes baked into the pipeline
 | Fix | Where |
 |-----|-------|
+| Pre-flight audit pipeline: preflight → preboundary → boundary → preseries → series → presolve → solve | audit_agent, master_agent, run.wl |
+| MPL .m vs .txt format convention: .m = expression (no parse), .txt = string (parse via StringTrim) | series_agent, audit_agent |
+| IBP output redirection via `"IBPDir"` option (LiteRed2 .mx caches to external dir) | boundary_agent |
 | `add = transformed / F^(weightN − poleOrder)` with `k=poleOrder` | Skill 1 |
 | `poleOrder` auto-derived from `poleType` ("simple"→1, "double"→2) | Skill 0, Skill 1 |
 | `Variables` + `Exponent` counting (fixes `x[a,b]^n` double-count) | ConformalWeight |
@@ -541,6 +654,13 @@ The run script:
 | 12 SeriesExpansion functions verbatim from `svbwalkthrough.wl` | Skill 1 |
 | 6 `zrep` definitions per limit | Skill 1 |
 | `filepath` shadowing removed from `boundary_agent.wl` | Skill 2 |
+
+### Loop-order convention
+
+| Loops | `$Order` (boundary + solve) | `yOrder` (series Y expansion) | Internal points |
+|-------|-----|------|----------------|
+| 3-loop | 3 | 4 | `{5,6,7}` |
+| 4-loop | 4 | 5 | `{5,6,7,8}` |
 
 ---
 
@@ -562,6 +682,7 @@ When restarting a bootstrap run from scratch, all cached outputs of prior runs m
 | Directory | File | Reason |
 |-----------|------|--------|
 | `asym/tmp/` | `targetIntegrals_reduced.m` | Shared across all runs — contains pre-reduced target integrals |
+| External `"IBPDir"` | `IBPReduction*/` (LiteRed2 .mx caches) | IBP reduction tables, reusable across runs; kept outside workspace |
 
 ### Example — clean `threeloophard2`:
 

@@ -23,20 +23,46 @@ ansatzExpr = Import[FileNameJoin[{runDir, "threeloopoddansatz.m"}]];
 Print["Ansatz length: ", Length[ansatzExpr]];
 
 basisSV  = Import[FileNameJoin[{rootDir, "allsvlist_fourloop.m"}]];
-basisMPL = Import[FileNameJoin[{rootDir, "allsvlistmpl_threeloop.m"}]];
-Print["basisSV length: ", Length[basisSV], ", basisMPL length: ", Length[basisMPL]];
+Print["basisSV length: ", Length[basisSV]];
 
 (* ---- reduce to basis elements appearing in ansatz ---- *)
 basisElements = DeleteDuplicates @ Cases[ansatzExpr, _I | _f, {1, Infinity}];
 svIndices = Function[e, If[# === {}, 0, #[[1,1]]] & @ Position[basisSV, e, {1}]] /@ basisElements;
-mplIndices = Function[e, If[# === {}, 0, #[[1,1]]] & @ Position[basisMPL, e, {1}]] /@ basisElements;
 svIndices = DeleteDuplicates[Select[svIndices, Positive]];
-mplIndices = DeleteDuplicates[Select[mplIndices, Positive]];
 Print["SVHPL in ansatz: ", Length[svIndices], " (of ", Length[basisSV], ")"];
-Print["MPL in ansatz: ", Length[mplIndices], " (of ", Length[basisMPL], ")"];
-
 basisSVReduced  = basisSV[[svIndices]];
-basisMPLReduced = basisMPL[[mplIndices]];
+
+(* ---- auto-detect MPL basis: scan allsvlistmpl_*.m, pick best coverage ---- *)
+mplBasisFile = None;
+mplFiles = FileNames[FileNameJoin[{rootDir, "allsvlistmpl_*.m"}]];
+(* filter out expansion files (end with e0.m, e1.m, einf.m) *)
+mplFiles = Select[mplFiles, !StringMatchQ[#, ___ ~~ ("e0.m" | "e1.m" | "einf.m")] &];
+If[mplFiles =!= {},
+  bestCount = 0;
+  Do[
+    mplTry = Import[f];
+    idx = Function[e, If[# === {}, 0, #[[1,1]]] & @ Position[mplTry, e, {1}]] /@ basisElements;
+    idx = Select[idx, Positive];
+    If[Length[idx] > bestCount, bestCount = Length[idx]; bestFile = f],
+    {f, mplFiles}
+  ];
+  If[bestCount > 0,
+    mplBasisFile = bestFile;
+    basisMPL = Import[mplBasisFile];
+    mplIndices = Function[e, If[# === {}, 0, #[[1,1]]] & @ Position[basisMPL, e, {1}]] /@ basisElements;
+    mplIndices = DeleteDuplicates[Select[mplIndices, Positive]];
+    basisMPLReduced = basisMPL[[mplIndices]];
+    Print["MPL in ansatz: ", Length[mplIndices], " (of ", Length[basisMPL], "), basis: ", FileBaseName[mplBasisFile]];
+  ,
+    Print["MPL in ansatz: 0 (no matching basis found)"];
+    mplIndices = {};
+    basisMPLReduced = {};
+  ];
+,
+  Print["MPL: no basis files found"];
+  mplIndices = {};
+  basisMPLReduced = {};
+];
 
 (* ---- global variables ---- *)
 $Integrand = (x[1, 4] x[2, 3]) /
@@ -89,7 +115,7 @@ Print[""];
 Print["=== SKILL 1: Series Expansion ==="];
 LaunchKernels[6];
 Get[FileNameJoin[{rootDir, "series_agent", "series_agent.wl"}]];
-RunSeriesExpansion[rootDir, label, lsAddPole, poleType, weightN, yOrder, svIndices, mplIndices];
+RunSeriesExpansion[rootDir, label, lsAddPole, poleType, weightN, yOrder, svIndices, mplIndices, 1, mplBasisFile];
 ReviewGate[rootDir, label, "series"];
 CloseKernels[];
 
