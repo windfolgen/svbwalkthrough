@@ -1,7 +1,14 @@
 # Summary of SVB Walkthrough Calculation Procedures
 
 ## Overview
-This Mathematica notebook implements a **bootstrap method for computing multi-loop Feynman integrals** via leading singularities. The core workflow is: (1) compute leading singularities of an integrand, (2) construct an ansatz from a basis of transcendental functions, (3) fix the ansatz coefficients by matching to the leading singularities.
+This Mathematica notebook implements a **bootstrap method for computing multi-loop Feynman integrals** via leading singularities. The final pipeline correctly reconstructs all equations using identical methodology across SVHPL and MPL bounds, entirely removing redundant runtime costs.
+
+- **Basis File Renaming & Cleanup:** The intermediate and long-named basis files were cleaned up. The final pre-computed, coordinate-transformed limit files loaded natively by `series_agent.wl` were renamed to shortened versions:
+  - SVHPL limits: `allsvliste0_uptow8_inuv_e0uv.m` $\to$ `allsvliste0_uptow8_inuv.m`, `allsvliste0_uptow8_inuv_e0uvp.m` $\to$ `allsvliste0_uptow8_inuvp.m` (and similarly for `e1` and `einf` limits).
+  - MPL limits: `allsvlistmpl_threeloope0_inuv_e0uv.txt` $\to$ `allsvlistmpl_threeloope0_inuv.txt`, `allsvlistmpl_threeloope0_inuvp.txt` $\to$ `allsvlistmpl_threeloope0_inuvp.txt` (and similarly for `e1` and `einf` limits).
+  - The `series_agent.wl` file loading paths (`svFile` and `mplFile`) were systematically updated to consume these shorter naming conventions.
+
+The core workflow is: (1) compute leading singularities of an integrand, (2) construct an ansatz from a basis of transcendental functions, (3) fix the ansatz coefficients by matching to the leading singularities.
 
 **Input to the workflow**: the integrand, the leading singularities, and the integral ansatz for each leading singularity.
 **Output of the workflow**: the coefficients before the ansatz.

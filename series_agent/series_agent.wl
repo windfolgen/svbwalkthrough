@@ -231,7 +231,7 @@ RunSeriesExpansion[rootDir_, label_, lsBase_, poleType_, weightN_, yOrder_:4, sv
       Return[$Failed]
     ];
     Print["[Skill 1] Loaded MPL expansions: ", mplPrefix, "{0,1,inf} (format: ",
-      mplFormat <> If[mplFormat === ".m", ", no parsing needed", ", parsed from string-wrapped list"), ")"];
+      mplFormat <> If[mplFormat === ".m", ", no parsing needed", ", parsed from string-wrapped list"] <> ")"];
   ,
     svlistmple0   = {};
     svlistmple1   = {};
@@ -283,53 +283,75 @@ RunSeriesExpansion[rootDir_, label_, lsBase_, poleType_, weightN_, yOrder_:4, sv
   Print["[Skill 1] Starting 6 expansions, poleType=", poleType, ", n=", weightN,
     ", k=", poleOrder, ", SVHPL=", Length[svliste0], ", MPL=", Length[svlistmple0]];
   For[i = 1, i <= 6, i++,
-    Module[{uRule, vRule, F, transformed, ptr, headSV, headMPL},
+    Module[{uRule, vRule, F, transformed, ptr, suffix, svFile, mplFile, svList, mplList, ExpandInuvList, zrep, svRes, mplRes},
 
-      (* solving order: {1,2,3,4},{2,1,3,4},{1,3,2,4},{2,3,1,4},{3,1,2,4},{3,2,1,4} *)
       Switch[i,
-        1, {uRule = u->u;   vRule = v->v;   F = 1; ptr = 0},   (* {1,2,3,4} e0uv *)
-        2, {uRule = u->u/v; vRule = v->1/v; F = v; ptr = 0},   (* {2,1,3,4} e0uvp *)
-        3, {uRule = u->1/u; vRule = v->v/u; F = u; ptr = 2},   (* {1,3,2,4} einfuv *)
-        4, {uRule = u->v/u; vRule = v->1/u; F = u; ptr = 2},   (* {2,3,1,4} einfuvp *)
-        5, {uRule = u->1/v; vRule = v->u/v; F = v; ptr = 1},   (* {3,1,2,4} e1uv *)
-        6, {uRule = u->v;   vRule = v->u;   F = 1; ptr = 1}    (* {3,2,1,4} e1uvp *)
+        1, {uRule = u->u;   vRule = v->v;   F = 1; ptr = 0; suffix = "e0uv";
+            svFile = "allsvliste0_uptow8_inuv.m";           mplFile = "allsvlistmpl_threeloope0_inuv.txt"},
+        2, {uRule = u->u/v; vRule = v->1/v; F = v; ptr = 0; suffix = "e0uvp";
+            svFile = "allsvliste0_uptow8_inuvp.m";          mplFile = "allsvlistmpl_threeloope0_inuvp.txt"},
+        3, {uRule = u->1/u; vRule = v->v/u; F = u; ptr = 2; suffix = "einfuv";
+            svFile = "allsvlisteinf_uptow8_inuv.m";       mplFile = "allsvlistmpl_threeloopeinf_inuv.txt"},
+        4, {uRule = u->v/u; vRule = v->1/u; F = u; ptr = 2; suffix = "einfuvp";
+            svFile = "allsvlisteinf_uptow8_inuvp.m";      mplFile = "allsvlistmpl_threeloopeinf_inuvp.txt"},
+        5, {uRule = u->1/v; vRule = v->u/v; F = v; ptr = 1; suffix = "e1uv";
+            svFile = "allsvliste1_uptow8_inuv.m";           mplFile = "allsvlistmpl_threeloope1_inuv.txt"},
+        6, {uRule = u->v;   vRule = v->u;   F = 1; ptr = 1; suffix = "e1uvp";
+            svFile = "allsvliste1_uptow8_inuvp.m";          mplFile = "allsvlistmpl_threeloope1_inuvp.txt"}
+      ];
+
+      svList = Get[FileNameJoin[{rootDir, svFile}]];
+      If[svIndices =!= {}, svList = svList[[svIndices]]];
+
+      If[mplBasisFile =!= None && mplIndices =!= {},
+        mplList = Import[FileNameJoin[{rootDir, mplFile}], "String"] // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
+        mplList = mplList[[mplIndices]];
+      ,
+        mplList = {};
       ];
 
       transformed = Simplify[lsBase /. {uRule, vRule}];
-      add = If[F === 1, transformed, Simplify[transformed / F^(weightN - poleOrder)]];
+      add = If[F === 1, transformed, Simplify[transformed / F^(weightN - poleOrder)]] /. {v -> 1 - Y} // Expand;
       Print["[Skill 1] Limit ", i, "/6: additional = ", add // InputForm];
 
-      Which[
-        ptr == 0 && OddQ[i],  {headSV = poleType /. {"simple"->SeriesExpansion0,   "double"->SeriesExpansion20}; headMPL = headSV},
-        ptr == 0 && EvenQ[i], {headSV = poleType /. {"simple"->SeriesExpansion0P,  "double"->SeriesExpansion20P}; headMPL = headSV},
-        ptr == 1 && OddQ[i],  {headSV = poleType /. {"simple"->SeriesExpansion1,   "double"->SeriesExpansion21}; headMPL = headSV},
-        ptr == 1 && EvenQ[i], {headSV = poleType /. {"simple"->SeriesExpansion1P,  "double"->SeriesExpansion21P}; headMPL = headSV},
-        ptr == 2 && OddQ[i],  {headSV = poleType /. {"simple"->SeriesExpansionInf, "double"->SeriesExpansion2Inf}; headMPL = headSV},
-        ptr == 2 && EvenQ[i], {headSV = poleType /. {"simple"->SeriesExpansionInfP,"double"->SeriesExpansion2InfP}; headMPL = headSV}
+      ExpandInuvList[basisList_, sqrtSeries_, expTerm_] := ParallelTable[
+        Module[{test, test2, seriesY},
+          test = If[poleType === "simple",
+            basisList[[j]] * add * (-sqrtSeries) / expTerm,
+            basisList[[j]] * add * (-1) / expTerm
+          ];
+          test2 = (test /. {Log[u] -> logU});
+          seriesY = Series[test2, {u, 0, 0}, {Y, 0, yOrder}, Assumptions -> {Y > 0}] // Normal;
+          (seriesY /. {logU -> Log[u]}) // Expand
+        ],
+        {j, 1, Length[basisList]}
       ];
 
-      Switch[ptr,
-        0, If[OddQ[i],
-             {zrep = zrep0;     svRes  = headSV[svliste0,      zrep, "Yorder"->yOrder, "additional"->add];
-                                mplRes = headMPL[svlistmple0,   zrep, "Yorder"->yOrder, "additional"->add]},
-             {zrep = zrep0P;   svRes  = headSV[svliste0,      zrep, "Yorder"->yOrder, "additional"->add];
-                                mplRes = headMPL[svlistmple0,   zrep, "Yorder"->yOrder, "additional"->add]}],
-        1, If[OddQ[i],  (* i=5 → e1uv, i=6 → e1uvp *)
-             {zrep = zrep1;     svRes  = headSV[svliste1,      zrep, "Yorder"->yOrder, "additional"->add];
-                                mplRes = headMPL[svlistmple1,   zrep, "Yorder"->yOrder, "additional"->add]},
-             {zrep = zrep1P;   svRes  = headSV[svliste1,      zrep, "Yorder"->yOrder, "additional"->add];
-                                mplRes = headMPL[svlistmple1,   zrep, "Yorder"->yOrder, "additional"->add]}],
-        2, If[OddQ[i],  (* i=3 → einfuv, i=4 → einfuvp *)
-             {zrep = zrepInf;   svRes  = headSV[svlisteinf,    zrep, "Yorder"->yOrder, "additional"->add];
-                                mplRes = headMPL[svlistmpleinf, zrep, "Yorder"->yOrder, "additional"->add]},
-             {zrep = zrepInfP; svRes  = headSV[svlisteinf,    zrep, "Yorder"->yOrder, "additional"->add];
-                                mplRes = headMPL[svlistmpleinf, zrep, "Yorder"->yOrder, "additional"->add]}]
-      ];
-
-      suffix = Switch[ptr,
-        0, If[OddQ[i], "e0uv", "e0uvp"],
-        1, If[OddQ[i], "e1uv", "e1uvp"],
-        2, If[OddQ[i], "einfuv", "einfuvp"]
+      Module[{radical, sqrtSeries, expTerm},
+        Switch[ptr,
+          0, If[OddQ[i], 
+               {radical = Sqrt[-4*u + (u + Y)^2]; expTerm = -4*u + (u + Y)^2;
+                sqrtSeries = Series[radical, {u, 0, 7}, {Y, 0, 7}] // Normal // Expand},
+               {radical = Sqrt[-4*u*(1 - Y) + (u - Y)^2]; expTerm = -4*u*(1 - Y) + (u - Y)^2;
+                sqrtSeries = Series[radical, {u, 0, 7}, {Y, 0, 7}] // Normal // Expand}],
+          1, If[OddQ[i],
+               {radical = Sqrt[(-2 + u + Y)^2 - 4*(1 - Y)]; expTerm = (-2 + u + Y)^2 - 4*(1 - Y);
+                sqrtSeries = Series[radical, {u, 0, 7}, {Y, 0, 7}] // Normal // Expand},
+               {radical = Sqrt[(-2 + u + Y)^2 - 4*(1 - Y)]; expTerm = (-2 + u + Y)^2 - 4*(1 - Y);
+                sqrtSeries = Series[radical, {u, 0, 7}, {Y, 0, 7}] // Normal // Expand}],
+          2, If[OddQ[i],
+               {radical = Sqrt[-4*u + (u + Y)^2]; expTerm = -4*u + (u + Y)^2;
+                sqrtSeries = Series[radical, {u, 0, 7}, {Y, 0, 7}] // Normal // Expand},
+               {radical = Sqrt[-4*u*(1 - Y) + (u - Y)^2]; expTerm = -4*u*(1 - Y) + (u - Y)^2;
+                sqrtSeries = Series[radical, {u, 0, 7}, {Y, 0, 7}] // Normal // Expand}]
+        ];
+        
+        svRes = ExpandInuvList[svList, sqrtSeries, expTerm];
+        If[Length[mplList] > 0,
+          mplRes = ExpandInuvList[mplList, sqrtSeries, expTerm];
+        ,
+          mplRes = {};
+        ];
       ];
 
       Export[FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> suffix <> ".m"}], svRes];
