@@ -609,11 +609,7 @@ RunAsymExpansion[intname_String, integrand_, perm_List, order_Integer:3, loops_L
     Print["target integrals reduced! ", "time: ", SessionTime[] - starttime];
 
     (* Step 4: Series expansion *)
-    Gmasterrep4L = Import[filepath <> "Gmaterrep4L.m"];
-    Gmasterrep3L = Import[filepath <> "Gmaterrep3L.m"];
-    Gmasterrep2L = Import[filepath <> "Gmaterrep2L.m"];
-    Gmasterrep1L = Import[filepath <> "Gmaterrep1L.m"];
-    Gmasterrep = Join[Gmasterrep4L, Gmasterrep3L, Gmasterrep2L, Gmasterrep1L] // Dispatch;
+    Gmasterrep = Join @@ (Import[FileNameJoin[{filepath, #}]] & /@ $GmaterrepFiles) // Dispatch;
     fresult = Series[(test /. gtransform /. {D -> 4 - 2 ep} /. Grep // Collect[#, _G] &) /. basischange /. Gmasterrep, {u, 0, 0}];
     fresults = Series[((fresult // Total) + O[ep]) // Normal // Expand, {Y, 0, order}] // ExpandAll;
 
@@ -716,11 +712,7 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
     Print["target integrals reduced! time: ", SessionTime[] - starttime];
 
     (* Step 4: Parallelize the Series expansions *)
-    Gmasterrep4L = Import[filepath <> "Gmaterrep4L.m"];
-    Gmasterrep3L = Import[filepath <> "Gmaterrep3L.m"];
-    Gmasterrep2L = Import[filepath <> "Gmaterrep2L.m"];
-    Gmasterrep1L = Import[filepath <> "Gmaterrep1L.m"];
-    Gmasterrep = Join[Gmasterrep4L, Gmasterrep3L, Gmasterrep2L, Gmasterrep1L] // Dispatch;
+    Gmasterrep = Join @@ (Import[FileNameJoin[{filepath, #}]] & /@ $GmaterrepFiles) // Dispatch;
 
     (* Distribute mapping rules dynamically down to local environments. 
        Note: We aggressively DO NOT broadcast `testAll` here to prevent massive RAM/WSTP failures. *)
@@ -796,11 +788,7 @@ RunAsymExpansionTest[intname_String, integrand_, perm_List, order_Integer:3, loo
     trep2 = trep /. {j[_, a__] :> G[2, {a}]} /. {u -> 1} /. {d -> 4 - 2 ep};
     Grep = Join[trep1, trep2] // Dispatch;
 
-    Gmasterrep4L = Import[filepath <> "Gmaterrep4L.m"];
-    Gmasterrep3L = Import[filepath <> "Gmaterrep3L.m"];
-    Gmasterrep2L = Import[filepath <> "Gmaterrep2L.m"];
-    Gmasterrep1L = Import[filepath <> "Gmaterrep1L.m"];
-    Gmasterrep = Join[Gmasterrep4L, Gmasterrep3L, Gmasterrep2L, Gmasterrep1L] // Dispatch;
+    Gmasterrep = Join @@ (Import[FileNameJoin[{filepath, #}]] & /@ $GmaterrepFiles) // Dispatch;
     
     Print["Testing order of epsilon for regions..."];
     CheckEpsOrder[{test, {}}, gtransform, Grep, basischange, Gmasterrep, order]

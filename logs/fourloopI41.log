@@ -1,0 +1,25 @@
+"Logging initialized. Writing to console and: "
+  "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough/logs/fourloopI41.lo\
+g"
+"Ansatz length: "146
+"basisSV length: "510
+"SVHPL in ansatz: "289" (of "510")"
+"MPL in ansatz: "279" (of "280"), basis: ""allsvlistmpl_fourloop_invzz"
+"Conformal weight n = "2
+"Review agent loaded from ""/Users/windfolgen/Documents/AntiGravity/svbwalkth\
+rough/audit_agent/audit_agent.wl"
+""
+"=== PRE-FLIGHT CHECKS ==="
+"[ReviewGate] ""preflight"" stage: ""PASS"" (PASS:"3" WARN:"0" FAIL:"0")"
+"PASS"": PASS "3", WARN "0", FAIL "0
+"=== PRE-BOUNDARY CHECKS ==="
+"[ReviewGate] ""preboundary"" stage: ""PASS"" (PASS:"6" WARN:"0" FAIL:"0")"
+"PASS"": PASS "6", WARN "0", FAIL "0
+""
+"=== SKILL 2: Boundary Conditions ==="
+"[Bootstrap] Cache file not found. Generating from existing runs..."
+"Root: ""/Users/windfolgen/Documents/AntiGravity/svbwalkthrough"
+"Run:  ""/Users/windfolgen/Documents/AntiGravity/svbwalkthrough/runs/fourloop\
+I41/"
+
+Print::strml: $Failed is not a string, stream, or list of strings and streams.

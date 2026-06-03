@@ -1,0 +1,10 @@
+"[Skill 3] Total Ansatz Elements=$LEN="30" $Order="3
+"  system size after limit "1": "60" vars: "30
+"Limit "2" (""e0uvp""): temp is empty, skipping."
+"  system size after limit "3": "120" vars: "30
+"Limit "4" (""einfuvp""): temp is empty, skipping."
+"Limit "5" (""e1uv""): temp is empty, skipping."
+"Limit "6" (""e1uvp""): temp is empty, skipping."
+"Solution written to ""/Users/windfolgen/Documents/AntiGravity/svbwalkthrough\
+/solve_agent/threeloopI8_sol.m"
+"Final result.m and coeff_sol.m saved to runs/""threeloopI8""/"

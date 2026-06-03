@@ -28,17 +28,21 @@
 ClearAll[RunBoundaryConditions];
 Options[RunBoundaryConditions] = {"InputDir" -> None, "IBPDir" -> "/Users/windfolgen/Documents/aether/svbwalkthrough_ibp"};
 
-RunBoundaryConditions[rootDir_, label_, order_:3, loopPoints_:{5,6,7}, opts : OptionsPattern[]] := Module[
+RunBoundaryConditions[rootDir_, label_, config_, order_:3, opts : OptionsPattern[]] := Module[
   {asymDir, tmpDir, boundaryDir, expectedFiles, altDir, altFiles,
-   fullIntegrand, results, i, j, perm, permStr, ibpDir, origDir},
+   fullIntegrand, results, i, j, perm, permStr, ibpDir, origDir, loopPoints, perms},
 
+  Get[FileNameJoin[{rootDir, "config.wl"}]];
+  loopPoints = config["LoopPoints"];
+  perms = $Perms;
+  
   asymDir  = FileNameJoin[{rootDir, "asym"}];
 
   (* ---- check if boundary files already exist ---- *)
   boundaryDir = FileNameJoin[{rootDir, "asym", "boundary_agent"}];
   expectedFiles = Table[
     FileNameJoin[{boundaryDir, label <> StringJoin[ToString /@ perm] <> "_order" <> ToString[order] <> "_asyexp.m"}],
-    {perm, $Perms}
+    {perm, perms}
   ];
   If[AllTrue[expectedFiles, FileExistsQ],
     Print["Boundary files already exist for '", label, "' in '", boundaryDir, "'. Skipping computation."];
@@ -50,7 +54,7 @@ RunBoundaryConditions[rootDir_, label_, order_:3, loopPoints_:{5,6,7}, opts : Op
   If[altDir =!= None,
     altFiles = Table[
       FileNameJoin[{altDir, label <> StringJoin[ToString /@ perm] <> "_order" <> ToString[order] <> "_asyexp.m"}],
-      {perm, $Perms}
+      {perm, perms}
     ];
     If[AllTrue[altFiles, FileExistsQ],
       Print["Found boundary files for '", label, "' in '", altDir, "'. Copying to boundary_agent/."];
@@ -75,10 +79,9 @@ RunBoundaryConditions[rootDir_, label_, order_:3, loopPoints_:{5,6,7}, opts : Op
   SetConstraints[{p}, sp[p, p] = u];
 
   (* load LiteRed2 bases *)
-  Get[FileNameJoin[{asymDir, "Bases", "asym", "asym"}]];
-  Get[FileNameJoin[{asymDir, "Bases", "asym3L", "asym3L"}]];
-  Get[FileNameJoin[{asymDir, "Bases", "asym2L", "asym2L"}]];
-  Get[FileNameJoin[{asymDir, "Bases", "asym1L", "asym1L"}]];
+  Do[
+    Get[FileNameJoin[{asymDir, "Bases", b, b}]];
+  , {b, $LiteRedBases}];
 
   LaunchKernels[6];
 
@@ -96,7 +99,7 @@ RunBoundaryConditions[rootDir_, label_, order_:3, loopPoints_:{5,6,7}, opts : Op
   (* run parallel asymptotic expansion for all 6 permutations *)
   (* RunAsymExpansionParallel saves results to asym/check<label><perm>_order<order>_asyexp.m *)
   (* We relocate them to asym/boundary_agent/ and strip the "check" prefix *)
-  RunAsymExpansionParallel[label, $Integrand, $Perms, order, loopPoints];
+  RunAsymExpansionParallel[label, $Integrand, perms, order, loopPoints];
 
   (* restore original working directory *)
   SetDirectory[origDir];
@@ -113,7 +116,7 @@ RunBoundaryConditions[rootDir_, label_, order_:3, loopPoints_:{5,6,7}, opts : Op
         Print["  Moved boundary output: ", label, permStr]
       ];
     ],
-    {perm, $Perms}
+    {perm, perms}
   ];
 
   Print["Boundary condition files saved."];

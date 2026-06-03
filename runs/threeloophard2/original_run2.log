@@ -1,0 +1,73 @@
+Root: /Users/windfolgen/Documents/AntiGravity/svbwalkthrough
+Run:  /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/runs/threeloophard2/
+Logging initialized. Writing to console and: /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/logs/threeloophard2.log
+Ansatz length: 43
+basisSV length: 510
+SVHPL in ansatz: 70 (of 510)
+MPL in ansatz: 75 (of 82), basis: allsvlistmpl_threeloop
+Conformal weight n = 2
+Review agent loaded from /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/audit_agent/audit_agent.wl
+Audit: disabled (audit_agent.wl not found)
+
+=== SKILL 2: Boundary Conditions ===
+Boundary files already exist for 'threeloophard2' in '/Users/windfolgen/Documents/AntiGravity/svbwalkthrough/asym/boundary_agent'. Skipping computation.
+[ReviewGate] boundary stage: PASS (PASS:6 WARN:0 FAIL:0)
+
+=== Loading targetData ===
+  targetData[[1]] loaded from threeloophard21234
+  targetData[[2]] loaded from threeloophard22134
+  targetData[[3]] loaded from threeloophard21324
+  targetData[[4]] loaded from threeloophard22314
+  targetData[[5]] loaded from threeloophard23124
+  targetData[[6]] loaded from threeloophard23214
+
+=== SKILL 1: Series Expansion ===
+
+Import::nffil: File /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/allsvlistmpl_threeloopharde0.txt not found during Import.
+
+StringTrim::strse: String or list of strings expected at position 1 in StringTrim[$Failed, [ | ]].
+
+StringJoin::string: String expected at position 2 in {<>StringTrim[$Failed, [ | ]]<>}.
+
+ToExpression::notstrbox: {<>StringTrim[$Failed, [ | ]]<>} is not a string or a box. ToExpression can only interpret strings or boxes as Wolfram Language input.
+
+Import::nffil: File /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/allsvlistmpl_threeloopharde1.txt not found during Import.
+
+StringTrim::strse: String or list of strings expected at position 1 in StringTrim[$Failed, [ | ]].
+
+StringJoin::string: String expected at position 2 in {<>StringTrim[$Failed, [ | ]]<>}.
+
+ToExpression::notstrbox: {<>StringTrim[$Failed, [ | ]]<>} is not a string or a box. ToExpression can only interpret strings or boxes as Wolfram Language input.
+
+Import::nffil: File /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/allsvlistmpl_threeloophardeinf.txt not found during Import.
+
+General::stop: Further output of Import::nffil will be suppressed during this calculation.
+
+StringTrim::strse: String or list of strings expected at position 1 in StringTrim[$Failed, [ | ]].
+
+General::stop: Further output of StringTrim::strse will be suppressed during this calculation.
+
+StringJoin::string: String expected at position 2 in {<>StringTrim[$Failed, [ | ]]<>}.
+
+General::stop: Further output of StringJoin::string will be suppressed during this calculation.
+
+ToExpression::notstrbox: {<>StringTrim[$Failed, [ | ]]<>} is not a string or a box. ToExpression can only interpret strings or boxes as Wolfram Language input.
+
+General::stop: Further output of ToExpression::notstrbox will be suppressed during this calculation.
+[Skill 1] Reduced SVHPL to 70 elements from ansatz indices
+
+Part::partd: Part specification $Failed[[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75}]] is longer than depth of object.
+
+Part::partd: Part specification $Failed[[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75}]] is longer than depth of object.
+
+Part::partd: Part specification $Failed[[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75}]] is longer than depth of object.
+
+General::stop: Further output of Part::partd will be suppressed during this calculation.
+[Skill 1] Starting 6 expansions, poleType=simple, n=2, k=1, SVHPL=70, MPL=2
+[Skill 1] Limit 1/6: additional = InputForm[(1 - v)^(-1)]
+[Skill 1] Limit 1/6 (e0uv): done.
+[Skill 1] Limit 2/6: additional = InputForm[(-1 + v)^(-1)]
+[Skill 1] Limit 2/6 (e0uvp): done.
+[Skill 1] Limit 3/6: additional = InputForm[(u - v)^(-1)]
+[Skill 1] Limit 3/6 (einfuv): done.
+[Skill 1] Limit 4/6: additional = InputForm[(-1 + u)^(-1)]

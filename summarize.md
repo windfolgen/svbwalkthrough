@@ -23,6 +23,9 @@ Each skill operates in its own working directory. Output files are written to th
 ```
 .                           (project root)
 ├── master_agent.wl          — Skill 0: orchestrator
+├── input_parser.wl          — Input config parser
+├── config.wl                — Global configuration
+├── data/                    — Pre-expanded series bases (.txt and .m)
 ├── review_agent.wl          — Review facade (gateway to audit)
 ├── ConformalWeight.m        — conformal weight calculator (shared)
 ├── .aetherignore            — exclude large intermediate files from AI indexing
@@ -49,14 +52,13 @@ Each skill operates in its own working directory. Output files are written to th
 ```
 
 ### 0.2 Orchestrator (`master_agent.wl`)
-`RunSVBPipeline[rootDir, label, poleType, lsAddPole, order_:3, yOrder_:4, opts]`
+`SolveIntegrandSystem[rootDir, label, config, order_:3, yOrder_:4, opts]`
+
+Uses the `parsed` dictionary from `input_parser.wl` which supports multiple leading singularities.
 
 - `poleOrder` is automatically derived from `poleType`: `"simple" → 1`, `"double" → 2`
 
-Set these **globals** before calling:
-- `$Integrand` — the integrand expression
-- `$Perms` — solving order: `{{1,2,3,4},{2,1,3,4},{1,3,2,4},{2,3,1,4},{3,1,2,4},{3,2,1,4}}`
-- `ansatzExpr`, `basisSV`, `basisMPL`, `targetData` — for Skill 3
+Globals are no longer manually set. The pipeline reads `runs/<label>/input.wl` which defines `$Integrand`, `$Coeff`, and `$LeadingSingularities` (a list of `{poleType, prefactor, ansatzFile}`).
 
 **Options:**
 - `"Audit" -> True` (default) — run `ReviewGate` after each stage
@@ -77,7 +79,7 @@ All three skills share a single `label` (one integrand, one leading singularity)
 
 | Agent | Reads from | Writes to |
 |-------|-----------|-----------|
-| `series_agent.wl` | `root/allsvliste*_uptow8.txt`, `root/allsvlistmpl_*e*.{m,txt}` (auto-detected via `mplBasisFile`), `root/ConformalWeight.m` | `root/series_agent/<label>_svlist*.m` (SVHPL), `root/series_agent/<label>_svlistmpl*.m` (MPL) |
+| `series_agent.wl` | `data/allsvliste*_uptow8.txt`, `data/allsvlistmpl_*e*.{m,txt}` (auto-detected via `mplBasisFile`), `root/ConformalWeight.m` | `root/series_agent/<label>_svlist*.m` (SVHPL), `root/series_agent/<label>_svlistmpl*.m` (MPL) |
 | `boundary_agent.wl` | `root/asym/asym_new.wl`, `root/asym/Bases/`, `root/asym/tmp/` (reused across runs), optionally `root/runs/<label>/boundaries/` (via `"InputDir"`) | `root/asym/boundary_agent/<label>*_asyexp.m`; LiteRed2 IBP .mx caches to `"IBPDir"` (external) |
 | `solve_agent.wl` | `root/series_agent/<label>_svlist*.m`, `root/asym/boundary_agent/<label>*_asyexp.m`, ansatz and basis `.m` files | `root/solve_agent/<label>_sol.m` |
 | `review_agent.wl` | `root/audit_agent/audit_agent.wl` (when loaded) | `root/audit_agent/reports/` (when writing) |
@@ -259,6 +261,8 @@ Table[{p, ConformalWeight[integrand, p]}, {p, 1, 7}]
    {{1, -1}, {2, -1}, {3, -1}, {4, -1},
     {5, -4}, {6, -4}, {7, -4}}
 *)
+
+**CRITICAL BUG FIX**: The conformal weight `n` must be evaluated at an **external vertex** (e.g., 1, 2, 3, or 4). Evaluating at a loop vertex (5, 6, 7) will return the wrong weight and introduce spurious `1/Y^5` poles in the Jacobian!
 ```
 
 **Examples:**
@@ -387,9 +391,7 @@ where `<perm>` is the concatenated digit string (e.g., `1234`). These are exactl
 ## 3. Skill 3: Coefficient Solving
 
 ### 3.1 Input
-- `ansatzExpr`: The complete `testansatz` expression (`Join[svhplansatz, svmplbasis]`).
-- `basisSV` (`allsvlist_fourloop.m`): SVHPL basis list.
-- `basisMPL` (`allsvlistmpl_threeloop.m`): MPL basis list.
+- `config`: The parsed input configuration, containing a list of `LeadingSingularities`, each specifying its own `ansatzExpr`. SV and MPL bases are now automatically matched to the subsets needed by each ansatz.
 - Pre-computed series expansions from **Skill 1** (`series_agent/<label>_svlist*.m`, `series_agent/<label>_svlistmpl*.m`).
 - `targetData` — a list of 6 boundary condition expressions. Construct by loading the output files from Skill 2 in this **exact order**:
 
@@ -456,7 +458,10 @@ The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only fil
 8. **Verify**: substitute `solt` back into `setup` for each limit and check `temp === 0`.
 
 ### 3.3 Output
-- `solve_agent/<label>_sol.m`: Solved numeric values for all coefficients `c[i]`.
+- `solve_agent/<label>_sol.m`: Raw solved numeric values for all coefficients `c[i]`.
+- `runs/<label>/coeff_sol.m`: Processed list of solved coefficient values, partitioned by leading singularity (e.g., `{{c1, c2, ...}, {cN, ...}}`). Generated natively by `solve_agent.wl`.
+- `runs/<label>/result.m`: Final expanded list of ansatz elements multiplied by their respective solved coefficients (e.g., `{coeff1.ansatz1, coeff2.ansatz2, ...}`). Generated natively by `solve_agent.wl` directly into the run folder without manual prefactors.
+- `runs/<label>/run.log`: Console output of the `solve_agent` is natively stream-captured directly to this file during execution.
 
 ---
 
@@ -471,10 +476,10 @@ The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only fil
 | `ConformalWeight.m` | Conformal weight calculator (shared) |
 | `svbwalkthrough.nb` | Main notebook with all algorithms |
 | `allsvlist_fourloop.m` | SVHPL basis (list of elements) |
-| `allsvliste0_uptow8.txt` | Series expansion of SVHPL basis at z→0 |
-| `allsvliste1_uptow8.txt` | Series expansion of SVHPL basis at z→1 |
-| `allsvlisteinf_uptow8.txt` | Series expansion of SVHPL basis at z→∞ |
-| `allsvlistmpl_*.m` files | Auto-detected: scanned for best ansatz element coverage |
+| `data/allsvliste0_uptow8.txt` | Series expansion of SVHPL basis at z→0 |
+| `data/allsvliste1_uptow8.txt` | Series expansion of SVHPL basis at z→1 |
+| `data/allsvlisteinf_uptow8.txt` | Series expansion of SVHPL basis at z→∞ |
+| `data/allsvlistmpl_*.m` files | Auto-detected: scanned for best ansatz element coverage |
 | SVHPL basis | `allsvlist_fourloop.m` (fixed, all runs share it) |
 
 ### MPL basis auto-detection
@@ -505,8 +510,10 @@ For a new problem type, drop in `<name>.m` and `<name>e{0,1,inf}.{m,txt}` — no
 | `runs/<label>/threeloophard1_ans.m` | Even-ansatz for hard topology (runs/threeloophard1/) |
 | `runs/<label>/threeloophard2_ans.m` | Even-ansatz for hard topology (runs/threeloophard2/) |
 | `runs/<label>/threeloopoddansatz.m` | Odd-ansatz (runs/threeloopI5/, threeloopI8/, fourloopI6boxing/) |
-| `runs/<label>/result.m` | Solved final result written to run directory |
-| `solve_agent/<label>_sol.m` | Solved coefficient values |
+| `runs/<label>/result.m` | Solved final result list written natively by solve_agent |
+| `runs/<label>/coeff_sol.m` | Partitioned coefficient values list natively by solve_agent |
+| `runs/<label>/run.log` | Captured log of the coefficient solver execution |
+| `solve_agent/<label>_sol.m` | Raw solved coefficient substitution rules |
 | `review_agent.wl` | Review facade (gateway to audit agent) |
 | `audit_agent/audit_agent.wl` | Skill 4: stage review checks |
 | `project_skills/ansatz_basis/SKILL.md` | Ansatz construction documentation |
@@ -562,11 +569,15 @@ Skill 0 (master_agent.wl): orchestrates the pipeline
   |    Checks: boundary files exist (6), series expansion files exist (12)
   |
   ├─ Skill 3 (solve_agent/solve_agent.wl)
+  |    |  - Opens output stream to runs/<label>/run.log
   |    |  - Load series expansions + boundary conditions
   |    |  - setup = (c[i]).ansatz /. solt /. svrep
   |    |  - Incremental solve across 6 limits
+  |    |  - Partitions coefficients and reconstructs final ansatze natively
   |    v
   |  Output: solve_agent/<label>_sol.m
+  |          runs/<label>/result.m
+  |          runs/<label>/coeff_sol.m
   |
   ├─ [SOLVE]        ReviewGate[rootDir, label, "solve"]
   |
@@ -590,14 +601,14 @@ runs/<label>/
   result.m    — final result (c[i] × ansatz, expanded)
 ```
 
-The run script:
-1. Computes `rootDir = ParentDirectory[ParentDirectory[runDir]]`
-2. Loads ansatz + basis files
-3. Pre-filters basis to ansatz-only indices (4× speedup)
-4. Loads `review_agent.wl` and `audit_agent.wl`
-5. Runs 4 pre-checks (preflight, preboundary, preseries, presolve) before each stage, aborting on FAIL
-6. Sequentially calls Skill 2 → Skill 1 → Skill 3, each followed by a post-stage audit
-7. Saves final result and solved coefficients
+The run script `runs/<label>/run.wl`:
+1. Uses `input_parser.wl` to parse `runs/<label>/input.wl`.
+2. Passes the `parsed` configuration to `SolveIntegrandSystem`.
+3. `SolveIntegrandSystem` manages the multi-LS workflow:
+   - Evaluates the integrand limits via Skill 2.
+   - For each LS, computes conformal weight (from external point 1) and runs Skill 1 to generate series expansions.
+   - Passes all bases and expansions to Skill 3 to incrementally solve for the coefficients.
+4. **Seamless Exit**: The run script immediately exits. The underlying `solve_agent.wl` automatically drops `result.m`, `coeff_sol.m`, and `run.log` perfectly into the run directory. Legacy assembly loops have been aggressively stripped out of orchestration scripts to prevent duplication or manual prefactor errors.
 
 ### Proven run: `threeloophard1`
 - Integrand: `(x[5,6]*x[3,4]−x[3,6]x[4,5]−x[3,5]x[4,6])/12p`
@@ -707,3 +718,8 @@ find . -name "*<label>*" -not -path "*/.git/*" -not -path "*/runs/<label>/*"
 ```
 
 Only the run directory and project-root files (e.g., `<label>_ans.m`) should remain. If any cache files appear, they must be removed before a fresh run.
+
+### Expansion Limits
+* **Three-loop runs:** `Y` is evaluated to `Y^3` by default. This is because the available boundary constraints (`boundary.m`) are only provided up to $O(Y^3)$.
+* **Four-loop runs:** `Y` is evaluated to `Y^4` by default.
+* **Overrides:** If the user specifically instructs to evaluate a certain run at a different expansion order, always follow their explicit instructions over the defaults.

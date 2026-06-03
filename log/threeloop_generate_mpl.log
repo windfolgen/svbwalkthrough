@@ -1,0 +1,23 @@
+Processing e1uv...
+From (kernel 1):
+                                                               -6
+Series::sbyc: Division by a series with no coefficients in O[u]  .
+From (kernel 1):
+                                                               -5
+Series::sbyc: Division by a series with no coefficients in O[u]  .
+From (kernel 1):
+                                                               -4
+Series::sbyc: Division by a series with no coefficients in O[u]  .
+From (kernel 1):
+General::stop: Further output of Series::sbyc will be suppressed during this calculation.
+Finished e1uv.
+Processing e1uvp...
+Finished e1uvp.
+Processing e0uv...
+Finished e0uv.
+Processing e0uvp...
+Finished e0uvp.
+Processing einfuv...
+Finished einfuv.
+Processing einfuvp...
+Finished einfuvp.

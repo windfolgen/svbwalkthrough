@@ -1,68 +1,72 @@
 (* =================================================================== *)
 (*  Skill 3: Coefficient Solving Agent                                 *)
-(*  Location: ./solve_agent/                                           *)
 (*                                                                     *)
-(*  Follows the exact syntax of svbwalkthrough.nb (Section 6).         *)
-(*  Only file paths and ansatz construction vary per integrand.         *)
+(*  Reads boundary target data and series expansion data to construct  *)
+(*  and solve a linear system for the unknown coefficients c[i].       *)
 (*                                                                     *)
-(*  Input (set before calling):                                        *)
-(*    rootDir      — project root                                      *)
-(*    label        — file name prefix shared by all skills             *)
-(*    ansatzExpr   — the full testansatz expression (Join[svhpl,svmpl]) *)
-(*    basisSV      — allsvlist (SVHPL basis)                            *)
-(*    basisMPL     — allsvlistmpl (MPL basis)                           *)
-(*    targetData   — list of 6 target expressions from boundary calc   *)
-(*    order        — $Order                                            *)
-(*                                                                     *)
-(*  Output:                                                             *)
-(*    solve_agent/<label>_sol.m                                        *)
+(*  Arguments:                                                         *)
+(*    rootDir      — project root directory                            *)
+(*    label        — run label (e.g. "threeloophard1")                 *)
+(*    ansatzList   — list of ansatz expressions for each LS            *)
+(*    labelsList   — list of labels used for series files per LS       *)
+(*    basisSVList  — list of SVHPL basis elements per LS               *)
+(*    basisMPLList — list of MPL basis elements per LS                 *)
+(*    targetData   — list of boundary data (one SeriesData per perm)   *)
+(*    order        — series expansion order for Y                      *)
 (* =================================================================== *)
 
 ClearAll[RunCoefficientSolving];
 
-RunCoefficientSolving[rootDir_, label_,
-                     ansatzExpr_, basisSV_, basisMPL_,
-                     targetData_List, order_ : 3] := Module[
-  {allsvlist, allsvlistmpl, testansatz, $LEN, $Order, c,
-   svliste, svlistmple, svrep, setup, temp, temp1, sys, solt,
-   i, j, k, suffix, filePrefix},
+RunCoefficientSolving[rootDir_, label_, config_,
+                      ansatzList_List, labelsList_List,
+                      basisSVList_List, basisMPLList_List,
+                      targetData_, order_:3] := Module[
+  {$LEN, $Order, c,
+   setup, temp, temp1, sys, solt,
+   i, j, k, suffix, filePrefix, ansatzK, svrepK, mplRules, offset, varsList,
+   logStream},
 
-  (* ---- load basis lists ---- *)
-  allsvlist    = basisSV;
-  allsvlistmpl = basisMPL;
-  testansatz   = ansatzExpr;
-  $LEN         = Length[testansatz];
+  logStream = OpenWrite[FileNameJoin[{rootDir, "runs", label, "run.log"}]];
+  AppendTo[$Output, logStream];
+
+  (* ---- global setups ---- *)
+  $LEN         = Total[Length /@ ansatzList];
   $Order       = order;
-  Clear[Y];  (* defensive: Y must remain symbolic *)
+  sys          = {};
+  solt         = {};
 
-  Print["[Skill 3] $LEN=", $LEN, " $Order=", $Order, " SV=", Length[allsvlist], " MPL=", Length[allsvlistmpl]];
-  Print["[Skill 3] Y=", Y // InputForm];
+  Print["[Skill 3] Total Ansatz Elements=$LEN=", $LEN, " $Order=", $Order];
 
-  filePrefix = FileNameJoin[{rootDir, "series_agent", label}];
+  (* ---- prepare output directory ---- *)
+  If[!DirectoryQ[FileNameJoin[{rootDir, "solve_agent"}]],
+    CreateDirectory[FileNameJoin[{rootDir, "solve_agent"}]]
+  ];
 
-  (* ---- process each limit incrementally, as in the notebook ---- *)
-  sys = {};
-  solt = {};
-
-  Do[
-    suffix = Switch[i,
-      1, "e0uv",  2, "e0uvp",  3, "einfuv",
-      4, "einfuvp", 5, "e1uv",  6, "e1uvp"
+  (* ---- incremental solve across 6 limits ---- *)
+  For[i = 1, i <= 6, i++,
+    suffix = Switch[i, 1, "e0uv", 2, "e0uvp", 3, "einfuv", 4, "einfuvp", 5, "e1uv", 6, "e1uvp"];
+    
+    (* setup: substitute partial solution from previous limits, summing over LS *)
+    Quiet[
+      setup = 0;
+      offset = 0;
+      Do[
+        ansatzK = ansatzList[[k]];
+        filePrefix = FileNameJoin[{rootDir, "series_agent", labelsList[[k]]}];
+        
+        mplRules = If[basisMPLList[[k]] =!= {},
+          Thread @ Rule[basisMPLList[[k]], ((Series[#, {Y, 0, $Order}]) &) /@ Import[filePrefix <> "_svlistmpl" <> suffix <> ".m"]],
+          {}
+        ];
+        svrepK = Join[
+          Thread @ Rule[basisSVList[[k]], ((Series[#, {Y, 0, $Order}]) &) /@ Import[filePrefix <> "_svlist" <> suffix <> ".m"]],
+          mplRules
+        ];
+        
+        setup = setup + ((c /@ Range[offset + 1, offset + Length[ansatzK]]) . ansatzK) /. svrepK /. solt;
+        offset = offset + Length[ansatzK];
+      , {k, 1, Length[ansatzList]}];
     ];
-
-    svliste    = Import[filePrefix <> "_svlist" <> suffix <> ".m"];
-    svlistmple = Import[filePrefix <> "_svlistmpl" <> suffix <> ".m"];
-
-    (* svrep: exact notebook syntax *)
-    svrep = Join[
-      Thread @ Rule[allsvlist, ((Series[#, {Y, 0, $Order}]) &) /@ svliste],
-      Thread @ Rule[allsvlistmpl, ((Series[#, {Y, 0, $Order}]) &) /@ svlistmple]
-    ];
-    Print["[DBG] After svrep, Y=", Y // InputForm];
-    Print["[Skill 3] Limit ", i, " (", suffix, "): equations="];
-
-    (* setup: substitute partial solution from previous limits *)
-    Quiet[setup = ((c /@ Range[$LEN]) . testansatz) /. solt /. svrep];
 
     (* temp: exact notebook syntax *)
     temp = MonomialList[
@@ -74,13 +78,12 @@ RunCoefficientSolving[rootDir_, label_,
       {Log[u]}
     ] // DeleteCases[#, 0] &;
 
-    (* If temp is empty, this limit provides no new constraints — skip *)
     If[temp === {},
       Print["Limit ", i, " (", suffix, "): temp is empty, skipping."];
       Continue[];
     ];
 
-    (***** FIXED: extract coefficients (temp1) — from notebook, never changes *****)
+    (***** extract coefficients (temp1) *****)
     temp1 = Table[
       (
         (temp[[j]] /. {
@@ -98,7 +101,7 @@ RunCoefficientSolving[rootDir_, label_,
       {j, 1, Length[temp]}
     ];
 
-    (***** FIXED: build linear system (sys1) — from notebook, never changes *****)
+    (***** build linear system (sys1) *****)
     Module[{sys1},
       sys1 = Table[
         Table[
@@ -111,52 +114,83 @@ RunCoefficientSolving[rootDir_, label_,
             0
           ],
           {k, 1, Length[temp1[[j]]]}
-        ] // Flatten,
+        ],
         {j, 1, Length[temp1]}
-      ] // Flatten // DeleteCases[#, True | False] &;
+      ] // Flatten // DeleteDuplicates // DeleteCases[#, True | False] &;
 
-      (* incremental join and solve, only if real equations were found *)
-      If[sys1 =!= {},
-        sys = Join[sys, sys1];
-        (* Extract only c[i]-like variables (c$nnn or c), exclude I,u,Y,etc. *)
-        allVars = Variables[sys[[All, 1]]];
-        cVars = Select[allVars, MatchQ[#, _[_]] && StringMatchQ[SymbolName[Head[#]], "c*"] &];
-        Print["  system size after limit ", i, ": ", Length[sys], " vars: ", Length[cVars]];
-        solt = Solve[sys, cVars][[1]];
-      ,
-        Print["  no new equations from limit ", i];
+      (* merge and solve incrementally *)
+      sys = Join[sys, sys1];
+      
+      varsList = Select[Variables[sys[[All, 1]]], MatchQ[#, _[_]] && StringStartsQ[SymbolName[Head[#]], "c"] &];
+      Print["  system size after limit ", i, ": ", Length[sys], " vars: ", Length[varsList]];
+      
+      solt = Quiet[Solve[sys, varsList]];
+      If[solt === {},
+        Print["[FATAL ERROR] Solve returned an empty set on Limit ", i, ". System is inconsistent."];
       ];
+      solt = solt[[1]];
     ];
-
-    , {i, 1, 6}
   ];
-
-  (* ---- final solution ---- *)
-  soltClean = Table[Symbol["c"][i] -> (c[i] /. solt), {i, 1, $LEN}]; Export[FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}], soltClean];
-  Print["Solution written to ", FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}]];
 
   (* ---- verify: substitute back and check all limits ---- *)
-  Do[
-    suffix = Switch[i,
-      1, "e0uv",  2, "e0uvp",  3, "einfuv",
-      4, "einfuvp", 5, "e1uv",  6, "e1uvp"
+  For[i = 1, i <= 6, i++,
+    suffix = Switch[i, 1, "e0uv", 2, "e0uvp", 3, "einfuv", 4, "einfuvp", 5, "e1uv", 6, "e1uvp"];
+    
+    Quiet[
+      setup = 0;
+      offset = 0;
+      Do[
+        ansatzK = ansatzList[[k]];
+        filePrefix = FileNameJoin[{rootDir, "series_agent", labelsList[[k]]}];
+        
+        mplRules = If[basisMPLList[[k]] =!= {},
+          Thread @ Rule[basisMPLList[[k]], ((Series[#, {Y, 0, $Order}]) &) /@ Import[filePrefix <> "_svlistmpl" <> suffix <> ".m"]],
+          {}
+        ];
+        svrepK = Join[
+          Thread @ Rule[basisSVList[[k]], ((Series[#, {Y, 0, $Order}]) &) /@ Import[filePrefix <> "_svlist" <> suffix <> ".m"]],
+          mplRules
+        ];
+        
+        setup = setup + ((c /@ Range[offset + 1, offset + Length[ansatzK]]) . ansatzK) /. svrepK /. solt;
+        offset = offset + Length[ansatzK];
+      , {k, 1, Length[ansatzList]}];
     ];
-    svliste    = Import[filePrefix <> "_svlist" <> suffix <> ".m"];
-    svlistmple = Import[filePrefix <> "_svlistmpl" <> suffix <> ".m"];
-    svrep = Join[
-      Thread @ Rule[allsvlist,    ((Series[#, {Y, 0, $Order}]) &) /@ svliste],
-      Thread @ Rule[allsvlistmpl, ((Series[#, {Y, 0, $Order}]) &) /@ svlistmple]
+
+    temp = Normal[setup - targetData[[i]]] /. {
+      f[3, 3] -> Zeta[3]^2 / 2, f[3, 5] -> Zeta[3] Zeta[5] - f[5, 3], f[a_] :> Zeta[a]
+    };
+    
+    If[temp =!= 0,
+      Print["Limit ", i, " mismatch: ", InputForm[temp]];
     ];
-    setup = ((c /@ Range[$LEN]) . testansatz) /. svrep /. solt;
-    temp = setup - targetData[[i]] /. {
-      f[3, 3] -> Zeta[3]^2 / 2,
-      f[3, 5] -> Zeta[3] Zeta[5] - f[5, 3],
-      f[a_] :> Zeta[a]
-    } // Simplify;
-    If[temp === 0,
-      Print["Limit ", i, " verified."],
-      Print["Limit ", i, " mismatch: ", temp // InputForm]
-    ],
-    {i, 1, 6}
   ];
+
+  (* save to disk *)
+  Export[FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}], solt /. c[i_] :> Symbol["c"][i]];
+  Print["Solution written to ", FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}]];
+
+  Module[{values, offset, finalResultList, coeffListAll, ansatzK, resK, coeffK},
+    values = varsList /. solt;
+    finalResultList = {};
+    coeffListAll = {};
+    offset = 0;
+    Do[
+      ansatzK = ansatzList[[k]];
+      coeffK = Table[values[[offset + i]], {i, 1, Length[ansatzK]}];
+      resK = Sum[coeffK[[i]] * ansatzK[[i]], {i, 1, Length[ansatzK]}];
+      
+      AppendTo[finalResultList, Expand[resK]];
+      AppendTo[coeffListAll, coeffK];
+      
+      offset = offset + Length[ansatzK];
+    , {k, 1, Length[ansatzList]}];
+    
+    Export[FileNameJoin[{rootDir, "runs", label, "result.m"}], finalResultList];
+    Export[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}], coeffListAll];
+    Print["Final result.m and coeff_sol.m saved to runs/", label, "/"];
+  ];
+
+  $Output = DeleteCases[$Output, logStream];
+  Close[logStream];
 ];

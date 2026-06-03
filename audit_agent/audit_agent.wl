@@ -3,9 +3,7 @@
 (*  Location: ./audit_agent/                                           *)
 (*                                                                     *)
 (*  Performs basic file-existence and format validation after each     *)
-(*  pipeline stage.  Designed to be always-on in the pipeline.         *)
-(*                                                                     *)
-(*  Benchmark labels: I3Lhard (boundary), I3Lhard (series/solve)       *)
+(*  pipeline stage. Designed to be always-on in the pipeline.          *)
 (* =================================================================== *)
 
 ClearAll[RunReviewGate, SVBAuditReport, SVBAuditCombine];
@@ -44,10 +42,13 @@ SetAttributes[SVBAuditCombine, {Flat, OneIdentity}];
 (*  Unified review gate                                                 *)
 (* =================================================================== *)
 
-RunReviewGate[rootDir_, label_String, stage_String] := Module[
+RunReviewGate[rootDir_, label_String, stage_String, config_Association] := Module[
   {checker},
 
+  Get[FileNameJoin[{rootDir, "config.wl"}]];
+
   checker = Switch[stage,
+    "input",       AuditInput,
     "boundary",    AuditBoundaryStage,
     "series",      AuditSeriesStage,
     "solve",       AuditSolveStage,
@@ -56,20 +57,19 @@ RunReviewGate[rootDir_, label_String, stage_String] := Module[
     "preseries",   AuditPreSeries,
     "presolve",    AuditPreSolve,
     "pipeline",    AuditPipeline,
-    _,             Function[{r, l}, SVBAuditReport["unknown:" <> stage, "FAIL", {}]]
+    _,             Function[{r, l, c}, SVBAuditReport["unknown:" <> stage, "FAIL", {}]]
   ];
 
-  checker[rootDir, label]
+  checker[rootDir, label, config]
 ];
 
 (* =================================================================== *)
 (*  Preflight check                                                     *)
 (* =================================================================== *)
 
-AuditPreflight[rootDir_, label_] := Module[
+AuditPreflight[rootDir_, label_, config_] := Module[
   {checks = {}, file},
 
-  (* required source files exist *)
   AppendTo[checks, Association[
     "Status" -> If[FileExistsQ[FileNameJoin[{rootDir, "ConformalWeight.m"}]], "PASS", "FAIL"],
     "Check"  -> "preflight-file-ConformalWeight",
@@ -77,67 +77,100 @@ AuditPreflight[rootDir_, label_] := Module[
   ]];
 
   AppendTo[checks, Association[
-    "Status" -> If[FileExistsQ[FileNameJoin[{rootDir, "allsvliste0_uptow8.txt"}]], "PASS", "FAIL"],
-    "Check"  -> "preflight-file-svhpl-txt",
-    "Message"-> "allsvliste*_uptow8.txt files present"
-  ]];
-
-  AppendTo[checks, Association[
-    "Status" -> If[FileExistsQ[FileNameJoin[{rootDir, "allsvlistmpl_threeloope0.txt"}]], "PASS", "FAIL"],
-    "Check"  -> "preflight-file-mpl-txt",
-    "Message"-> "allsvlistmpl_*e*.txt files present"
+    "Status" -> If[FileExistsQ[$SVBasisFile], "PASS", "FAIL"],
+    "Check"  -> "preflight-svbasis",
+    "Message"-> "SVBasisFile exists at " <> $SVBasisFile
   ]];
 
   SVBAuditReport["preflight", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL", "PASS"], checks]
 ];
 
 (* =================================================================== *)
+(*  Input validation check                                              *)
+(* =================================================================== *)
+
+AuditInput[rootDir_, label_, config_] := Module[
+  {checks = {}, inputFile, hasIntegrand, hasIntegrandList, hasCoeff, hasLS, hasLSList, hasAnsatz, hasAnsatzList, hasOrderY},
+
+  inputFile = FileNameJoin[{rootDir, "runs", label, "input.wl"}];
+  If[FileExistsQ[inputFile],
+    AppendTo[checks, Association["Status"->"PASS", "Check"->"input-file-exists", "Message"->"input.wl exists"]];
+    
+    Block[{integrand, integrandlist, coeff, leadingsingularity, leadingsingularitylist, ansatz, ansatzlist, OrderY},
+      Quiet[Get[inputFile]];
+      
+      hasIntegrand = ValueQ[integrand];
+      hasIntegrandList = ValueQ[integrandlist];
+      hasCoeff = ValueQ[coeff];
+      hasLS = ValueQ[leadingsingularity];
+      hasLSList = ValueQ[leadingsingularitylist];
+      hasAnsatz = ValueQ[ansatz];
+      hasAnsatzList = ValueQ[ansatzlist];
+      hasOrderY = ValueQ[OrderY];
+    ];
+
+    If[hasIntegrand || (hasIntegrandList && hasCoeff),
+      AppendTo[checks, Association["Status"->"PASS", "Check"->"input-integrand", "Message"->"Integrand or (IntegrandList and coeff) provided"]],
+      AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-integrand", "Message"->"Missing integrand or (integrandlist and coeff)"]]
+    ];
+    
+    If[hasLS || hasLSList,
+      AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ls", "Message"->"Leading singularity provided"]],
+      AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ls", "Message"->"Missing leadingsingularity or leadingsingularitylist"]]
+    ];
+    
+    If[hasAnsatz || hasAnsatzList,
+      AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ansatz", "Message"->"Ansatz provided"]],
+      AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ansatz", "Message"->"Missing ansatz or ansatzlist"]]
+    ];
+    
+    If[hasOrderY,
+      AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ordery", "Message"->"OrderY provided"]],
+      AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ordery", "Message"->"Missing OrderY"]]
+    ];
+  ,
+    AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-file-exists", "Message"->"Missing input.wl file at " <> inputFile]]
+  ];
+  
+  SVBAuditReport["input", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL", "PASS"], checks]
+];
+
+(* =================================================================== *)
 (*  Pre-Boundary stage: verify inputs before running boundary expansion  *)
 (* =================================================================== *)
 
-AuditPreBoundary[rootDir_, label_] := Module[
+AuditPreBoundary[rootDir_, label_, config_] := Module[
   {checks = {}, asymDir, path, data, i, f},
 
   asymDir = FileNameJoin[{rootDir, "asym"}];
 
-  (* check LiteRed2 bases *)
+  (* check LiteRed2 bases from config.wl *)
   Table[
     path = FileNameJoin[{asymDir, "Bases", b, b}];
-    f = If[FileExistsQ[path],
+    If[FileExistsQ[path],
       AppendTo[checks, Association["Status"->"PASS", "Check"->"preboundary-liteRed-basis-"<>b,
         "Message"->"LiteRed basis '"<>b<>"' exists"]],
       AppendTo[checks, Association["Status"->"FAIL", "Check"->"preboundary-liteRed-basis-missing-"<>b,
         "Message"->"Missing LiteRed basis: " <> path]]
     ],
-    {b, {"asym", "asym3L", "asym2L", "asym1L"}}
+    {b, $LiteRedBases}
   ];
 
   (* check asym_new.wl *)
   path = FileNameJoin[{asymDir, "asym_new.wl"}];
   AppendTo[checks, If[FileExistsQ[path],
-    Association["Status"->"PASS", "Check"->"preboundary-asym-engine",
-      "Message"->"asym_new.wl exists"],
-    Association["Status"->"FAIL", "Check"->"preboundary-asym-engine-missing",
-      "Message"->"Missing asym_new.wl"]
+    Association["Status"->"PASS", "Check"->"preboundary-asym-engine", "Message"->"asym_new.wl exists"],
+    Association["Status"->"FAIL", "Check"->"preboundary-asym-engine-missing", "Message"->"Missing asym_new.wl"]
   ]];
 
   (* check Gmaterrep files *)
   Table[
-    path = FileNameJoin[{asymDir, "Gmaterrep4L.m"}];
+    path = FileNameJoin[{asymDir, f}];
     AppendTo[checks, If[FileExistsQ[path],
-      Association["Status"->"PASS", "Check"->"preboundary-gmaterrep4l",
-        "Message"->"Gmaterrep4L.m exists"],
-      Association["Status"->"FAIL", "Check"->"preboundary-gmaterrep4l-missing",
-        "Message"->"Missing Gmaterrep4L.m"]
-    ]];
-    path = FileNameJoin[{asymDir, "Gmaterrep3L.m"}];
-    AppendTo[checks, If[FileExistsQ[path],
-      Association["Status"->"PASS", "Check"->"preboundary-gmaterrep3l",
-        "Message"->"Gmaterrep3L.m exists"],
-      Association["Status"->"WARN", "Check"->"preboundary-gmaterrep3l-missing",
-        "Message"->"Missing Gmaterrep3L.m (may not be needed)"]
+      Association["Status"->"PASS", "Check"->"preboundary-gmaterrep-"<>f, "Message"->f<>" exists"],
+      Association["Status"->"WARN", "Check"->"preboundary-gmaterrep-missing-"<>f, "Message"->"Missing "<>f<>" (may not be needed)"]
     ]],
-    {path}
+    {f, $GmaterrepFiles}
   ];
 
   (* check that tmp dir exists or can be created *)
@@ -151,98 +184,86 @@ AuditPreBoundary[rootDir_, label_] := Module[
 ];
 
 (* =================================================================== *)
-(*  Pre-Series stage: verify inputs before running series expansion     *)
-(*                                                                     *)
-(*    File format convention:                                          *)
-(*      .m   — Mathematica expression (e.g. {e1, e2, ...}), no parsing *)
-(*      .txt — string-wrapped list (e.g. "[e1, e2, ...]"), needs parse *)
+(*  Pre-Series stage: verify inputs and infer MPL dependency           *)
 (* =================================================================== *)
 
-AuditPreSeries[rootDir_, label_] := Module[
-  {checks = {}, path, data, txtFiles, mplPrefix, mplFiles, loadOk,
-   svNames, mplNames, i, fname, nEntries, fileType},
+AuditPreSeries[rootDir_, label_, config_] := Module[
+  {checks = {}, path, fname, lsConfig, k, cAnsatz, basisElements = {},
+   svNames = {}, mplFiles, bestCount = 0, bestFile = None, 
+   mplTry, idx, mplPrefix, mplBaseLength, ext, expPath, expData, foundMatch},
 
-  (* check SVHPL text files *)
-  svNames = {"allsvliste0_uptow8.txt", "allsvliste1_uptow8.txt", "allsvlisteinf_uptow8.txt"};
+  (* 1. Check SVHPL text files *)
   Do[
-    path = FileNameJoin[{rootDir, fname}];
+    Do[
+      fname = $SVTextPrefix <> lim <> sfx;
+      AppendTo[svNames, fname];
+    , {sfx, $SVTextSuffixes}]
+  , {lim, $Limits}];
+  
+  Do[
+    path = FileNameJoin[{$DataDir, fname}];
     If[FileExistsQ[path],
-      Quiet[data = Import[path, "String"], Import::nffil];
-      If[StringQ[data],
-        (* try parsing to verify it's valid *)
-        Quiet[data = ToExpression["{" <> StringTrim[data, "["|"]"] <> "}"]];
-        If[ListQ[data],
-          AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-svhpl-" <> fname,
-            "Message"->fname <> " (.txt, parsed to list, " <> ToString[Length[data]] <> " elements)"]],
-          AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-svhpl-parse-" <> fname,
-            "Message"->fname <> " (.txt) exists but cannot be parsed as list"]]
-        ],
-        AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-svhpl-string-" <> fname,
-          "Message"->fname <> " (.txt) exists but Import did not return a string"]]
-      ],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-svhpl-missing-" <> fname,
-        "Message"->"Missing: " <> path]]
+      AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-svhpl-" <> fname, "Message"->fname <> " exists"]],
+      AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-svhpl-missing-" <> fname, "Message"->"Missing: " <> path]]
     ],
     {fname, svNames}
   ];
 
-  (* check MPL expansion files — scan for pattern *_e0, *_e1, *_einf *)
-  (* priority: .m (expression format, no parsing) over .txt (string format, needs parsing) *)
-  mplFiles = FileNames[FileNameJoin[{rootDir, "allsvlistmpl_*e0.m"}]];
-  If[mplFiles =!= {},
-    (* ---- .m format: expression list, no parsing ---- *)
-    mplPrefix = StringReplace[FileBaseName[First[mplFiles]], "e0" -> "e"];
-    fileType = ".m";
-    AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-format-convention",
-      "Message"->"MPL basis format: .m — loaded as Mathematica expression (no string parsing needed)"]];
-    Do[
-      fname = mplPrefix <> ext <> ".m";
-      path = FileNameJoin[{rootDir, fname}];
-      If[FileExistsQ[path],
-        Quiet[data = Import[path], Import::nffil];
-        If[ListQ[data] && data =!= $Failed,
-          AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-" <> fname,
-            "Message"->fname <> " (.m) loaded as expression list (" <> ToString[Length[data]] <> " elements) — no parsing needed"]],
-          AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-format-" <> fname,
-            "Message"->fname <> " (.m) exists but is not a valid expression list (type: " <> ToString[Head[data]] <> ") — expected a list"]]
-        ],
-        AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-missing-" <> fname,
-          "Message"->"Missing MPL expansion: " <> path]]
-      ],
-      {ext, {"0", "1", "inf"}}
-    ];
+  (* 2. Strict MPL Inference *)
+  (* Collect all basis elements from all leading singularities in config *)
+  Do[
+    cAnsatz = config["LeadingSingularities"][[k, 3]];
+    basisElements = Join[basisElements, Cases[cAnsatz, _I | _f, {1, Infinity}]];
+  , {k, 1, Length[config["LeadingSingularities"]]}];
+  
+  basisElements = DeleteDuplicates[basisElements];
+
+  If[Length[basisElements] == 0,
+    AppendTo[checks, Association["Status"->"WARN", "Check"->"preseries-mpl-none", "Message"->"No basis elements found in ansatz."]];
   ,
-    (* ---- .txt format: string-wrapped list, needs parsing ---- *)
-    mplFiles = FileNames[FileNameJoin[{rootDir, "allsvlistmpl_*e0.txt"}]];
-    If[mplFiles =!= {},
-      mplPrefix = StringReplace[FileBaseName[First[mplFiles]], "e0" -> "e"];
-      fileType = ".txt";
-      AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-format-convention",
-        "Message"->"MPL basis format: .txt — loaded as string, parsed via StringTrim+ToExpression"]];
-      Do[
-        fname = mplPrefix <> ext <> ".txt";
-        path = FileNameJoin[{rootDir, fname}];
-        If[FileExistsQ[path],
-          Quiet[data = Import[path, "String"], Import::nffil];
-          If[StringQ[data],
-            Quiet[data = ToExpression["{" <> StringTrim[data, "["|"]"] <> "}"]];
-            If[ListQ[data] && data =!= $Failed,
-              AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-" <> fname,
-                "Message"->fname <> " (.txt) loaded as string, parsed to list (" <> ToString[Length[data]] <> " elements)"]],
-              AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-parse-" <> fname,
-                "Message"->fname <> " (.txt) exists but parsing to list failed — format: .txt files must be string-wrapped lists"]]
-            ],
-            AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-string-" <> fname,
-              "Message"->fname <> " (.txt) exists but Import did not return a string"]]
-          ],
-          AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-missing-" <> fname,
-            "Message"->"Missing MPL expansion: " <> path]]
-        ],
-        {ext, {"0", "1", "inf"}}
+    mplFiles = FileNames[FileNameJoin[{$DataDir, "allsvlistmpl_*.m"}]];
+    mplFiles = Select[mplFiles, !StringMatchQ[#, ___ ~~ ("e0.m" | "e1.m" | "einf.m")] &];
+
+    Do[
+      mplTry = Import[f];
+      idx = Function[e, If[# === {}, 0, #[[1,1]]] & @ Position[mplTry, e, {1}]] /@ basisElements;
+      idx = Select[idx, Positive];
+      If[Length[idx] == Length[basisElements],
+        bestFile = f;
+        Break[];
       ];
+    , {f, mplFiles}];
+
+    If[bestFile === None,
+      AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-missing-basis", 
+        "Message"->"FAIL: No MPL basis file fully covers the required elements from your ansatz! Please generate a matching allsvlistmpl_*.m in ./data/"]];
     ,
-      AppendTo[checks, Association["Status"->"WARN", "Check"->"preseries-mpl-none",
-        "Message"->"No allsvlistmpl_*e0.m or .txt files found — MPL expansions may not be needed"]]
+      mplTry = Import[bestFile];
+      mplBaseLength = Length[mplTry];
+      mplPrefix = FileBaseName[bestFile];
+      
+      AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-basis-found", 
+        "Message"->"Found covering MPL basis: " <> bestFile <> " (Length=" <> ToString[mplBaseLength] <> ")"]];
+        
+      (* Check expansions e0, e1, einf *)
+      foundMatch = True;
+      Do[
+        expPath = FileNameJoin[{$DataDir, mplPrefix <> ext <> ".m"}];
+        If[FileExistsQ[expPath],
+          expData = Import[expPath];
+          If[ListQ[expData] && Length[expData] == mplBaseLength,
+            AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-expansion-" <> ext, "Message"->"Expansion " <> ext <> " exists and matches length " <> ToString[mplBaseLength]]];
+          ,
+            AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-expansion-lengthmismatch-" <> ext, 
+              "Message"->"FAIL: Expansion " <> ext <> " length (" <> ToString[If[ListQ[expData], Length[expData], "Invalid"]] <> ") does NOT match base length (" <> ToString[mplBaseLength] <> "). Please recreate it in proper format!"]];
+            foundMatch = False;
+          ];
+        ,
+          AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-expansion-missing-" <> ext, 
+            "Message"->"FAIL: Missing required expansion file: " <> expPath <> ". Please generate it!"]];
+          foundMatch = False;
+        ];
+      , {ext, $Limits}];
     ];
   ];
 
@@ -254,10 +275,9 @@ AuditPreSeries[rootDir_, label_] := Module[
 (*  Pre-Solve stage: verify inputs before coefficient solving           *)
 (* =================================================================== *)
 
-AuditPreSolve[rootDir_, label_] := Module[
-  {checks = {}, path, data},
+AuditPreSolve[rootDir_, label_, config_] := Module[
+  {checks = {}, path, data, sfx, suffixes},
 
-  (* check that targetData is loaded (boundary conditions must be available) *)
   Table[
     path = FileNameJoin[{rootDir, "asym", "boundary_agent",
       label <> StringJoin[ToString /@ perm] <> "_order*_asyexp.m"}];
@@ -268,24 +288,21 @@ AuditPreSolve[rootDir_, label_] := Module[
         "Message"->"Missing boundary file for permutation " <> StringJoin[ToString/@perm]]
       ]
     ],
-    {perm, {{1,2,3,4},{2,1,3,4},{1,3,2,4},{2,3,1,4},{3,1,2,4},{3,2,1,4}}}
+    {perm, $Perms}
   ];
 
-  (* check series expansion output exists *)
+  suffixes = {"e0uv","e0uvp","einfuv","einfuvp","e1uv","e1uvp"};
   Table[
     path = FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}];
     If[FileExistsQ[path],
       Quiet[data = Import[path], Import::nffil];
       If[ListQ[data] && data =!= $Failed,
-        AppendTo[checks, Association["Status"->"PASS", "Check"->"presolve-series-" <> sfx,
-          "Message"->"Series svlist " <> sfx <> " loaded (" <> ToString[Length[data]] <> " elements)"]],
-        AppendTo[checks, Association["Status"->"WARN", "Check"->"presolve-series-format-" <> sfx,
-          "Message"->"Series svlist " <> sfx <> " exists but not a valid list"]]
+        AppendTo[checks, Association["Status"->"PASS", "Check"->"presolve-series-" <> sfx, "Message"->"Series svlist " <> sfx <> " loaded (" <> ToString[Length[data]] <> " elements)"]],
+        AppendTo[checks, Association["Status"->"WARN", "Check"->"presolve-series-format-" <> sfx, "Message"->"Series svlist " <> sfx <> " exists but not a valid list"]]
       ],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"presolve-series-missing-" <> sfx,
-        "Message"->"Missing series file: " <> path]]
+      AppendTo[checks, Association["Status"->"FAIL", "Check"->"presolve-series-missing-" <> sfx, "Message"->"Missing series file: " <> path]]
     ],
-    {sfx, {"e0uv","e0uvp","einfuv","einfuvp","e1uv","e1uvp"}}
+    {sfx, suffixes}
   ];
 
   SVBAuditReport["presolve", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL",
@@ -296,37 +313,47 @@ AuditPreSolve[rootDir_, label_] := Module[
 (*  Boundary stage checks                                               *)
 (* =================================================================== *)
 
-AuditBoundaryStage[rootDir_, label_] := Module[
+AuditBoundaryStage[rootDir_, label_, config_] := Module[
   {checks = {}, perms, i, perm, permStr, pathPattern, found, path, data},
 
-  perms = {{1,2,3,4},{2,1,3,4},{1,3,2,4},{2,3,1,4},{3,1,2,4},{3,2,1,4}};
-
+  perms = $Perms;
   For[i = 1, i <= Length[perms], i++,
     perm = perms[[i]];
     permStr = StringJoin[ToString /@ perm];
-    (* accept any order, since it's set by the pipeline *)
     pathPattern = FileNameJoin[{rootDir, "asym", "boundary_agent", label <> permStr <> "_order*_asyexp.m"}];
     found = FileNames[pathPattern];
 
     If[found =!= {},
       path = First[found];
       Quiet[data = Import[path], Import::nffil];
-      If[Head[data] === SeriesData || NumberQ[data] || ListQ[data],
-        AppendTo[checks, Association[
-          "Status"  -> "PASS",
-          "Check"   -> "boundary-file-exists-" <> permStr,
-          "Message" -> "Boundary file " <> permStr <> " exists and importable"
-        ]],
-        AppendTo[checks, Association[
-          "Status"  -> "WARN",
-          "Check"   -> "boundary-file-format-" <> permStr,
-          "Message" -> "Boundary file " <> permStr <> " exists but unexpected format: " <> ToString[Head[data]]
-        ]]
+      If[Head[data] === SeriesData,
+        Module[{vars, syms, badSyms},
+          vars = Variables[Normal[data]];
+          syms = Cases[vars, _Symbol, Infinity] // DeleteDuplicates;
+          badSyms = Select[syms, Context[#] === "Global`" && !MemberQ[{u, Y}, #] &];
+          
+          If[Length[badSyms] == 0 && !FreeQ[data, Y] && !FreeQ[data, u],
+            AppendTo[checks, Association[
+              "Status"  -> "PASS", "Check"   -> "boundary-file-valid-" <> permStr,
+              "Message" -> "Boundary file " <> permStr <> " is a valid SeriesData containing ONLY u and Y"
+            ]],
+            AppendTo[checks, Association[
+              "Status"  -> "FAIL", "Check"   -> "boundary-file-variables-" <> permStr,
+              "Message" -> "Boundary file " <> permStr <> " is SeriesData but contains unauthorized variables or is missing u/Y: " <> ToString[badSyms]
+            ]]
+          ]
+        ],
+        If[NumberQ[data] || ListQ[data],
+          AppendTo[checks, Association[
+            "Status"  -> "PASS", "Check"   -> "boundary-file-fallback-" <> permStr, "Message" -> "Boundary file " <> permStr <> " is a valid fallback format (" <> ToString[Head[data]] <> ")"
+          ]],
+          AppendTo[checks, Association[
+            "Status"  -> "WARN", "Check"   -> "boundary-file-format-" <> permStr, "Message" -> "Boundary file " <> permStr <> " exists but unexpected format: " <> ToString[Head[data]]
+          ]]
+        ]
       ],
       AppendTo[checks, Association[
-        "Status"  -> "FAIL",
-        "Check"   -> "boundary-file-missing-" <> permStr,
-        "Message" -> "Missing boundary file matching: " <> pathPattern
+        "Status"  -> "FAIL", "Check"   -> "boundary-file-missing-" <> permStr, "Message" -> "Missing boundary file matching: " <> pathPattern
       ]]
     ];
   ];
@@ -336,14 +363,46 @@ AuditBoundaryStage[rootDir_, label_] := Module[
 ];
 
 (* =================================================================== *)
+(*  Pre-Series stage checks (Check MPL Caches)                          *)
+(* =================================================================== *)
+
+AuditPreSeries[rootDir_, label_, config_] := Module[
+  {checks = {}, mplPrefix, suffixes, expectedFile, ext, sfxSuffix, s, bestFile},
+  
+  bestFile = Lookup[config, "BestFile", None];
+  
+  If[bestFile === None,
+    AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-caches", "Message"->"No MPL files required for this basis."]];
+  ,
+    mplPrefix = StringReplace[FileBaseName[bestFile], ".m" -> ""];
+    suffixes = {
+      {"e0", "_inuv"}, {"e0", "_inuvp"},
+      {"einf", "_inuv"}, {"einf", "_inuvp"},
+      {"e1", "_inuv"}, {"e1", "_inuvp"}
+    };
+    
+    Do[
+      ext = s[[1]]; sfxSuffix = s[[2]];
+      expectedFile = FileNameJoin[{rootDir, "data", mplPrefix <> ext <> sfxSuffix <> ".txt"}];
+      If[FileExistsQ[expectedFile],
+        AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-cache-" <> ext <> sfxSuffix, "Message"->"Found MPL cache: " <> expectedFile]];
+      ,
+        AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-cache-missing-" <> ext <> sfxSuffix, "Message"->"Missing required MPL cache file: " <> expectedFile]];
+      ];
+    , {s, suffixes}];
+  ];
+
+  SVBAuditReport["preseries", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL",
+                          If[MemberQ[checks, _?(#["Status"] === "WARN" &)], "WARN", "PASS"]], checks]
+];
+
+(* =================================================================== *)
 (*  Series stage checks                                                 *)
 (* =================================================================== *)
 
-AuditSeriesStage[rootDir_, label_] := Module[
+AuditSeriesStage[rootDir_, label_, config_] := Module[
   {checks = {}, suffixes, sfx, svPath, mplPath, svData, mplData},
-
   suffixes = {"e0uv","e0uvp","einfuv","einfuvp","e1uv","e1uvp"};
-
   Do[
     svPath  = FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}];
     mplPath = FileNameJoin[{rootDir, "series_agent", label <> "_svlistmpl" <> sfx <> ".m"}];
@@ -351,25 +410,17 @@ AuditSeriesStage[rootDir_, label_] := Module[
     If[FileExistsQ[svPath],
       Quiet[svData = Import[svPath], Import::nffil];
       If[ListQ[svData],
-        AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlist-"<>sfx,
-          "Message"->"svlist " <> sfx <> " exists (Length="<>ToString[Length[svData]]<>")"]],
-        AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlist-"<>sfx,
-          "Message"->"svlist " <> sfx <> " exists but not a list"]]
+        AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlist-"<>sfx, "Message"->"svlist " <> sfx <> " exists (Length="<>ToString[Length[svData]]<>")"]],
+        AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlist-"<>sfx, "Message"->"svlist " <> sfx <> " exists but not a list"]]
       ],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"series-file-missing-svlist-"<>sfx,
-        "Message"->"Missing: " <> svPath]]
+      AppendTo[checks, Association["Status"->"FAIL", "Check"->"series-file-missing-svlist-"<>sfx, "Message"->"Missing: " <> svPath]]
     ];
-
     If[FileExistsQ[mplPath],
       Quiet[mplData = Import[mplPath], Import::nffil];
       If[ListQ[mplData],
-        AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlistmpl-"<>sfx,
-          "Message"->"svlistmpl " <> sfx <> " exists (Length="<>ToString[Length[mplData]]<>")"]],
-        AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlistmpl-"<>sfx,
-          "Message"->"svlistmpl " <> sfx <> " exists but not a list"]]
-      ],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"series-file-missing-svlistmpl-"<>sfx,
-        "Message"->"Missing: " <> mplPath]]
+        AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlistmpl-"<>sfx, "Message"->"svlistmpl " <> sfx <> " exists (Length="<>ToString[Length[mplData]]<>")"]],
+        AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlistmpl-"<>sfx, "Message"->"svlistmpl " <> sfx <> " exists but not a list"]]
+      ]
     ],
     {sfx, suffixes}
   ];
@@ -382,30 +433,16 @@ AuditSeriesStage[rootDir_, label_] := Module[
 (*  Solve stage checks                                                  *)
 (* =================================================================== *)
 
-AuditSolveStage[rootDir_, label_] := Module[
+AuditSolveStage[rootDir_, label_, config_] := Module[
   {checks = {}, path, data},
-
   path = FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}];
-
   If[FileExistsQ[path],
     Quiet[data = Import[path], Import::nffil];
     If[ListQ[data] && AllTrue[data, MatchQ[#, _Rule | _RuleDelayed] &],
-      AppendTo[checks, Association[
-        "Status"  -> "PASS",
-        "Check"   -> "solve-file-exists",
-        "Message" -> "Solution file exists with " <> ToString[Length[data]] <> " rules"
-      ]],
-      AppendTo[checks, Association[
-        "Status"  -> "WARN",
-        "Check"   -> "solve-file-format",
-        "Message" -> "Solution file exists but not a list of rules"
-      ]]
+      AppendTo[checks, Association["Status"  -> "PASS", "Check"   -> "solve-file-exists", "Message" -> "Solution file exists with " <> ToString[Length[data]] <> " rules"]],
+      AppendTo[checks, Association["Status"  -> "WARN", "Check"   -> "solve-file-format", "Message" -> "Solution file exists but not a list of rules"]]
     ],
-    AppendTo[checks, Association[
-      "Status"  -> "FAIL",
-      "Check"   -> "solve-file-missing",
-      "Message" -> "Missing solution file: " <> path
-    ]]
+    AppendTo[checks, Association["Status"  -> "FAIL", "Check"   -> "solve-file-missing", "Message" -> "Missing solution file: " <> path]]
   ];
 
   SVBAuditReport["solve", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL",
@@ -416,12 +453,11 @@ AuditSolveStage[rootDir_, label_] := Module[
 (*  Pipeline combined check                                             *)
 (* =================================================================== *)
 
-AuditPipeline[rootDir_, label_] := Module[
+AuditPipeline[rootDir_, label_, config_] := Module[
   {rBoundary, rSeries, rSolve, combined},
-
-  rBoundary = AuditBoundaryStage[rootDir, label];
-  rSeries   = AuditSeriesStage[rootDir, label];
-  rSolve    = AuditSolveStage[rootDir, label];
+  rBoundary = AuditBoundaryStage[rootDir, label, config];
+  rSeries   = AuditSeriesStage[rootDir, label, config];
+  rSolve    = AuditSolveStage[rootDir, label, config];
   combined  = SVBAuditCombine[rBoundary, rSeries, rSolve];
 
   Print["[Audit] Pipeline: ", combined["Status"],

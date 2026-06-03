@@ -1,0 +1,24 @@
+Root: /Users/windfolgen/Documents/AntiGravity/svbwalkthrough
+Run:  /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/runs/threeloophard1/
+=== Starting Unified Workflow Engine for: threeloophard1 ===
+  Conformal weight n = 2
+  Checking for boundary target data...
+  Loading full SV basis...
+  [Leading Singularity 1/1 (double)]
+  Executing RunSeriesExpansion for threeloophard1...
+[Skill 1] Loaded MPL expansions: allsvlistmpl_threeloope{0,1,inf} (format: .txt, parsed from string-wrapped list)
+[Skill 1] Reduced SVHPL to 74 elements from ansatz indices
+? [Skill 1] WARNING: 12 existing series expansion files will be overwritten:
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svliste0uv.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svlistmple0uv.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svliste0uvp.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svlistmple0uvp.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svlisteinfuv.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svlistmpleinfuv.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svlisteinfuvp.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svlistmpleinfuvp.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svliste1uv.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svlistmple1uv.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svliste1uvp.m
+  - /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/threeloophard1_svlistmple1uvp.m
+[Skill 1] Proceed and overwrite? (y/n)
