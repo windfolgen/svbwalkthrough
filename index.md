@@ -389,6 +389,7 @@
 ./test/compare.wl
 ./test/compare_0.wl
 ./test/compare_0P.wl
+./test/compare_fourloopI41_symmetry_terms.wl
 ./test/diff.wl
 ./test/diff_e1uv.wl
 ./test/eval_test.wl
@@ -411,6 +412,8 @@
 ./test/test_B_expansion.wl
 ./test/test_I.wl
 ./test/test_bm_1.wl
+./test/test_boundary_cache.wl
+./test/test_audit_validation.wl
 ./test/test_bterm.wl
 ./test/test_bytecount.wl
 ./test/test_collect_series_10.wl
@@ -442,6 +445,7 @@
 ./test/test_exact_size.wl
 ./test/test_fast_series.wl
 ./test/test_first_element.wl
+./test/test_fourloopI41_recalc.wl
 ./test/test_inf_series.wl
 ./test/test_length.wl
 ./test/test_normal.wl
@@ -465,6 +469,7 @@
 ./test/test_split.wl
 ./test/test_sqrt_series_10.wl
 ./test/test_suggestions.wl
+./test/test_symmetry_equivalence.wl
 ./test/test_transform.wl
 ./test/test_u_series.wl
 ./test/test_user_idea.wl

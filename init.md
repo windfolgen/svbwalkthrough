@@ -8,7 +8,7 @@
 
 4. update the audit_agent.wl so that you can make sure it works for current workflow, especially it will check name and position of input and output files.
 
-5. once finish a task, you must update it to walkthrough and remove those stale files which are proven wrong or not consistent.
+5. before a task, you need to check twice that your scripts will work and is consistent. once finish a task, you must update it to walkthrough and remove those stale files which are proven wrong or not consistent.
 
 6. manage the files you have created carefully, do not mess up the workspace after you have performed some job. For example, similar scripts lie in different folder randomly.
 

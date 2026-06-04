@@ -296,7 +296,7 @@ GenTensorProjection[indexlist_, tagp_, OptionsPattern[]] := Module[
   start = SessionTime[];
   tensor = MPartition[indexlist, tagp];
   l = Length[tensor];
-  If[l > OptionValue["outputrank"], 
+  If[l > 24, 
     Print["dimensions: ", l];
     Print["indexlist: ", indexlist]
   ];
@@ -308,7 +308,7 @@ GenTensorProjection[indexlist_, tagp_, OptionsPattern[]] := Module[
     {i, 1, l}
   ];
   sol = Flatten[Solve[sys, cv]];
-  If[l > OptionValue["outputrank"], 
+  If[l > 24, 
     Print["time consuming: ", SessionTime[] - start]
   ];
   Return[{Normal[CoefficientArrays[cv . tensor /. sol, bv]][[2]] // Factor, tensor}]
@@ -348,19 +348,19 @@ FindTensor[tensor_, record_] := Module[
 SpecialMultiply[temlist_, h_, rep_] := Module[
   {scalar, listA, listB, totalB},
   
-  scalar = temlist[[1]];
+  scalar = temlist[[1]]/.rep;
   
   (* 1. Determine which list to iterate over to minimize loop overhead *)
   If[Length[temlist[[2]]] > Length[temlist[[3]]],
-    listA = temlist[[2]]; 
-    listB = temlist[[3]],
+    listA = temlist[[2]]/.rep; 
+    listB = temlist[[3]]/.rep,
     
-    listA = temlist[[3]]; 
-    listB = temlist[[2]]
+    listA = temlist[[3]]/.rep; 
+    listB = temlist[[2]]/.rep
   ];
   
   (* 2. PRECOMPUTE the sum of the smaller list ONCE outside the loop *)
-  totalB = Total[listB];
+  totalB = Total[listB]/.rep;
   
   (* 3. Map functionally instead of using Reap/Sow *)
   Total @ Map[
@@ -376,7 +376,13 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
   Module[{vclist, tem1, tem2, tp, record, flag, top, k, check, start, end, len, fresult, glist = {}, gtotal = {}, rep = Association[{}], revrep, tensor, t0, tGen, tExp, tClass, tCont, tMult},
    Print["projecting the tensor structure and performing the contraction..."];
    top = {top1, top2};
-   record = {};(*record known tensor reduction*)
+   Module[{commonDir, commonCache},
+     commonDir = If[StringEndsQ[OptionValue["dir"], "tmp/"], OptionValue["dir"], ParentDirectory[OptionValue["dir"]]];
+     commonCache = FileNameJoin[{commonDir, "cache_tensor_record_noremove.mx"}];
+     record = If[FileExistsQ[commonCache], Import[commonCache], {}];
+     If[Not[ListQ[record]], record = {}];
+   ];
+
    (*we further split the results into smaller size*)
    len = Length[list];
    Print["total length: ",len," split into number of chunks: ",Quotient[len, OptionValue["chunksize"]] + 1];
@@ -494,6 +500,12 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
     , {mm, 1, Quotient[len, OptionValue["chunksize"]] + 1}];
    revrep = AssociationMap[Reverse, rep];
    fresult = Table[Import[OptionValue["dir"] <> "tensor_" <> ToString[mm] <> ".mx"], {mm, 1, Quotient[len, OptionValue["chunksize"]] + 1}] /. revrep // Flatten;
+   If[record =!= {},
+     Module[{localCache},
+       localCache = FileNameJoin[{OptionValue["dir"], "tensor_record_cache_local.mx"}];
+       Export[localCache, record];
+     ]
+   ];
    If[OptionValue[deBug], Return[{fresult, record}]];
    Return[fresult];
 ];
@@ -631,11 +643,43 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
      Gmasterrep4L, Gmasterrep3L, Gmasterrep2L, Gmasterrep1L, Gmasterrep,
      fresults},
 
-    names = (intname <> StringJoin[ToString /@ #]) & /@ perms;
-    ints = (integrand /. {x[a__] :> (x[a] /. Thread@Rule[{1, 2, 3, 4}, #])}) & /@ perms;
-
     Print["=== Running Parallel Expansion for ", intname, " with ", Length[perms], " permutations ==="];
     starttime = SessionTime[];
+
+    (* Select best symmetry exchange case for each permutation *)
+    Module[{chosenPerms, i, perm, case1, case2, case3, case4, cases, bestCase, minTerms, terms, intCase},
+      chosenPerms = Table[Null, {Length[perms]}];
+      Do[
+        perm = perms[[i]];
+        case1 = perm;
+        case2 = perm /. {1 -> 3, 3 -> 1, 2 -> 4, 4 -> 2};
+        case3 = perm /. {1 -> 2, 2 -> 1, 3 -> 4, 4 -> 3};
+        case4 = perm /. {1 -> 4, 4 -> 1, 2 -> 3, 3 -> 2};
+        cases = {case1, case2, case3, case4};
+        
+        bestCase = case1;
+        minTerms = Infinity;
+        Do[
+          intCase = integrand /. {x[a__] :> (x[a] /. Thread@Rule[{1, 2, 3, 4}, c])};
+          Quiet[
+            terms = Length[RegionExpand[intCase, loops, "order" -> order, "check" -> False][[2]]];
+          ];
+          If[terms < minTerms,
+            minTerms = terms;
+            bestCase = c;
+          ];
+        , {c, cases}];
+        
+        chosenPerms[[i]] = bestCase;
+        Print["Permutation ", perm, " -> chosen equivalent permutation ", bestCase, " (", minTerms, " terms)"];
+      , {i, 1, Length[perms]}];
+      
+      names = (intname <> StringJoin[ToString /@ #]) & /@ perms;
+      ints = Table[
+        integrand /. {x[a__] :> (x[a] /. Thread@Rule[{1, 2, 3, 4}, chosenPerms[[i]]])},
+        {i, 1, Length[perms]}
+      ];
+    ];
 
     (* Step 1: Parallel Tensor Reduction *)
     testAll = ParallelTable[
@@ -737,6 +781,33 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
     , {i, 1, Length[perms]}];
 
     CloseKernels[];
+    
+    (* Merge caches on master kernel *)
+    Module[{commonDir, commonCache, record = {}, localCache, localRecord, i},
+      commonDir = FileNameJoin[{filepath, "tmp"}];
+      commonCache = FileNameJoin[{commonDir, "cache_tensor_record_noremove.mx"}];
+      If[FileExistsQ[commonCache],
+        record = Import[commonCache];
+      ];
+      If[Not[ListQ[record]], record = {}];
+      
+      Do[
+        localCache = FileNameJoin[{filepath, "tmp", "tensor_" <> names[[i]], "tensor_record_cache_local.mx"}];
+        If[FileExistsQ[localCache],
+          localRecord = Import[localCache];
+          If[ListQ[localRecord],
+            record = Join[record, localRecord];
+          ];
+          Quiet[DeleteFile[localCache]];
+        ]
+      , {i, 1, Length[perms]}];
+      
+      If[record =!= {},
+        record = DeleteDuplicatesBy[record, #[[1]] &];
+        Export[commonCache, record];
+        Print["[Global Cache] Merged and updated cache with ", Length[record], " records."];
+      ];
+    ];
     
     Print["=== Done Parallel Expansion! time: ", SessionTime[] - starttime, " ==="];
     fresults

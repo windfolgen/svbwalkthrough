@@ -90,8 +90,30 @@ AuditPreflight[rootDir_, label_, config_] := Module[
 (* =================================================================== *)
 
 AuditInput[rootDir_, label_, config_] := Module[
-  {checks = {}, inputFile, hasIntegrand, hasIntegrandList, hasCoeff, hasLS, hasLSList, hasAnsatz, hasAnsatzList, hasOrderY},
+  {checks = {}, inputFile, runFile, hasIntegrand, hasIntegrandList, hasCoeff,
+   hasLS, hasLSList, hasAnsatz, hasAnsatzList, hasOrderY, runContent},
 
+  (* 1. Validate run.wl existence and basic content *)
+  runFile = FileNameJoin[{rootDir, "runs", label, "run.wl"}];
+  If[FileExistsQ[runFile],
+    AppendTo[checks, Association["Status"->"PASS", "Check"->"run-file-exists", "Message"->"run.wl exists"]];
+    Quiet[
+      runContent = Import[runFile, "String"];
+      If[StringQ[runContent],
+        If[StringContainsQ[runContent, "workflow_engine.wl"] && 
+           StringContainsQ[runContent, "input_parser.wl"] && 
+           StringContainsQ[runContent, "SolveIntegrandSystem"],
+          AppendTo[checks, Association["Status"->"PASS", "Check"->"run-file-structure", "Message"->"run.wl contains expected imports and call"]],
+          AppendTo[checks, Association["Status"->"WARN", "Check"->"run-file-structure", "Message"->"run.wl might be missing standard imports or SolveIntegrandSystem call"]]
+        ],
+        AppendTo[checks, Association["Status"->"FAIL", "Check"->"run-file-readable", "Message"->"run.wl is not readable"]]
+      ]
+    ];
+  ,
+    AppendTo[checks, Association["Status"->"FAIL", "Check"->"run-file-exists", "Message"->"Missing run.wl file at " <> runFile]]
+  ];
+
+  (* 2. Validate input.wl *)
   inputFile = FileNameJoin[{rootDir, "runs", label, "input.wl"}];
   If[FileExistsQ[inputFile],
     AppendTo[checks, Association["Status"->"PASS", "Check"->"input-file-exists", "Message"->"input.wl exists"]];
@@ -107,32 +129,51 @@ AuditInput[rootDir_, label_, config_] := Module[
       hasAnsatz = ValueQ[ansatz];
       hasAnsatzList = ValueQ[ansatzlist];
       hasOrderY = ValueQ[OrderY];
-    ];
-
-    If[hasIntegrand || (hasIntegrandList && hasCoeff),
-      AppendTo[checks, Association["Status"->"PASS", "Check"->"input-integrand", "Message"->"Integrand or (IntegrandList and coeff) provided"]],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-integrand", "Message"->"Missing integrand or (integrandlist and coeff)"]]
-    ];
-    
-    If[hasLS || hasLSList,
-      AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ls", "Message"->"Leading singularity provided"]],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ls", "Message"->"Missing leadingsingularity or leadingsingularitylist"]]
-    ];
-    
-    If[hasAnsatz || hasAnsatzList,
-      AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ansatz", "Message"->"Ansatz provided"]],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ansatz", "Message"->"Missing ansatz or ansatzlist"]]
-    ];
-    
-    If[hasOrderY,
-      AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ordery", "Message"->"OrderY provided"]],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ordery", "Message"->"Missing OrderY"]]
+      
+      (* Check integrand validation *)
+      If[hasIntegrandList,
+        If[hasCoeff,
+          If[ListQ[integrandlist] && ListQ[coeff] && Length[integrandlist] == Length[coeff],
+            AppendTo[checks, Association["Status"->"PASS", "Check"->"input-integrand", "Message"->"integrandlist and coeff are matching lists"]],
+            AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-integrand", "Message"->"integrandlist and coeff must be lists of equal length"]]
+          ],
+          AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-integrand", "Message"->"integrandlist provided but coeff is missing"]]
+        ],
+        If[hasIntegrand,
+          AppendTo[checks, Association["Status"->"PASS", "Check"->"input-integrand", "Message"->"integrand provided"]],
+          AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-integrand", "Message"->"Neither integrand nor integrandlist + coeff found"]]
+        ]
+      ];
+      
+      (* Check leading singularity validation *)
+      If[hasLSList,
+        If[hasAnsatzList,
+          If[ListQ[leadingsingularitylist] && ListQ[ansatzlist] && Length[leadingsingularitylist] == Length[ansatzlist],
+            AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ls-ansatz", "Message"->"leadingsingularitylist and ansatzlist are matching lists"]],
+            AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ls-ansatz", "Message"->"leadingsingularitylist and ansatzlist must be lists of equal length"]]
+          ],
+          AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ls-ansatz", "Message"->"leadingsingularitylist provided but ansatzlist is missing"]]
+        ],
+        If[hasLS,
+          If[hasAnsatz,
+            AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ls-ansatz", "Message"->"leadingsingularity and ansatz provided"]],
+            AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ls-ansatz", "Message"->"leadingsingularity provided but ansatz is missing"]]
+          ],
+          AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ls-ansatz", "Message"->"Neither leadingsingularity nor leadingsingularitylist found"]]
+        ]
+      ];
+      
+      If[hasOrderY,
+        AppendTo[checks, Association["Status"->"PASS", "Check"->"input-ordery", "Message"->"OrderY provided"]],
+        AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-ordery", "Message"->"Missing OrderY"]]
+      ];
     ];
   ,
     AppendTo[checks, Association["Status"->"FAIL", "Check"->"input-file-exists", "Message"->"Missing input.wl file at " <> inputFile]]
   ];
   
-  SVBAuditReport["input", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL", "PASS"], checks]
+  SVBAuditReport["input", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL",
+                                If[MemberQ[checks, _?(#["Status"] === "WARN" &)], "WARN", "PASS"]], checks]
 ];
 
 (* =================================================================== *)

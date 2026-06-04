@@ -1,0 +1,2203 @@
+Root: /Users/windfolgen/Documents/AntiGravity/svbwalkthrough
+Run:  /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/runs/fourloopI42/
+=== Starting Unified Workflow Engine for: fourloopI42 ===
+Review agent loaded from /Users/windfolgen/Documents/AntiGravity/svbwalkthrough/audit_agent/audit_agent.wl
+[ReviewGate] preflight stage: PASS (PASS:2 WARN:0 FAIL:0)
+  Conformal weight n = 1
+  Checking for boundary target data...
+[ReviewGate] preboundary stage: PASS (PASS:10 WARN:0 FAIL:0)
+
+FrontEndObject::notavail: A front end is not available; certain operations require a front end.
+
+j::shdw: Symbol j appears in multiple contexts {LiteRed`, Global`}; definitions in context LiteRed` may shadow or be shadowed by other definitions.
+**************** LiteRed v2.025β ********************
+Author: Roman N. Lee, Budker Institute of Nuclear Physics, Novosibirsk.
+Release Date: ????-??-??
+Timestamp: Tue 25 Feb 2025 15:30:30
+Read from:/Users/windfolgen/GitRepos/LiteRed2/Source/LiteRed2025.m (CRC32:2205507540,{2340977437, 3317197336, 1063727846})
+
+LiteRed stands for Loop integrals Reduction.
+The package is designed for the search and application of the Integration-By-Part reduction rules. It also contains some other useful tools.
+
+See ?LiteRed`* for a list of functions. 
+
+CheckDefinitions::warn: Some external definitions used in 'asym' basis are missing. Probably, you should run ExecuteDefinitions[asym].
+
+CheckDefinitions::warn: Some external definitions used in 'asym3L' basis are missing. Probably, you should run ExecuteDefinitions[asym3L].
+
+CheckDefinitions::warn: Some external definitions used in 'asym2L' basis are missing. Probably, you should run ExecuteDefinitions[asym2L].
+
+General::stop: Further output of CheckDefinitions::warn will be suppressed during this calculation.
+
+j$::shdw: Symbol j$ appears in multiple contexts {LiteRed`, Global`}; definitions in context LiteRed` may shadow or be shadowed by other definitions.
+IBP output redirected to: /Users/windfolgen/Documents/aether/svbwalkthrough_ibp
+=== Running Parallel Expansion for fourloopI42_comp1_ with 6 permutations ===
+(kernel 1):
+fourloopI42_comp1_1234: no tensor reduced results found. Starting reduction...
+
+(kernel 2):
+fourloopI42_comp1_2134: no tensor reduced results found. Starting reduction...
+
+(kernel 3):
+fourloopI42_comp1_1324: no tensor reduced results found. Starting reduction...
+
+(kernel 4):
+fourloopI42_comp1_2314: no tensor reduced results found. Starting reduction...
+
+(kernel 5):
+fourloopI42_comp1_3124: no tensor reduced results found. Starting reduction...
+
+(kernel 6):
+fourloopI42_comp1_3214: no tensor reduced results found. Starting reduction...
+
+(kernel 1):
+set 1 to 0, 4 to infinity.
+
+(kernel 2):
+set 1 to 0, 4 to infinity.
+
+(kernel 3):
+set 1 to 0, 4 to infinity.
+
+(kernel 4):
+set 1 to 0, 4 to infinity.
+
+(kernel 5):
+set 1 to 0, 4 to infinity.
+
+(kernel 6):
+set 1 to 0, 4 to infinity.
+
+(kernel 1):
+performing region expansion...
+
+(kernel 2):
+performing region expansion...
+
+(kernel 3):
+performing region expansion...
+
+(kernel 4):
+performing region expansion...
+
+(kernel 5):
+performing region expansion...
+
+(kernel 6):
+performing region expansion...
+
+(kernel 1):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[1, 8], d2[2, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]} can be split into
+
+(kernel 2):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[1, 8], d2[2, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]} can be split into
+
+(kernel 3):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[1, 8], d2[2, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]} can be split into
+
+(kernel 4):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[1, 8], d2[2, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]} can be split into
+
+(kernel 5):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[1, 8], d2[2, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]} can be split into
+
+(kernel 6):
+topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, 7], d2[2, 7], d2[3, 7], d2[1, 8], d2[2, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]} can be split into
+
+(kernel 1):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[1, 8], d2[2, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 2):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[1, 8], d2[2, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 3):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[1, 8], d2[2, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 4):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[1, 8], d2[2, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 5):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[1, 8], d2[2, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 6):
+topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[1, 8], d2[2, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 1):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[1, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 2):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[1, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 3):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[1, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 4):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[1, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 5):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[1, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 6):
+topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[1, 8], d2[3, 8], d2[5, 6], d2[5, 7], d2[5, 8], d2[6, 7], d2[6, 8], d2[7, 8]}
+
+(kernel 1):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7], Subscript[x, 8]}. There are totally 16 regions.
+
+(kernel 2):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7], Subscript[x, 8]}. There are totally 16 regions.
+
+(kernel 3):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7], Subscript[x, 8]}. There are totally 16 regions.
+
+(kernel 4):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7], Subscript[x, 8]}. There are totally 16 regions.
+
+(kernel 5):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7], Subscript[x, 8]}. There are totally 16 regions.
+
+(kernel 6):
+Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7], Subscript[x, 8]}. There are totally 16 regions.
+
+(kernel 1):
+classifying topologies: 
+
+(kernel 2):
+classifying topologies: 
+
+(kernel 3):
+classifying topologies: 
+
+(kernel 4):
+classifying topologies: 
+
+(kernel 5):
+classifying topologies: 
+
+(kernel 6):
+classifying topologies: 
+
+(kernel 1):
+region 1: total terms 70
+
+(kernel 2):
+region 1: total terms 70
+
+(kernel 3):
+region 1: total terms 70
+
+(kernel 4):
+region 1: total terms 70
+
+(kernel 5):
+region 1: total terms 70
+
+(kernel 6):
+region 1: total terms 70
+
+(kernel 1):
+region 2: total terms 935
+
+(kernel 2):
+region 2: total terms 935
+
+(kernel 3):
+region 2: total terms 935
+
+(kernel 4):
+region 2: total terms 935
+
+(kernel 6):
+region 2: total terms 935
+
+(kernel 5):
+region 2: total terms 935
+
+(kernel 1):
+region 3: total terms 1001
+
+(kernel 2):
+region 3: total terms 495
+
+(kernel 4):
+region 3: total terms 495
+
+(kernel 3):
+region 3: total terms 1001
+
+(kernel 6):
+region 3: total terms 1729
+
+(kernel 5):
+region 3: total terms 1729
+
+(kernel 2):
+region 4: total terms 935
+
+(kernel 4):
+region 4: total terms 935
+
+(kernel 1):
+region 4: total terms 1729
+
+(kernel 3):
+region 4: total terms 1729
+
+(kernel 2):
+region 5: total terms 495
+
+(kernel 4):
+region 5: total terms 1001
+
+(kernel 6):
+region 4: total terms 2730
+
+(kernel 5):
+region 4: total terms 2730
+
+(kernel 2):
+region 6: total terms 1001
+
+(kernel 1):
+region 5: total terms 210
+
+(kernel 4):
+region 6: total terms 1729
+
+(kernel 3):
+region 5: total terms 1001
+
+(kernel 1):
+region 6: total terms 495
+
+(kernel 2):
+region 7: total terms 495
+
+(kernel 1):
+region 7: total terms 495
+
+(kernel 3):
+region 6: total terms 1729
+
+(kernel 2):
+region 8: total terms 210
+
+(kernel 6):
+region 5: total terms 210
+
+(kernel 1):
+region 8: total terms 210
+
+(kernel 5):
+region 5: total terms 495
+
+(kernel 4):
+region 7: total terms 1001
+
+(kernel 6):
+region 6: total terms 495
+
+(kernel 1):
+region 9: total terms 1001
+
+(kernel 2):
+region 9: total terms 1001
+
+(kernel 5):
+region 6: total terms 1001
+
+(kernel 6):
+region 7: total terms 1001
+
+(kernel 4):
+region 8: total terms 495
+
+(kernel 1):
+region 10: total terms 1729
+
+(kernel 2):
+region 10: total terms 1729
+
+(kernel 3):
+region 7: total terms 1729
+
+(kernel 4):
+region 9: total terms 495
+
+(kernel 6):
+region 8: total terms 495
+
+(kernel 5):
+region 7: total terms 1729
+
+(kernel 6):
+region 9: total terms 495
+
+(kernel 4):
+region 10: total terms 1001
+
+(kernel 1):
+region 11: total terms 1729
+
+(kernel 3):
+region 8: total terms 1001
+
+(kernel 2):
+region 11: total terms 1001
+
+(kernel 6):
+region 10: total terms 1001
+
+(kernel 4):
+region 11: total terms 495
+
+(kernel 3):
+region 9: total terms 210
+
+(kernel 5):
+region 8: total terms 1001
+
+(kernel 2):
+region 12: total terms 495
+
+(kernel 4):
+region 12: total terms 210
+
+(kernel 3):
+region 10: total terms 495
+
+(kernel 6):
+region 11: total terms 1729
+
+(kernel 4):
+region 13: total terms 2730
+
+(kernel 1):
+region 12: total terms 1001
+
+(kernel 2):
+region 13: total terms 2730
+
+(kernel 5):
+region 9: total terms 210
+
+(kernel 3):
+region 11: total terms 495
+
+(kernel 5):
+region 10: total terms 495
+
+(kernel 3):
+region 12: total terms 210
+
+(kernel 1):
+region 13: total terms 1729
+
+(kernel 3):
+region 13: total terms 1729
+
+(kernel 5):
+region 11: total terms 1001
+
+(kernel 6):
+region 12: total terms 1001
+
+(kernel 5):
+region 12: total terms 495
+
+(kernel 2):
+region 14: total terms 1729
+
+(kernel 4):
+region 14: total terms 1729
+
+(kernel 1):
+region 14: total terms 1001
+
+(kernel 6):
+region 13: total terms 935
+
+(kernel 3):
+region 14: total terms 1001
+
+(kernel 5):
+region 13: total terms 935
+
+(kernel 6):
+region 14: total terms 495
+
+(kernel 1):
+region 15: total terms 935
+
+(kernel 3):
+region 15: total terms 935
+
+(kernel 5):
+region 14: total terms 495
+
+(kernel 2):
+region 15: total terms 935
+
+(kernel 4):
+region 15: total terms 935
+
+(kernel 6):
+region 15: total terms 935
+
+(kernel 1):
+region 16: total terms 70
+
+(kernel 3):
+region 16: total terms 70
+
+(kernel 5):
+region 15: total terms 935
+
+(kernel 2):
+region 16: total terms 70
+
+(kernel 4):
+region 16: total terms 70
+
+(kernel 6):
+region 16: total terms 70
+
+(kernel 5):
+region 16: total terms 70
+
+(kernel 1):
+projecting the tensor structure and performing the contraction...
+
+(kernel 1):
+total length: 4892 split into number of chunks: 5
+
+(kernel 1):
+--- ProjectTensor Chunk 1/5 (Terms 1-1000) Time: 12.157654 ---
+
+(kernel 1):
+dimensions: 1
+
+(kernel 1):
+indexlist: {{m[1]}}
+
+(kernel 1):
+time consuming: 0.001196`3.228246177484386
+
+(kernel 3):
+projecting the tensor structure and performing the contraction...
+
+(kernel 1):
+dimensions: 2
+
+(kernel 3):
+total length: 4892 split into number of chunks: 5
+
+(kernel 1):
+indexlist: {{m[1], m[2]}}
+
+(kernel 3):
+--- ProjectTensor Chunk 1/5 (Terms 1-1000) Time: 12.210818 ---
+
+(kernel 1):
+time consuming: 0.000794`3.05033550025909
+
+(kernel 3):
+dimensions: 1
+
+(kernel 1):
+dimensions: 2
+
+(kernel 3):
+indexlist: {{m[1]}}
+
+(kernel 1):
+indexlist: {{m[1], m[2], m[3]}}
+
+(kernel 3):
+time consuming: 0.001596`3.353547884846704
+
+(kernel 1):
+time consuming: 0.001618`3.3594935151082472
+
+(kernel 3):
+dimensions: 2
+
+(kernel 1):
+dimensions: 2
+
+(kernel 3):
+indexlist: {{m[1], m[2]}}
+
+(kernel 1):
+indexlist: {{m[1]}, {m[2]}}
+
+(kernel 3):
+time consuming: 0.000602`2.9301114890898186
+
+(kernel 1):
+time consuming: 0.000521`2.8673527211315184
+
+(kernel 3):
+dimensions: 2
+
+(kernel 1):
+dimensions: 3
+
+(kernel 3):
+indexlist: {{m[1], m[2], m[3]}}
+
+(kernel 1):
+indexlist: {{m[3]}, {m[1], m[2]}}
+
+(kernel 3):
+time consuming: 0.001402`3.297263011462634
+
+(kernel 1):
+time consuming: 0.001687`3.3776300804211195
+
+(kernel 3):
+dimensions: 2
+
+(kernel 1):
+dimensions: 3
+
+(kernel 3):
+indexlist: {{m[1]}, {m[2]}}
+
+(kernel 1):
+indexlist: {{m[1], m[2], m[3], m[4]}}
+
+(kernel 3):
+time consuming: 0.001205`3.2315020447428813
+
+(kernel 1):
+time consuming: 0.008182`4.063374472994349
+
+(kernel 3):
+dimensions: 3
+
+(kernel 1):
+dimensions: 4
+
+(kernel 3):
+indexlist: {{m[3]}, {m[1], m[2]}}
+
+(kernel 1):
+indexlist: {{m[4]}, {m[1], m[2], m[3]}}
+
+(kernel 3):
+time consuming: 0.002418`3.533971294356747
+
+(kernel 1):
+time consuming: 0.00659`3.9694004124260034
+
+(kernel 3):
+dimensions: 3
+
+(kernel 3):
+indexlist: {{m[1], m[2], m[3], m[4]}}
+
+(kernel 3):
+time consuming: 0.005645`3.9021789440929804
+
+(kernel 3):
+dimensions: 4
+
+(kernel 3):
+indexlist: {{m[4]}, {m[1], m[2], m[3]}}
+
+(kernel 3):
+time consuming: 0.006391`3.9560838153805498
+
+(kernel 1):
+dimensions: 6
+
+(kernel 1):
+indexlist: {{m[1], m[2]}, {m[3], m[4]}}
+
+(kernel 1):
+time consuming: 0.01703`4.381729645794595
+
+(kernel 3):
+dimensions: 6
+
+(kernel 3):
+indexlist: {{m[1], m[2]}, {m[3], m[4]}}
+
+(kernel 3):
+time consuming: 0.013165`4.269935861274081
+
+(kernel 2):
+projecting the tensor structure and performing the contraction...
+
+(kernel 2):
+total length: 6805 split into number of chunks: 7
+
+(kernel 2):
+--- ProjectTensor Chunk 1/7 (Terms 1-1000) Time: 13.234328 ---
+
+(kernel 2):
+dimensions: 1
+
+(kernel 2):
+indexlist: {{m[1]}}
+
+(kernel 2):
+time consuming: 0.001125`3.201667520279375
+
+(kernel 2):
+dimensions: 2
+
+(kernel 2):
+indexlist: {{m[1], m[2]}}
+
+(kernel 2):
+time consuming: 0.000608`2.934418577104729
+
+(kernel 2):
+dimensions: 2
+
+(kernel 2):
+indexlist: {{m[1], m[2], m[3]}}
+
+(kernel 2):
+time consuming: 0.002002`3.4519790709752938
+
+(kernel 2):
+dimensions: 2
+
+(kernel 2):
+indexlist: {{m[1]}, {m[2]}}
+
+(kernel 4):
+projecting the tensor structure and performing the contraction...
+
+(kernel 2):
+time consuming: 0.000559`2.8979268057184173
+
+(kernel 4):
+total length: 6805 split into number of chunks: 7
+
+(kernel 2):
+dimensions: 3
+
+(kernel 4):
+--- ProjectTensor Chunk 1/7 (Terms 1-1000) Time: 13.387535 ---
+
+(kernel 2):
+indexlist: {{m[3]}, {m[1], m[2]}}
+
+(kernel 4):
+dimensions: 1
+
+(kernel 2):
+time consuming: 0.001663`3.371407247051513
+
+(kernel 4):
+indexlist: {{m[1]}}
+
+(kernel 2):
+dimensions: 3
+
+(kernel 4):
+time consuming: 0.001113`3.1970101621667
+
+(kernel 2):
+indexlist: {{m[1], m[2], m[3], m[4]}}
+
+(kernel 4):
+dimensions: 2
+
+(kernel 2):
+time consuming: 0.006574`3.9683446975775998
+
+(kernel 4):
+indexlist: {{m[1], m[2]}}
+
+(kernel 4):
+time consuming: 0.000586`2.9184126138500806
+
+(kernel 2):
+dimensions: 4
+
+(kernel 4):
+dimensions: 2
+
+(kernel 2):
+indexlist: {{m[4]}, {m[1], m[2], m[3]}}
+
+(kernel 4):
+indexlist: {{m[1], m[2], m[3]}}
+
+(kernel 2):
+time consuming: 0.005652`3.902717151008515
+
+(kernel 4):
+time consuming: 0.001191`3.2264267593147693
+
+(kernel 4):
+dimensions: 2
+
+(kernel 4):
+indexlist: {{m[1]}, {m[2]}}
+
+(kernel 4):
+time consuming: 0.000553`2.893240129136692
+
+(kernel 4):
+dimensions: 3
+
+(kernel 4):
+indexlist: {{m[3]}, {m[1], m[2]}}
+
+(kernel 4):
+time consuming: 0.00191`3.4315483650797174
+
+(kernel 4):
+dimensions: 3
+
+(kernel 4):
+indexlist: {{m[1], m[2], m[3], m[4]}}
+
+(kernel 4):
+time consuming: 0.007865`4.046213724791298
+
+(kernel 4):
+dimensions: 4
+
+(kernel 4):
+indexlist: {{m[4]}, {m[1], m[2], m[3]}}
+
+(kernel 4):
+time consuming: 0.005953`3.9252508803837447
+
+(kernel 2):
+dimensions: 6
+
+(kernel 2):
+indexlist: {{m[1], m[2]}, {m[3], m[4]}}
+
+(kernel 2):
+time consuming: 0.016487`4.367656635770275
+
+(kernel 1):
+dimensions: 4
+
+(kernel 1):
+indexlist: {{m[1]}, {m[3]}, {m[5]}}
+
+(kernel 1):
+time consuming: 0.001921`3.434042362693688
+
+(kernel 3):
+dimensions: 4
+
+(kernel 1):
+    Working on Term 100/4892
+
+(kernel 3):
+indexlist: {{m[1]}, {m[3]}, {m[5]}}
+
+(kernel 3):
+time consuming: 0.00198`3.447180188093525
+
+(kernel 4):
+dimensions: 6
+
+(kernel 4):
+indexlist: {{m[1], m[2]}, {m[3], m[4]}}
+
+(kernel 4):
+time consuming: 0.014671`4.316974714925475
+
+(kernel 3):
+    Working on Term 100/4892
+
+(kernel 2):
+dimensions: 4
+
+(kernel 2):
+indexlist: {{m[1]}, {m[3]}, {m[5]}}
+
+(kernel 2):
+time consuming: 0.003226`3.6591793608849366
+
+(kernel 4):
+dimensions: 4
+
+(kernel 4):
+indexlist: {{m[1]}, {m[3]}, {m[5]}}
+
+(kernel 4):
+time consuming: 0.001954`3.441439557214748
+
+(kernel 2):
+    Working on Term 100/6805
+
+(kernel 4):
+    Working on Term 100/6805
+
+(kernel 2):
+dimensions: 3
+
+(kernel 2):
+indexlist: {{m[1], m[3], m[5], m[7], m[9]}}
+
+(kernel 2):
+time consuming: 0.05247`4.870426062030333
+
+(kernel 4):
+dimensions: 3
+
+(kernel 4):
+indexlist: {{m[1], m[3], m[5], m[7], m[9]}}
+
+(kernel 4):
+time consuming: 0.051295`4.860590031983991
+
+(kernel 6):
+projecting the tensor structure and performing the contraction...
+
+(kernel 6):
+total length: 14302 split into number of chunks: 15
+
+(kernel 6):
+--- ProjectTensor Chunk 1/15 (Terms 1-1000) Time: 20.50393 ---
+
+(kernel 6):
+dimensions: 1
+
+(kernel 6):
+indexlist: {{m[1]}}
+
+(kernel 6):
+time consuming: 0.00121`3.233300368148444
+
+(kernel 6):
+dimensions: 2
+
+(kernel 6):
+indexlist: {{m[1]}, {m[2]}}
+
+(kernel 6):
+time consuming: 0.000648`2.962090003702587
+
+(kernel 6):
+dimensions: 2
+
+(kernel 6):
+indexlist: {{m[1], m[2]}}
+
+(kernel 6):
+time consuming: 0.000651`2.9640959864001855
+
+(kernel 6):
+dimensions: 3
+
+(kernel 6):
+indexlist: {{m[3]}, {m[1], m[2]}}
+
+(kernel 6):
+time consuming: 0.001851`3.417921416584898
+
+(kernel 6):
+dimensions: 2
+
+(kernel 6):
+indexlist: {{m[1], m[2], m[3]}}
+
+(kernel 6):
+time consuming: 0.00193`3.436072306839768
+
+(kernel 6):
+dimensions: 4
+
+(kernel 6):
+indexlist: {{m[4]}, {m[1], m[2], m[3]}}
+
+(kernel 6):
+time consuming: 0.009852`4.14403940099906
+
+(kernel 6):
+dimensions: 4
+
+(kernel 6):
+indexlist: {{m[1]}, {m[2]}, {m[3]}}
+
+(kernel 6):
+time consuming: 0.00207`3.466485343288912
+
+(kernel 5):
+projecting the tensor structure and performing the contraction...
+
+(kernel 5):
+total length: 14302 split into number of chunks: 15
+
+(kernel 5):
+--- ProjectTensor Chunk 1/15 (Terms 1-1000) Time: 20.873918 ---
+
+(kernel 5):
+dimensions: 1
+
+(kernel 5):
+indexlist: {{m[1]}}
+
+(kernel 6):
+dimensions: 7
+
+(kernel 5):
+time consuming: 0.001195`3.2278829031161504
+
+(kernel 6):
+indexlist: {{m[3]}, {m[4]}, {m[1], m[2]}}
+
+(kernel 5):
+dimensions: 2
+
+(kernel 6):
+time consuming: 0.020664`4.465729390997255
+
+(kernel 5):
+indexlist: {{m[1]}, {m[2]}}
+
+(kernel 5):
+time consuming: 0.00092`3.1143028251775493
+
+(kernel 5):
+dimensions: 2
+
+(kernel 5):
+indexlist: {{m[1], m[2]}}
+
+(kernel 5):
+time consuming: 0.0006669999999999999`2.974640831748543
+
+(kernel 5):
+dimensions: 3
+
+(kernel 5):
+indexlist: {{m[3]}, {m[1], m[2]}}
+
+(kernel 5):
+time consuming: 0.001666`3.3721899949027625
+
+(kernel 5):
+dimensions: 2
+
+(kernel 5):
+indexlist: {{m[1], m[2], m[3]}}
+
+(kernel 5):
+time consuming: 0.001234`3.2418301575292165
+
+(kernel 5):
+dimensions: 4
+
+(kernel 5):
+indexlist: {{m[4]}, {m[1], m[2], m[3]}}
+
+(kernel 5):
+time consuming: 0.006981`3.9944326358383866
+
+(kernel 5):
+dimensions: 4
+
+(kernel 5):
+indexlist: {{m[1]}, {m[2]}, {m[3]}}
+
+(kernel 5):
+time consuming: 0.002392`3.529276173148367
+
+(kernel 5):
+dimensions: 7
+
+(kernel 5):
+indexlist: {{m[3]}, {m[4]}, {m[1], m[2]}}
+
+(kernel 5):
+time consuming: 0.016808`4.3760310372298905
+
+(kernel 3):
+dimensions: 7
+
+(kernel 3):
+indexlist: {{m[5]}, {m[7]}, {m[1], m[3]}}
+
+(kernel 3):
+time consuming: 0.01941`4.4385405332203565
+
+(kernel 1):
+dimensions: 7
+
+(kernel 1):
+indexlist: {{m[5]}, {m[7]}, {m[1], m[3]}}
+
+(kernel 1):
+time consuming: 0.018222`4.411111040133902
+
+(kernel 6):
+dimensions: 3
+
+(kernel 6):
+indexlist: {{m[1], m[2], m[3], m[4]}}
+
+(kernel 6):
+time consuming: 0.006301`3.9499244774471207
+
+(kernel 6):
+dimensions: 5
+
+(kernel 6):
+indexlist: {{m[5]}, {m[1], m[2], m[3], m[4]}}
+
+(kernel 6):
+time consuming: 0.028757`4.609258575252042
+
+(kernel 5):
+dimensions: 3
+
+(kernel 5):
+indexlist: {{m[1], m[2], m[3], m[4]}}
+
+(kernel 5):
+time consuming: 0.007127`4.003421756628947
+
+(kernel 5):
+dimensions: 5
+
+(kernel 5):
+indexlist: {{m[5]}, {m[1], m[2], m[3], m[4]}}
+
+(kernel 5):
+time consuming: 0.032897`4.667671292655789
+
+(kernel 6):
+dimensions: 9
+
+(kernel 6):
+indexlist: {{m[4]}, {m[5]}, {m[1], m[2], m[3]}}
+
+(kernel 6):
+time consuming: 0.043023`4.78421568835623
+
+(kernel 5):
+dimensions: 9
+
+(kernel 5):
+indexlist: {{m[4]}, {m[5]}, {m[1], m[2], m[3]}}
+
+(kernel 5):
+time consuming: 0.045074`4.804441098189286
+
+(kernel 6):
+dimensions: 6
+
+(kernel 6):
+indexlist: {{m[1], m[2]}, {m[3], m[4]}}
+
+(kernel 6):
+time consuming: 0.017274`4.38790791309372
+
+(kernel 5):
+dimensions: 6
+
+(kernel 5):
+indexlist: {{m[1], m[2]}, {m[3], m[4]}}
+
+(kernel 5):
+time consuming: 0.015963`4.353629511476379
+
+(kernel 6):
+dimensions: 12
+
+(kernel 6):
+indexlist: {{m[5]}, {m[1], m[2]}, {m[3], m[4]}}
+
+(kernel 6):
+time consuming: 0.13375`5.27680878852526
+
+(kernel 5):
+dimensions: 12
+
+(kernel 5):
+indexlist: {{m[5]}, {m[1], m[2]}, {m[3], m[4]}}
+
+(kernel 5):
+time consuming: 0.141297`5.3006479388930305
+
+(kernel 6):
+    Working on Term 100/14302
+
+(kernel 5):
+    Working on Term 100/14302
+
+(kernel 6):
+    Working on Term 200/14302
+
+(kernel 5):
+    Working on Term 200/14302
+
+(kernel 1):
+    Working on Term 200/4892
+
+(kernel 3):
+    Working on Term 200/4892
+
+(kernel 4):
+dimensions: 7
+
+(kernel 4):
+indexlist: {{m[5]}, {m[7]}, {m[1], m[3]}}
+
+(kernel 4):
+time consuming: 0.018928`4.4276197251158464
+
+(kernel 2):
+dimensions: 7
+
+(kernel 2):
+indexlist: {{m[5]}, {m[7]}, {m[1], m[3]}}
+
+(kernel 2):
+time consuming: 0.018474`4.4170759371188355
+
+(kernel 1):
+    Working on Term 300/4892
+
+(kernel 3):
+    Working on Term 300/4892
+
+(kernel 5):
+    Working on Term 300/14302
+
+(kernel 1):
+    Working on Term 400/4892
+
+(kernel 3):
+    Working on Term 400/4892
+
+(kernel 1):
+    Working on Term 500/4892
+
+(kernel 3):
+    Working on Term 500/4892
+
+(kernel 3):
+dimensions: 3
+
+(kernel 3):
+indexlist: {{m[1], m[3], m[5], m[7], m[9]}}
+
+(kernel 3):
+time consuming: 0.047338`4.825724903150614
+
+(kernel 3):
+dimensions: 5
+
+(kernel 3):
+indexlist: {{m[2]}, {m[4], m[6], m[8], m[10]}}
+
+(kernel 3):
+time consuming: 0.03036`4.632816765055437
+
+(kernel 1):
+dimensions: 5
+
+(kernel 1):
+indexlist: {{m[1]}, {m[3], m[5], m[7], m[9]}}
+
+(kernel 1):
+time consuming: 0.037956`4.729795435795341
+
+(kernel 1):
+dimensions: 3
+
+(kernel 1):
+indexlist: {{m[2], m[4], m[6], m[8], m[10]}}
+
+(kernel 1):
+time consuming: 0.051829`4.865087827380158
+
+(kernel 1):
+dimensions: 9
+
+(kernel 1):
+indexlist: {{m[1]}, {m[9]}, {m[3], m[5], m[7]}}
+
+(kernel 1):
+time consuming: 0.05147`4.862069166082164
+
+(kernel 3):
+dimensions: 7
+
+(kernel 3):
+indexlist: {{m[7], m[9]}, {m[1], m[3], m[5]}}
+
+(kernel 3):
+time consuming: 0.033645`4.677435530470643
+
+(kernel 1):
+dimensions: 12
+
+(kernel 1):
+indexlist: {{m[1]}, {m[3], m[5]}, {m[7], m[9]}}
+
+(kernel 1):
+time consuming: 0.137566`5.289026107334869
+
+(kernel 2):
+    Working on Term 200/6805
+
+(kernel 4):
+    Working on Term 200/6805
+
+(kernel 2):
+    Working on Term 300/6805
+
+(kernel 4):
+    Working on Term 300/6805
+
+(kernel 4):
+    Working on Term 400/6805
+
+(kernel 6):
+dimensions: 7
+
+(kernel 6):
+indexlist: {{m[1], m[3]}, {m[2], m[5], m[7]}}
+
+(kernel 6):
+time consuming: 0.035717`4.703389971616221
+
+(kernel 2):
+    Working on Term 400/6805
+
+(kernel 5):
+    Working on Term 400/14302
+
+(kernel 2):
+    Working on Term 500/6805
+
+(kernel 2):
+    Working on Term 600/6805
+
+(kernel 4):
+    Working on Term 500/6805
+
+(kernel 4):
+    Working on Term 600/6805
+
+(kernel 5):
+    Working on Term 500/14302
+
+(kernel 4):
+    Working on Term 700/6805
+
+(kernel 2):
+    Working on Term 700/6805
+
+(kernel 5):
+dimensions: 7
+
+(kernel 5):
+indexlist: {{m[1], m[3]}, {m[2], m[5], m[7]}}
+
+(kernel 5):
+time consuming: 0.037995`4.730241446678223
+
+(kernel 2):
+    Working on Term 800/6805
+
+(kernel 2):
+    Working on Term 900/6805
+
+(kernel 4):
+    Working on Term 800/6805
+
+(kernel 4):
+    Working on Term 900/6805
+
+(kernel 2):
+    Working on Term 1000/6805
+
+(kernel 4):
+    Working on Term 1000/6805
+
+(kernel 3):
+    Working on Term 600/4892
+
+(kernel 5):
+    Working on Term 600/14302
+
+(kernel 2):
+--- ProjectTensor Chunk 2/7 (Terms 1001-2000) Time: 234.241707 ---
+
+(kernel 6):
+    Working on Term 300/14302
+
+(kernel 4):
+--- ProjectTensor Chunk 2/7 (Terms 1001-2000) Time: 236.294438 ---
+
+(kernel 2):
+    Working on Term 1100/6805
+
+(kernel 4):
+    Working on Term 1100/6805
+
+(kernel 2):
+    Working on Term 1200/6805
+
+(kernel 4):
+    Working on Term 1200/6805
+
+(kernel 2):
+    Working on Term 1300/6805
+
+(kernel 2):
+    Working on Term 1400/6805
+
+(kernel 2):
+    Working on Term 1500/6805
+
+(kernel 4):
+    Working on Term 1300/6805
+
+(kernel 4):
+    Working on Term 1400/6805
+
+(kernel 4):
+    Working on Term 1500/6805
+
+(kernel 4):
+dimensions: 5
+
+(kernel 4):
+indexlist: {{m[2]}, {m[4], m[6], m[8], m[10]}}
+
+(kernel 4):
+time consuming: 0.031893`4.654210370701989
+
+(kernel 2):
+    Working on Term 1600/6805
+
+(kernel 2):
+    Working on Term 1700/6805
+
+(kernel 6):
+    Working on Term 400/14302
+
+(kernel 6):
+    Working on Term 500/14302
+
+(kernel 6):
+dimensions: 3
+
+(kernel 6):
+indexlist: {{m[2], m[4], m[6], m[8], m[10]}}
+
+(kernel 6):
+time consuming: 0.049356`4.843854953388793
+
+(kernel 4):
+dimensions: 7
+
+(kernel 4):
+indexlist: {{m[7], m[9]}, {m[1], m[3], m[5]}}
+
+(kernel 4):
+time consuming: 0.034949`4.693949751570485
+
+(kernel 2):
+    Working on Term 1800/6805
+
+(kernel 5):
+    Working on Term 700/14302
+
+(kernel 2):
+    Working on Term 1900/6805
+
+(kernel 5):
+    Working on Term 800/14302
+
+(kernel 6):
+dimensions: 6
+
+(kernel 6):
+indexlist: {{m[2]}, {m[1], m[4], m[6], m[8], m[10]}}
+
+(kernel 6):
+time consuming: 0.29222`5.616224934250235
+
+(kernel 2):
+dimensions: 5
+
+(kernel 2):
+indexlist: {{m[1]}, {m[3], m[5], m[7], m[9]}}
+
+(kernel 2):
+time consuming: 0.034131`4.683664010638019
+
+(kernel 5):
+    Working on Term 900/14302
+
+(kernel 5):
+    Working on Term 1000/14302
+
+(kernel 2):
+dimensions: 9
+
+(kernel 2):
+indexlist: {{m[1]}, {m[9]}, {m[3], m[5], m[7]}}
+
+(kernel 2):
+time consuming: 0.050953`4.857684757226245
+
+(kernel 5):
+--- ProjectTensor Chunk 2/15 (Terms 1001-2000) Time: 367.819078 ---
+
+(kernel 5):
+dimensions: 3
+
+(kernel 5):
+indexlist: {{m[1], m[2], m[3], m[4], m[6]}}
+
+(kernel 5):
+time consuming: 0.055492`4.894745375436052
+
+(kernel 1):
+    Working on Term 600/4892
+
+(kernel 4):
+    Working on Term 1600/6805
+
+(kernel 2):
+dimensions: 12
+
+(kernel 2):
+indexlist: {{m[1]}, {m[3], m[5]}, {m[7], m[9]}}
+
+(kernel 2):
+time consuming: 0.14333`5.306852098702804
+
+(kernel 5):
+dimensions: 6
+
+(kernel 5):
+indexlist: {{m[2]}, {m[1], m[4], m[6], m[8], m[10]}}
+
+(kernel 5):
+time consuming: 0.335298`5.675945960770046
+
+(kernel 1):
+    Working on Term 700/4892
+
+(kernel 1):
+    Working on Term 800/4892
+
+(kernel 1):
+    Working on Term 900/4892
+
+(kernel 1):
+    Working on Term 1000/4892
+
+(kernel 6):
+dimensions: 12
+
+(kernel 6):
+indexlist: {{m[2]}, {m[10]}, {m[1], m[4], m[6], m[8]}}
+
+(kernel 6):
+time consuming: 0.361013`5.708037838869538
+
+(kernel 1):
+--- ProjectTensor Chunk 2/5 (Terms 1001-2000) Time: 577.59819 ---
+
+(kernel 1):
+    Working on Term 1100/4892
+
+(kernel 5):
+    Working on Term 1100/14302
+
+(kernel 1):
+    Working on Term 1200/4892
+
+(kernel 2):
+    Working on Term 2000/6805
+
+(kernel 2):
+--- ProjectTensor Chunk 3/7 (Terms 2001-3000) Time: 627.93913 ---
+
+(kernel 1):
+dimensions: 7
+
+(kernel 1):
+indexlist: {{m[7], m[9]}, {m[1], m[3], m[5]}}
+
+(kernel 1):
+time consuming: 0.055672`4.896151821318952
+
+(kernel 2):
+    Working on Term 2100/6805
+
+(kernel 2):
+    Working on Term 2200/6805
+
+(kernel 2):
+    Working on Term 2300/6805
+
+(kernel 2):
+    Working on Term 2400/6805
+
+(kernel 2):
+    Working on Term 2500/6805
+
+(kernel 2):
+    Working on Term 2600/6805
+
+(kernel 2):
+    Working on Term 2700/6805
+
+(kernel 2):
+    Working on Term 2800/6805
+
+(kernel 2):
+    Working on Term 2900/6805
+
+(kernel 2):
+    Working on Term 3000/6805
+
+(kernel 3):
+    Working on Term 700/4892
+
+(kernel 2):
+--- ProjectTensor Chunk 4/7 (Terms 3001-4000) Time: 897.507455 ---
+
+(kernel 1):
+    Working on Term 1300/4892
+
+(kernel 5):
+dimensions: 12
+
+(kernel 5):
+indexlist: {{m[2]}, {m[10]}, {m[1], m[4], m[6], m[8]}}
+
+(kernel 5):
+time consuming: 0.382787`5.733472177918687
+
+(kernel 2):
+dimensions: 7
+
+(kernel 2):
+indexlist: {{m[7], m[9]}, {m[1], m[3], m[5]}}
+
+(kernel 2):
+time consuming: 0.039302`4.744929649145412
+
+(kernel 4):
+    Working on Term 1700/6805
+
+(kernel 4):
+    Working on Term 1800/6805
+
+(kernel 2):
+    Working on Term 3100/6805
+
+(kernel 6):
+dimensions: 17
+
+(kernel 6):
+indexlist: {{m[2]}, {m[8], m[10]}, {m[1], m[4], m[6]}}
+
+(kernel 6):
+time consuming: 0.566011`5.903339869290371
+
+(kernel 3):
+    Working on Term 800/4892
+
+(kernel 5):
+    Working on Term 1200/14302
+
+(kernel 4):
+    Working on Term 1900/6805
+
+(kernel 3):
+    Working on Term 900/4892
+
+(kernel 1):
+    Working on Term 1400/4892
+
+(kernel 3):
+    Working on Term 1000/4892
+
+(kernel 3):
+--- ProjectTensor Chunk 2/5 (Terms 1001-2000) Time: 1809.107565 ---
+
+(kernel 3):
+    Working on Term 1100/4892
+
+(kernel 3):
+    Working on Term 1200/4892
+
+(kernel 1):
+    Working on Term 1500/4892
+
+(kernel 1):
+    Working on Term 1600/4892
+
+(kernel 5):
+dimensions: 17
+
+(kernel 5):
+indexlist: {{m[2]}, {m[8], m[10]}, {m[1], m[4], m[6]}}
+
+(kernel 5):
+time consuming: 0.626842`5.947673085432553
+
+(kernel 4):
+    Working on Term 2000/6805
+
+(kernel 2):
+    Working on Term 3200/6805
+
+(kernel 4):
+--- ProjectTensor Chunk 3/7 (Terms 2001-3000) Time: 1945.104706 ---
+
+(kernel 4):
+    Working on Term 2100/6805
+
+(kernel 4):
+    Working on Term 2200/6805
+
+(kernel 4):
+    Working on Term 2300/6805
+
+(kernel 3):
+    Working on Term 1300/4892
+
+(kernel 3):
+    Working on Term 1400/4892
+
+(kernel 3):
+    Working on Term 1500/4892
+
+(kernel 3):
+    Working on Term 1600/4892
+
+(kernel 4):
+    Working on Term 2400/6805
+
+(kernel 3):
+    Working on Term 1700/4892
+
+(kernel 3):
+    Working on Term 1800/4892
+
+(kernel 3):
+    Working on Term 1900/4892
+
+(kernel 3):
+    Working on Term 2000/4892
+
+(kernel 3):
+--- ProjectTensor Chunk 3/5 (Terms 2001-3000) Time: 2222.310646 ---
+
+(kernel 3):
+    Working on Term 2100/4892
+
+(kernel 4):
+    Working on Term 2500/6805
+
+(kernel 3):
+    Working on Term 2200/4892
+
+(kernel 3):
+    Working on Term 2300/4892
+
+(kernel 3):
+    Working on Term 2400/4892
+
+(kernel 3):
+    Working on Term 2500/4892
+
+(kernel 3):
+dimensions: 9
+
+(kernel 3):
+indexlist: {{m[1]}, {m[9]}, {m[3], m[5], m[7]}}
+
+(kernel 3):
+time consuming: 0.067089`4.97716631634792
+
+(kernel 4):
+    Working on Term 2600/6805
+
+(kernel 4):
+    Working on Term 2700/6805
+
+(kernel 2):
+    Working on Term 3300/6805
+
+(kernel 4):
+    Working on Term 2800/6805
+
+(kernel 3):
+dimensions: 12
+
+(kernel 3):
+indexlist: {{m[1]}, {m[3], m[5]}, {m[7], m[9]}}
+
+(kernel 3):
+time consuming: 0.134071`5.277849846511353
+
+(kernel 4):
+    Working on Term 2900/6805
+
+(kernel 4):
+    Working on Term 3000/6805
+
+(kernel 4):
+--- ProjectTensor Chunk 4/7 (Terms 3001-4000) Time: 2383.520985 ---
+
+(kernel 4):
+    Working on Term 3100/6805
+
+(kernel 4):
+    Working on Term 3200/6805
+
+(kernel 4):
+    Working on Term 3300/6805
+
+(kernel 4):
+    Working on Term 3400/6805
+
+(kernel 4):
+    Working on Term 3500/6805
+
+(kernel 4):
+    Working on Term 3600/6805
+
+(kernel 4):
+    Working on Term 3700/6805
+
+(kernel 4):
+    Working on Term 3800/6805
+
+(kernel 4):
+    Working on Term 3900/6805
+
+(kernel 4):
+    Working on Term 4000/6805
+
+(kernel 4):
+--- ProjectTensor Chunk 5/7 (Terms 4001-5000) Time: 2531.810027 ---
+
+(kernel 4):
+    Working on Term 4100/6805
+
+(kernel 3):
+    Working on Term 2600/4892
+
+(kernel 4):
+dimensions: 9
+
+(kernel 4):
+indexlist: {{m[1]}, {m[9]}, {m[3], m[5], m[7]}}
+
+(kernel 4):
+time consuming: 0.052442`4.870194244015575
+
+(kernel 4):
+dimensions: 12
+
+(kernel 4):
+indexlist: {{m[1]}, {m[3], m[5]}, {m[7], m[9]}}
+
+(kernel 4):
+time consuming: 0.153132`5.335580952548852
+
+(kernel 3):
+    Working on Term 2700/4892
+
+(kernel 1):
+    Working on Term 1700/4892
+
+(kernel 3):
+    Working on Term 2800/4892
+
+(kernel 3):
+    Working on Term 2900/4892
+
+(kernel 3):
+    Working on Term 3000/4892
+
+(kernel 3):
+--- ProjectTensor Chunk 4/5 (Terms 3001-4000) Time: 2774.376753 ---
+
+(kernel 3):
+    Working on Term 3100/4892
+
+(kernel 3):
+    Working on Term 3200/4892
+
+(kernel 1):
+    Working on Term 1800/4892
+
+(kernel 1):
+    Working on Term 1900/4892
+
+(kernel 1):
+    Working on Term 2000/4892
+
+(kernel 2):
+    Working on Term 3400/6805
+
+(kernel 1):
+--- ProjectTensor Chunk 3/5 (Terms 2001-3000) Time: 2850.285606 ---
+
+(kernel 4):
+    Working on Term 4200/6805
+
+(kernel 4):
+    Working on Term 4300/6805
+
+(kernel 2):
+    Working on Term 3500/6805
+
+(kernel 1):
+    Working on Term 2100/4892
+
+(kernel 4):
+    Working on Term 4400/6805
+
+(kernel 4):
+    Working on Term 4500/6805
+
+(kernel 4):
+    Working on Term 4600/6805
+
+(kernel 4):
+    Working on Term 4700/6805
+
+(kernel 4):
+    Working on Term 4800/6805
+
+(kernel 4):
+    Working on Term 4900/6805
+
+(kernel 3):
+    Working on Term 3300/4892
+
+(kernel 1):
+    Working on Term 2200/4892
+
+(kernel 4):
+    Working on Term 5000/6805
+
+(kernel 1):
+    Working on Term 2300/4892
+
+(kernel 1):
+    Working on Term 2400/4892
+
+(kernel 4):
+--- ProjectTensor Chunk 6/7 (Terms 5001-6000) Time: 3117.311655 ---
+
+(kernel 4):
+    Working on Term 5100/6805
+
+(kernel 1):
+    Working on Term 2500/4892
+
+(kernel 1):
+    Working on Term 2600/4892
+
+(kernel 4):
+    Working on Term 5200/6805
+
+(kernel 2):
+    Working on Term 3600/6805
+
+(kernel 1):
+    Working on Term 2700/4892
+
+(kernel 2):
+    Working on Term 3700/6805
+
+(kernel 1):
+    Working on Term 2800/4892
+
+(kernel 2):
+    Working on Term 3800/6805
+
+(kernel 2):
+    Working on Term 3900/6805
+
+(kernel 2):
+    Working on Term 4000/6805
+
+(kernel 2):
+--- ProjectTensor Chunk 5/7 (Terms 4001-5000) Time: 3371.756597 ---
+
+(kernel 2):
+dimensions: 12
+
+(kernel 2):
+indexlist: {{m[1]}, {m[3]}, {m[5], m[7], m[9], m[11]}}
+
+(kernel 2):
+time consuming: 0.342142`5.684721387564078
+
+(kernel 2):
+dimensions: 17
+
+(kernel 2):
+indexlist: {{m[3]}, {m[1], m[5]}, {m[7], m[9], m[11]}}
+
+(kernel 2):
+time consuming: 0.855243`6.0826045260865635
+
+(kernel 6):
+dimensions: 10
+
+(kernel 6):
+indexlist: {{m[1], m[3]}, {m[2], m[5], m[7], m[9]}}
+
+(kernel 6):
+time consuming: 3.163099`6.650627782691398
+
+(kernel 4):
+    Working on Term 5300/6805
+
+(kernel 3):
+    Working on Term 3400/4892
+
+(kernel 6):
+    Working on Term 600/14302
+
+(kernel 1):
+    Working on Term 2900/4892
+
+(kernel 3):
+    Working on Term 3500/4892
+
+(kernel 3):
+    Working on Term 3600/4892
+
+(kernel 1):
+    Working on Term 3000/4892
+
+(kernel 1):
+--- ProjectTensor Chunk 4/5 (Terms 3001-4000) Time: 4136.697265 ---
+
+(kernel 4):
+    Working on Term 5400/6805
+
+(kernel 2):
+dimensions: 24
+
+(kernel 2):
+indexlist: {{m[1], m[4]}, {m[2], m[6]}, {m[8], m[10]}}
+
+(kernel 5):
+    Working on Term 1300/14302
+
+(kernel 6):
+dimensions: 24
+
+(kernel 6):
+indexlist: {{m[1], m[3]}, {m[2], m[5]}, {m[7], m[9]}}
+
+(kernel 5):
+    Working on Term 1400/14302
+
+(kernel 4):
+    Working on Term 5500/6805
+
+(kernel 5):
+    Working on Term 1500/14302
+
+(kernel 5):
+    Working on Term 1600/14302
+
+(kernel 5):
+dimensions: 10
+
+(kernel 5):
+indexlist: {{m[1], m[3]}, {m[2], m[5], m[7], m[9]}}
+
+(kernel 5):
+time consuming: 3.021851`6.630788044375994
+
+(kernel 2):
+time consuming: 393.984681`8.745994333651204
+
+(kernel 6):
+time consuming: 395.435301`8.747590434547572
+
+(kernel 1):
+    Working on Term 3100/4892
+
+(kernel 3):
+    Working on Term 3700/4892
+
+(kernel 5):
+    Working on Term 1700/14302
+
+(kernel 1):
+    Working on Term 3200/4892
+
+(kernel 3):
+    Working on Term 3800/4892
+
+(kernel 3):
+    Working on Term 3900/4892
+
+(kernel 1):
+    Working on Term 3300/4892
+
+(kernel 3):
+    Working on Term 4000/4892
+
+(kernel 1):
+    Working on Term 3400/4892
+
+(kernel 3):
+--- ProjectTensor Chunk 5/5 (Terms 4001-4892) Time: 5051.62243 ---
+
+(kernel 1):
+    Working on Term 3500/4892
+
+(kernel 4):
+    Working on Term 5600/6805
+
+(kernel 4):
+    Working on Term 5700/6805
+
+(kernel 3):
+    Working on Term 4100/4892
+
+(kernel 1):
+    Working on Term 3600/4892
+
+(kernel 3):
+    Working on Term 4200/4892
+
+(kernel 3):
+    Working on Term 4300/4892
+
+(kernel 3):
+    Working on Term 4400/4892
+
+(kernel 1):
+    Working on Term 3700/4892
+
+(kernel 3):
+    Working on Term 4500/4892
+
+(kernel 1):
+    Working on Term 3800/4892
+
+(kernel 3):
+    Working on Term 4600/4892
+
+(kernel 4):
+    Working on Term 5800/6805
+
+(kernel 1):
+    Working on Term 3900/4892
+
+(kernel 1):
+    Working on Term 4000/4892
+
+(kernel 3):
+    Working on Term 4700/4892
+
+(kernel 1):
+--- ProjectTensor Chunk 5/5 (Terms 4001-4892) Time: 5381.981724 ---
+
+(kernel 1):
+    Working on Term 4100/4892
+
+(kernel 1):
+    Working on Term 4200/4892
+
+(kernel 1):
+    Working on Term 4300/4892
+
+(kernel 3):
+    Working on Term 4800/4892
+
+(kernel 1):
+    Working on Term 4400/4892
+
+(kernel 1):
+    Working on Term 4500/4892
+
+(kernel 1):
+    Working on Term 4600/4892
+
+(kernel 1):
+    Working on Term 4700/4892
+
+(kernel 1):
+    Working on Term 4800/4892
+
+(kernel 1):
+fourloopI42_comp1_1234: tensor reduction finished!
+
+(kernel 4):
+    Working on Term 5900/6805
+
+(kernel 3):
+fourloopI42_comp1_1324: tensor reduction finished!
+
+(kernel 4):
+    Working on Term 6000/6805
+
+(kernel 4):
+--- ProjectTensor Chunk 7/7 (Terms 6001-6805) Time: 5552.972718 ---
+
+(kernel 4):
+    Working on Term 6100/6805
+
+(kernel 4):
+dimensions: 12
+
+(kernel 4):
+indexlist: {{m[1]}, {m[3]}, {m[5], m[7], m[9], m[11]}}
+
+(kernel 4):
+time consuming: 0.279483`5.596870394202092
+
+(kernel 5):
+    Working on Term 1800/14302
+
+(kernel 5):
+dimensions: 24
+
+(kernel 5):
+indexlist: {{m[1], m[3]}, {m[2], m[5]}, {m[7], m[9]}}
+
+(kernel 4):
+dimensions: 17
+
+(kernel 4):
+indexlist: {{m[3]}, {m[1], m[5]}, {m[7], m[9], m[11]}}
+
+(kernel 4):
+time consuming: 0.73172`6.014859923537701
+
+(kernel 5):
+time consuming: 329.774307`8.668731814201774
+
+(kernel 4):
+    Working on Term 6200/6805
+
+(kernel 4):
+dimensions: 24
+
+(kernel 4):
+indexlist: {{m[1], m[4]}, {m[2], m[6]}, {m[8], m[10]}}
+
+(kernel 4):
+time consuming: 321.762563`8.658050510471542
+

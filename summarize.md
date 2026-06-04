@@ -377,7 +377,17 @@ RunBoundaryConditions[rootDir, label, order, loopPoints,
 
 The external directory is gitignored and aetherignored, while `asym/tmp/` (tensor reduction and target integral caches) remains in-workspace.
 
-### 2.3 Output
+### 2.5 Parallel Workload Balancing and Persistent Caching
+To optimize execution speed and resource usage, `RunAsymExpansionParallel` incorporates two performance features:
+1. **Workload Balancing via Symmetry Selection**: The integrand is mathematically invariant under coordinate exchanges of external legs $\{1 \leftrightarrow 3, 2 \leftrightarrow 4\}$, $\{1 \leftrightarrow 2, 3 \leftrightarrow 4\}$, and $\{1 \leftrightarrow 4, 2 \leftrightarrow 3\}$. For each of the 6 permutations, the orchestrator checks all 4 coordinate exchange representations, computes the term count in `RegionExpand[..., "check" -> False]`, and runs the calculation using the representation that minimizes terms. For `fourloopI41`, this selects representations with **4,286 terms** instead of **8,971 terms** (a **52% term reduction**), cutting runtime by more than 2x.
+2. **Persistent Global Tensor Caching**: Tensor projection records generated during reduction are loaded from a global cache (`asym/tmp/cache_tensor_record_noremove.mx`) at the start of `ProjectTensor` and written to local caches (`tensor_record_cache_local.mx`) in parallel worker directories. When parallel kernels finish, the master kernel merges and deduplicates all local caches using `DeleteDuplicatesBy[..., #[[1]] &]` and saves the result back to the global cache file.
+
+For verification, see the following test scripts:
+*   [test_symmetry_equivalence.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/test/test_symmetry_equivalence.wl) — verifies mathematical equivalence of all 4 coordinate exchanges (which evaluate to exactly `0` when converted to normal form).
+*   [test_fourloopI41_recalc.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/test/test_fourloopI41_recalc.wl) — recalculates the `fourloopI41` boundary conditions and verifies that the results are mathematically identical to reference benchmarks.
+*   [compare_fourloopI41_symmetry_terms.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/test/compare_fourloopI41_symmetry_terms.wl) — prints the exact term counts for the 4 Cases across all 6 permutations.
+
+### 2.6 Output
 `RunAsymExpansionParallel` saves 6 files to `asym/boundary_agent/`:
 
 ```
