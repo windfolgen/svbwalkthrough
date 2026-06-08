@@ -23,11 +23,7 @@ RunCoefficientSolving[rootDir_, label_, config_,
                       targetData_, order_:3] := Module[
   {$LEN, $Order, c,
    setup, temp, temp1, sys, solt,
-   i, j, k, suffix, filePrefix, ansatzK, svrepK, mplRules, offset, varsList,
-   logStream},
-
-  logStream = OpenWrite[FileNameJoin[{rootDir, "runs", label, "run.log"}]];
-  AppendTo[$Output, logStream];
+   i, j, k, suffix, filePrefix, ansatzK, svrepK, mplRules, offset, varsList},
 
   (* ---- global setups ---- *)
   $LEN         = Total[Length /@ ansatzList];
@@ -159,7 +155,7 @@ RunCoefficientSolving[rootDir_, label_, config_,
 
     temp = Normal[setup - targetData[[i]]] /. {
       f[3, 3] -> Zeta[3]^2 / 2, f[3, 5] -> Zeta[3] Zeta[5] - f[5, 3], f[a_] :> Zeta[a]
-    };
+    } // Simplify;
     
     If[temp =!= 0,
       Print["Limit ", i, " mismatch: ", InputForm[temp]];
@@ -191,6 +187,4 @@ RunCoefficientSolving[rootDir_, label_, config_,
     Print["Final result.m and coeff_sol.m saved to runs/", label, "/"];
   ];
 
-  $Output = DeleteCases[$Output, logStream];
-  Close[logStream];
 ];

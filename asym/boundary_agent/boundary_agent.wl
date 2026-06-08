@@ -205,7 +205,7 @@ RunBoundaryConditions[rootDir_, label_, config_, order_:3, opts : OptionsPattern
   (* ---- exact syntax from run_I3Lhard_parallel.wl ---- *)
 
   (* load package LiteRed2 *)
-  Get["LiteRed2`"];
+  If[!MemberQ[$Packages, "LiteRed`"], Get["LiteRed2`"]];
 
   (* kinematic settings *)
   SetDim[d];
@@ -215,10 +215,11 @@ RunBoundaryConditions[rootDir_, label_, config_, order_:3, opts : OptionsPattern
   (* load LiteRed2 bases *)
   Do[
     Get[FileNameJoin[{asymDir, "Bases", b, b}]];
-    Quiet[ExecuteDefinitions[ToExpression[b]]];
+    Quiet[ExecuteDefinitions[ToExpression["LiteRed2`" <> b]]];
   , {b, $LiteRedBases}];
 
   LaunchKernels[6];
+  ParallelEvaluate[Quiet[If[NameQ["Global`j"], Remove["Global`j"]]]];
 
   (* load asymptotic expansion engine *)
   Get[FileNameJoin[{asymDir, "asym_new.wl"}]];
@@ -256,14 +257,12 @@ RunBoundaryConditions[rootDir_, label_, config_, order_:3, opts : OptionsPattern
 
   (* update the dynamic cache association *)
   Module[{assocFile, assoc},
-    assocFile = FileNameJoin[{rootDir, "asym", "boundary_agent", "calculated_integrands.m"}];
-    If[FileExistsQ[assocFile],
-      Quiet[assoc = Get[assocFile]];
-      If[AssociationQ[assoc],
-        AssociateTo[assoc, $Integrand -> label];
-        Quiet[Put[assoc, assocFile]];
-        Print["[Boundary Agent] Added new computed integrand to association: '", label, "'"];
-      ];
+    assoc = VerifyOrConstructAssociation[rootDir];
+    If[AssociationQ[assoc],
+      AssociateTo[assoc, $Integrand -> label];
+      assocFile = FileNameJoin[{rootDir, "asym", "boundary_agent", "calculated_integrands.m"}];
+      Quiet[Put[assoc, assocFile]];
+      Print["[Boundary Agent] Added new computed integrand to association: '", label, "'"];
     ];
   ];
 

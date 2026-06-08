@@ -1,3 +1,403 @@
+"=== Starting Unified Workflow Engine for: ""threeloopI5"" ==="
+"Start Date and Time: ""Mon 8 Jun 2026 18:50:34"
+
+FrontEndObject::notavail: 
+   A front end is not available; certain operations require a front end.
+"**************** "Style["LiteRed v2.025\[Beta]", 
+   {Bold, RGBColor[1, 1/3, 1/3]}]" ********************\nAuthor: Roman N. \
+Lee, Budker Institute of Nuclear Physics, Novosibirsk.\nRelease Date: \
+????-??-??\nTimestamp: Tue 25 Feb 2025 15:30:30\nRead \
+from:/Users/windfolgen/GitRepos/LiteRed2/Source/LiteRed2025.m \
+(CRC32:2205507540,{2340977437, 3317197336, 1063727846})\n\nLiteRed stands for \
+"Style["L", {RGBColor[1, 1/3, 1/3]}]"oop "Style["i", {RGBColor[1, 1/3, 1/3]}]
+  "n"Style["te", {RGBColor[1, 1/3, 1/3]}]"grals "
+  Style["Red", {RGBColor[1, 1/3, 1/3]}]
+  "uction.\nThe package is designed for the search and application of the \
+Integration-By-Part reduction rules. It also contains some other useful \
+tools.\n\nSee ?LiteRed`* for a list of functions. "
+"Review agent loaded from ""/Users/windfolgen/Documents/AntiGravity/svbwalkth\
+rough/audit_agent/audit_agent.wl"
+"[ReviewGate] ""preflight"" stage: ""PASS"" (PASS:"2" WARN:"0" FAIL:"0")"
+"  Conformal weight n = "2
+"  Checking for boundary target data..."
+"[ReviewGate] ""preboundary"" stage: ""PASS"" (PASS:"10" WARN:"0" FAIL:"0")"
+"[Boundary Cache Hit Warning] Matches pattern '""threeloopI5"
+  "', but some boundary files were missing on disk under "
+  "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough/asym/boundary_agent"
+"Executing\n"HoldForm[sp[p, p] = u; ]
+"IBP output redirected to: ""/Users/windfolgen/Documents/aether/svbwalkthroug\
+h_ibp"
+"=== Running Parallel Expansion for ""threeloopI5"" with "6" permutations ==="
+"Permutation "{1, 2, 3, 4}" -> chosen equivalent permutation "{1, 2, 3, 4}" ("
+  145" terms)"
+"Permutation "{2, 1, 3, 4}" -> chosen equivalent permutation "{2, 1, 3, 4}" ("
+  145" terms)"
+"Permutation "{1, 3, 2, 4}" -> chosen equivalent permutation "{2, 4, 1, 3}" ("
+  125" terms)"
+"Permutation "{2, 3, 1, 4}" -> chosen equivalent permutation "{4, 1, 3, 2}" ("
+  110" terms)"
+"Permutation "{3, 1, 2, 4}" -> chosen equivalent permutation "{4, 2, 1, 3}" ("
+  125" terms)"
+"Permutation "{3, 2, 1, 4}" -> chosen equivalent permutation "{1, 4, 3, 2}" ("
+  110" terms)"
+"(kernel 1):"
+"threeloopI51234: no tensor reduced results found. Starting reduction...\n"
+"(kernel 2):"
+"threeloopI52134: no tensor reduced results found. Starting reduction...\n"
+"(kernel 3):"
+"threeloopI51324: no tensor reduced results found. Starting reduction...\n"
+"(kernel 4):"
+"threeloopI52314: no tensor reduced results found. Starting reduction...\n"
+"(kernel 5):"
+"threeloopI53124: no tensor reduced results found. Starting reduction...\n"
+"(kernel 6):"
+"threeloopI53214: no tensor reduced results found. Starting reduction...\n"
+"(kernel 1):"
+"set 1 to 0, 4 to infinity.\n"
+"(kernel 2):"
+"set 1 to 0, 4 to infinity.\n"
+"(kernel 3):"
+"set 1 to 0, 4 to infinity.\n"
+"(kernel 4):"
+"set 1 to 0, 4 to infinity.\n"
+"(kernel 5):"
+"set 1 to 0, 4 to infinity.\n"
+"(kernel 6):"
+"set 1 to 0, 4 to infinity.\n"
+"(kernel 1):"
+"performing region expansion...\n"
+"(kernel 2):"
+"performing region expansion...\n"
+"(kernel 3):"
+"performing region expansion...\n"
+"(kernel 4):"
+"performing region expansion...\n"
+"(kernel 5):"
+"performing region expansion...\n"
+"(kernel 6):"
+"performing region expansion...\n"
+"(kernel 1):"
+"topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, \
+7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into\n"
+"(kernel 2):"
+"topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, \
+7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into\n"
+"(kernel 3):"
+"topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, \
+7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into\n"
+"(kernel 4):"
+"topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, \
+7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into\n"
+"(kernel 5):"
+"topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, \
+7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into\n"
+"(kernel 6):"
+"topology: {d2[1, 5], d2[2, 5], d2[3, 5], d2[1, 6], d2[2, 6], d2[3, 6], d2[1, \
+7], d2[2, 7], d2[3, 7], d2[5, 6], d2[5, 7], d2[6, 7]} can be split into\n"
+"(kernel 1):"
+"topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 2):"
+"topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 3):"
+"topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 4):"
+"topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 5):"
+"topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 6):"
+"topo1: {d2[1, 5], d2[2, 5], d2[1, 6], d2[2, 6], d2[1, 7], d2[2, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 1):"
+"topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 2):"
+"topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 3):"
+"topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 4):"
+"topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 5):"
+"topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 6):"
+"topo2: {d2[1, 5], d2[3, 5], d2[1, 6], d2[3, 6], d2[1, 7], d2[3, 7], d2[5, \
+6], d2[5, 7], d2[6, 7]}\n"
+"(kernel 1):"
+"Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are \
+totally 8 regions.\n"
+"(kernel 2):"
+"Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are \
+totally 8 regions.\n"
+"(kernel 3):"
+"Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are \
+totally 8 regions.\n"
+"(kernel 4):"
+"Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are \
+totally 8 regions.\n"
+"(kernel 5):"
+"Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are \
+totally 8 regions.\n"
+"(kernel 6):"
+"Loops: {Subscript[x, 5], Subscript[x, 6], Subscript[x, 7]}. There are \
+totally 8 regions.\n"
+"(kernel 1):"
+"classifying topologies: \n"
+"(kernel 2):"
+"classifying topologies: \n"
+"(kernel 3):"
+"classifying topologies: \n"
+"(kernel 4):"
+"classifying topologies: \n"
+"(kernel 5):"
+"classifying topologies: \n"
+"(kernel 6):"
+"classifying topologies: \n"
+"(kernel 1):"
+"region 1: total terms 35\n"
+"(kernel 2):"
+"region 1: total terms 35\n"
+"(kernel 3):"
+"region 1: total terms 35\n"
+"(kernel 4):"
+"region 1: total terms 35\n"
+"(kernel 5):"
+"region 1: total terms 35\n"
+"(kernel 6):"
+"region 1: total terms 35\n"
+"(kernel 1):"
+"region 2: total terms 84\n"
+"(kernel 2):"
+"region 2: total terms 84\n"
+"(kernel 3):"
+"region 2: total terms 165\n"
+"(kernel 4):"
+"region 2: total terms 35\n"
+"(kernel 5):"
+"region 2: total terms 165\n"
+"(kernel 6):"
+"region 2: total terms 35\n"
+"(kernel 1):"
+"region 3: total terms 165\n"
+"(kernel 2):"
+"region 3: total terms 165\n"
+"(kernel 3):"
+"region 3: total terms 84\n"
+"(kernel 4):"
+"region 3: total terms 165\n"
+"(kernel 5):"
+"region 3: total terms 84\n"
+"(kernel 6):"
+"region 3: total terms 165\n"
+"(kernel 1):"
+"region 4: total terms 275\n"
+"(kernel 2):"
+"region 4: total terms 275\n"
+"(kernel 3):"
+"region 4: total terms 275\n"
+"(kernel 4):"
+"region 4: total terms 165\n"
+"(kernel 5):"
+"region 4: total terms 275\n"
+"(kernel 6):"
+"region 4: total terms 165\n"
+"(kernel 6):"
+"region 5: total terms 165\n"
+"(kernel 4):"
+"region 5: total terms 165\n"
+"(kernel 2):"
+"region 5: total terms 84\n"
+"(kernel 1):"
+"region 5: total terms 84\n"
+"(kernel 3):"
+"region 5: total terms 84\n"
+"(kernel 4):"
+"region 6: total terms 35\n"
+"(kernel 5):"
+"region 5: total terms 84\n"
+"(kernel 6):"
+"region 6: total terms 35\n"
+"(kernel 2):"
+"region 6: total terms 35\n"
+"(kernel 1):"
+"region 6: total terms 35\n"
+"(kernel 2):"
+"region 7: total terms 84\n"
+"(kernel 3):"
+"region 6: total terms 84\n"
+"(kernel 4):"
+"region 7: total terms 165\n"
+"(kernel 5):"
+"region 6: total terms 84\n"
+"(kernel 6):"
+"region 7: total terms 165\n"
+"(kernel 1):"
+"region 7: total terms 84\n"
+"(kernel 2):"
+"region 8: total terms 35\n"
+"(kernel 3):"
+"region 7: total terms 35\n"
+"(kernel 5):"
+"region 7: total terms 35\n"
+"(kernel 1):"
+"region 8: total terms 35\n"
+"(kernel 3):"
+"region 8: total terms 35\n"
+"(kernel 5):"
+"region 8: total terms 35\n"
+"(kernel 6):"
+"region 8: total terms 35\n"
+"(kernel 4):"
+"region 8: total terms 35\n"
+"(kernel 2):"
+"projecting the tensor structure and performing the contraction...\n"
+"(kernel 3):"
+"projecting the tensor structure and performing the contraction...\n"
+"(kernel 6):"
+"projecting the tensor structure and performing the contraction...\n"
+"(kernel 1):"
+"projecting the tensor structure and performing the contraction...\n"
+"(kernel 4):"
+"projecting the tensor structure and performing the contraction...\n"
+"(kernel 5):"
+"projecting the tensor structure and performing the contraction...\n"
+"(kernel 2):"
+"total length: 145 split into number of chunks: 1\n"
+"(kernel 3):"
+"total length: 125 split into number of chunks: 1\n"
+"(kernel 6):"
+"total length: 110 split into number of chunks: 1\n"
+"(kernel 2):"
+"--- ProjectTensor Chunk 1/1 (Terms 1-145) Time: 7.180075 ---\n"
+"(kernel 3):"
+"--- ProjectTensor Chunk 1/1 (Terms 1-125) Time: 7.176254 ---\n"
+"(kernel 5):"
+"total length: 125 split into number of chunks: 1\n"
+"(kernel 6):"
+"--- ProjectTensor Chunk 1/1 (Terms 1-110) Time: 7.167385 ---\n"
+"(kernel 4):"
+"total length: 110 split into number of chunks: 1\n"
+"(kernel 5):"
+"--- ProjectTensor Chunk 1/1 (Terms 1-125) Time: 7.179622 ---\n"
+"(kernel 1):"
+"total length: 145 split into number of chunks: 1\n"
+"(kernel 4):"
+"--- ProjectTensor Chunk 1/1 (Terms 1-110) Time: 7.197673 ---\n"
+"(kernel 1):"
+"--- ProjectTensor Chunk 1/1 (Terms 1-145) Time: 7.22702 ---\n"
+"(kernel 6):"
+"    Working on Term 100/110\n"
+"(kernel 3):"
+"    Working on Term 100/125\n"
+"(kernel 4):"
+"    Working on Term 100/110\n"
+"(kernel 5):"
+"    Working on Term 100/125\n"
+"(kernel 6):"
+"threeloopI53214: tensor reduction finished!\n"
+"(kernel 2):"
+"    Working on Term 100/145\n"
+"(kernel 4):"
+"threeloopI52314: tensor reduction finished!\n"
+"(kernel 1):"
+"    Working on Term 100/145\n"
+"(kernel 3):"
+"threeloopI51324: tensor reduction finished!\n"
+"(kernel 5):"
+"threeloopI53124: tensor reduction finished!\n"
+"(kernel 2):"
+"threeloopI52134: tensor reduction finished!\n"
+"(kernel 1):"
+"threeloopI51234: tensor reduction finished!\n"
+"basischange loaded!"
+"reduced results loaded!"
+
+FrontEndObject::notavail: 
+   A front end is not available; certain operations require a front end.
+"MIs: "{}
+
+FrontEndObject::notavail: 
+   A front end is not available; certain operations require a front end.
+
+General::stop: Further output of FrontEndObject::notavail
+     will be suppressed during this calculation.
+"MIs: "{}
+"MIs: "{}
+"MIs: "{}
+"target integrals reduced! time: "12.417368`7.244544549855299
+"(kernel 1):"
+"threeloopI51234: series expansion finished!\n"
+"(kernel 2):"
+"threeloopI52134: series expansion finished!\n"
+"(kernel 6):"
+"threeloopI53214: series expansion finished!\n"
+"(kernel 4):"
+"threeloopI52314: series expansion finished!\n"
+"(kernel 5):"
+"threeloopI53124: series expansion finished!\n"
+"(kernel 3):"
+"threeloopI51324: series expansion finished!\n"
+"[Global Cache] Merged and updated cache with "10" records."
+"=== Done Parallel Expansion! time: "35.040385`7.695083867087655" ==="
+"  Moved boundary output: ""threeloopI5""1234"
+"  Moved boundary output: ""threeloopI5""2134"
+"  Moved boundary output: ""threeloopI5""1324"
+"  Moved boundary output: ""threeloopI5""2314"
+"  Moved boundary output: ""threeloopI5""3124"
+"  Moved boundary output: ""threeloopI5""3214"
+"[Boundary Agent] Added new computed integrand to association: '""threeloopI5"
+  "'"
+"Boundary condition files saved."
+"Cached temporary results in ""/Users/windfolgen/Documents/AntiGravity/svbwal\
+kthrough/asym/tmp"" can be reused for subsequent bootstrap problems."
+"[ReviewGate] ""boundary"" stage: ""PASS"" (PASS:"6" WARN:"0" FAIL:"0")"
+"[Time Record] Stage 1 (Boundary Conditions) took: "
+  38.803287`7.739383513774085" seconds."
+"  Loading full SV basis..."
+"  [Leading Singularity "1"/"1" (""simple"")]"
+"  [MPL auto-detect] Found 0 MPL elements."
+"  Executing RunSeriesExpansion for ""threeloopI5""..."
+"[ReviewGate] ""preseries"" stage: ""PASS"" (PASS:"7" WARN:"0" FAIL:"0")"
+"[Skill 1] Starting 6 expansions, poleType=""simple"", n="2", k="1", SVHPL \
+indices="64", MPL indices="0
+"[Skill 1] Limit "1"/6: additional = "InputForm[Y^(-1)]
+
+ParallelTable::nopar: 
+   No parallel kernels available; proceeding with sequential evaluation.
+"[Skill 1] Limit "1"/6 (""e0uv""): done."
+"[Skill 1] Limit "2"/6: additional = "InputForm[-Y^(-1)]
+
+ParallelTable::nopar: 
+   No parallel kernels available; proceeding with sequential evaluation.
+"[Skill 1] Limit "2"/6 (""e0uvp""): done."
+"[Skill 1] Limit "3"/6: additional = "InputForm[(-1 + u + Y)^(-1)]
+
+ParallelTable::nopar: 
+   No parallel kernels available; proceeding with sequential evaluation.
+
+General::stop: Further output of ParallelTable::nopar
+     will be suppressed during this calculation.
+"[Skill 1] Limit "3"/6 (""einfuv""): done."
+"[Skill 1] Limit "4"/6: additional = "InputForm[(-1 + u)^(-1)]
+"[Skill 1] Limit "4"/6 (""einfuvp""): done."
+"[Skill 1] Limit "5"/6: additional = "InputForm[(1 - u - Y)^(-1)]
+"[Skill 1] Limit "5"/6 (""e1uv""): done."
+"[Skill 1] Limit "6"/6: additional = "InputForm[(1 - u)^(-1)]
+"[Skill 1] Limit "6"/6 (""e1uvp""): done."
+"Series expansion files written to "
+  "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent"
+"[ReviewGate] ""series"" stage: ""PASS"" (PASS:"12" WARN:"0" FAIL:"0")"
+"[Time Record] Stage 2 (Series Expansion) took: "56.278107`7.599824483018837
+  " seconds."
+"[ReviewGate] ""presolve"" stage: ""PASS"" (PASS:"12" WARN:"0" FAIL:"0")"
+"  Executing RunCoefficientSolving..."
 "[Skill 3] Total Ansatz Elements=$LEN="30" $Order="3
 "  system size after limit "1": "50" vars: "30
 "Limit "2" (""e0uvp""): temp is empty, skipping."
@@ -5,2118 +405,13 @@
 "Limit "4" (""einfuvp""): temp is empty, skipping."
 "Limit "5" (""e1uv""): temp is empty, skipping."
 "Limit "6" (""e1uvp""): temp is empty, skipping."
-"Limit "1" mismatch: "InputForm[-10 + 10*Log[u] - 3*Log[u]^2 + Log[u]^3/3 + 
-    2*Zeta[3] - 2*((-11*Zeta[3])/2 + 2*(3/4 - Log[u]/2)*Zeta[3] - 
-       (3*(-1 + Log[u])*Zeta[3])/2 + 5*Log[u]*Zeta[3]) + 
-    2*((19*Zeta[3])/8 + (-3/4 + Log[u]/2)*Zeta[3] + 
-       ((-1 + Log[u])*Zeta[3])/2 - (3*Log[u]*Zeta[3])/2 + 
-       ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/8 + 
-       (Zeta[3] - 4*Log[u]*Zeta[3] + 2*Log[u]^2*Zeta[3])/4) - 
-    4*(-1/4*Zeta[3] + (-1 + Log[u])*Zeta[3] + 
-       ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/4 + 
-       (-7 + 2*Log[u] + 24*Zeta[3] - 16*Log[u]*Zeta[3])/16 + 
-       (-23 + 12*Log[u] - 2*Log[u]^2 + 24*Zeta[3] - 32*Log[u]*Zeta[3] + 
-          16*Log[u]^2*Zeta[3])/16) + 
-    4*(1/16 - Zeta[3]/4 + ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/4 + 
-       (147 - 102*Log[u] + 30*Log[u]^2 - 4*Log[u]^3 - 24*Zeta[3] + 
-          48*Log[u]*Zeta[3] - 48*Log[u]^2*Zeta[3] - 192*Zeta[5])/48) + 
-    2*((7*Zeta[3])/4 + (-3/4 + Log[u]/2)*Zeta[3] - Log[u]*Zeta[3] + 
-       (-Zeta[3] - 9*Zeta[5])/2) - 
-    2*((-3*Zeta[3])/8 + (-3/4 + Log[u]/2)*Zeta[3] + 
-       ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 
-       (5*Zeta[3] - 2*Log[u]*Zeta[3] - 2*Log[u]^2*Zeta[3] - 8*Zeta[5])/4) - 
-    2*(2*Zeta[3] - 10*Zeta[5]) - 4*(5/2 - Log[u]/2 - 4*Zeta[5]) + 
-    2*(Zeta[3] - (5*Zeta[5])/2) - 2*(2*Zeta[3] - 2*Zeta[5]) - 15*Zeta[5] - 
-    2*(-Zeta[3] + 5*Zeta[5]) + 2*
-     (Zeta[3]/4 + (3/4 - Log[u]/2)*Zeta[3] + 
-       (-3*Zeta[3] + 2*Log[u]*Zeta[3] + Zeta[5])/2) - 
-    2*((-3*Zeta[3])/8 + (3*(1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 
-       (-7*Zeta[3] + 6*Log[u]*Zeta[3] - 6*Log[u]^2*Zeta[3] + 2*Zeta[5])/4) + 
-    2*((7*Zeta[3])/8 + 2*(3/4 - Log[u]/2)*Zeta[3] - 
-       (3*(1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 
-       (-9*Zeta[3] + 2*Log[u]*Zeta[3] + 6*Log[u]^2*Zeta[3] + 22*Zeta[5])/4) + 
-    Y*(-5 + 7*Log[u] - (5*Log[u]^2)/2 + Log[u]^3/3 + (2*Zeta[3])/3 - 
-       2*(-1/3*Zeta[3] + 2*(7/12 - Log[u]/2)*Zeta[3] - 
-          6*(-2/27 + Log[u]/9)*Zeta[3] + 
-          (-19 + 6*Log[u] + 24*Zeta[3] + 72*Log[u]*Zeta[3])/108 + 
-          (8 - 3*Log[u] - 300*Zeta[3] + 288*Log[u]*Zeta[3])/108) + 
-       2*((7*Zeta[3])/54 + 2*(-2/27 + Log[u]/9)*Zeta[3] + 
-          (-7/12 + Log[u]/2)*Zeta[3] + 
-          ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/54 + 
-          (5 - 2*Log[u] + 150*Zeta[3] - 132*Log[u]*Zeta[3])/108 + 
-          (37 - 26*Log[u] + 6*Log[u]^2 - 24*Zeta[3] - 96*Log[u]*Zeta[3] + 
-             72*Log[u]^2*Zeta[3])/216) - 
-       4*((-2*Zeta[3])/27 + 4*(-2/27 + Log[u]/9)*Zeta[3] + 
-          ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/27 + 
-          (-14 + 5*Log[u] + 48*Zeta[3] - 48*Log[u]*Zeta[3])/108 + 
-          (-245 + 148*Log[u] - 30*Log[u]^2 + 192*Zeta[3] - 
-             384*Log[u]*Zeta[3] + 288*Log[u]^2*Zeta[3])/432) - 
-       4*(17/144 + (215 - 51*Log[u] - 384*Zeta[5])/144) + 
-       2*(-1/72 - Zeta[3]/6 + (-7/12 + Log[u]/2)*Zeta[3] + 
-          (-23 + 6*Log[u] + 42*Zeta[3] - 36*Log[u]*Zeta[3] - 108*Zeta[5])/36\
-) + 2*((7*Zeta[3])/6 - (5*Zeta[5])/3) - (50*Zeta[5])/3 - 
-       2*((11*Zeta[3])/54 + (-7/12 + Log[u]/2)*Zeta[3] + 
-          ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/54 + 
-          (-575 + 510*Log[u] - 198*Log[u]^2 + 36*Log[u]^3 + 
-             1416*Zeta[3] - 1008*Log[u]*Zeta[3] - 432*Log[u]^2*Zeta[3] - 
-             1728*Zeta[5])/1296 + (-1 - 66*Zeta[3] - 216*Zeta[5])/162 + 
-          (4*Zeta[5])/3) - 2*((-5*Zeta[3])/3 + 
-          (-1 + 60*Zeta[3] - 48*Zeta[5])/36 + 
-          (-10 + 3*Log[u] + 60*Zeta[3] - 48*Zeta[5])/36 + (4*Zeta[5])/3) + 
-       4*((2*Zeta[3])/27 + ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/27 + 
-          (2369 - 1761*Log[u] + 576*Log[u]^2 - 90*Log[u]^3 - 
-             192*Zeta[3] + 576*Log[u]*Zeta[3] - 864*Log[u]^2*Zeta[3] - 
-             3456*Zeta[5])/1296 + (5 - 48*Zeta[3] - 864*Zeta[5])/324 + 
-          (8*Zeta[5])/3) - 2*((-5*Zeta[3])/3 + 
-          (-1 + 40*Zeta[3] - 160*Zeta[5])/24 + 
-          (1 + 20*Zeta[3] - 80*Zeta[5])/12 + (20*Zeta[5])/3) + 
-       (Zeta[3] + 20*Zeta[5])/3 + 
-       2*(-1/6*Zeta[3] + (7/12 - Log[u]/2)*Zeta[3] - Zeta[5]/3 + 
-          (-1 + 6*Zeta[3] + 6*Zeta[5])/18 + 
-          (-17 + 6*Log[u] - 168*Zeta[3] + 144*Log[u]*Zeta[3] + 48*Zeta[5])/
-           144) - 2*((17*Zeta[3])/18 + 
-          ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/18 - Zeta[5]/3 + 
-          (-1 - 57*Zeta[3] + 18*Zeta[5])/54 + 
-          (127 - 84*Log[u] + 18*Log[u]^2 - 456*Zeta[3] + 
-             288*Log[u]*Zeta[3] - 432*Log[u]^2*Zeta[3] + 144*Zeta[5])/432) - 
-       2*((5*Zeta[3])/6 - (10*Zeta[5])/3 + (1 - 5*Zeta[3] + 20*Zeta[5])/6 + 
-          (-1 - 40*Zeta[3] + 160*Zeta[5])/48) + 
-       2*((-4*Zeta[3])/9 + 2*(7/12 - Log[u]/2)*Zeta[3] + 
-          ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/18 - (11*Zeta[5])/3 + 
-          (-1 + 96*Zeta[3] + 396*Zeta[5])/108 + 
-          (187 - 102*Log[u] + 18*Log[u]^2 - 456*Zeta[3] + 
-             288*Log[u]*Zeta[3] + 216*Log[u]^2*Zeta[3] + 792*Zeta[5])/216)) + 
-    Y^2*((-7883 + 13822*Log[u] - 5406*Log[u]^2 + 804*Log[u]^3 - 
-          4824*Zeta[3])/2592 - (11*Zeta[3])/9 - 
-       2*((-11*Zeta[3])/48 + 2*(131/288 - (11*Log[u])/24)*Zeta[3] - 
-          6*(-1/32 + Log[u]/16)*Zeta[3] + 
-          (-187 + 66*Log[u] + 312*Zeta[3] + 432*Log[u]*Zeta[3])/1152 + 
-          (69 - 30*Log[u] - 2312*Zeta[3] + 2544*Log[u]*Zeta[3])/1152) + 
-       2*((19*Zeta[3])/192 + 2*(-1/32 + Log[u]/16)*Zeta[3] + 
-          (-131/288 + (11*Log[u])/24)*Zeta[3] + 
-          ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/64 + 
-          (75 - 36*Log[u] + 2312*Zeta[3] - 2400*Log[u]*Zeta[3])/2304 + 
-          (331 - 264*Log[u] + 72*Log[u]^2 - 312*Zeta[3] - 
-             576*Log[u]*Zeta[3] + 576*Log[u]^2*Zeta[3])/2304) - 
-       4*(-1/32*Zeta[3] + 4*(-1/32 + Log[u]/16)*Zeta[3] + 
-          ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/32 + 
-          (-1445 + 588*Log[u] + 5184*Zeta[3] - 6912*Log[u]*Zeta[3])/27648 + 
-          (-8021 + 5192*Log[u] - 1176*Log[u]^2 + 5184*Zeta[3] - 
-             13824*Log[u]*Zeta[3] + 13824*Log[u]^2*Zeta[3])/27648) + 
-       4*(49/9216 - Zeta[3]/32 + ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/32 + 
-          (318139 - 242028*Log[u] + 82872*Log[u]^2 - 14112*Log[u]^3 - 
-             15552*Zeta[3] + 62208*Log[u]*Zeta[3] - 
-             124416*Log[u]^2*Zeta[3] - 497664*Zeta[5])/248832) - 
-       2*(-1/256 - (25*Zeta[3])/192 + (-131/288 + (11*Log[u])/24)*Zeta[3] + 
-          ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/64 + 
-          (-3355 + 3180*Log[u] - 1368*Log[u]^2 + 288*Log[u]^3 + 
-             6072*Zeta[3] - 5472*Log[u]*Zeta[3] - 1728*Log[u]^2*Zeta[3] - 
-             6912*Zeta[5])/6912) - 
-       2*(-7/288 + (-257 + 84*Log[u] + 1176*Zeta[3] - 864*Zeta[5])/864) + 
-       (29 - 12*Log[u] - 984*Zeta[3] + 1584*Log[u]*Zeta[3] - 1296*Zeta[5])/
-        864 + (1 - 420*Zeta[3] - 792*Zeta[5])/288 + 
-       (37 - 12*Log[u] + 236*Zeta[3] - 528*Log[u]*Zeta[3] - 792*Zeta[5])/
-        288 + (-1 + 294*Zeta[3] - 540*Zeta[5])/144 + 
-       (3 + 328*Zeta[3] - 432*Zeta[5])/288 + 
-       (1 + 98*Zeta[3] - 180*Zeta[5])/48 - 
-       2*(11/216 + (49*Zeta[3])/36 - 5*Zeta[5]) - 
-       4*(36383/31104 - (1393*Log[u])/5184 - 2*Zeta[5]) + 13*Zeta[5] + 
-       2*((-85*Zeta[3])/72 + (1 + 255*Zeta[3] - 270*Zeta[5])/216 + 
-          (-3 + 85*Zeta[3] - 90*Zeta[5])/72 + (5*Zeta[5])/4) + 
-       2*((11*Zeta[3])/96 + (-131/288 + (11*Log[u])/24)*Zeta[3] + 
-          (-13 - 264*Zeta[3] - 2592*Zeta[5])/1152 + 
-          (-909 + 252*Log[u] + 1048*Zeta[3] - 1056*Log[u]*Zeta[3] - 
-             2592*Zeta[5])/1152 + (9*Zeta[5])/4) + 
-       2*((-11*Zeta[3])/96 + (131/288 - (11*Log[u])/24)*Zeta[3] - 
-          Zeta[5]/4 + (-21 + 88*Zeta[3] + 96*Zeta[5])/384 + 
-          (-397 + 156*Log[u] - 3144*Zeta[3] + 3168*Log[u]*Zeta[3] + 
-             864*Zeta[5])/3456) - 
-       2*(1/192 + (31 - 12*Log[u] + 1296*Zeta[5])/576) - 
-       2*((419*Zeta[3])/576 + (3*(1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/64 - 
-          Zeta[5]/4 + (-33 - 1784*Zeta[3] + 576*Zeta[5])/2304 + 
-          (2029 - 1476*Log[u] + 360*Log[u]^2 - 5352*Zeta[3] + 
-             2592*Log[u]*Zeta[3] - 5184*Log[u]^2*Zeta[3] + 1728*Zeta[5])/
-           6912) - 2*((49*Zeta[3])/72 - (5*Zeta[5])/2 + 
-          (123 - 392*Zeta[3] + 1440*Zeta[5])/576 + 
-          (-35 - 1176*Zeta[3] + 4320*Zeta[5])/1728) + 
-       2*((-53*Zeta[3])/192 + 2*(131/288 - (11*Log[u])/24)*Zeta[3] - 
-          (3*(1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/64 - (11*Zeta[5])/4 + 
-          (-5 + 424*Zeta[3] + 2112*Zeta[5])/768 + 
-          (7043 - 4092*Log[u] + 792*Log[u]^2 - 11928*Zeta[3] + 
-             10080*Log[u]*Zeta[3] + 5184*Log[u]^2*Zeta[3] + 19008*Zeta[5])/
-           6912)) + Y^3*(23/960 + 
-       (-5399 + 11222*Log[u] - 4638*Log[u]^2 + 744*Log[u]^3 - 4464*Zeta[3])/
-        2592 + (26*Zeta[3])/9 - 
-       2*(-1/6*Zeta[3] + 2*(53/144 - (5*Log[u])/12)*Zeta[3] - 
-          6*(-2/125 + Log[u]/25)*Zeta[3] + 
-          (-28579 + 10860*Log[u] + 51264*Zeta[3] + 51840*Log[u]*Zeta[3])/
-           216000 + (1591 - 765*Log[u] - 56456*Zeta[3] + 
-             68640*Log[u]*Zeta[3])/36000) + 
-       2*((113*Zeta[3])/1500 + 2*(-2/125 + Log[u]/25)*Zeta[3] + 
-          (-53/144 + (5*Log[u])/12)*Zeta[3] + 
-          ((-2 + 10*Log[u] - 25*Log[u]^2)*Zeta[3])/250 + 
-          (767 - 420*Log[u] + 28228*Zeta[3] - 32880*Log[u]*Zeta[3])/36000 + 
-          (47329 - 40980*Log[u] + 12600*Log[u]^2 - 51264*Zeta[3] - 
-             69120*Log[u]*Zeta[3] + 86400*Log[u]^2*Zeta[3])/432000) - 
-       4*((-2*Zeta[3])/125 + 4*(-2/125 + Log[u]/25)*Zeta[3] + 
-          ((-2 + 10*Log[u] - 25*Log[u]^2)*Zeta[3])/125 + 
-          (-2773 + 1230*Log[u] + 10368*Zeta[3] - 17280*Log[u]*Zeta[3])/
-           108000 + (-150309 + 101080*Log[u] - 24600*Log[u]^2 + 
-             82944*Zeta[3] - 276480*Log[u]*Zeta[3] + 345600*Log[u]^2*Zeta[3]\
-)/864000) - 4*(22369/518400 + (1356482 - 335535*Log[u] - 2488320*Zeta[5])/
-           1555200) + (3293 - 1140*Log[u] + 4400*Zeta[3] - 
-          24000*Log[u]*Zeta[3] - 31680*Zeta[5])/14400 + 
-       (1117 - 510*Log[u] - 19500*Zeta[3] + 36000*Log[u]*Zeta[3] - 
-          25920*Zeta[5])/21600 + (17 - 5400*Zeta[3] - 7920*Zeta[5])/3600 + 
-       (57 + 3250*Zeta[3] - 4320*Zeta[5])/3600 - 
-       2*(1763/34560 + (41*Zeta[3])/36 - 4*Zeta[5]) + 
-       2*(-607/8640 + (83*Zeta[3])/72 - Zeta[5]) - 
-       2*((-41*Zeta[3])/36 + (-7921 + 2730*Log[u] + 32800*Zeta[3] - 
-             23040*Zeta[5])/28800 + 
-          (-273 + 16400*Zeta[3] - 11520*Zeta[5])/14400 + (4*Zeta[5])/5) - 
-       2*((137*Zeta[3])/1500 + (-53/144 + (5*Log[u])/12)*Zeta[3] + 
-          ((2 - 10*Log[u] + 25*Log[u]^2)*Zeta[3])/250 + 
-          (-2388971 + 2347980*Log[u] - 1078200*Log[u]^2 + 
-             252000*Log[u]^3 + 3733056*Zeta[3] - 3905280*Log[u]*Zeta[3] - 
-             1036800*Log[u]^2*Zeta[3] - 4147200*Zeta[5])/5184000 + 
-          (-7 - 548*Zeta[3] - 2400*Zeta[5])/3000 + (4*Zeta[5])/5) + 
-       (22*Zeta[5])/5 + 4*((2*Zeta[3])/125 + 
-          ((2 - 10*Log[u] + 25*Log[u]^2)*Zeta[3])/125 + 
-          (7617712 - 5854185*Log[u] + 2052900*Log[u]^2 - 369000*Log[u]^3 - 
-             248832*Zeta[3] + 1244160*Log[u]*Zeta[3] - 
-             3110400*Log[u]^2*Zeta[3] - 12441600*Zeta[5])/7776000 + 
-          (41 - 576*Zeta[3] - 28800*Zeta[5])/18000 + (8*Zeta[5])/5) + 
-       2*(Zeta[3]/12 + (-53/144 + (5*Log[u])/12)*Zeta[3] + 
-          (-69973 + 20140*Log[u] + 63600*Zeta[3] - 72000*Log[u]*Zeta[3] - 
-             155520*Zeta[5])/86400 + 
-          (-241 - 4800*Zeta[3] - 51840*Zeta[5])/28800 + (9*Zeta[5])/5) - 
-       2*(42911/207360 - (41*Zeta[3])/72 + 2*Zeta[5]) - 
-       2*(3/400 + (1283 - 540*Log[u] + 25920*Zeta[5])/14400) + 
-       2*(-1/12*Zeta[3] + (53/144 - (5*Log[u])/12)*Zeta[3] - Zeta[5]/5 + 
-          (-1007 + 3600*Zeta[3] + 4320*Zeta[5])/21600 + 
-          (-34487 + 14460*Log[u] - 254400*Zeta[3] + 288000*Log[u]*Zeta[3] + 
-             69120*Zeta[5])/345600) - 
-       2*((5341*Zeta[3])/9000 + 
-          (3*(2 - 10*Log[u] + 25*Log[u]^2)*Zeta[3])/250 - Zeta[5]/5 + 
-          (-181 - 11114*Zeta[3] + 3600*Zeta[5])/18000 + 
-          (448249 - 345120*Log[u] + 91800*Log[u]^2 - 1066944*Zeta[3] + 
-             414720*Log[u]*Zeta[3] - 1036800*Log[u]^2*Zeta[3] + 
-             345600*Zeta[5])/1728000) + 
-       2*((-143*Zeta[3])/750 + 2*(53/144 - (5*Log[u])/12)*Zeta[3] - 
-          (3*(2 - 10*Log[u] + 25*Log[u]^2)*Zeta[3])/250 - (11*Zeta[5])/5 + 
-          (-51 + 4576*Zeta[3] + 26400*Zeta[5])/12000 + 
-          (875703 - 528140*Log[u] + 108600*Log[u]^2 - 1230528*Zeta[3] + 
-             1232640*Log[u]*Zeta[3] + 518400*Log[u]^2*Zeta[3] + 
-             1900800*Zeta[5])/864000))]
-"Limit "2" mismatch: "InputForm[-10 + 10*Log[u] - 3*Log[u]^2 + Log[u]^3/3 + 
-    2*Zeta[3] - 2*(Zeta[3]/2 + 2*(-3/4 + Log[u]/2)*Zeta[3] - 
-       (9*(-1 + Log[u])*Zeta[3])/2) + 
-    2*((-9*Zeta[3])/8 + (3/4 - Log[u]/2)*Zeta[3] + 
-       (3*(-1 + Log[u])*Zeta[3])/2 + ((1 - 2*Log[u] - 2*Log[u]^2)*Zeta[3])/8) \
-- 4*(-7/16 + Log[u]/8 + (-23 + 12*Log[u] - 2*Log[u]^2)/16 - (7*Zeta[3])/4 + 
-       3*(-1 + Log[u])*Zeta[3] + ((1 - 2*Log[u] - 2*Log[u]^2)*Zeta[3])/4) + 
-    2*((-17*Zeta[3])/8 + 2*(-3/4 + Log[u]/2)*Zeta[3] - 
-       (3*(-1 + 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 - (11*Zeta[5])/2) - 
-    2*(-Zeta[3] - 5*Zeta[5]) + 2*
-     (Zeta[3]/4 + (-3/4 + Log[u]/2)*Zeta[3] - Zeta[5]/2) - 
-    2*((13*Zeta[3])/8 + (3*(-1 + 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 - 
-       Zeta[5]/2) + 15*Zeta[5] - 2*(2*Zeta[3] + 2*Zeta[5]) - 
-    2*((5*Zeta[3])/8 + (3/4 - Log[u]/2)*Zeta[3] + 
-       ((-1 + 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 2*Zeta[5]) + 
-    2*(Zeta[3] + (5*Zeta[5])/2) - 4*(5/2 - Log[u]/2 + 4*Zeta[5]) + 
-    4*(1/16 + (147 - 102*Log[u] + 30*Log[u]^2 - 4*Log[u]^3)/48 + 
-       (7*Zeta[3])/4 + ((-1 + 2*Log[u] + 2*Log[u]^2)*Zeta[3])/4 + 4*Zeta[5]) \
-+ 2*(-1/4*Zeta[3] + (3/4 - Log[u]/2)*Zeta[3] + (9*Zeta[5])/2) - 
-    2*(2*Zeta[3] + 10*Zeta[5]) + 
-    Y^3*(4091/10800 - (43*Log[u])/360 + 
-       (-5399 + 11222*Log[u] - 4638*Log[u]^2 + 744*Log[u]^3 - 4464*Zeta[3])/
-        2592 + (187*Zeta[3])/36 - 
-       2*(48283/216000 - (509*Log[u])/7200 + (3*Zeta[3])/4 + 
-          2*(-11/144 + (5*Log[u])/12)*Zeta[3] - 
-          6*(-163/18000 + (137*Log[u])/300)*Zeta[3]) + 
-       2*(-6463/54000 + (217*Log[u])/3600 + 
-          (-122579 + 97980*Log[u] - 30600*Log[u]^2)/432000 - 
-          (18769*Zeta[3])/18000 + (11/144 - (5*Log[u])/12)*Zeta[3] + 
-          2*(-163/18000 + (137*Log[u])/300)*Zeta[3] + 
-          ((-649 - 1130*Log[u] - 300*Log[u]^2)*Zeta[3])/3000) - 
-       4*(-326033/432000 + (4261*Log[u])/14400 + 
-          (-605033 + 387210*Log[u] - 97200*Log[u]^2)/432000 - 
-          (12019*Zeta[3])/9000 + 
-          4*(-163/18000 + (137*Log[u])/300)*Zeta[3] + 
-          ((-649 - 1130*Log[u] - 300*Log[u]^2)*Zeta[3])/1500) + 
-       2*(2431/72000 + (-997703 + 624140*Log[u] - 144600*Log[u]^2)/864000 - 
-          (7519*Zeta[3])/6000 + 2*(-11/144 + (5*Log[u])/12)*Zeta[3] + 
-          ((-649 - 1130*Log[u] - 300*Log[u]^2)*Zeta[3])/1000 - 
-          (11*Zeta[5])/5) - 2*
-        (-64031/207360 - (83*Zeta[3])/72 - 2*Zeta[5]) - 
-       2*(1709/14400 - (11*Log[u])/240 - (9*Zeta[5])/5) + 
-       2*(5237/12800 - (641*Log[u])/5760 + (3*Zeta[3])/8 + 
-          (-11/144 + (5*Log[u])/12)*Zeta[3] - Zeta[5]/5) - 
-       2*(511/8000 - (7*(34869 - 26720*Log[u] + 7800*Log[u]^2))/576000 + 
-          (15307*Zeta[3])/18000 + 
-          ((649 + 1130*Log[u] + 300*Log[u]^2)*Zeta[3])/1000 - Zeta[5]/5) - 
-       2*(55801/86400 - (593*Log[u])/2880 + (83*Zeta[3])/36 + 
-          (4*Zeta[5])/5) - 2*(5129/216000 + 
-          (2160971 - 1987980*Log[u] + 862200*Log[u]^2 - 252000*Log[u]^3)/
-           5184000 + (5269*Zeta[3])/18000 + 
-          (11/144 - (5*Log[u])/12)*Zeta[3] + 
-          ((649 + 1130*Log[u] + 300*Log[u]^2)*Zeta[3])/3000 + (4*Zeta[5])/5) \
-+ (12*Zeta[5])/5 + 2*(-673/8640 + (41*Zeta[3])/72 + Zeta[5]) - 
-       4*(4511711/1555200 - (76111*Log[u])/103680 + (8*Zeta[5])/5) + 
-       4*(152407/864000 + (10411288 - 8203815*Log[u] + 2933100*Log[u]^2 - 
-             747000*Log[u]^3)/7776000 + (12019*Zeta[3])/9000 + 
-          ((649 + 1130*Log[u] + 300*Log[u]^2)*Zeta[3])/1500 + (8*Zeta[5])/5) \
-+ 2*(25249/21600 - (1547*Log[u])/4320 - (3*Zeta[3])/8 + 
-          (11/144 - (5*Log[u])/12)*Zeta[3] + (9*Zeta[5])/5) - 
-       2*(-1121/11520 + (83*Zeta[3])/36 + 4*Zeta[5])) + 
-    Y^2*(41/216 - Log[u]/18 + (-7883 + 13822*Log[u] - 5406*Log[u]^2 + 
-          804*Log[u]^3 - 4824*Zeta[3])/2592 + (47*Zeta[3])/9 - 
-       2*(101/576 - (5*Log[u])/96 + (35*Zeta[3])/48 + 
-          2*(-59/288 + (11*Log[u])/24)*Zeta[3] - 
-          6*(-35/288 + (25*Log[u])/48)*Zeta[3]) + 
-       2*(-607/6912 + (23*Log[u])/576 + 
-          (-1727 + 1320*Log[u] - 360*Log[u]^2)/6912 - (625*Zeta[3])/576 + 
-          (59/288 - (11*Log[u])/24)*Zeta[3] + 
-          2*(-35/288 + (25*Log[u])/48)*Zeta[3] + 
-          ((-29 - 76*Log[u] - 24*Log[u]^2)*Zeta[3])/192) - 
-       4*(-19621/27648 + (593*Log[u])/2304 + 
-          (-41301 + 25544*Log[u] - 5784*Log[u]^2)/27648 - 
-          (415*Zeta[3])/288 + 4*(-35/288 + (25*Log[u])/48)*Zeta[3] + 
-          ((-29 - 76*Log[u] - 24*Log[u]^2)*Zeta[3])/96) + 
-       2*(49/2304 + (-7645 + 4548*Log[u] - 936*Log[u]^2)/6912 - 
-          (275*Zeta[3])/192 + 2*(-59/288 + (11*Log[u])/24)*Zeta[3] + 
-          ((-29 - 76*Log[u] - 24*Log[u]^2)*Zeta[3])/64 - (11*Zeta[5])/4) - 
-       2*(-211/864 - (85*Zeta[3])/72 - (5*Zeta[5])/2) - 
-       2*(17/288 - Log[u]/48 - (9*Zeta[5])/4) + 
-       2*(535/1728 - (23*Log[u])/288 + (35*Zeta[3])/96 + 
-          (-59/288 + (11*Log[u])/24)*Zeta[3] - Zeta[5]/4) - 
-       2*(95/2304 + (-2723 + 1980*Log[u] - 504*Log[u]^2)/6912 + 
-          (565*Zeta[3])/576 + ((29 + 76*Log[u] + 24*Log[u]^2)*Zeta[3])/64 - 
-          Zeta[5]/4) + 3*Zeta[5] - 
-       2*(221/432 - (11*Log[u])/72 + (85*Zeta[3])/36 + Zeta[5]) - 
-       2*(101/6912 + (3125 - 2868*Log[u] + 1224*Log[u]^2 - 288*Log[u]^3)/
-           6912 + (205*Zeta[3])/576 + (59/288 - (11*Log[u])/24)*Zeta[3] + 
-          ((29 + 76*Log[u] + 24*Log[u]^2)*Zeta[3])/192 + Zeta[5]) + 
-       2*(-1/27 + (49*Zeta[3])/72 + (5*Zeta[5])/4) - 
-       4*(91463/31104 - (3661*Log[u])/5184 + 2*Zeta[5]) + 
-       4*(4051/27648 + (411451 - 319788*Log[u] + 113976*Log[u]^2 - 
-             24480*Log[u]^3)/248832 + (415*Zeta[3])/288 + 
-          ((29 + 76*Log[u] + 24*Log[u]^2)*Zeta[3])/96 + 2*Zeta[5]) + 
-       2*(571/576 - (9*Log[u])/32 - (35*Zeta[3])/96 + 
-          (59/288 - (11*Log[u])/24)*Zeta[3] + (9*Zeta[5])/4) - 
-       2*(-2/27 + (85*Zeta[3])/36 + 5*Zeta[5])) + 
-    Y*(-5 + 7*Log[u] - (5*Log[u]^2)/2 + Log[u]^3/3 + 3*Zeta[3] - 
-       2*(11/108 - Log[u]/36 + (2*Zeta[3])/3 + 
-          2*(-5/12 + Log[u]/2)*Zeta[3] - 6*(-35/108 + (11*Log[u])/18)*Zeta[3]\
-) + 2*(-5/108 + Log[u]/54 + (-37 + 26*Log[u] - 6*Log[u]^2)/216 - 
-          (121*Zeta[3])/108 + (5/12 - Log[u]/2)*Zeta[3] + 
-          2*(-35/108 + (11*Log[u])/18)*Zeta[3] + 
-          ((-2 - 21*Log[u] - 9*Log[u]^2)*Zeta[3])/54) - 
-       4*(-67/108 + (11*Log[u])/54 + (-673 + 392*Log[u] - 78*Log[u]^2)/432 - 
-          (85*Zeta[3])/54 + 4*(-35/108 + (11*Log[u])/18)*Zeta[3] + 
-          ((-2 - 21*Log[u] - 9*Log[u]^2)*Zeta[3])/27) + 
-       2*(1/108 + (-187 + 102*Log[u] - 18*Log[u]^2)/216 - (61*Zeta[3])/36 + 
-          2*(-5/12 + Log[u]/2)*Zeta[3] + 
-          ((-2 - 21*Log[u] - 9*Log[u]^2)*Zeta[3])/18 - (11*Zeta[5])/3) - 
-       2*(-7/48 - (7*Zeta[3])/6 - (10*Zeta[5])/3) + 
-       2*(25/144 - Log[u]/24 + Zeta[3]/3 + (-5/12 + Log[u]/2)*Zeta[3] - 
-          Zeta[5]/3) - 2*(1/54 + (-127 + 84*Log[u] - 18*Log[u]^2)/432 + 
-          (43*Zeta[3])/36 + ((2 + 21*Log[u] + 9*Log[u]^2)*Zeta[3])/18 - 
-          Zeta[5]/3) + 10*Zeta[5] - 
-       2*(11/36 - Log[u]/12 + (7*Zeta[3])/3 + (4*Zeta[5])/3) - 
-       2*(1/162 + (575 - 510*Log[u] + 198*Log[u]^2 - 36*Log[u]^3)/1296 + 
-          (49*Zeta[3])/108 + (5/12 - Log[u]/2)*Zeta[3] + 
-          ((2 + 21*Log[u] + 9*Log[u]^2)*Zeta[3])/54 + (4*Zeta[5])/3) + 
-       2*((5*Zeta[3])/6 + (5*Zeta[5])/3) - 
-       4*(26/9 - (31*Log[u])/48 + (8*Zeta[5])/3) + 
-       4*(71/648 + (2815 - 2127*Log[u] + 720*Log[u]^2 - 126*Log[u]^3)/1296 + 
-          (85*Zeta[3])/54 + ((2 + 21*Log[u] + 9*Log[u]^2)*Zeta[3])/27 + 
-          (8*Zeta[5])/3) + 2*(47/72 - Log[u]/6 - Zeta[3]/3 + 
-          (5/12 - Log[u]/2)*Zeta[3] + 3*Zeta[5]) - 
-       2*(-1/24 + (7*Zeta[3])/3 + (20*Zeta[5])/3))]
-"Limit "3" mismatch: "InputForm[-20 + 10*Log[u] - 2*Log[u]^2 + Log[u]^3/6 + 
-    8*Zeta[3] + 2*(-1/2*Log[u]^2 - Log[u]^3/6)*Zeta[3] + 
-    8*(-2 + Log[u] - Log[u]^2/2 - Log[u]^3/6 - 4*Zeta[3])*Zeta[3] + 
-    12*(-1 - Log[u])*Zeta[5] + (-7200 + 2880*Log[u] - 360*Log[u]^2 + 
-       6*Log[u]^5 + Log[u]^6 - 720*Log[u]^2*Zeta[3] - 
-       240*Log[u]^3*Zeta[3] - 8640*Zeta[5] - 8640*Log[u]*Zeta[5])/720 + 
-    (-7200 + 4320*Log[u] - 1080*Log[u]^2 + 120*Log[u]^3 - 6*Log[u]^5 - 
-       Log[u]^6 - 5760*Zeta[5] - 5760*Log[u]*Zeta[5])/720 + 
-    (4320 - 2880*Log[u] + 1080*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 - 
-       6*Log[u]^5 - Log[u]^6 + 2880*Zeta[3] - 1440*Log[u]*Zeta[3] + 
-       720*Log[u]^2*Zeta[3] + 240*Log[u]^3*Zeta[3] + 2880*Zeta[3]^2 - 
-       1440*Zeta[5] - 1440*Log[u]*Zeta[5])/720 + 
-    (7920 - 2880*Log[u] + 360*Log[u]^2 - 6*Log[u]^5 - Log[u]^6 + 
-       2880*Zeta[3]^2 + 2160*Zeta[5] + 2160*Log[u]*Zeta[5])/720 + 
-    (10800 - 5760*Log[u] + 1440*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 - 
-       6*Log[u]^5 - Log[u]^6 + 2880*Zeta[3] - 1440*Log[u]*Zeta[3] + 
-       720*Log[u]^2*Zeta[3] + 240*Log[u]^3*Zeta[3] + 11520*Zeta[3]^2 + 
-       2160*Zeta[5] + 2160*Log[u]*Zeta[5])/720 + 
-    (4320 - 1440*Log[u] + 360*Log[u]^2 - 120*Log[u]^3 + 30*Log[u]^4 + 
-       Log[u]^6 - 2880*Zeta[3] + 2880*Log[u]*Zeta[3] + 
-       480*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 + 5760*Log[u]*Zeta[5])/720 + 
-    (7920 - 5040*Log[u] + 1440*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 + 
-       Log[u]^6 + 2880*Zeta[3]^2 + 5760*Log[u]*Zeta[5])/720 + 
-    (10800 - 5040*Log[u] + 1080*Log[u]^2 - 120*Log[u]^3 + 6*Log[u]^5 + 
-       Log[u]^6 - 2880*Zeta[3] + 1440*Log[u]^2*Zeta[3] + 
-       480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 8640*Zeta[5] + 
-       8640*Log[u]*Zeta[5])/720 + 
-    2*(-3*(-1 - Log[u]^3/6)*Zeta[3] - 
-       3*(-1 + Log[u] - Log[u]^2/2 - Log[u]^3/6)*Zeta[3] + 
-       2*Zeta[3]*(1 - Log[u] - Log[u]^3/6 + 2*Zeta[3]) + 
-       2*Zeta[3]*(1 - Log[u]^2/2 - Log[u]^3/6 + 2*Zeta[3]) - 
-       11*(-1 - Log[u])*Zeta[5] + 
-       (-10080 + 5040*Log[u] - 1080*Log[u]^2 + 120*Log[u]^3 - 6*Log[u]^5 - 
-          Log[u]^6 - 2880*Zeta[3]^2 - 5760*Zeta[5] - 5760*Log[u]*Zeta[5])/
-        720 + (-10080 + 5040*Log[u] - 1080*Log[u]^2 + 120*Log[u]^3 + 
-          Log[u]^6 - 1440*Zeta[3] - 240*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 - 
-          2160*Log[u]*Zeta[5])/720) - 
-    2*(-2*(-2 + Log[u] - Log[u]^2/2 - Log[u]^3/6 - 4*Zeta[3])*Zeta[3] - 
-       10*(-1 - Log[u])*Zeta[5] + 
-       (-3600 + 2160*Log[u] - 720*Log[u]^2 + 120*Log[u]^3 - 6*Log[u]^5 - 
-          Log[u]^6 - 2880*Zeta[3]^2 - 5760*Zeta[5] - 5760*Log[u]*Zeta[5])/
-        720 + (-3600 + 1440*Log[u] - 360*Log[u]^2 + 120*Log[u]^3 - 
-          30*Log[u]^4 + 6*Log[u]^5 + Log[u]^6 - 1440*Zeta[3] + 
-          1440*Log[u]*Zeta[3] - 720*Log[u]^2*Zeta[3] - 
-          240*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 - 1440*Zeta[5] - 
-          1440*Log[u]*Zeta[5])/720) + 
-    2*(2*(2 - Log[u] - Log[u]^3/6)*Zeta[3] + (1 + Log[u]^3/6)*Zeta[3] + 
-       (1 - Log[u] + Log[u]^2/2 + Log[u]^3/6)*Zeta[3] + 
-       (-1 + Log[u] + Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-       (-1 + Log[u]^2/2 + Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-       (-3600 + 1440*Log[u] - 360*Log[u]^2 + 120*Log[u]^3 - 30*Log[u]^4 - 
-          Log[u]^6 + 1440*Zeta[3]^2 - 1440*Log[u]*Zeta[5])/720 + 
-       (-3600 + 2160*Log[u] - 720*Log[u]^2 + 120*Log[u]^3 + Log[u]^6 - 
-          1440*Zeta[3] - 240*Log[u]^3*Zeta[3] + 1440*Zeta[3]^2 + 
-          1440*Log[u]*Zeta[5])/720) - 
-    2*(3*(-1 - Log[u]^3/6)*Zeta[3] + 
-       3*(-1 + Log[u] - Log[u]^2/2 - Log[u]^3/6)*Zeta[3] - 
-       2*(-2 + Log[u] - Log[u]^2/2 - Log[u]^3/6 - 4*Zeta[3])*Zeta[3] + 
-       (1 + Log[u])*Zeta[5] + (720 + 1440*Log[u] - 720*Log[u]^2 + 
-          120*Log[u]^3 + Log[u]^6 + 2880*Zeta[3] + 480*Log[u]^3*Zeta[3] - 
-          2880*Zeta[3]^2 - 2160*Log[u]*Zeta[5])/720 + 
-       (720 - 2160*Log[u] + 1080*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 - 
-          6*Log[u]^5 - Log[u]^6 - 2880*Zeta[3]^2 + 1440*Zeta[5] + 
-          1440*Log[u]*Zeta[5])/720) + 
-    2*(Zeta[3]*(1 - Log[u] - Log[u]^3/6 + 2*Zeta[3]) + 
-       Zeta[3]*(1 - Log[u]^2/2 - Log[u]^3/6 + 2*Zeta[3]) + 
-       (1 + Log[u])*Zeta[5] + (-2880 + 1440*Log[u] - 120*Log[u]^3 + 
-          30*Log[u]^4 + Log[u]^6 - 1440*Zeta[3]^2 - 2160*Log[u]*Zeta[5])/720 \
-+ (-2880 + 1440*Log[u] - 120*Log[u]^3 + 30*Log[u]^4 - 6*Log[u]^5 - 
-          Log[u]^6 + 1440*Zeta[3] - 1440*Log[u]*Zeta[3] + 
-          720*Log[u]^2*Zeta[3] + 240*Log[u]^3*Zeta[3] - 1440*Zeta[3]^2 + 
-          1440*Zeta[5] + 1440*Log[u]*Zeta[5])/720) - 
-    2*((-1 - Log[u]^3/6)*Zeta[3] + 
-       (-1 + Log[u] - Log[u]^2/2 - Log[u]^3/6)*Zeta[3] + 
-       (-1 + Log[u] + Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-       (-1 + Log[u]^2/2 + Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-       4*(-1 - Log[u])*Zeta[5] + 
-       (4320 - 2160*Log[u] + 360*Log[u]^2 + Log[u]^6 + 1440*Zeta[3]^2 + 
-          1440*Log[u]*Zeta[5])/720 + 
-       (4320 - 2160*Log[u] + 360*Log[u]^2 - 6*Log[u]^5 - Log[u]^6 + 
-          1440*Zeta[3]^2 + 1440*Zeta[5] + 1440*Log[u]*Zeta[5])/720) - 
-    2*(-6*(2 - Log[u] - Log[u]^3/6)*Zeta[3] + 
-       2*Zeta[3]*(1 - Log[u] - Log[u]^3/6 + 2*Zeta[3]) + 
-       2*Zeta[3]*(1 - Log[u]^2/2 - Log[u]^3/6 + 2*Zeta[3]) + 
-       (7200 - 5040*Log[u] + 1440*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 + 
-          Log[u]^6 + 2880*Zeta[3] - 1440*Log[u]*Zeta[3] - 
-          240*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 - 2160*Log[u]*Zeta[5])/720 + 
-       (7200 - 2160*Log[u] + 120*Log[u]^3 - 30*Log[u]^4 - Log[u]^6 - 
-          2880*Zeta[3]^2 + 2160*Log[u]*Zeta[5])/720) - 
-    2*(-9*(-1 - Log[u])*Zeta[5] + 
-       (-6480 + 2160*Log[u] - 120*Log[u]^3 + 30*Log[u]^4 + Log[u]^6 + 
-          1440*Zeta[3] - 1440*Log[u]*Zeta[3] - 240*Log[u]^3*Zeta[3] + 
-          1440*Zeta[3]^2 - 8640*Log[u]*Zeta[5])/720 + 
-       (-6480 + 4320*Log[u] - 1080*Log[u]^2 + 120*Log[u]^3 - 6*Log[u]^5 - 
-          Log[u]^6 - 1440*Zeta[3] + 720*Log[u]^2*Zeta[3] + 
-          240*Log[u]^3*Zeta[3] - 1440*Zeta[3]^2 + 2160*Zeta[5] + 
-          2160*Log[u]*Zeta[5])/720) + 
-    2*(-2*(-1/2*Log[u]^2 - Log[u]^3/6)*Zeta[3] + 
-       2*(-2 + Log[u] - Log[u]^2/2 - Log[u]^3/6 - 4*Zeta[3])*Zeta[3] + 
-       5*(-1 - Log[u])*Zeta[5] + 
-       (3600 - 1440*Log[u] + 120*Log[u]^3 - 30*Log[u]^4 + 6*Log[u]^5 + 
-          Log[u]^6 + 2880*Zeta[3]^2 + 1440*Zeta[5] + 1440*Log[u]*Zeta[5])/
-        720 + (3600 - 2160*Log[u] + 360*Log[u]^2 - 6*Log[u]^5 - Log[u]^6 + 
-          2880*Zeta[3]^2 + 2160*Zeta[5] + 2160*Log[u]*Zeta[5])/720) - 
-    4*(-2*(-1 - Log[u]^3/6)*Zeta[3] + 4*(2 - Log[u] - Log[u]^3/6)*Zeta[3] - 
-       2*(-1 + Log[u] - Log[u]^2/2 - Log[u]^3/6)*Zeta[3] + 
-       (-10800 + 5760*Log[u] - 1440*Log[u]^2 + 240*Log[u]^3 - 
-          30*Log[u]^4 - Log[u]^6 - 5760*Log[u]*Zeta[5])/720 + 
-       (-10800 + 5040*Log[u] - 1080*Log[u]^2 + 120*Log[u]^3 + Log[u]^6 + 
-          5760*Log[u]*Zeta[5])/720) - 
-    4*((4320 - 1440*Log[u] + 360*Log[u]^2 - 120*Log[u]^3 + 30*Log[u]^4 - 
-          6*Log[u]^5 - Log[u]^6)/720 + 8*(-1 - Log[u])*Zeta[5] + 
-       (4320 - 2880*Log[u] + 1080*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 + 
-          Log[u]^6 + 5760*Log[u]*Zeta[5])/720) + 
-    4*((7920 - 5040*Log[u] + 1440*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 - 
-          6*Log[u]^5 - Log[u]^6)/720 + 2*(-1 - Log[u]^3/6)*Zeta[3] + 
-       2*(-1 + Log[u] - Log[u]^2/2 - Log[u]^3/6)*Zeta[3] + 
-       8*(-1 - Log[u])*Zeta[5] + 
-       (7920 - 2880*Log[u] + 360*Log[u]^2 + Log[u]^6 + 
-          480*Log[u]^3*Zeta[3] + 5760*Log[u]*Zeta[5])/720) - 
-    2*(4*(-2 + Log[u] - Log[u]^2/2 - Log[u]^3/6 - 4*Zeta[3])*Zeta[3] + 
-       4*(-1 - Log[u])*Zeta[5] + 
-       (11520 - 5760*Log[u] + 1440*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 - 
-          6*Log[u]^5 - Log[u]^6 + 5760*Zeta[3]^2 - 5760*Zeta[5] - 
-          5760*Log[u]*Zeta[5])/720 + 
-       (11520 - 5760*Log[u] + 1440*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 + 
-          Log[u]^6 - 5760*Zeta[3] + 2880*Log[u]*Zeta[3] + 
-          480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 8640*Log[u]*Zeta[5])/720) + 
-    2*((-1 + Log[u] + Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-       (-1 + Log[u]^2/2 + Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-       9*(-1 - Log[u])*Zeta[5] + 
-       (720 - 2160*Log[u] + 1080*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 + 
-          Log[u]^6 + 2880*Zeta[3] - 1440*Log[u]*Zeta[3] - 
-          240*Log[u]^3*Zeta[3] + 1440*Zeta[3]^2 - 2160*Log[u]*Zeta[5])/720 + 
-       (720 + 1440*Log[u] - 720*Log[u]^2 + 120*Log[u]^3 - 6*Log[u]^5 - 
-          Log[u]^6 + 1440*Zeta[3]^2 + 8640*Zeta[5] + 8640*Log[u]*Zeta[5])/720\
-) - 2*(4*(-2 + Log[u] - Log[u]^2/2 - Log[u]^3/6 - 4*Zeta[3])*Zeta[3] + 
-       20*(-1 - Log[u])*Zeta[5] + 
-       (7200 - 2160*Log[u] + 120*Log[u]^3 - 30*Log[u]^4 + 6*Log[u]^5 + 
-          Log[u]^6 + 2880*Zeta[3] - 2880*Log[u]*Zeta[3] + 
-          1440*Log[u]^2*Zeta[3] + 480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 
-          5760*Zeta[5] + 5760*Log[u]*Zeta[5])/720 + 
-       (7200 - 5040*Log[u] + 1440*Log[u]^2 - 240*Log[u]^3 + 30*Log[u]^4 - 
-          6*Log[u]^5 - Log[u]^6 + 5760*Zeta[3]^2 + 8640*Zeta[5] + 
-          8640*Log[u]*Zeta[5])/720) + 
-    (-1/720*Log[u]^6 - (Log[u]^3*Zeta[3])/3 + 
-       8*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] + 8*Zeta[3]^2 - 
-       2*(-1/3*(Log[u]^3*Zeta[3]) + 2*(Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-          4*Zeta[3]^2) + 2*((Log[u]^3*Zeta[3])/3 + 
-          2*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] + 8*Zeta[3]^2) - 
-       9*Log[u]*Zeta[5] + (Log[u]^6 - 240*Log[u]^3*Zeta[3] - 
-          8640*Log[u]*Zeta[5])/720 + 
-       (-Log[u]^6 + 240*Log[u]^3*Zeta[3] + 2880*Zeta[3]^2 - 
-          1440*Log[u]*Zeta[5])/720 + 
-       (-Log[u]^6 + 240*Log[u]^3*Zeta[3] + 11520*Zeta[3]^2 + 
-          2160*Log[u]*Zeta[5])/720 + 
-       (Log[u]^6 + 480*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 + 
-          5760*Log[u]*Zeta[5])/720 + 
-       (Log[u]^6 + 480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 
-          8640*Log[u]*Zeta[5])/720 - 
-       2*(-1/720*Log[u]^6 - Log[u]^3*Zeta[3] - 
-          2*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] - 4*Zeta[3]^2 + 
-          3*Log[u]*Zeta[5] + (Log[u]^6 + 480*Log[u]^3*Zeta[3] - 
-             2880*Zeta[3]^2 - 2160*Log[u]*Zeta[5])/720) + 
-       2*(-1/720*Log[u]^6 + 2*(Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-          2*Zeta[3]^2 + 3*Log[u]*Zeta[5] + 
-          (Log[u]^6 - 240*Log[u]^3*Zeta[3] + 1440*Zeta[3]^2 - 
-             2160*Log[u]*Zeta[5])/720) - 
-       2*(-1/720*Log[u]^6 - 2*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] - 
-          4*Zeta[3]^2 + 2*Log[u]*Zeta[5] + 
-          (Log[u]^6 - 240*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 - 
-             1440*Log[u]*Zeta[5])/720) + 
-       2*(Log[u]^6/720 - 2*Zeta[3]^2 + 
-          2*Zeta[3]*(-1/6*Log[u]^3 + 2*Zeta[3]) - 2*Log[u]*Zeta[5] + 
-          (-Log[u]^6 + 240*Log[u]^3*Zeta[3] - 1440*Zeta[3]^2 + 
-             1440*Log[u]*Zeta[5])/720) + 
-       2*(-1/720*Log[u]^6 + 2*(Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-          2*Zeta[3]^2 - 2*Log[u]*Zeta[5] + 
-          (Log[u]^6 - 240*Log[u]^3*Zeta[3] + 1440*Zeta[3]^2 + 
-             1440*Log[u]*Zeta[5])/720) - 
-       2*(9*Log[u]*Zeta[5] + (Log[u]^6 - 240*Log[u]^3*Zeta[3] + 
-             1440*Zeta[3]^2 - 8640*Log[u]*Zeta[5])/720 + 
-          (-Log[u]^6 + 240*Log[u]^3*Zeta[3] - 1440*Zeta[3]^2 + 
-             2160*Log[u]*Zeta[5])/720) + 
-       4*(-1/720*Log[u]^6 - (2*Log[u]^3*Zeta[3])/3 - 8*Log[u]*Zeta[5] + 
-          (Log[u]^6 + 480*Log[u]^3*Zeta[3] + 5760*Log[u]*Zeta[5])/720) - 
-       2*(-1/720*Log[u]^6 + 4*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] + 
-          8*Zeta[3]^2 - 8*Log[u]*Zeta[5] + 
-          (Log[u]^6 + 480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 
-             5760*Log[u]*Zeta[5])/720) - 
-       2*(-1/720*Log[u]^6 + 4*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] + 
-          8*Zeta[3]^2 - 12*Log[u]*Zeta[5] + 
-          (Log[u]^6 + 480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 
-             8640*Log[u]*Zeta[5])/720))/Y + 
-    Y*(((-6*Log[u] - 9*Log[u]^2 - 2*Log[u]^3)*Zeta[3])/6 + 
-       ((-33 + 15*Log[u] - 9*Log[u]^2 - 2*Log[u]^3 - 48*Zeta[3])*Zeta[3])/
-        6 + ((-21 + 30*Log[u] + 4*Log[u]^3 - 48*Zeta[3])*Zeta[3])/12 + 
-       ((-45 + 12*Log[u] + 18*Log[u]^2 + 4*Log[u]^3 - 48*Zeta[3])*Zeta[3])/
-        12 + (Zeta[3]*(21 - 30*Log[u] - 4*Log[u]^3 + 48*Zeta[3]))/12 + 
-       (Zeta[3]*(45 - 12*Log[u] - 18*Log[u]^2 - 4*Log[u]^3 + 48*Zeta[3]))/
-        12 - (Zeta[3]*(33 - 15*Log[u] + 9*Log[u]^2 + 2*Log[u]^3 + 
-            48*Zeta[3]))/2 + (-645 + 357*Log[u] - 78*Log[u]^2 + 
-          7*Log[u]^3 + 336*Zeta[3])/48 + 12*(-3/2 - Log[u])*Zeta[5] + 
-       (-22815 + 9900*Log[u] - 1395*Log[u]^2 + 30*Log[u]^4 + 18*Log[u]^5 + 
-          2*Log[u]^6 - 1440*Log[u]*Zeta[3] - 2160*Log[u]^2*Zeta[3] - 
-          480*Log[u]^3*Zeta[3] - 25920*Zeta[5] - 17280*Log[u]*Zeta[5])/1440 \
-+ (-19935 + 12690*Log[u] - 3465*Log[u]^2 + 450*Log[u]^3 - 30*Log[u]^4 - 
-          18*Log[u]^5 - 2*Log[u]^6 - 17280*Zeta[5] - 11520*Log[u]*Zeta[5])/
-        1440 + (11025 - 7020*Log[u] + 2745*Log[u]^2 - 660*Log[u]^3 + 
-          75*Log[u]^4 - 18*Log[u]^5 - 2*Log[u]^6 + 7920*Zeta[3] - 
-          3600*Log[u]*Zeta[3] + 2160*Log[u]^2*Zeta[3] + 
-          480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 - 4320*Zeta[5] - 
-          2880*Log[u]*Zeta[5])/1440 + 
-       (51165 - 19800*Log[u] + 2790*Log[u]^2 - 60*Log[u]^4 - 36*Log[u]^5 - 
-          4*Log[u]^6 + 11520*Zeta[3]^2 + 12960*Zeta[5] + 
-          8640*Log[u]*Zeta[5])/2880 + 
-       (58545 - 31680*Log[u] + 7920*Log[u]^2 - 1320*Log[u]^3 + 
-          150*Log[u]^4 - 36*Log[u]^5 - 4*Log[u]^6 + 15840*Zeta[3] - 
-          7200*Log[u]*Zeta[3] + 4320*Log[u]^2*Zeta[3] + 
-          960*Log[u]^3*Zeta[3] + 46080*Zeta[3]^2 + 12960*Zeta[5] + 
-          8640*Log[u]*Zeta[5])/2880 + 
-       (11025 - 3510*Log[u] + 675*Log[u]^2 - 210*Log[u]^3 + 75*Log[u]^4 + 
-          2*Log[u]^6 - 5040*Zeta[3] + 7200*Log[u]*Zeta[3] + 
-          960*Log[u]^3*Zeta[3] - 5760*Zeta[3]^2 + 11520*Log[u]*Zeta[5])/1440 \
-+ (33885 - 22050*Log[u] + 6480*Log[u]^2 - 1080*Log[u]^3 + 150*Log[u]^4 + 
-          4*Log[u]^6 + 11520*Zeta[3]^2 + 23040*Log[u]*Zeta[5])/2880 + 
-       (64305 - 30690*Log[u] + 6930*Log[u]^2 - 900*Log[u]^3 + 
-          60*Log[u]^4 + 36*Log[u]^5 + 4*Log[u]^6 - 21600*Zeta[3] + 
-          5760*Log[u]*Zeta[3] + 8640*Log[u]^2*Zeta[3] + 
-          1920*Log[u]^3*Zeta[3] + 23040*Zeta[3]^2 + 51840*Zeta[5] + 
-          34560*Log[u]*Zeta[5])/2880 - 
-       2*((Zeta[3]*(33 - 15*Log[u] + 9*Log[u]^2 + 2*Log[u]^3 + 
-               48*Zeta[3]))/6 - 10*(-3/2 - Log[u])*Zeta[5] + 
-          (-19575 + 11610*Log[u] - 4320*Log[u]^2 + 900*Log[u]^3 - 
-             60*Log[u]^4 - 36*Log[u]^5 - 4*Log[u]^6 - 11520*Zeta[3]^2 - 
-             34560*Zeta[5] - 23040*Log[u]*Zeta[5])/2880 + 
-          (-19575 + 7380*Log[u] - 1530*Log[u]^2 + 540*Log[u]^3 - 
-             150*Log[u]^4 + 36*Log[u]^5 + 4*Log[u]^6 - 6480*Zeta[3] + 
-             7200*Log[u]*Zeta[3] - 4320*Log[u]^2*Zeta[3] - 
-             960*Log[u]^3*Zeta[3] - 11520*Zeta[3]^2 - 8640*Zeta[5] - 
-             5760*Log[u]*Zeta[5])/2880) + 
-       2*(-3*(-9/8 - Log[u]^3/6)*Zeta[3] + 
-          ((27 - 30*Log[u] + 18*Log[u]^2 + 4*Log[u]^3)*Zeta[3])/8 + 
-          (Zeta[3]*(21 - 30*Log[u] - 4*Log[u]^3 + 48*Zeta[3]))/12 + 
-          (Zeta[3]*(45 - 12*Log[u] - 18*Log[u]^2 - 4*Log[u]^3 + 
-               48*Zeta[3]))/12 - 11*(-3/2 - Log[u])*Zeta[5] + 
-          (-29520 + 15345*Log[u] - 3465*Log[u]^2 + 450*Log[u]^3 - 
-             30*Log[u]^4 - 18*Log[u]^5 - 2*Log[u]^6 - 5760*Zeta[3]^2 - 
-             17280*Zeta[5] - 11520*Log[u]*Zeta[5])/1440 + 
-          (-20880 + 10575*Log[u] - 2295*Log[u]^2 + 270*Log[u]^3 + 
-             2*Log[u]^6 - 3240*Zeta[3] - 480*Log[u]^3*Zeta[3] - 
-             5760*Zeta[3]^2 - 4320*Log[u]*Zeta[5])/1440) + 
-       2*((Zeta[3]*(21 - 30*Log[u] - 4*Log[u]^3 + 48*Zeta[3]))/24 + 
-          (Zeta[3]*(45 - 12*Log[u] - 18*Log[u]^2 - 4*Log[u]^3 + 
-               48*Zeta[3]))/24 + (3/2 + Log[u])*Zeta[5] + 
-          (-6480 + 3960*Log[u] - 360*Log[u]^2 - 210*Log[u]^3 + 
-             75*Log[u]^4 + 2*Log[u]^6 - 2880*Zeta[3]^2 - 
-             4320*Log[u]*Zeta[5])/1440 + 
-          (-7920 + 4680*Log[u] - 360*Log[u]^2 - 270*Log[u]^3 + 
-             75*Log[u]^4 - 18*Log[u]^5 - 2*Log[u]^6 + 3240*Zeta[3] - 
-             3600*Log[u]*Zeta[3] + 2160*Log[u]^2*Zeta[3] + 
-             480*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 + 4320*Zeta[5] + 
-             2880*Log[u]*Zeta[5])/1440) - 
-       2*(((-27 + 30*Log[u] - 18*Log[u]^2 - 4*Log[u]^3)*Zeta[3])/24 + 
-          (-9/8 - Log[u]^3/6)*Zeta[3] + 
-          ((-21 + 30*Log[u] + 4*Log[u]^3 - 48*Zeta[3])*Zeta[3])/24 + 
-          ((-45 + 12*Log[u] + 18*Log[u]^2 + 4*Log[u]^3 - 48*Zeta[3])*
-             Zeta[3])/24 + 4*(-3/2 - Log[u])*Zeta[5] + 
-          (8640 - 4365*Log[u] + 765*Log[u]^2 + 2*Log[u]^6 + 
-             2880*Zeta[3]^2 + 2880*Log[u]*Zeta[5])/1440 + 
-          (12960 - 7155*Log[u] + 1395*Log[u]^2 - 30*Log[u]^4 - 
-             18*Log[u]^5 - 2*Log[u]^6 + 2880*Zeta[3]^2 + 4320*Zeta[5] + 
-             2880*Log[u]*Zeta[5])/1440) - 
-       2*(((-27 + 15*Log[u] + 2*Log[u]^3)*Zeta[3])/2 + 
-          (Zeta[3]*(21 - 30*Log[u] - 4*Log[u]^3 + 48*Zeta[3]))/12 + 
-          (Zeta[3]*(45 - 12*Log[u] - 18*Log[u]^2 - 4*Log[u]^3 + 
-               48*Zeta[3]))/12 + 
-          (14985 - 11025*Log[u] + 3240*Log[u]^2 - 540*Log[u]^3 + 
-             75*Log[u]^4 + 2*Log[u]^6 + 6480*Zeta[3] - 
-             3600*Log[u]*Zeta[3] - 480*Log[u]^3*Zeta[3] - 
-             5760*Zeta[3]^2 - 4320*Log[u]*Zeta[5])/1440 + 
-          (17865 - 5985*Log[u] + 360*Log[u]^2 + 210*Log[u]^3 - 
-             75*Log[u]^4 - 2*Log[u]^6 - 5760*Zeta[3]^2 + 
-             4320*Log[u]*Zeta[5])/1440) + 
-       2*(((27 - 15*Log[u] - 2*Log[u]^3)*Zeta[3])/6 + 
-          (9/8 + Log[u]^3/6)*Zeta[3] + 
-          ((27 - 30*Log[u] + 18*Log[u]^2 + 4*Log[u]^3)*Zeta[3])/24 + 
-          ((-21 + 30*Log[u] + 4*Log[u]^3 - 48*Zeta[3])*Zeta[3])/24 + 
-          ((-45 + 12*Log[u] + 18*Log[u]^2 + 4*Log[u]^3 - 48*Zeta[3])*
-             Zeta[3])/24 + (-17865 + 7020*Log[u] - 1350*Log[u]^2 + 
-             420*Log[u]^3 - 150*Log[u]^4 - 4*Log[u]^6 + 5760*Zeta[3]^2 - 
-             5760*Log[u]*Zeta[5])/2880 + 
-          (-14985 + 8550*Log[u] - 2880*Log[u]^2 + 540*Log[u]^3 + 
-             4*Log[u]^6 - 6480*Zeta[3] - 960*Log[u]^3*Zeta[3] + 
-             5760*Zeta[3]^2 + 5760*Log[u]*Zeta[5])/2880) - 
-       2*(((-27 + 30*Log[u] - 18*Log[u]^2 - 4*Log[u]^3)*Zeta[3])/8 + 
-          3*(-9/8 - Log[u]^3/6)*Zeta[3] + 
-          (Zeta[3]*(33 - 15*Log[u] + 9*Log[u]^2 + 2*Log[u]^3 + 
-               48*Zeta[3]))/6 + (3/2 + Log[u])*Zeta[5] + 
-          (4905 + 5040*Log[u] - 2880*Log[u]^2 + 540*Log[u]^3 + 
-             4*Log[u]^6 + 12960*Zeta[3] + 1920*Log[u]^3*Zeta[3] - 
-             11520*Zeta[3]^2 - 8640*Log[u]*Zeta[5])/2880 + 
-          (-855 - 9090*Log[u] + 5490*Log[u]^2 - 1320*Log[u]^3 + 
-             150*Log[u]^4 - 36*Log[u]^5 - 4*Log[u]^6 - 11520*Zeta[3]^2 + 
-             8640*Zeta[5] + 5760*Log[u]*Zeta[5])/2880) - 
-       2*(-9*(-3/2 - Log[u])*Zeta[5] + 
-          (-31635 + 11970*Log[u] - 720*Log[u]^2 - 420*Log[u]^3 + 
-             150*Log[u]^4 + 4*Log[u]^6 + 5040*Zeta[3] - 
-             7200*Log[u]*Zeta[3] - 960*Log[u]^3*Zeta[3] + 
-             5760*Zeta[3]^2 - 34560*Log[u]*Zeta[5])/2880 + 
-          (-34515 + 25380*Log[u] - 6930*Log[u]^2 + 900*Log[u]^3 - 
-             60*Log[u]^4 - 36*Log[u]^5 - 4*Log[u]^6 - 10800*Zeta[3] + 
-             2880*Log[u]*Zeta[3] + 4320*Log[u]^2*Zeta[3] + 
-             960*Log[u]^3*Zeta[3] - 5760*Zeta[3]^2 + 12960*Zeta[5] + 
-             8640*Log[u]*Zeta[5])/2880) + 
-       2*(((6*Log[u] + 9*Log[u]^2 + 2*Log[u]^3)*Zeta[3])/6 + 
-          ((-33 + 15*Log[u] - 9*Log[u]^2 - 2*Log[u]^3 - 48*Zeta[3])*
-             Zeta[3])/6 + 5*(-3/2 - Log[u])*Zeta[5] + 
-          (20475 - 9360*Log[u] + 720*Log[u]^2 + 540*Log[u]^3 - 
-             150*Log[u]^4 + 36*Log[u]^5 + 4*Log[u]^6 + 11520*Zeta[3]^2 + 
-             8640*Zeta[5] + 5760*Log[u]*Zeta[5])/2880 + 
-          (20475 - 14310*Log[u] + 2790*Log[u]^2 - 60*Log[u]^4 - 
-             36*Log[u]^5 - 4*Log[u]^6 + 11520*Zeta[3]^2 + 12960*Zeta[5] + 
-             8640*Log[u]*Zeta[5])/2880) - 
-       4*((12015 - 3690*Log[u] + 765*Log[u]^2 - 270*Log[u]^3 + 
-             75*Log[u]^4 - 18*Log[u]^5 - 2*Log[u]^6)/1440 + 
-          8*(-3/2 - Log[u])*Zeta[5] + 
-          (9135 - 5940*Log[u] + 2295*Log[u]^2 - 540*Log[u]^3 + 
-             75*Log[u]^4 + 2*Log[u]^6 + 11520*Log[u]*Zeta[5])/1440) - 
-       2*(((-33 + 15*Log[u] - 9*Log[u]^2 - 2*Log[u]^3 - 48*Zeta[3])*
-             Zeta[3])/3 + 4*(-3/2 - Log[u])*Zeta[5] + 
-          (31680 - 15840*Log[u] + 3960*Log[u]^2 - 660*Log[u]^3 + 
-             75*Log[u]^4 - 18*Log[u]^5 - 2*Log[u]^6 + 11520*Zeta[3]^2 - 
-             17280*Zeta[5] - 11520*Log[u]*Zeta[5])/1440 + 
-          (25920 - 12960*Log[u] + 3240*Log[u]^2 - 540*Log[u]^3 + 
-             75*Log[u]^4 + 2*Log[u]^6 - 12960*Zeta[3] + 
-             7200*Log[u]*Zeta[3] + 960*Log[u]^3*Zeta[3] + 
-             11520*Zeta[3]^2 + 17280*Log[u]*Zeta[5])/1440) - 
-       2*(((-33 + 15*Log[u] - 9*Log[u]^2 - 2*Log[u]^3 - 48*Zeta[3])*
-             Zeta[3])/3 + 20*(-3/2 - Log[u])*Zeta[5] + 
-          (21015 - 6975*Log[u] + 360*Log[u]^2 + 270*Log[u]^3 - 
-             75*Log[u]^4 + 18*Log[u]^5 + 2*Log[u]^6 + 6480*Zeta[3] - 
-             7200*Log[u]*Zeta[3] + 4320*Log[u]^2*Zeta[3] + 
-             960*Log[u]^3*Zeta[3] + 11520*Zeta[3]^2 + 17280*Zeta[5] + 
-             11520*Log[u]*Zeta[5])/1440 + 
-          (18135 - 13455*Log[u] + 3960*Log[u]^2 - 660*Log[u]^3 + 
-             75*Log[u]^4 - 18*Log[u]^5 - 2*Log[u]^6 + 11520*Zeta[3]^2 + 
-             25920*Zeta[5] + 17280*Log[u]*Zeta[5])/1440) - 
-       4*(((27 - 15*Log[u] - 2*Log[u]^3)*Zeta[3])/3 - 
-          2*(-9/8 - Log[u]^3/6)*Zeta[3] + 
-          ((27 - 30*Log[u] + 18*Log[u]^2 + 4*Log[u]^3)*Zeta[3])/12 + 
-          (-48015 + 25920*Log[u] - 6480*Log[u]^2 + 1080*Log[u]^3 - 
-             150*Log[u]^4 - 4*Log[u]^6 - 23040*Log[u]*Zeta[5])/2880 + 
-          (-45135 + 21150*Log[u] - 4590*Log[u]^2 + 540*Log[u]^3 + 
-             4*Log[u]^6 + 23040*Log[u]*Zeta[5])/2880) + 
-       4*((40995 - 26910*Log[u] + 7920*Log[u]^2 - 1320*Log[u]^3 + 
-             150*Log[u]^4 - 36*Log[u]^5 - 4*Log[u]^6)/2880 + 
-          ((-27 + 30*Log[u] - 18*Log[u]^2 - 4*Log[u]^3)*Zeta[3])/12 + 
-          2*(-9/8 - Log[u]^3/6)*Zeta[3] + 8*(-3/2 - Log[u])*Zeta[5] + 
-          (32355 - 11880*Log[u] + 1530*Log[u]^2 + 4*Log[u]^6 + 
-             1920*Log[u]^3*Zeta[3] + 23040*Log[u]*Zeta[5])/2880) + 
-       2*(((-21 + 30*Log[u] + 4*Log[u]^3 - 48*Zeta[3])*Zeta[3])/24 + 
-          ((-45 + 12*Log[u] + 18*Log[u]^2 + 4*Log[u]^3 - 48*Zeta[3])*
-             Zeta[3])/24 + 9*(-3/2 - Log[u])*Zeta[5] + 
-          (855 - 8190*Log[u] + 4590*Log[u]^2 - 1080*Log[u]^3 + 
-             150*Log[u]^4 + 4*Log[u]^6 + 12960*Zeta[3] - 
-             7200*Log[u]*Zeta[3] - 960*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 - 
-             8640*Log[u]*Zeta[5])/2880 + 
-          (9495 + 6480*Log[u] - 4320*Log[u]^2 + 900*Log[u]^3 - 
-             60*Log[u]^4 - 36*Log[u]^5 - 4*Log[u]^6 + 5760*Zeta[3]^2 + 
-             51840*Zeta[5] + 34560*Log[u]*Zeta[5])/2880)) + 
-    Y^2*(((-2 - 12*Log[u] - 11*Log[u]^2 - 2*Log[u]^3)*Zeta[3])/6 + 
-       ((-350 + 147*Log[u] - 99*Log[u]^2 - 18*Log[u]^3 - 432*Zeta[3])*
-          Zeta[3])/54 + ((-161 + 294*Log[u] + 36*Log[u]^3 - 432*Zeta[3])*
-          Zeta[3])/108 + ((-539 + 216*Log[u] + 198*Log[u]^2 + 
-            36*Log[u]^3 - 432*Zeta[3])*Zeta[3])/108 + 
-       (Zeta[3]*(161 - 294*Log[u] - 36*Log[u]^3 + 432*Zeta[3]))/108 + 
-       (Zeta[3]*(539 - 216*Log[u] - 198*Log[u]^2 - 36*Log[u]^3 + 
-            432*Zeta[3]))/108 - 
-       (Zeta[3]*(350 - 147*Log[u] + 99*Log[u]^2 + 18*Log[u]^3 + 
-            432*Zeta[3]))/18 + 
-       (-117356 + 68871*Log[u] - 15759*Log[u]^2 + 1449*Log[u]^3 + 
-          69552*Zeta[3])/11664 + 12*(-11/6 - Log[u])*Zeta[5] + 
-       (-2352625 + 1073550*Log[u] - 164745*Log[u]^2 + 3240*Log[u]^3 + 
-          4860*Log[u]^4 + 1782*Log[u]^5 + 162*Log[u]^6 - 38880*Zeta[3] - 
-          233280*Log[u]*Zeta[3] - 213840*Log[u]^2*Zeta[3] - 
-          38880*Log[u]^3*Zeta[3] - 2566080*Zeta[5] - 1399680*Log[u]*Zeta[5]\
-)/116640 + (-1893355 + 1242180*Log[u] - 355725*Log[u]^2 + 48510*Log[u]^3 - 
-          4860*Log[u]^4 - 1782*Log[u]^5 - 162*Log[u]^6 - 1710720*Zeta[5] - 
-          933120*Log[u]*Zeta[5])/116640 + 
-       (339035 - 207190*Log[u] + 82125*Log[u]^2 - 21000*Log[u]^3 + 
-          2205*Log[u]^4 - 594*Log[u]^5 - 54*Log[u]^6 + 252000*Zeta[3] - 
-          105840*Log[u]*Zeta[3] + 71280*Log[u]^2*Zeta[3] + 
-          12960*Log[u]^3*Zeta[3] + 155520*Zeta[3]^2 - 142560*Zeta[5] - 
-          77760*Log[u]*Zeta[5])/38880 + 
-       (1832965 - 1001200*Log[u] + 250320*Log[u]^2 - 42000*Log[u]^3 + 
-          4410*Log[u]^4 - 1188*Log[u]^5 - 108*Log[u]^6 + 504000*Zeta[3] - 
-          211680*Log[u]*Zeta[3] + 142560*Log[u]^2*Zeta[3] + 
-          25920*Log[u]^3*Zeta[3] + 1244160*Zeta[3]^2 + 427680*Zeta[5] + 
-          233280*Log[u]*Zeta[5])/77760 + 
-       (331745 - 106430*Log[u] + 18465*Log[u]^2 - 4830*Log[u]^3 + 
-          2205*Log[u]^4 + 54*Log[u]^6 - 115920*Zeta[3] + 
-          211680*Log[u]*Zeta[3] + 25920*Log[u]^3*Zeta[3] - 
-          155520*Zeta[3]^2 + 311040*Log[u]*Zeta[5])/38880 + 
-       (5354335 - 2147100*Log[u] + 329490*Log[u]^2 - 6480*Log[u]^3 - 
-          9720*Log[u]^4 - 3564*Log[u]^5 - 324*Log[u]^6 + 
-          933120*Zeta[3]^2 + 1283040*Zeta[5] + 699840*Log[u]*Zeta[5])/233280 \
-+ (2136715 - 1028870*Log[u] + 237150*Log[u]^2 - 32340*Log[u]^3 + 
-          3240*Log[u]^4 + 1188*Log[u]^5 + 108*Log[u]^6 - 776160*Zeta[3] + 
-          311040*Log[u]*Zeta[3] + 285120*Log[u]^2*Zeta[3] + 
-          51840*Log[u]^3*Zeta[3] + 622080*Zeta[3]^2 + 1710720*Zeta[5] + 
-          933120*Log[u]*Zeta[5])/77760 + 
-       (2795545 - 1832730*Log[u] + 546840*Log[u]^2 - 90360*Log[u]^3 + 
-          13230*Log[u]^4 + 324*Log[u]^6 + 933120*Zeta[3]^2 + 
-          1866240*Log[u]*Zeta[5])/233280 - 
-       2*((Zeta[3]*(350 - 147*Log[u] + 99*Log[u]^2 + 18*Log[u]^3 + 
-               432*Zeta[3]))/54 - 10*(-11/6 - Log[u])*Zeta[5] + 
-          (-1856275 + 1070190*Log[u] - 419220*Log[u]^2 + 97020*Log[u]^3 - 
-             9720*Log[u]^4 - 3564*Log[u]^5 - 324*Log[u]^6 - 
-             933120*Zeta[3]^2 - 3421440*Zeta[5] - 1866240*Log[u]*Zeta[5])/
-           233280 + (-1848985 + 682320*Log[u] - 125370*Log[u]^2 + 
-             45180*Log[u]^3 - 13230*Log[u]^4 + 3564*Log[u]^5 + 
-             324*Log[u]^6 - 542160*Zeta[3] + 635040*Log[u]*Zeta[3] - 
-             427680*Log[u]^2*Zeta[3] - 77760*Log[u]^3*Zeta[3] - 
-             933120*Zeta[3]^2 - 855360*Zeta[5] - 466560*Log[u]*Zeta[5])/
-           233280) + 2*(-3*(-251/216 - Log[u]^3/6)*Zeta[3] + 
-          ((251 - 294*Log[u] + 198*Log[u]^2 + 36*Log[u]^3)*Zeta[3])/72 + 
-          (Zeta[3]*(161 - 294*Log[u] - 36*Log[u]^3 + 432*Zeta[3]))/108 + 
-          (Zeta[3]*(539 - 216*Log[u] - 198*Log[u]^2 - 36*Log[u]^3 + 
-               432*Zeta[3]))/108 - 11*(-11/6 - Log[u])*Zeta[5] + 
-          (-2908475 + 1543305*Log[u] - 355725*Log[u]^2 + 48510*Log[u]^3 - 
-             4860*Log[u]^4 - 1782*Log[u]^5 - 162*Log[u]^6 - 
-             466560*Zeta[3]^2 - 1710720*Zeta[5] - 933120*Log[u]*Zeta[5])/
-           116640 + (-1701980 + 865335*Log[u] - 188055*Log[u]^2 + 
-             22590*Log[u]^3 + 162*Log[u]^6 - 271080*Zeta[3] - 
-             38880*Log[u]^3*Zeta[3] - 466560*Zeta[3]^2 - 
-             349920*Log[u]*Zeta[5])/116640) - 
-       2*(-9*(-11/6 - Log[u])*Zeta[5] + 
-          (-305015 + 121010*Log[u] - 9720*Log[u]^2 - 3220*Log[u]^3 + 
-             1470*Log[u]^4 + 36*Log[u]^6 + 38640*Zeta[3] - 
-             70560*Log[u]*Zeta[3] - 8640*Log[u]^3*Zeta[3] + 
-             51840*Zeta[3]^2 - 311040*Log[u]*Zeta[5])/25920 + 
-          (-352805 + 276040*Log[u] - 79050*Log[u]^2 + 10780*Log[u]^3 - 
-             1080*Log[u]^4 - 396*Log[u]^5 - 36*Log[u]^6 - 129360*Zeta[3] + 
-             51840*Log[u]*Zeta[3] + 47520*Log[u]^2*Zeta[3] + 
-             8640*Log[u]^3*Zeta[3] - 51840*Zeta[3]^2 + 142560*Zeta[5] + 
-             77760*Log[u]*Zeta[5])/25920) - 
-       2*(((-251 + 294*Log[u] - 198*Log[u]^2 - 36*Log[u]^3)*Zeta[3])/216 + 
-          (-251/216 - Log[u]^3/6)*Zeta[3] + 
-          ((-161 + 294*Log[u] + 36*Log[u]^3 - 432*Zeta[3])*Zeta[3])/216 + 
-          ((-539 + 216*Log[u] + 198*Log[u]^2 + 36*Log[u]^3 - 432*Zeta[3])*
-             Zeta[3])/216 + 4*(-11/6 - Log[u])*Zeta[5] + 
-          (233120 - 117615*Log[u] + 20895*Log[u]^2 + 54*Log[u]^6 + 
-             77760*Zeta[3]^2 + 77760*Log[u]*Zeta[5])/38880 + 
-          (428735 - 251265*Log[u] + 54915*Log[u]^2 - 1080*Log[u]^3 - 
-             1620*Log[u]^4 - 594*Log[u]^5 - 54*Log[u]^6 + 
-             77760*Zeta[3]^2 + 142560*Zeta[5] + 77760*Log[u]*Zeta[5])/38880) \
-+ 2*((Zeta[3]*(161 - 294*Log[u] - 36*Log[u]^3 + 432*Zeta[3]))/216 + 
-          (Zeta[3]*(539 - 216*Log[u] - 198*Log[u]^2 - 36*Log[u]^3 + 
-               432*Zeta[3]))/216 + (11/6 + Log[u])*Zeta[5] + 
-          (-532180 + 353580*Log[u] - 43740*Log[u]^2 - 14490*Log[u]^3 + 
-             6615*Log[u]^4 + 162*Log[u]^6 - 233280*Zeta[3]^2 - 
-             349920*Log[u]*Zeta[5])/116640 + 
-          (-736300 + 470220*Log[u] - 51030*Log[u]^2 - 22590*Log[u]^3 + 
-             6615*Log[u]^4 - 1782*Log[u]^5 - 162*Log[u]^6 + 
-             271080*Zeta[3] - 317520*Log[u]*Zeta[3] + 
-             213840*Log[u]^2*Zeta[3] + 38880*Log[u]^3*Zeta[3] - 
-             233280*Zeta[3]^2 + 427680*Zeta[5] + 233280*Log[u]*Zeta[5])/
-           116640) - 4*((382775 - 113720*Log[u] + 20895*Log[u]^2 - 
-             7530*Log[u]^3 + 2205*Log[u]^4 - 594*Log[u]^5 - 54*Log[u]^6)/
-           38880 + 8*(-11/6 - Log[u])*Zeta[5] + 
-          (251555 - 161020*Log[u] + 62685*Log[u]^2 - 15060*Log[u]^3 + 
-             2205*Log[u]^4 + 54*Log[u]^6 + 311040*Log[u]*Zeta[5])/38880) - 
-       2*(((-251 + 147*Log[u] + 18*Log[u]^3)*Zeta[3])/18 + 
-          (Zeta[3]*(161 - 294*Log[u] - 36*Log[u]^3 + 432*Zeta[3]))/108 + 
-          (Zeta[3]*(539 - 216*Log[u] - 198*Log[u]^2 - 36*Log[u]^3 + 
-               432*Zeta[3]))/108 + 
-          (1217185 - 916365*Log[u] + 273420*Log[u]^2 - 45180*Log[u]^3 + 
-             6615*Log[u]^4 + 162*Log[u]^6 + 542160*Zeta[3] - 
-             317520*Log[u]*Zeta[3] - 38880*Log[u]^3*Zeta[3] - 
-             466560*Zeta[3]^2 - 349920*Log[u]*Zeta[5])/116640 + 
-          (1567105 - 544545*Log[u] + 43740*Log[u]^2 + 14490*Log[u]^3 - 
-             6615*Log[u]^4 - 162*Log[u]^6 - 466560*Zeta[3]^2 + 
-             349920*Log[u]*Zeta[5])/116640) + 
-       2*(((251 - 147*Log[u] - 18*Log[u]^3)*Zeta[3])/54 + 
-          (251/216 + Log[u]^3/6)*Zeta[3] + 
-          ((251 - 294*Log[u] + 198*Log[u]^2 + 36*Log[u]^3)*Zeta[3])/216 + 
-          ((-161 + 294*Log[u] + 36*Log[u]^3 - 432*Zeta[3])*Zeta[3])/216 + 
-          ((-539 + 216*Log[u] + 198*Log[u]^2 + 36*Log[u]^3 - 432*Zeta[3])*
-             Zeta[3])/216 + (-1586545 + 638580*Log[u] - 110790*Log[u]^2 + 
-             28980*Log[u]^3 - 13230*Log[u]^4 - 324*Log[u]^6 + 
-             466560*Zeta[3]^2 - 466560*Log[u]*Zeta[5])/233280 + 
-          (-1236625 + 691110*Log[u] - 229680*Log[u]^2 + 45180*Log[u]^3 + 
-             324*Log[u]^6 - 542160*Zeta[3] - 77760*Log[u]^3*Zeta[3] + 
-             466560*Zeta[3]^2 + 466560*Log[u]*Zeta[5])/233280) - 
-       2*(((-251 + 294*Log[u] - 198*Log[u]^2 - 36*Log[u]^3)*Zeta[3])/72 + 
-          3*(-251/216 - Log[u]^3/6)*Zeta[3] + 
-          (Zeta[3]*(350 - 147*Log[u] + 99*Log[u]^2 + 18*Log[u]^3 + 
-               432*Zeta[3]))/54 + (11/6 + Log[u])*Zeta[5] + 
-          (444425 + 386400*Log[u] - 229680*Log[u]^2 + 45180*Log[u]^3 + 
-             324*Log[u]^6 + 1084320*Zeta[3] + 155520*Log[u]^3*Zeta[3] - 
-             933120*Zeta[3]^2 - 699840*Log[u]*Zeta[5])/233280 + 
-          (-313735 - 710010*Log[u] + 492750*Log[u]^2 - 126000*Log[u]^3 + 
-             13230*Log[u]^4 - 3564*Log[u]^5 - 324*Log[u]^6 - 
-             933120*Zeta[3]^2 + 855360*Zeta[5] + 466560*Log[u]*Zeta[5])/
-           233280) - 4*(((251 - 147*Log[u] - 18*Log[u]^3)*Zeta[3])/27 - 
-          2*(-251/216 - Log[u]^3/6)*Zeta[3] + 
-          ((251 - 294*Log[u] + 198*Log[u]^2 + 36*Log[u]^3)*Zeta[3])/108 + 
-          (-1342105 + 729040*Log[u] - 182280*Log[u]^2 + 30120*Log[u]^3 - 
-             4410*Log[u]^4 - 108*Log[u]^6 - 622080*Log[u]*Zeta[5])/77760 + 
-          (-1230325 + 576890*Log[u] - 125370*Log[u]^2 + 15060*Log[u]^3 + 
-             108*Log[u]^6 + 622080*Log[u]*Zeta[5])/77760) + 
-       2*(((2 + 12*Log[u] + 11*Log[u]^2 + 2*Log[u]^3)*Zeta[3])/6 + 
-          ((-350 + 147*Log[u] - 99*Log[u]^2 - 18*Log[u]^3 - 432*Zeta[3])*
-             Zeta[3])/54 + 5*(-11/6 - Log[u])*Zeta[5] + 
-          (1949605 - 940440*Log[u] + 102060*Log[u]^2 + 45180*Log[u]^3 - 
-             13230*Log[u]^4 + 3564*Log[u]^5 + 324*Log[u]^6 + 
-             933120*Zeta[3]^2 + 855360*Zeta[5] + 466560*Log[u]*Zeta[5])/
-           233280 + (1942315 - 1507590*Log[u] + 329490*Log[u]^2 - 
-             6480*Log[u]^3 - 9720*Log[u]^4 - 3564*Log[u]^5 - 
-             324*Log[u]^6 + 933120*Zeta[3]^2 + 1283040*Zeta[5] + 
-             699840*Log[u]*Zeta[5])/233280) - 
-       2*(((-350 + 147*Log[u] - 99*Log[u]^2 - 18*Log[u]^3 - 432*Zeta[3])*
-             Zeta[3])/27 + 4*(-11/6 - Log[u])*Zeta[5] + 
-          (3003520 - 1501800*Log[u] + 375480*Log[u]^2 - 63000*Log[u]^3 + 
-             6615*Log[u]^4 - 1782*Log[u]^5 - 162*Log[u]^6 + 
-             933120*Zeta[3]^2 - 1710720*Zeta[5] - 933120*Log[u]*Zeta[5])/
-           116640 + (2187040 - 1093560*Log[u] + 273420*Log[u]^2 - 
-             45180*Log[u]^3 + 6615*Log[u]^4 + 162*Log[u]^6 - 
-             1084320*Zeta[3] + 635040*Log[u]*Zeta[3] + 
-             77760*Log[u]^3*Zeta[3] + 933120*Zeta[3]^2 + 
-             1399680*Log[u]*Zeta[5])/116640) - 
-       2*(((-350 + 147*Log[u] - 99*Log[u]^2 - 18*Log[u]^3 - 432*Zeta[3])*
-             Zeta[3])/27 + 20*(-11/6 - Log[u])*Zeta[5] + 
-          (2037310 - 704925*Log[u] + 51030*Log[u]^2 + 22590*Log[u]^3 - 
-             6615*Log[u]^4 + 1782*Log[u]^5 + 162*Log[u]^6 + 
-             542160*Zeta[3] - 635040*Log[u]*Zeta[3] + 
-             427680*Log[u]^2*Zeta[3] + 77760*Log[u]^3*Zeta[3] + 
-             933120*Zeta[3]^2 + 1710720*Zeta[5] + 933120*Log[u]*Zeta[5])/
-           116640 + (1629070 - 1251705*Log[u] + 375480*Log[u]^2 - 
-             63000*Log[u]^3 + 6615*Log[u]^4 - 1782*Log[u]^5 - 
-             162*Log[u]^6 + 933120*Zeta[3]^2 + 2566080*Zeta[5] + 
-             1399680*Log[u]*Zeta[5])/116640) + 
-       4*((3750535 - 2503410*Log[u] + 750960*Log[u]^2 - 126000*Log[u]^3 + 
-             13230*Log[u]^4 - 3564*Log[u]^5 - 324*Log[u]^6)/233280 + 
-          ((-251 + 294*Log[u] - 198*Log[u]^2 - 36*Log[u]^3)*Zeta[3])/108 + 
-          2*(-251/216 - Log[u]^3/6)*Zeta[3] + 8*(-11/6 - Log[u])*Zeta[5] + 
-          (2627875 - 966120*Log[u] + 125370*Log[u]^2 + 324*Log[u]^6 + 
-             155520*Log[u]^3*Zeta[3] + 1866240*Log[u]*Zeta[5])/233280) + 
-       2*(((-161 + 294*Log[u] + 36*Log[u]^3 - 432*Zeta[3])*Zeta[3])/216 + 
-          ((-539 + 216*Log[u] + 198*Log[u]^2 + 36*Log[u]^3 - 432*Zeta[3])*
-             Zeta[3])/216 + 9*(-11/6 - Log[u])*Zeta[5] + 
-          (-265 - 637110*Log[u] + 376110*Log[u]^2 - 90360*Log[u]^3 + 
-             13230*Log[u]^4 + 324*Log[u]^6 + 1084320*Zeta[3] - 
-             635040*Log[u]*Zeta[3] - 77760*Log[u]^3*Zeta[3] + 
-             466560*Zeta[3]^2 - 699840*Log[u]*Zeta[5])/233280 + 
-          (1246325 + 503040*Log[u] - 419220*Log[u]^2 + 97020*Log[u]^3 - 
-             9720*Log[u]^4 - 3564*Log[u]^5 - 324*Log[u]^6 + 
-             466560*Zeta[3]^2 + 5132160*Zeta[5] + 2799360*Log[u]*Zeta[5])/
-           233280)) + Y^3*(((-10 - 35*Log[u] - 25*Log[u]^2 - 4*Log[u]^3)*
-          Zeta[3])/12 + ((-3121 + 1230*Log[u] - 900*Log[u]^2 - 
-            144*Log[u]^3 - 3456*Zeta[3])*Zeta[3])/432 + 
-       ((-1117 + 2460*Log[u] + 288*Log[u]^3 - 3456*Zeta[3])*Zeta[3])/864 + 
-       ((-5125 + 2520*Log[u] + 1800*Log[u]^2 + 288*Log[u]^3 - 3456*Zeta[3])*
-          Zeta[3])/864 + (Zeta[3]*
-          (1117 - 2460*Log[u] - 288*Log[u]^3 + 3456*Zeta[3]))/864 + 
-       (Zeta[3]*(5125 - 2520*Log[u] - 1800*Log[u]^2 - 288*Log[u]^3 + 
-            3456*Zeta[3]))/864 - 
-       (Zeta[3]*(3121 - 1230*Log[u] + 900*Log[u]^2 + 144*Log[u]^3 + 
-            3456*Zeta[3]))/144 + 
-       (-6026015 + 3682110*Log[u] - 868392*Log[u]^2 + 80424*Log[u]^3 + 
-          3860352*Zeta[3])/746496 + 12*(-25/12 - Log[u])*Zeta[5] + 
-       (-176705935 + 83495640*Log[u] - 13544460*Log[u]^2 + 
-          518400*Log[u]^3 + 453600*Log[u]^4 + 129600*Log[u]^5 + 
-          10368*Log[u]^6 - 6220800*Zeta[3] - 21772800*Log[u]*Zeta[3] - 
-          15552000*Log[u]^2*Zeta[3] - 2488320*Log[u]^3*Zeta[3] - 
-          186624000*Zeta[5] - 89579520*Log[u]*Zeta[5])/7464960 + 
-       (-134265295 + 89763300*Log[u] - 26576100*Log[u]^2 + 
-          3690000*Log[u]^3 - 453600*Log[u]^4 - 129600*Log[u]^5 - 
-          10368*Log[u]^6 - 124416000*Zeta[5] - 59719680*Log[u]*Zeta[5])/
-        7464960 + (23725195 - 14032840*Log[u] + 5572620*Log[u]^2 - 
-          1498080*Log[u]^3 + 147600*Log[u]^4 - 43200*Log[u]^5 - 
-          3456*Log[u]^6 + 17976960*Zeta[3] - 7084800*Log[u]*Zeta[3] + 
-          5184000*Log[u]^2*Zeta[3] + 829440*Log[u]^3*Zeta[3] + 
-          9953280*Zeta[3]^2 - 10368000*Zeta[5] - 4976640*Log[u]*Zeta[5])/
-        2488320 + (128896395 - 70883200*Log[u] + 17716800*Log[u]^2 - 
-          2996160*Log[u]^3 + 295200*Log[u]^4 - 86400*Log[u]^5 - 
-          6912*Log[u]^6 + 35953920*Zeta[3] - 14169600*Log[u]*Zeta[3] + 
-          10368000*Log[u]^2*Zeta[3] + 1658880*Log[u]^3*Zeta[3] + 
-          79626240*Zeta[3]^2 + 31104000*Zeta[5] + 14929920*Log[u]*Zeta[5])/
-        4976640 + (22594955 - 7335140*Log[u] + 1228740*Log[u]^2 - 
-          268080*Log[u]^3 + 147600*Log[u]^4 + 3456*Log[u]^6 - 
-          6433920*Zeta[3] + 14169600*Log[u]*Zeta[3] + 
-          1658880*Log[u]^3*Zeta[3] - 9953280*Zeta[3]^2 + 
-          19906560*Log[u]*Zeta[5])/2488320 + 
-       (407053645 - 166991280*Log[u] + 27088920*Log[u]^2 - 
-          1036800*Log[u]^3 - 907200*Log[u]^4 - 259200*Log[u]^5 - 
-          20736*Log[u]^6 + 59719680*Zeta[3]^2 + 93312000*Zeta[5] + 
-          44789760*Log[u]*Zeta[5])/14929920 + 
-       (157002635 - 75975980*Log[u] + 17717400*Log[u]^2 - 
-          2460000*Log[u]^3 + 302400*Log[u]^4 + 86400*Log[u]^5 + 
-          6912*Log[u]^6 - 59040000*Zeta[3] + 29030400*Log[u]*Zeta[3] + 
-          20736000*Log[u]^2*Zeta[3] + 3317760*Log[u]^3*Zeta[3] + 
-          39813120*Zeta[3]^2 + 124416000*Zeta[5] + 59719680*Log[u]*Zeta[5])/
-        4976640 + (180405325 - 118620420*Log[u] + 35749440*Log[u]^2 - 
-          5860800*Log[u]^3 + 885600*Log[u]^4 + 20736*Log[u]^6 + 
-          59719680*Zeta[3]^2 + 119439360*Log[u]*Zeta[5])/14929920 - 
-       2*((Zeta[3]*(3121 - 1230*Log[u] + 900*Log[u]^2 + 144*Log[u]^3 + 
-               3456*Zeta[3]))/432 - 10*(-25/12 - Log[u])*Zeta[5] + 
-          (-132120055 + 74056500*Log[u] - 29905920*Log[u]^2 + 
-             7380000*Log[u]^3 - 907200*Log[u]^4 - 259200*Log[u]^5 - 
-             20736*Log[u]^6 - 59719680*Zeta[3]^2 - 248832000*Zeta[5] - 
-             119439360*Log[u]*Zeta[5])/14929920 + 
-          (-130620535 + 47709480*Log[u] - 8052840*Log[u]^2 + 
-             2930400*Log[u]^3 - 885600*Log[u]^4 + 259200*Log[u]^5 + 
-             20736*Log[u]^6 - 35164800*Zeta[3] + 42508800*Log[u]*Zeta[3] - 
-             31104000*Log[u]^2*Zeta[3] - 4976640*Log[u]^3*Zeta[3] - 
-             59719680*Zeta[3]^2 - 62208000*Zeta[5] - 29859840*Log[u]*Zeta[5]\
-)/14929920) + 2*(-3*(-2035/1728 - Log[u]^3/6)*Zeta[3] + 
-          ((2035 - 2460*Log[u] + 1800*Log[u]^2 + 288*Log[u]^3)*Zeta[3])/
-           576 + (Zeta[3]*(1117 - 2460*Log[u] - 288*Log[u]^3 + 
-               3456*Zeta[3]))/864 + 
-          (Zeta[3]*(5125 - 2520*Log[u] - 1800*Log[u]^2 - 288*Log[u]^3 + 
-               3456*Zeta[3]))/864 - 11*(-25/12 - Log[u])*Zeta[5] + 
-          (-105897880 + 56981985*Log[u] - 13288050*Log[u]^2 + 
-             1845000*Log[u]^3 - 226800*Log[u]^4 - 64800*Log[u]^5 - 
-             5184*Log[u]^6 - 14929920*Zeta[3]^2 - 62208000*Zeta[5] - 
-             29859840*Log[u]*Zeta[5])/3732480 + 
-          (-54572440 + 27795615*Log[u] - 6039630*Log[u]^2 + 
-             732600*Log[u]^3 + 5184*Log[u]^6 - 8791200*Zeta[3] - 
-             1244160*Log[u]^3*Zeta[3] - 14929920*Zeta[3]^2 - 
-             11197440*Log[u]*Zeta[5])/3732480) + 
-       2*((Zeta[3]*(1117 - 2460*Log[u] - 288*Log[u]^3 + 3456*Zeta[3]))/
-           1728 + (Zeta[3]*(5125 - 2520*Log[u] - 1800*Log[u]^2 - 
-               288*Log[u]^3 + 3456*Zeta[3]))/1728 + 
-          (25/12 + Log[u])*Zeta[5] + 
-          (-2122915 + 1478985*Log[u] - 208170*Log[u]^2 - 50265*Log[u]^3 + 
-             27675*Log[u]^4 + 648*Log[u]^6 - 933120*Zeta[3]^2 - 
-             1399680*Log[u]*Zeta[5])/466560 + 
-          (-3198925 + 2142015*Log[u] - 271890*Log[u]^2 - 91575*Log[u]^3 + 
-             27675*Log[u]^4 - 8100*Log[u]^5 - 648*Log[u]^6 + 
-             1098900*Zeta[3] - 1328400*Log[u]*Zeta[3] + 
-             972000*Log[u]^2*Zeta[3] + 155520*Log[u]^3*Zeta[3] - 
-             933120*Zeta[3]^2 + 1944000*Zeta[5] + 933120*Log[u]*Zeta[5])/
-           466560) - 2*(((-2035 + 2460*Log[u] - 1800*Log[u]^2 - 
-               288*Log[u]^3)*Zeta[3])/1728 + 
-          (-2035/1728 - Log[u]^3/6)*Zeta[3] + 
-          ((-1117 + 2460*Log[u] + 288*Log[u]^3 - 3456*Zeta[3])*Zeta[3])/
-           1728 + ((-5125 + 2520*Log[u] + 1800*Log[u]^2 + 288*Log[u]^3 - 
-               3456*Zeta[3])*Zeta[3])/1728 + 4*(-25/12 - Log[u])*Zeta[5] + 
-          (7459840 - 3758415*Log[u] + 671070*Log[u]^2 + 1728*Log[u]^6 + 
-             2488320*Zeta[3]^2 + 2488320*Log[u]*Zeta[5])/1244160 + 
-          (15636400 - 9536625*Log[u] + 2257410*Log[u]^2 - 86400*Log[u]^3 - 
-             75600*Log[u]^4 - 21600*Log[u]^5 - 1728*Log[u]^6 + 
-             2488320*Zeta[3]^2 + 5184000*Zeta[5] + 2488320*Log[u]*Zeta[5])/
-           1244160) - 2*(-9*(-25/12 - Log[u])*Zeta[5] + 
-          (-20211755 + 8226980*Log[u] - 740160*Log[u]^2 - 
-             178720*Log[u]^3 + 98400*Log[u]^4 + 2304*Log[u]^6 + 
-             2144640*Zeta[3] - 4723200*Log[u]*Zeta[3] - 
-             552960*Log[u]^3*Zeta[3] + 3317760*Zeta[3]^2 - 
-             19906560*Log[u]*Zeta[5])/1658880 + 
-          (-24345835 + 19947400*Log[u] - 5905800*Log[u]^2 + 
-             820000*Log[u]^3 - 100800*Log[u]^4 - 28800*Log[u]^5 - 
-             2304*Log[u]^6 - 9840000*Zeta[3] + 4838400*Log[u]*Zeta[3] + 
-             3456000*Log[u]^2*Zeta[3] + 552960*Log[u]^3*Zeta[3] - 
-             3317760*Zeta[3]^2 + 10368000*Zeta[5] + 4976640*Log[u]*Zeta[5])/
-           1658880) - 2*(((-3121 + 1230*Log[u] - 900*Log[u]^2 - 
-               144*Log[u]^3 - 3456*Zeta[3])*Zeta[3])/216 + 
-          4*(-25/12 - Log[u])*Zeta[5] + 
-          (13289980 - 6645300*Log[u] + 1660950*Log[u]^2 - 
-             280890*Log[u]^3 + 27675*Log[u]^4 - 8100*Log[u]^5 - 
-             648*Log[u]^6 + 3732480*Zeta[3]^2 - 7776000*Zeta[5] - 
-             3732480*Log[u]*Zeta[5])/466560 + 
-          (8930500 - 4465500*Log[u] + 1117170*Log[u]^2 - 183150*Log[u]^3 + 
-             27675*Log[u]^4 + 648*Log[u]^6 - 4395600*Zeta[3] + 
-             2656800*Log[u]*Zeta[3] + 311040*Log[u]^3*Zeta[3] + 
-             3732480*Zeta[3]^2 + 5598720*Log[u]*Zeta[5])/466560) - 
-       4*((27244725 - 7951580*Log[u] + 1342140*Log[u]^2 - 
-             488400*Log[u]^3 + 147600*Log[u]^4 - 43200*Log[u]^5 - 
-             3456*Log[u]^6)/2488320 + 8*(-25/12 - Log[u])*Zeta[5] + 
-          (16270325 - 10315000*Log[u] + 4026420*Log[u]^2 - 
-             976800*Log[u]^3 + 147600*Log[u]^4 + 3456*Log[u]^6 + 
-             19906560*Log[u]*Zeta[5])/2488320) - 
-       2*(((-2035 + 1230*Log[u] + 144*Log[u]^3)*Zeta[3])/144 + 
-          (Zeta[3]*(1117 - 2460*Log[u] - 288*Log[u]^3 + 3456*Zeta[3]))/864 + 
-          (Zeta[3]*(5125 - 2520*Log[u] - 1800*Log[u]^2 - 288*Log[u]^3 + 
-               3456*Zeta[3]))/864 + 
-          (77767945 - 59310210*Log[u] + 17874720*Log[u]^2 - 
-             2930400*Log[u]^3 + 442800*Log[u]^4 + 10368*Log[u]^6 + 
-             35164800*Zeta[3] - 21254400*Log[u]*Zeta[3] - 
-             2488320*Log[u]^3*Zeta[3] - 29859840*Zeta[3]^2 - 
-             22394880*Log[u]*Zeta[5])/7464960 + 
-          (104635465 - 37021410*Log[u] + 3330720*Log[u]^2 + 
-             804240*Log[u]^3 - 442800*Log[u]^4 - 10368*Log[u]^6 - 
-             29859840*Zeta[3]^2 + 22394880*Log[u]*Zeta[5])/7464960) + 
-       2*(((2035 - 1230*Log[u] - 144*Log[u]^3)*Zeta[3])/432 + 
-          (2035/1728 + Log[u]^3/6)*Zeta[3] + 
-          ((2035 - 2460*Log[u] + 1800*Log[u]^2 + 288*Log[u]^3)*Zeta[3])/
-           1728 + ((-1117 + 2460*Log[u] + 288*Log[u]^3 - 3456*Zeta[3])*
-             Zeta[3])/1728 + ((-5125 + 2520*Log[u] + 1800*Log[u]^2 + 
-               288*Log[u]^3 - 3456*Zeta[3])*Zeta[3])/1728 + 
-          (-106812745 + 44010840*Log[u] - 7372440*Log[u]^2 + 
-             1608480*Log[u]^3 - 885600*Log[u]^4 - 20736*Log[u]^6 + 
-             29859840*Zeta[3]^2 - 29859840*Log[u]*Zeta[5])/14929920 + 
-          (-79945225 + 44294220*Log[u] - 14544000*Log[u]^2 + 
-             2930400*Log[u]^3 + 20736*Log[u]^6 - 35164800*Zeta[3] - 
-             4976640*Log[u]^3*Zeta[3] + 29859840*Zeta[3]^2 + 
-             29859840*Log[u]*Zeta[5])/14929920) - 
-       2*(((-2035 + 2460*Log[u] - 1800*Log[u]^2 - 288*Log[u]^3)*Zeta[3])/
-           576 + 3*(-2035/1728 - Log[u]^3/6)*Zeta[3] + 
-          (Zeta[3]*(3121 - 1230*Log[u] + 900*Log[u]^2 + 144*Log[u]^3 + 
-               3456*Zeta[3]))/432 + (25/12 + Log[u])*Zeta[5] + 
-          (29680745 + 24120480*Log[u] - 14544000*Log[u]^2 + 
-             2930400*Log[u]^3 + 20736*Log[u]^6 + 70329600*Zeta[3] + 
-             9953280*Log[u]^3*Zeta[3] - 59719680*Zeta[3]^2 - 
-             44789760*Log[u]*Zeta[5])/14929920 + 
-          (-32506135 - 43059780*Log[u] + 33435720*Log[u]^2 - 
-             8988480*Log[u]^3 + 885600*Log[u]^4 - 259200*Log[u]^5 - 
-             20736*Log[u]^6 - 59719680*Zeta[3]^2 + 62208000*Zeta[5] + 
-             29859840*Log[u]*Zeta[5])/14929920) - 
-       4*(((2035 - 1230*Log[u] - 144*Log[u]^3)*Zeta[3])/216 - 
-          2*(-2035/1728 - Log[u]^3/6)*Zeta[3] + 
-          ((2035 - 2460*Log[u] + 1800*Log[u]^2 + 288*Log[u]^3)*Zeta[3])/
-           864 + (-87356725 + 47632000*Log[u] - 11916480*Log[u]^2 + 
-             1953600*Log[u]^3 - 295200*Log[u]^4 - 6912*Log[u]^6 - 
-             39813120*Log[u]*Zeta[5])/4976640 + 
-          (-79019125 + 37060820*Log[u] - 8052840*Log[u]^2 + 
-             976800*Log[u]^3 + 6912*Log[u]^6 + 39813120*Log[u]*Zeta[5])/
-           4976640) + 2*(((10 + 35*Log[u] + 25*Log[u]^2 + 4*Log[u]^3)*
-             Zeta[3])/12 + ((-3121 + 1230*Log[u] - 900*Log[u]^2 - 
-               144*Log[u]^3 - 3456*Zeta[3])*Zeta[3])/432 + 
-          5*(-25/12 - Log[u])*Zeta[5] + 
-          (137937355 - 68544480*Log[u] + 8700480*Log[u]^2 + 
-             2930400*Log[u]^3 - 885600*Log[u]^4 + 259200*Log[u]^5 + 
-             20736*Log[u]^6 + 59719680*Zeta[3]^2 + 62208000*Zeta[5] + 
-             29859840*Log[u]*Zeta[5])/14929920 + 
-          (136142155 - 114439500*Log[u] + 27088920*Log[u]^2 - 
-             1036800*Log[u]^3 - 907200*Log[u]^4 - 259200*Log[u]^5 - 
-             20736*Log[u]^6 + 59719680*Zeta[3]^2 + 93312000*Zeta[5] + 
-             44789760*Log[u]*Zeta[5])/14929920) - 
-       2*(((-3121 + 1230*Log[u] - 900*Log[u]^2 - 144*Log[u]^3 - 
-               3456*Zeta[3])*Zeta[3])/216 + 20*(-25/12 - Log[u])*Zeta[5] + 
-          (145931095 - 51696990*Log[u] + 4350240*Log[u]^2 + 
-             1465200*Log[u]^3 - 442800*Log[u]^4 + 129600*Log[u]^5 + 
-             10368*Log[u]^6 + 35164800*Zeta[3] - 42508800*Log[u]*Zeta[3] + 
-             31104000*Log[u]^2*Zeta[3] + 4976640*Log[u]^3*Zeta[3] + 
-             59719680*Zeta[3]^2 + 124416000*Zeta[5] + 
-             59719680*Log[u]*Zeta[5])/7464960 + 
-          (111055255 - 87420990*Log[u] + 26575200*Log[u]^2 - 
-             4494240*Log[u]^3 + 442800*Log[u]^4 - 129600*Log[u]^5 - 
-             10368*Log[u]^6 + 59719680*Zeta[3]^2 + 186624000*Zeta[5] + 
-             89579520*Log[u]*Zeta[5])/7464960) + 
-       4*((259162675 - 174841980*Log[u] + 53150400*Log[u]^2 - 
-             8988480*Log[u]^3 + 885600*Log[u]^4 - 259200*Log[u]^5 - 
-             20736*Log[u]^6)/14929920 + 
-          ((-2035 + 2460*Log[u] - 1800*Log[u]^2 - 288*Log[u]^3)*Zeta[3])/
-           864 + 2*(-2035/1728 - Log[u]^3/6)*Zeta[3] + 
-          8*(-25/12 - Log[u])*Zeta[5] + 
-          (168303475 - 61890000*Log[u] + 8052840*Log[u]^2 + 
-             20736*Log[u]^6 + 9953280*Log[u]^3*Zeta[3] + 
-             119439360*Log[u]*Zeta[5])/14929920) + 
-       2*(((-1117 + 2460*Log[u] + 288*Log[u]^3 - 3456*Zeta[3])*Zeta[3])/
-           1728 + ((-5125 + 2520*Log[u] + 1800*Log[u]^2 + 288*Log[u]^3 - 
-               3456*Zeta[3])*Zeta[3])/1728 + 9*(-25/12 - Log[u])*Zeta[5] + 
-          (-2366185 - 39734460*Log[u] + 24158520*Log[u]^2 - 
-             5860800*Log[u]^3 + 885600*Log[u]^4 + 20736*Log[u]^6 + 
-             70329600*Zeta[3] - 42508800*Log[u]*Zeta[3] - 
-             4976640*Log[u]^3*Zeta[3] + 29859840*Zeta[3]^2 - 
-             44789760*Log[u]*Zeta[5])/14929920 + 
-          (106316375 + 29382240*Log[u] - 29905920*Log[u]^2 + 
-             7380000*Log[u]^3 - 907200*Log[u]^4 - 259200*Log[u]^5 - 
-             20736*Log[u]^6 + 29859840*Zeta[3]^2 + 373248000*Zeta[5] + 
-             179159040*Log[u]*Zeta[5])/14929920))]
-"Limit "4" mismatch: "InputForm[-19 + 10*Log[u] - 2*Log[u]^2 + Log[u]^3/6 + 
-    (-60 + 36*Log[u] - 9*Log[u]^2 + Log[u]^3)/6 + 4*Zeta[3] + 
-    8*(2 - Log[u])*Zeta[3] + (144 - 96*Log[u] + 36*Log[u]^2 - 8*Log[u]^3 + 
-       Log[u]^4 + 96*Zeta[3])/24 + 
-    (90 - 42*Log[u] + 9*Log[u]^2 - Log[u]^3 - 96*Zeta[3] + 
-       36*Log[u]*Zeta[3])/6 + (360 - 192*Log[u] + 48*Log[u]^2 - 
-       8*Log[u]^3 + Log[u]^4 - 192*Zeta[3] + 96*Log[u]*Zeta[3])/24 - 
-    2*(-5 + 3*Log[u] - Log[u]^2 + Log[u]^3/6 + 4*Zeta[3] - 
-       2*(2 - Log[u])*Zeta[3] - 2*Log[u]*Zeta[3] + 
-       (-120 + 48*Log[u] - 12*Log[u]^2 + 4*Log[u]^3 - Log[u]^4 + 48*Zeta[3])/
-        24) + 2*(5 - 3*Log[u] + Log[u]^2/2 - 4*Zeta[3] + 
-       2*(2 - Log[u])*Zeta[3] + 2*Log[u]*Zeta[3] + 
-       (120 - 48*Log[u] + 4*Log[u]^3 - Log[u]^4 - 96*Zeta[3] + 
-          48*Log[u]*Zeta[3])/24) - 
-    2*((240 - 72*Log[u] + 4*Log[u]^3 - Log[u]^4 - 96*Zeta[3])/24 + 
-       4*(2 - Log[u])*Zeta[3] + 
-       (240 - 168*Log[u] + 48*Log[u]^2 - 8*Log[u]^3 + Log[u]^4 - 
-          192*Zeta[3] + 96*Log[u]*Zeta[3])/24) - 
-    2*(4*(2 - Log[u])*Zeta[3] + 
-       (384 - 192*Log[u] + 48*Log[u]^2 - 8*Log[u]^3 + Log[u]^4 - 
-          192*Zeta[3] + 96*Log[u]*Zeta[3])/24 + 
-       (1920 - 960*Log[u] + 240*Log[u]^2 - 40*Log[u]^3 + 5*Log[u]^4 - 
-          Log[u]^5 - 1920*Zeta[3] + 960*Log[u]*Zeta[3] - 
-          240*Log[u]^2*Zeta[3] - 1440*Zeta[5])/120) - 
-    4*((144 - 48*Log[u] + 12*Log[u]^2 - 4*Log[u]^3 + Log[u]^4)/24 + 
-       (720 - 480*Log[u] + 180*Log[u]^2 - 40*Log[u]^3 + 5*Log[u]^4 - 
-          Log[u]^5 - 960*Zeta[5])/120) + 
-    4*(2*(1 - Log[u])*Zeta[3] + 2*(1 - Log[u]^2/2)*Zeta[3] + 
-       (264 - 168*Log[u] + 48*Log[u]^2 - 8*Log[u]^3 + Log[u]^4 - 
-          96*Zeta[3] + 96*Log[u]*Zeta[3])/24 + 
-       (1320 - 480*Log[u] + 60*Log[u]^2 - Log[u]^5 - 480*Zeta[3] - 
-          960*Zeta[5])/120) - 2*
-     (6 - 3*Log[u] + Log[u]^2/2 - 3*Zeta[3] + (1 - Log[u])*Zeta[3] + 
-       2*Log[u]*Zeta[3] + (1 - Log[u]^2/2)*Zeta[3] + 
-       (1 - Log[u] + Log[u]^2/2)*Zeta[3] + 
-       (720 - 360*Log[u] + 60*Log[u]^2 - Log[u]^5 - 480*Zeta[3] + 
-          240*Log[u]*Zeta[3] - 240*Zeta[5])/120) + 
-    (720 - 240*Log[u] + 60*Log[u]^2 - 20*Log[u]^3 + 5*Log[u]^4 - Log[u]^5 - 
-       480*Zeta[3] + 240*Log[u]*Zeta[3] - 960*Zeta[5])/120 + 
-    (1320 - 840*Log[u] + 240*Log[u]^2 - 40*Log[u]^3 + 5*Log[u]^4 - 
-       Log[u]^5 - 480*Zeta[3] + 480*Log[u]*Zeta[3] - 240*Log[u]^2*Zeta[3] - 
-       960*Zeta[5])/120 - 2*(1 + 2*Log[u] - Log[u]^2 + Log[u]^3/6 - 
-       Log[u]^5/120 + 2*Zeta[3] + 3*(1 - Log[u])*Zeta[3] - 
-       2*(2 - Log[u])*Zeta[3] - 2*Log[u]*Zeta[3] + Log[u]^2*Zeta[3] + 
-       3*(1 - Log[u]^2/2)*Zeta[3] + 
-       (24 - 72*Log[u] + 36*Log[u]^2 - 8*Log[u]^3 + Log[u]^4 - 
-          48*Zeta[3] + 96*Log[u]*Zeta[3])/24 + 3*Zeta[5]) + 
-    2*(-5 + 3*Log[u] - Log[u]^2 + Log[u]^3/6 - Log[u]^5/120 + 3*Zeta[3] + 
-       (-1 + Log[u])*Zeta[3] - 2*Log[u]*Zeta[3] + Log[u]^2*Zeta[3] + 
-       2*(-2 + Log[u] - Log[u]^2/2)*Zeta[3] + (-1 + Log[u]^2/2)*Zeta[3] + 
-       (1 - Log[u] + Log[u]^2/2)*Zeta[3] - 2*Zeta[5] + 
-       (-600 + 240*Log[u] - 60*Log[u]^2 + 20*Log[u]^3 - 5*Log[u]^4 + 
-          Log[u]^5 + 480*Zeta[3] - 240*Log[u]*Zeta[3] + 240*Zeta[5])/120) + 
-    2*(1 + 2*Log[u] - Log[u]^2 + Log[u]^3/6 - Zeta[3] + 
-       (1 - Log[u] + Log[u]^2/2)*Zeta[3] + 
-       (120 - 360*Log[u] + 180*Log[u]^2 - 40*Log[u]^3 + 5*Log[u]^4 - 
-          Log[u]^5 + 240*Zeta[3] + 360*Zeta[5])/120) + 
-    2*(-2*Zeta[3] - 3*(1 - Log[u])*Zeta[3] - 3*(1 - Log[u]^2/2)*Zeta[3] + 
-       2*(-1 + Log[u] - Log[u]^2/2)*Zeta[3] + 
-       (-84 + 42*Log[u] - 9*Log[u]^2 + Log[u]^3 + 60*Zeta[3] - 
-          36*Log[u]*Zeta[3])/6 + 
-       (-1680 + 840*Log[u] - 180*Log[u]^2 + 20*Log[u]^3 - Log[u]^5 + 
-          960*Zeta[3] - 480*Log[u]*Zeta[3] + 360*Zeta[5])/120) - 
-    2*(-2*Zeta[3] - 6*(-2 + Log[u] - Log[u]^2/2)*Zeta[3] + 
-       2*(-1 + Log[u] - Log[u]^2/2)*Zeta[3] + 
-       (1200 - 360*Log[u] + 20*Log[u]^3 - 5*Log[u]^4 + Log[u]^5 - 
-          960*Zeta[3] + 240*Log[u]*Zeta[3] - 120*Log[u]^2*Zeta[3] - 
-          360*Zeta[5])/120 + (1200 - 840*Log[u] + 240*Log[u]^2 - 
-          40*Log[u]^3 + 5*Log[u]^4 - Log[u]^5 - 480*Zeta[3] + 
-          480*Log[u]*Zeta[3] - 240*Log[u]^2*Zeta[3] + 360*Zeta[5])/120) + 
-    2*(-Zeta[3] + (-1 + Log[u] - Log[u]^2/2)*Zeta[3] + 
-       (-96 + 48*Log[u] - 4*Log[u]^3 + Log[u]^4 + 96*Zeta[3] - 
-          48*Log[u]*Zeta[3])/24 + 
-       (-480 + 240*Log[u] - 20*Log[u]^3 + 5*Log[u]^4 - Log[u]^5 + 
-          240*Zeta[3] - 240*Log[u]*Zeta[3] + 120*Log[u]^2*Zeta[3] + 
-          360*Zeta[5])/120) - 4*
-     (-2*(1 - Log[u])*Zeta[3] - 2*(1 - Log[u]^2/2)*Zeta[3] + 
-       4*(-2 + Log[u] - Log[u]^2/2)*Zeta[3] + 
-       (-1800 + 840*Log[u] - 180*Log[u]^2 + 20*Log[u]^3 - Log[u]^5 + 
-          1440*Zeta[3] - 480*Log[u]*Zeta[3] - 960*Zeta[5])/120 + 
-       (-1800 + 960*Log[u] - 240*Log[u]^2 + 40*Log[u]^3 - 5*Log[u]^4 + 
-          Log[u]^5 + 1440*Zeta[3] - 960*Log[u]*Zeta[3] + 
-          240*Log[u]^2*Zeta[3] + 960*Zeta[5])/120) - 
-    2*((-54 + 36*Log[u] - 9*Log[u]^2 + Log[u]^3 - 12*Zeta[3])/6 + 
-       (-1080 + 360*Log[u] - 20*Log[u]^3 + 5*Log[u]^4 - Log[u]^5 + 
-          240*Zeta[3] - 240*Log[u]*Zeta[3] + 120*Log[u]^2*Zeta[3] + 
-          1440*Zeta[5])/120) + Y*
-     ((-5 + 4*Log[u] - Log[u]^2)/32 + 
-       (-15 + 18*Log[u] - 9*Log[u]^2 + 2*Log[u]^3)/96 + 
-       (15 - 8*Log[u] + 2*Log[u]^2 - 32*Zeta[3])/64 + 
-       8*(1/4 - Log[u]/4)*Zeta[3] + 
-       ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/4 + 
-       ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/4 + 
-       (33 - 12*Log[u] + 9*Log[u]^2 - 4*Log[u]^3 + Log[u]^4 + 48*Zeta[3])/
-        96 + (-265 + 137*Log[u] - 30*Log[u]^2 + 3*Log[u]^3 + 144*Zeta[3])/
-        16 + (321 - 192*Log[u] + 48*Log[u]^2 - 8*Log[u]^3 + 2*Log[u]^4 - 
-          192*Zeta[3] + 192*Log[u]*Zeta[3])/192 + 
-       (129 - 66*Log[u] + 18*Log[u]^2 - 4*Log[u]^3 - 384*Zeta[3] + 
-          288*Log[u]*Zeta[3])/192 - 
-       2*(-2*(1/4 - Log[u]/4)*Zeta[3] + 
-          (-231 + 84*Log[u] + 6*Log[u]^2 - 4*Log[u]^3 - 2*Log[u]^4 + 
-             144*Zeta[3])/192 + 
-          (-39 - 6*Log[u] + 4*Log[u]^3 + 96*Zeta[3] - 96*Log[u]*Zeta[3])/192\
-) + 2*(2*(1/4 - Log[u]/4)*Zeta[3] + 
-          (-7 - 2*Log[u] + 2*Log[u]^2 - 32*Zeta[3] + 32*Log[u]*Zeta[3])/
-           64 + (171 - 144*Log[u] + 48*Log[u]^2 - 4*Log[u]^3 - 
-             2*Log[u]^4 - 96*Zeta[3] + 96*Log[u]*Zeta[3])/192) - 
-       2*((231 - 111*Log[u] + 24*Log[u]^2 - 2*Log[u]^3 - Log[u]^4 - 
-             144*Zeta[3])/96 + 4*(1/4 - Log[u]/4)*Zeta[3] + 
-          (39 - 63*Log[u] + 24*Log[u]^2 - 4*Log[u]^3 + Log[u]^4 - 
-             96*Zeta[3] + 96*Log[u]*Zeta[3])/96) + 
-       4*(2*(-1/8 - Log[u]/4)*Zeta[3] + 
-          ((7 - 4*Log[u] - 2*Log[u]^2)*Zeta[3])/4 + 
-          (147 - 126*Log[u] + 48*Log[u]^2 - 8*Log[u]^3 + 2*Log[u]^4 + 
-             96*Zeta[3] + 192*Log[u]*Zeta[3])/192 + 
-          (6495 - 2760*Log[u] + 450*Log[u]^2 - 20*Log[u]^4 - 4*Log[u]^5 - 
-             3360*Zeta[3] - 3840*Zeta[5])/960) - 
-       2*(4*(1/4 - Log[u]/4)*Zeta[3] + 
-          (192 - 96*Log[u] + 24*Log[u]^2 - 4*Log[u]^3 + Log[u]^4 - 
-             96*Zeta[3] + 96*Log[u]*Zeta[3])/96 + 
-          (2880 - 1440*Log[u] + 360*Log[u]^2 - 60*Log[u]^3 + 5*Log[u]^4 - 
-             2*Log[u]^5 - 1920*Zeta[3] + 960*Log[u]*Zeta[3] - 
-             480*Log[u]^2*Zeta[3] - 2880*Zeta[5])/480) - 
-       4*((159 - 42*Log[u] - 3*Log[u]^2 + 2*Log[u]^3 + Log[u]^4)/96 + 
-          (795 - 420*Log[u] + 195*Log[u]^2 - 60*Log[u]^3 + 5*Log[u]^4 - 
-             2*Log[u]^5 - 1920*Zeta[5])/480) - 
-       2*(Zeta[3]/8 + (-1/8 - Log[u]/4)*Zeta[3] + 
-          ((7 - 4*Log[u] - 2*Log[u]^2)*Zeta[3])/8 + 
-          ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 
-          (-Log[u] + Log[u]^2 + 16*Log[u]*Zeta[3])/32 + 
-          (1440 - 945*Log[u] + 225*Log[u]^2 - 10*Log[u]^4 - 2*Log[u]^5 - 
-             960*Zeta[3] + 720*Log[u]*Zeta[3] - 480*Zeta[5])/480) + 
-       (3105 - 2250*Log[u] + 720*Log[u]^2 - 120*Log[u]^3 + 10*Log[u]^4 - 
-          4*Log[u]^5 - 480*Zeta[3] + 960*Log[u]*Zeta[3] - 
-          960*Log[u]^2*Zeta[3] - 3840*Zeta[5])/960 + 
-       (1125 - 270*Log[u] + 15*Log[u]^2 - 10*Log[u]^3 + 5*Log[u]^4 - 
-          2*Log[u]^5 - 240*Zeta[3] + 240*Log[u]*Zeta[3] - 1920*Zeta[5])/480 \
-+ 2*(-1/4*Zeta[3] - 3*(-1/8 - Log[u]/4)*Zeta[3] - 
-          (3*(7 - 4*Log[u] - 2*Log[u]^2)*Zeta[3])/8 + 
-          ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/4 + 
-          (-48 + 33*Log[u] - 9*Log[u]^2 + 2*Log[u]^3 - 24*Zeta[3] - 
-             144*Log[u]*Zeta[3])/96 + 
-          (-3120 + 1755*Log[u] - 435*Log[u]^2 + 70*Log[u]^3 - 
-             10*Log[u]^4 - 2*Log[u]^5 + 1920*Zeta[3] - 
-             1440*Log[u]*Zeta[3] + 720*Zeta[5])/480) - 
-       2*(-1/4*Zeta[3] + ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/4 - 
-          (3*(-3 + Log[u] - Log[u]^2)*Zeta[3])/2 + 
-          (2205 - 885*Log[u] + 120*Log[u]^2 + 10*Log[u]^3 - 5*Log[u]^4 + 
-             2*Log[u]^5 - 1920*Zeta[3] + 240*Log[u]*Zeta[3] - 
-             240*Log[u]^2*Zeta[3] - 720*Zeta[5])/480 + 
-          (1245 - 1125*Log[u] + 360*Log[u]^2 - 60*Log[u]^3 + 5*Log[u]^4 - 
-             2*Log[u]^5 - 1200*Zeta[3] + 480*Log[u]*Zeta[3] - 
-             480*Log[u]^2*Zeta[3] + 720*Zeta[5])/480) + 
-       2*(-1/8*Zeta[3] + ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/8 + 
-          (-48 + 72*Log[u] - 24*Log[u]^2 + 2*Log[u]^3 + Log[u]^4 - 
-             48*Log[u]*Zeta[3])/96 + 
-          (-720 + 600*Log[u] - 120*Log[u]^2 - 10*Log[u]^3 + 5*Log[u]^4 - 
-             2*Log[u]^5 + 120*Zeta[3] - 240*Log[u]*Zeta[3] + 
-             240*Log[u]^2*Zeta[3] + 720*Zeta[5])/480) + 
-       2*(Zeta[3]/8 + (1/8 + Log[u]/4)*Zeta[3] + 
-          ((-3 + Log[u] - Log[u]^2)*Zeta[3])/2 + 
-          ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 
-          ((-7 + 4*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 
-          (-1725 + 990*Log[u] - 480*Log[u]^2 + 140*Log[u]^3 - 
-             20*Log[u]^4 - 4*Log[u]^5 + 1200*Zeta[3] - 
-             480*Log[u]*Zeta[3] + 480*Log[u]^2*Zeta[3] - 960*Zeta[5])/960 + 
-          (-1725 + 540*Log[u] - 30*Log[u]^2 + 20*Log[u]^3 - 10*Log[u]^4 + 
-             4*Log[u]^5 + 960*Zeta[3] - 480*Log[u]*Zeta[3] + 960*Zeta[5])/
-           960) + 2*((135 - 48*Log[u] + 4*Log[u]^3 - 48*Zeta[3])/192 + 
-          Zeta[3]/8 + ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 
-          (-1245 - 150*Log[u] + 390*Log[u]^2 - 120*Log[u]^3 + 
-             10*Log[u]^4 - 4*Log[u]^5 + 1200*Zeta[3] + 1440*Zeta[5])/960) - 
-       2*(3*(-1/8 - Log[u]/4)*Zeta[3] - 2*(1/4 - Log[u]/4)*Zeta[3] + 
-          (3*(7 - 4*Log[u] - 2*Log[u]^2)*Zeta[3])/8 + 
-          (-135 + 30*Log[u] + 18*Log[u]^2 - 8*Log[u]^3 + 2*Log[u]^4 + 
-             240*Zeta[3] + 192*Log[u]*Zeta[3])/192 + 
-          (2205 + 240*Log[u] - 480*Log[u]^2 + 140*Log[u]^3 - 20*Log[u]^4 - 
-             4*Log[u]^5 - 1200*Zeta[3] + 480*Log[u]*Zeta[3] + 
-             480*Log[u]^2*Zeta[3] + 1440*Zeta[5])/960) - 
-       4*(-2*(-1/8 - Log[u]/4)*Zeta[3] + (-3 + Log[u] - Log[u]^2)*Zeta[3] + 
-          ((-7 + 4*Log[u] + 2*Log[u]^2)*Zeta[3])/4 + 
-          (-7035 + 3510*Log[u] - 870*Log[u]^2 + 140*Log[u]^3 - 
-             20*Log[u]^4 - 4*Log[u]^5 + 6240*Zeta[3] - 
-             2880*Log[u]*Zeta[3] - 3840*Zeta[5])/960 + 
-          (-5115 + 2880*Log[u] - 720*Log[u]^2 + 120*Log[u]^3 - 
-             10*Log[u]^4 + 4*Log[u]^5 + 2400*Zeta[3] - 
-             1920*Log[u]*Zeta[3] + 960*Log[u]^2*Zeta[3] + 3840*Zeta[5])/960) \
-- 2*((-3 + 36*Log[u] - 18*Log[u]^2 + 4*Log[u]^3 - 48*Zeta[3])/192 + 
-          (-3855 + 1770*Log[u] - 240*Log[u]^2 - 20*Log[u]^3 + 10*Log[u]^4 - 
-             4*Log[u]^5 + 240*Zeta[3] - 480*Log[u]*Zeta[3] + 
-             480*Log[u]^2*Zeta[3] + 5760*Zeta[5])/960)) + 
-    Y^2*((-20 + 24*Log[u] - 9*Log[u]^2)/1458 + 
-       (-20 + 36*Log[u] - 27*Log[u]^2 + 9*Log[u]^3)/1458 + 
-       (89 - 48*Log[u] + 18*Log[u]^2 - 432*Zeta[3])/2916 + 
-       8*(2/27 - Log[u]/9)*Zeta[3] + 
-       ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/27 + 
-       ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/27 + 
-       (491 - 64*Log[u] + 72*Log[u]^2 - 48*Log[u]^3 + 18*Log[u]^4 + 
-          576*Zeta[3])/3888 + (-82735 + 42819*Log[u] - 9702*Log[u]^2 + 
-          1089*Log[u]^3 + 52272*Zeta[3])/5832 + 
-       (146 - 73*Log[u] + 18*Log[u]^2 - 6*Log[u]^3 - 576*Zeta[3] + 
-          648*Log[u]*Zeta[3])/972 + 
-       (2285 - 1460*Log[u] + 366*Log[u]^2 - 48*Log[u]^3 + 18*Log[u]^4 - 
-          1152*Zeta[3] + 1728*Log[u]*Zeta[3])/3888 - 
-       2*(-2*(2/27 - Log[u]/9)*Zeta[3] + 
-          (-3487 + 1749*Log[u] - 36*Log[u]^2 - 126*Log[u]^3 - 
-             27*Log[u]^4 + 2376*Zeta[3])/5832 + 
-          (-571 - 36*Log[u] + 90*Log[u]^2 + 36*Log[u]^3 + 864*Zeta[3] - 
-             1296*Log[u]*Zeta[3])/5832) + 
-       2*(2*(2/27 - Log[u]/9)*Zeta[3] + 
-          (-97 + 18*Log[u] + 18*Log[u]^2 - 432*Zeta[3] + 
-             648*Log[u]*Zeta[3])/2916 + 
-          (3257 - 3282*Log[u] + 1458*Log[u]^2 - 252*Log[u]^3 - 
-             54*Log[u]^4 - 1728*Zeta[3] + 2592*Log[u]*Zeta[3])/11664) - 
-       2*((6002 - 2988*Log[u] + 729*Log[u]^2 - 126*Log[u]^3 - 
-             27*Log[u]^4 - 4752*Zeta[3])/5832 + 
-          4*(2/27 - Log[u]/9)*Zeta[3] + 
-          (170 - 1167*Log[u] + 549*Log[u]^2 - 72*Log[u]^3 + 27*Log[u]^4 - 
-             1728*Zeta[3] + 2592*Log[u]*Zeta[3])/5832) + 
-       4*(2*(-7/54 - Log[u]/9)*Zeta[3] + 
-          ((67 - 54*Log[u] - 18*Log[u]^2)*Zeta[3])/54 + 
-          (2543 - 2334*Log[u] + 1098*Log[u]^2 - 144*Log[u]^3 + 
-             54*Log[u]^4 + 6048*Zeta[3] + 5184*Log[u]*Zeta[3])/11664 + 
-          (604985 - 271650*Log[u] + 51750*Log[u]^2 - 3240*Log[u]^3 - 
-             2430*Log[u]^4 - 324*Log[u]^5 - 367200*Zeta[3] - 311040*Zeta[5]\
-)/116640) - 2*(4*(2/27 - Log[u]/9)*Zeta[3] + 
-          (4376 - 2190*Log[u] + 549*Log[u]^2 - 72*Log[u]^3 + 
-             27*Log[u]^4 - 1728*Zeta[3] + 2592*Log[u]*Zeta[3])/5832 + 
-          (109360 - 54690*Log[u] + 13680*Log[u]^2 - 2385*Log[u]^3 + 
-             135*Log[u]^4 - 81*Log[u]^5 - 65880*Zeta[3] + 
-             25920*Log[u]*Zeta[3] - 19440*Log[u]^2*Zeta[3] - 116640*Zeta[5]\
-)/29160) - 4*((3407 - 1166*Log[u] + 24*Log[u]^2 + 84*Log[u]^3 + 
-             18*Log[u]^4)/3888 + 
-          (20680 - 8825*Log[u] + 4005*Log[u]^2 - 1590*Log[u]^3 + 
-             90*Log[u]^4 - 54*Log[u]^5 - 51840*Zeta[5])/19440) - 
-       2*(Zeta[3]/27 + (-7/54 - Log[u]/9)*Zeta[3] + 
-          ((67 - 54*Log[u] - 18*Log[u]^2)*Zeta[3])/108 + 
-          ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/54 + 
-          (-2 + 3*Log[u] + 3*Log[u]^2 + 90*Zeta[3] + 108*Log[u]*Zeta[3])/
-           486 + (78815 - 58080*Log[u] + 17250*Log[u]^2 - 1080*Log[u]^3 - 
-             810*Log[u]^4 - 108*Log[u]^5 - 51120*Zeta[3] + 
-             47520*Log[u]*Zeta[3] - 25920*Zeta[5])/38880) + 
-       (107485 - 80925*Log[u] + 27360*Log[u]^2 - 4770*Log[u]^3 + 
-          270*Log[u]^4 - 162*Log[u]^5 - 8640*Zeta[3] + 
-          25920*Log[u]*Zeta[3] - 38880*Log[u]^2*Zeta[3] - 155520*Zeta[5])/
-        58320 + (29185 - 7045*Log[u] + 120*Log[u]^2 - 120*Log[u]^3 + 
-          90*Log[u]^4 - 54*Log[u]^5 - 2880*Zeta[3] + 4320*Log[u]*Zeta[3] - 
-          51840*Zeta[5])/19440 - 
-       2*((19 + 16*Log[u] - 12*Log[u]^2 + 4*Log[u]^3 - 48*Zeta[3])/648 + 
-          (-16010 + 7775*Log[u] - 1215*Log[u]^2 - 40*Log[u]^3 + 
-             30*Log[u]^4 - 18*Log[u]^5 + 480*Zeta[3] - 
-             1440*Log[u]*Zeta[3] + 2160*Log[u]^2*Zeta[3] + 25920*Zeta[5])/
-           6480) + 2*((589 - 273*Log[u] + 45*Log[u]^2 + 18*Log[u]^3 - 
-             216*Zeta[3])/2916 + Zeta[3]/27 + 
-          ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/54 + 
-          (-61120 + 6570*Log[u] + 12015*Log[u]^2 - 4770*Log[u]^3 + 
-             270*Log[u]^4 - 162*Log[u]^5 + 52920*Zeta[3] + 58320*Zeta[5])/
-           58320) + 2*(-1/27*Zeta[3] + 
-          ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/54 + 
-          (-365 + 1641*Log[u] - 729*Log[u]^2 + 126*Log[u]^3 + 
-             27*Log[u]^4 - 1080*Zeta[3] - 1296*Log[u]*Zeta[3])/5832 + 
-          (-47390 + 45570*Log[u] - 10935*Log[u]^2 - 360*Log[u]^3 + 
-             270*Log[u]^4 - 162*Log[u]^5 + 4320*Zeta[3] - 
-             12960*Log[u]*Zeta[3] + 19440*Log[u]^2*Zeta[3] + 58320*Zeta[5])/
-           58320) + 2*(Zeta[3]/27 + (7/54 + Log[u]/9)*Zeta[3] + 
-          ((-53 + 12*Log[u] - 18*Log[u]^2)*Zeta[3])/54 + 
-          ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/54 + 
-          ((-67 + 54*Log[u] + 18*Log[u]^2)*Zeta[3])/108 + 
-          (-67675 + 32445*Log[u] - 17325*Log[u]^2 + 6030*Log[u]^3 - 
-             1215*Log[u]^4 - 162*Log[u]^5 + 52920*Zeta[3] - 
-             12960*Log[u]*Zeta[3] + 19440*Log[u]^2*Zeta[3] - 38880*Zeta[5]\
-)/58320 + (-131705 + 42270*Log[u] - 720*Log[u]^2 + 720*Log[u]^3 - 
-             540*Log[u]^4 + 324*Log[u]^5 + 75600*Zeta[3] - 
-             25920*Log[u]*Zeta[3] + 77760*Zeta[5])/116640) - 
-       4*(-2*(-7/54 - Log[u]/9)*Zeta[3] + 
-          ((-53 + 12*Log[u] - 18*Log[u]^2)*Zeta[3])/27 + 
-          ((-67 + 54*Log[u] + 18*Log[u]^2)*Zeta[3])/54 + 
-          (-100120 + 50060*Log[u] - 12510*Log[u]^2 + 2010*Log[u]^3 - 
-             405*Log[u]^4 - 54*Log[u]^5 + 86400*Zeta[3] - 
-             47520*Log[u]*Zeta[3] - 51840*Zeta[5])/19440 + 
-          (-126125 + 72920*Log[u] - 18240*Log[u]^2 + 3180*Log[u]^3 - 
-             180*Log[u]^4 + 108*Log[u]^5 + 56160*Zeta[3] - 
-             34560*Log[u]*Zeta[3] + 25920*Log[u]^2*Zeta[3] + 103680*Zeta[5]\
-)/38880) + 2*((-2*Zeta[3])/27 - 3*(-7/54 - Log[u]/9)*Zeta[3] + 
-          ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/27 + 
-          ((-67 + 54*Log[u] + 18*Log[u]^2)*Zeta[3])/36 + 
-          (-535 + 438*Log[u] - 108*Log[u]^2 + 36*Log[u]^3 - 
-             3672*Zeta[3] - 3888*Log[u]*Zeta[3])/5832 + 
-          (-517355 + 300360*Log[u] - 75060*Log[u]^2 + 12060*Log[u]^3 - 
-             2430*Log[u]^4 - 324*Log[u]^5 + 306720*Zeta[3] - 
-             285120*Log[u]*Zeta[3] + 116640*Zeta[5])/116640) - 
-       2*((-2*Zeta[3])/27 + ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/27 + 
-          ((53 - 12*Log[u] + 18*Log[u]^2)*Zeta[3])/18 + 
-          (335095 - 139950*Log[u] + 21870*Log[u]^2 + 720*Log[u]^3 - 
-             540*Log[u]^4 + 324*Log[u]^5 - 326160*Zeta[3] + 
-             25920*Log[u]*Zeta[3] - 38880*Log[u]^2*Zeta[3] - 
-             116640*Zeta[5])/116640 + 
-          (160135 - 161850*Log[u] + 54720*Log[u]^2 - 9540*Log[u]^3 + 
-             540*Log[u]^4 - 324*Log[u]^5 - 211680*Zeta[3] + 
-             51840*Log[u]*Zeta[3] - 77760*Log[u]^2*Zeta[3] + 116640*Zeta[5]\
-)/116640) - 2*(3*(-7/54 - Log[u]/9)*Zeta[3] - 2*(2/27 - Log[u]/9)*Zeta[3] + 
-          ((67 - 54*Log[u] - 18*Log[u]^2)*Zeta[3])/36 + 
-          (-1738 + 657*Log[u] + 108*Log[u]^2 - 72*Log[u]^3 + 27*Log[u]^4 + 
-             5400*Zeta[3] + 2592*Log[u]*Zeta[3])/5832 + 
-          (238615 - 10920*Log[u] - 34650*Log[u]^2 + 12060*Log[u]^3 - 
-             2430*Log[u]^4 - 324*Log[u]^5 - 127440*Zeta[3] + 
-             90720*Log[u]*Zeta[3] + 38880*Log[u]^2*Zeta[3] + 116640*Zeta[5])/
-           116640)) + Y^3*((-5 + 8*Log[u] - 4*Log[u]^2)/2048 + 
-       (-15 + 36*Log[u] - 36*Log[u]^2 + 16*Log[u]^3)/6144 + 
-       (295 - 144*Log[u] + 72*Log[u]^2 - 2304*Zeta[3])/36864 + 
-       8*(1/32 - Log[u]/16)*Zeta[3] + 
-       ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/32 + 
-       ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/32 + 
-       (11387 - 648*Log[u] + 972*Log[u]^2 - 864*Log[u]^3 + 432*Log[u]^4 + 
-          10368*Zeta[3])/165888 + 
-       (5*(-624559 + 321630*Log[u] - 73800*Log[u]^2 + 9000*Log[u]^3 + 
-            432000*Zeta[3]))/248832 + 
-       (32489 - 21632*Log[u] + 5568*Log[u]^2 - 576*Log[u]^3 + 
-          288*Log[u]^4 - 13824*Zeta[3] + 27648*Log[u]*Zeta[3])/110592 + 
-       (6185 - 3108*Log[u] + 648*Log[u]^2 - 288*Log[u]^3 - 27648*Zeta[3] + 
-          41472*Log[u]*Zeta[3])/110592 - 
-       2*(-2*(1/32 - Log[u]/16)*Zeta[3] + 
-          (-117197 + 69816*Log[u] - 6264*Log[u]^2 - 5472*Log[u]^3 - 
-             864*Log[u]^4 + 86400*Zeta[3])/331776 + 
-          (-5935 + 468*Log[u] + 1152*Log[u]^2 + 288*Log[u]^3 + 
-             6912*Zeta[3] - 13824*Log[u]*Zeta[3])/110592) - 
-       2*((96461 - 48234*Log[u] + 11808*Log[u]^2 - 2736*Log[u]^3 - 
-             432*Log[u]^4 - 86400*Zeta[3])/165888 + 
-          4*(1/32 - Log[u]/16)*Zeta[3] + 
-          (-977 - 4910*Log[u] + 2784*Log[u]^2 - 288*Log[u]^3 + 
-             144*Log[u]^4 - 6912*Zeta[3] + 13824*Log[u]*Zeta[3])/55296) + 
-       2*(2*(1/32 - Log[u]/16)*Zeta[3] + 
-          (-415 + 156*Log[u] + 72*Log[u]^2 - 2304*Zeta[3] + 
-             4608*Log[u]*Zeta[3])/36864 + 
-          (42409 - 45984*Log[u] + 23616*Log[u]^2 - 5472*Log[u]^3 - 
-             864*Log[u]^4 - 20736*Zeta[3] + 41472*Log[u]*Zeta[3])/331776) + 
-       4*(2*(-19/192 - Log[u]/16)*Zeta[3] + 
-          ((271 - 264*Log[u] - 72*Log[u]^2)*Zeta[3])/288 + 
-          (33121 - 29460*Log[u] + 16704*Log[u]^2 - 1728*Log[u]^3 + 
-             864*Log[u]^4 + 131328*Zeta[3] + 82944*Log[u]*Zeta[3])/331776 + 
-          (21458735 - 9858960*Log[u] + 2000520*Log[u]^2 - 
-             207360*Log[u]^3 - 95040*Log[u]^4 - 10368*Log[u]^5 - 
-             14342400*Zeta[3] - 9953280*Zeta[5])/4976640) - 
-       4*((30295 - 11636*Log[u] + 1044*Log[u]^2 + 912*Log[u]^3 + 
-             144*Log[u]^4)/55296 + 
-          (2026955 - 772680*Log[u] + 316620*Log[u]^2 - 154080*Log[u]^3 + 
-             6480*Log[u]^4 - 5184*Log[u]^5 - 4976640*Zeta[5])/2488320) - 
-       2*(4*(1/32 - Log[u]/16)*Zeta[3] + 
-          (4052 - 2028*Log[u] + 522*Log[u]^2 - 54*Log[u]^3 + 
-             27*Log[u]^4 - 1296*Zeta[3] + 2592*Log[u]*Zeta[3])/10368 + 
-          (425300 - 212700*Log[u] + 53010*Log[u]^2 - 9630*Log[u]^3 + 
-             405*Log[u]^4 - 324*Log[u]^5 - 250560*Zeta[3] + 
-             77760*Log[u]*Zeta[3] - 77760*Log[u]^2*Zeta[3] - 466560*Zeta[5]\
-)/155520) - 2*(Zeta[3]/64 + (-19/192 - Log[u]/16)*Zeta[3] + 
-          ((271 - 264*Log[u] - 72*Log[u]^2)*Zeta[3])/576 + 
-          ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/64 + 
-          (13*Log[u] + 6*Log[u]^2 + 512*Zeta[3] + 384*Log[u]*Zeta[3])/
-           3072 + (638960 - 498715*Log[u] + 166710*Log[u]^2 - 
-             17280*Log[u]^3 - 7920*Log[u]^4 - 864*Log[u]^5 - 
-             403200*Zeta[3] + 432000*Log[u]*Zeta[3] - 207360*Zeta[5])/414720\
-) + (6376145 - 4874580*Log[u] + 1696320*Log[u]^2 - 308160*Log[u]^3 + 
-          12960*Log[u]^4 - 10368*Log[u]^5 - 311040*Zeta[3] + 
-          1244160*Log[u]*Zeta[3] - 2488320*Log[u]^2*Zeta[3] - 
-          9953280*Zeta[5])/4976640 + 
-       (2747125 - 673500*Log[u] + 4860*Log[u]^2 - 6480*Log[u]^3 + 
-          6480*Log[u]^4 - 5184*Log[u]^5 - 155520*Zeta[3] + 
-          311040*Log[u]*Zeta[3] - 4976640*Zeta[5])/2488320 + 
-       2*(-1/64*Zeta[3] + ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/64 + 
-          (43 + 479*Log[u] - 246*Log[u]^2 + 57*Log[u]^3 + 9*Log[u]^4 - 
-             576*Zeta[3] - 432*Log[u]*Zeta[3])/3456 + 
-          (-84575 + 87045*Log[u] - 22590*Log[u]^2 - 405*Log[u]^3 + 
-             405*Log[u]^4 - 324*Log[u]^5 + 4860*Zeta[3] - 
-             19440*Log[u]*Zeta[3] + 38880*Log[u]^2*Zeta[3] + 116640*Zeta[5]\
-)/155520) - 2*(-1/32*Zeta[3] + ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/32 + 
-          ((107 - 18*Log[u] + 36*Log[u]^2)*Zeta[3])/48 + 
-          (5181085 - 2193930*Log[u] + 361440*Log[u]^2 + 6480*Log[u]^3 - 
-             6480*Log[u]^4 + 5184*Log[u]^5 - 5391360*Zeta[3] + 
-             311040*Log[u]*Zeta[3] - 622080*Log[u]^2*Zeta[3] - 
-             1866240*Zeta[5])/2488320 + 
-          (754975 - 812430*Log[u] + 282720*Log[u]^2 - 51360*Log[u]^3 + 
-             2160*Log[u]^4 - 1728*Log[u]^5 - 1180800*Zeta[3] + 
-             207360*Log[u]*Zeta[3] - 414720*Log[u]^2*Zeta[3] + 
-             622080*Zeta[5])/829440) + 
-       2*(Zeta[3]/64 + (19/192 + Log[u]/16)*Zeta[3] + 
-          ((-107 + 18*Log[u] - 36*Log[u]^2)*Zeta[3])/144 + 
-          ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/64 + 
-          ((-271 + 264*Log[u] + 72*Log[u]^2)*Zeta[3])/576 + 
-          (-4439485 + 1854780*Log[u] - 1025280*Log[u]^2 + 
-             390240*Log[u]^3 - 95040*Log[u]^4 - 10368*Log[u]^5 + 
-             3542400*Zeta[3] - 622080*Log[u]*Zeta[3] + 
-             1244160*Log[u]^2*Zeta[3] - 2488320*Zeta[5])/4976640 + 
-          (-1365055 + 449000*Log[u] - 3240*Log[u]^2 + 4320*Log[u]^3 - 
-             4320*Log[u]^4 + 3456*Log[u]^5 + 852480*Zeta[3] - 
-             207360*Log[u]*Zeta[3] + 829440*Zeta[5])/1658880) + 
-       2*(-1/32*Zeta[3] - 3*(-19/192 - Log[u]/16)*Zeta[3] + 
-          ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/32 + 
-          ((-271 + 264*Log[u] + 72*Log[u]^2)*Zeta[3])/192 + 
-          (-808 + 777*Log[u] - 162*Log[u]^2 + 72*Log[u]^3 - 
-             14688*Zeta[3] - 10368*Log[u]*Zeta[3])/27648 + 
-          (-4275560 + 2532075*Log[u] - 634950*Log[u]^2 + 97560*Log[u]^3 - 
-             23760*Log[u]^4 - 2592*Log[u]^5 + 2419200*Zeta[3] - 
-             2592000*Log[u]*Zeta[3] + 933120*Zeta[5])/1244160) - 
-       2*(3*(-19/192 - Log[u]/16)*Zeta[3] - 2*(1/32 - Log[u]/16)*Zeta[3] + 
-          ((271 - 264*Log[u] - 72*Log[u]^2)*Zeta[3])/192 + 
-          (-52205 + 23124*Log[u] + 1944*Log[u]^2 - 1728*Log[u]^3 + 
-             864*Log[u]^4 + 217728*Zeta[3] + 82944*Log[u]*Zeta[3])/331776 + 
-          (2950175 - 312480*Log[u] - 341760*Log[u]^2 + 130080*Log[u]^3 - 
-             31680*Log[u]^4 - 3456*Log[u]^5 - 1457280*Zeta[3] + 
-             1313280*Log[u]*Zeta[3] + 414720*Log[u]^2*Zeta[3] + 
-             1244160*Zeta[5])/1658880) + 
-       2*((9167 - 4512*Log[u] + 1152*Log[u]^2 + 288*Log[u]^3 - 
-             3456*Zeta[3])/110592 + Zeta[3]/64 + 
-          ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/64 + 
-          (-4142365 + 793620*Log[u] + 633240*Log[u]^2 - 308160*Log[u]^3 + 
-             12960*Log[u]^4 - 10368*Log[u]^5 + 3542400*Zeta[3] + 
-             3732480*Zeta[5])/4976640) - 
-       2*((1765 + 648*Log[u] - 648*Log[u]^2 + 288*Log[u]^3 - 3456*Zeta[3])/
-           110592 + (-2944405 + 1462620*Log[u] - 240960*Log[u]^2 - 
-             4320*Log[u]^3 + 4320*Log[u]^4 - 3456*Log[u]^5 + 
-             51840*Zeta[3] - 207360*Log[u]*Zeta[3] + 
-             414720*Log[u]^2*Zeta[3] + 4976640*Zeta[5])/1658880) - 
-       4*(-2*(-19/192 - Log[u]/16)*Zeta[3] + 
-          ((-107 + 18*Log[u] - 36*Log[u]^2)*Zeta[3])/72 + 
-          ((-271 + 264*Log[u] + 72*Log[u]^2)*Zeta[3])/288 + 
-          (-20252875 + 10128300*Log[u] - 2539800*Log[u]^2 + 
-             390240*Log[u]^3 - 95040*Log[u]^4 - 10368*Log[u]^5 + 
-             16761600*Zeta[3] - 10368000*Log[u]*Zeta[3] - 9953280*Zeta[5])/
-           4976640 + (-11586635 + 6806400*Log[u] - 1696320*Log[u]^2 + 
-             308160*Log[u]^3 - 12960*Log[u]^4 + 10368*Log[u]^5 + 
-             5425920*Zeta[3] - 2488320*Log[u]*Zeta[3] + 
-             2488320*Log[u]^2*Zeta[3] + 9953280*Zeta[5])/4976640)) + 
-    (-1/720*Log[u]^6 - (Log[u]^3*Zeta[3])/3 + 
-       8*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] + 8*Zeta[3]^2 - 
-       2*(-1/3*(Log[u]^3*Zeta[3]) + 2*(Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-          4*Zeta[3]^2) + 2*((Log[u]^3*Zeta[3])/3 + 
-          2*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] + 8*Zeta[3]^2) - 
-       9*Log[u]*Zeta[5] + (Log[u]^6 - 240*Log[u]^3*Zeta[3] - 
-          8640*Log[u]*Zeta[5])/720 + 
-       (-Log[u]^6 + 240*Log[u]^3*Zeta[3] + 2880*Zeta[3]^2 - 
-          1440*Log[u]*Zeta[5])/720 + 
-       (-Log[u]^6 + 240*Log[u]^3*Zeta[3] + 11520*Zeta[3]^2 + 
-          2160*Log[u]*Zeta[5])/720 + 
-       (Log[u]^6 + 480*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 + 
-          5760*Log[u]*Zeta[5])/720 + 
-       (Log[u]^6 + 480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 
-          8640*Log[u]*Zeta[5])/720 - 
-       2*(-1/720*Log[u]^6 - Log[u]^3*Zeta[3] - 
-          2*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] - 4*Zeta[3]^2 + 
-          3*Log[u]*Zeta[5] + (Log[u]^6 + 480*Log[u]^3*Zeta[3] - 
-             2880*Zeta[3]^2 - 2160*Log[u]*Zeta[5])/720) + 
-       2*(-1/720*Log[u]^6 + 2*(Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-          2*Zeta[3]^2 + 3*Log[u]*Zeta[5] + 
-          (Log[u]^6 - 240*Log[u]^3*Zeta[3] + 1440*Zeta[3]^2 - 
-             2160*Log[u]*Zeta[5])/720) - 
-       2*(-1/720*Log[u]^6 - 2*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] - 
-          4*Zeta[3]^2 + 2*Log[u]*Zeta[5] + 
-          (Log[u]^6 - 240*Log[u]^3*Zeta[3] - 2880*Zeta[3]^2 - 
-             1440*Log[u]*Zeta[5])/720) + 
-       2*(Log[u]^6/720 - 2*Zeta[3]^2 + 
-          2*Zeta[3]*(-1/6*Log[u]^3 + 2*Zeta[3]) - 2*Log[u]*Zeta[5] + 
-          (-Log[u]^6 + 240*Log[u]^3*Zeta[3] - 1440*Zeta[3]^2 + 
-             1440*Log[u]*Zeta[5])/720) + 
-       2*(-1/720*Log[u]^6 + 2*(Log[u]^3/6 - 2*Zeta[3])*Zeta[3] + 
-          2*Zeta[3]^2 - 2*Log[u]*Zeta[5] + 
-          (Log[u]^6 - 240*Log[u]^3*Zeta[3] + 1440*Zeta[3]^2 + 
-             1440*Log[u]*Zeta[5])/720) - 
-       2*(9*Log[u]*Zeta[5] + (Log[u]^6 - 240*Log[u]^3*Zeta[3] + 
-             1440*Zeta[3]^2 - 8640*Log[u]*Zeta[5])/720 + 
-          (-Log[u]^6 + 240*Log[u]^3*Zeta[3] - 1440*Zeta[3]^2 + 
-             2160*Log[u]*Zeta[5])/720) + 
-       4*(-1/720*Log[u]^6 - (2*Log[u]^3*Zeta[3])/3 - 8*Log[u]*Zeta[5] + 
-          (Log[u]^6 + 480*Log[u]^3*Zeta[3] + 5760*Log[u]*Zeta[5])/720) - 
-       2*(-1/720*Log[u]^6 + 4*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] + 
-          8*Zeta[3]^2 - 8*Log[u]*Zeta[5] + 
-          (Log[u]^6 + 480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 
-             5760*Log[u]*Zeta[5])/720) - 
-       2*(-1/720*Log[u]^6 + 4*(-1/6*Log[u]^3 - 4*Zeta[3])*Zeta[3] + 
-          8*Zeta[3]^2 - 12*Log[u]*Zeta[5] + 
-          (Log[u]^6 + 480*Log[u]^3*Zeta[3] + 5760*Zeta[3]^2 + 
-             8640*Log[u]*Zeta[5])/720))/Y]
-"Limit "5" mismatch: "InputForm[-10 + 6*Log[u] - (3*Log[u]^2)/2 + 
-    Log[u]^3/6 - 24*Zeta[3] + 16*Log[u]*Zeta[3] + (2*Log[u]^3*Zeta[3])/3 + 
-    2*(-1/2*Log[u]^2 - Log[u]^3/6)*Zeta[3] - 32*Zeta[3]^2 + 
-    8*Zeta[3]*(2 - Log[u] + 4*Zeta[3]) - 
-    2*(4*Zeta[3] + 2*(-1 - 2*Zeta[3])*Zeta[3] + 
-       2*(-1 + Log[u] - Log[u]^2/2 - 2*Zeta[3])*Zeta[3] + 8*Zeta[3]^2 - 
-       20*Zeta[5]) - 52*Zeta[5] + 12*(-1 - Log[u])*Zeta[5] + 
-    24*Log[u]*Zeta[5] + 2*(-2*Zeta[3] - 4*Zeta[3]^2 + 
-       Zeta[3]*(1 + 2*Zeta[3]) + 
-       Zeta[3]*(1 - Log[u] + Log[u]^2/2 + 2*Zeta[3]) + 10*Zeta[5]) + 
-    (60 - 36*Log[u] + 9*Log[u]^2 - Log[u]^3 - 6*Log[u]^2*Zeta[3] - 
-       2*Log[u]^3*Zeta[3] - 72*Zeta[5] - 72*Log[u]*Zeta[5])/6 + 
-    2*(10*Zeta[3] - 4*Log[u]*Zeta[3] + 2*Log[u]^2*Zeta[3] + 
-       2*(-1 - 2*Zeta[3])*Zeta[3] + 
-       2*(-1 + Log[u] - Log[u]^2/2 - 2*Zeta[3])*Zeta[3] + 8*Zeta[3]^2 - 
-       11*(-1 - Log[u])*Zeta[5] - 11*Log[u]*Zeta[5]) - 
-    2*(10*Zeta[3] - 4*Log[u]*Zeta[3] + 8*Zeta[3]^2 - 
-       2*Zeta[3]*(2 - Log[u] + 4*Zeta[3]) - 10*Zeta[5] - 
-       10*(-1 - Log[u])*Zeta[5] - 10*Log[u]*Zeta[5]) - 
-    2*(2*Zeta[3] - 2*Log[u]*Zeta[3] + Log[u]^2*Zeta[3] + 2*Zeta[3]^2 - 
-       2*(Zeta[3] + Zeta[3]^2) + 3*Zeta[5] - 9*(-1 - Log[u])*Zeta[5] - 
-       9*Log[u]*Zeta[5]) - 2*(-4*Zeta[3] + 2*Log[u]*Zeta[3] - 
-       Log[u]^2*Zeta[3] - 4*Zeta[3]^2 + Zeta[3]*(1 + 2*Zeta[3]) + 
-       Zeta[3]*(1 - Log[u] + Log[u]^2/2 + 2*Zeta[3]) + 
-       4*(-1 - Log[u])*Zeta[5] + 4*Log[u]*Zeta[5]) - 
-    2*(-8*Zeta[3] + 4*Log[u]*Zeta[3] - 16*Zeta[3]^2 + 
-       4*Zeta[3]*(2 - Log[u] + 4*Zeta[3]) + 4*(-1 - Log[u])*Zeta[5] + 
-       4*Log[u]*Zeta[5]) + 2*(-8*Zeta[3] + 4*Log[u]*Zeta[3] - 
-       Log[u]^2*Zeta[3] - (Log[u]^3*Zeta[3])/3 - 
-       2*(-1/2*Log[u]^2 - Log[u]^3/6)*Zeta[3] - 8*Zeta[3]^2 + 
-       2*Zeta[3]*(2 - Log[u] + 4*Zeta[3]) + 5*Zeta[5] + 
-       5*(-1 - Log[u])*Zeta[5] + 5*Log[u]*Zeta[5]) + 
-    4*(-3*Zeta[5] + 8*(-1 - Log[u])*Zeta[5] + 8*Log[u]*Zeta[5]) - 
-    4*(2*Zeta[5] + 8*(-1 - Log[u])*Zeta[5] + 8*Log[u]*Zeta[5]) + 
-    2*(-2*Zeta[3] + 2*Log[u]*Zeta[3] - Log[u]^2*Zeta[3] + 2*Zeta[3]^2 + 
-       Zeta[3]*(1 + 2*Zeta[3]) + 
-       Zeta[3]*(1 - Log[u] + Log[u]^2/2 + 2*Zeta[3]) - 
-       6*(Zeta[3] + Zeta[3]^2) + 10*Zeta[5] + 9*(-1 - Log[u])*Zeta[5] + 
-       9*Log[u]*Zeta[5]) - 2*(-20*Zeta[3] + 10*Log[u]*Zeta[3] - 
-       16*Zeta[3]^2 + 4*Zeta[3]*(2 - Log[u] + 4*Zeta[3]) + 20*Zeta[5] + 
-       20*(-1 - Log[u])*Zeta[5] + 20*Log[u]*Zeta[5]) + 
-    2*(2*Zeta[3] + (-1 - 2*Zeta[3])*Zeta[3] + 
-       (-1 + Log[u] - Log[u]^2/2 - 2*Zeta[3])*Zeta[3] + 4*Zeta[3]^2 - 
-       Log[u]*Zeta[5] + (1 + Log[u])*Zeta[5]) - 
-    2*(4*Zeta[3] - 2*Log[u]*Zeta[3] + 8*Zeta[3]^2 - 
-       2*Zeta[3]*(2 - Log[u] + 4*Zeta[3]) - 10*Zeta[5] - Log[u]*Zeta[5] + 
-       (1 + Log[u])*Zeta[5]) + Y*
-     (-5/16 + ((-6*Log[u] - 9*Log[u]^2 - 2*Log[u]^3)*Zeta[3])/6 + 
-       ((-7 + 6*Log[u] - 6*Log[u]^2 - 16*Zeta[3])*Zeta[3])/4 + 
-       8*Zeta[3]*(11/4 - (7*Log[u])/4 + 4*Zeta[3]) + 
-       (Zeta[3]*(7 - 6*Log[u] + 6*Log[u]^2 + 16*Zeta[3]))/4 + 
-       (-645 + 357*Log[u] - 78*Log[u]^2 + 7*Log[u]^3 + 336*Zeta[3])/48 - 
-       2*((5*Zeta[3])/2 + ((-7 + 6*Log[u] - 6*Log[u]^2 - 16*Zeta[3])*
-             Zeta[3])/4 - 6*(-1/2 - 4*Zeta[3])*Zeta[3] + 
-          2*(-15/8 - 2*Zeta[3])*Zeta[3] - 16*Zeta[3]^2 - 30*Zeta[5]) + 
-       12*(-3/2 - Log[u])*Zeta[5] + 
-       2*((-9*Zeta[3])/4 + 2*(-1/2 - 4*Zeta[3])*Zeta[3] + 
-          (1/4 - 2*Zeta[3])*Zeta[3] + 
-          (-3/4 + Log[u]/2 - 2*Zeta[3])*Zeta[3] + 8*Zeta[3]^2 + 
-          Zeta[3]*(15/8 + 2*Zeta[3]) + 
-          (Zeta[3]*(7 - 6*Log[u] + 6*Log[u]^2 + 16*Zeta[3]))/8 + 15*Zeta[5]) \
-- 4*(4*Zeta[3] + 4*(-1/2 - 4*Zeta[3])*Zeta[3] + 24*Zeta[3]^2 - 
-          2*Zeta[3]*(-1/4 + 2*Zeta[3]) - 
-          2*Zeta[3]*(3/4 - Log[u]/2 + 2*Zeta[3]) + (45*Zeta[5])/2) + 
-       (1329 - 846*Log[u] + 231*Log[u]^2 - 30*Log[u]^3 - 
-          96*Log[u]*Zeta[3] - 144*Log[u]^2*Zeta[3] - 32*Log[u]^3*Zeta[3] - 
-          1728*Zeta[5] - 1152*Log[u]*Zeta[5])/96 + 
-       (507 - 220*Log[u] + 31*Log[u]^2 - 384*Zeta[5] - 256*Log[u]*Zeta[5])/
-        32 + 2*((65*Zeta[3])/4 - 5*Log[u]*Zeta[3] + 3*Log[u]^2*Zeta[3] + 
-          ((-7 + 6*Log[u] - 6*Log[u]^2 - 16*Zeta[3])*Zeta[3])/4 + 
-          2*(-15/8 - 2*Zeta[3])*Zeta[3] + 20*Zeta[3]^2 - 
-          3*Zeta[3]*(-1/4 + 2*Zeta[3]) - 
-          3*Zeta[3]*(3/4 - Log[u]/2 + 2*Zeta[3]) - 
-          11*(-3/2 - Log[u])*Zeta[5] - 11*Log[u]*Zeta[5]) - 
-       2*((61*Zeta[3])/4 - 7*Log[u]*Zeta[3] + 8*Zeta[3]^2 - 
-          2*Zeta[3]*(11/4 - (7*Log[u])/4 + 4*Zeta[3]) - 15*Zeta[5] - 
-          10*(-3/2 - Log[u])*Zeta[5] - 10*Log[u]*Zeta[5]) - 
-       2*(-13*Zeta[3] + 7*Log[u]*Zeta[3] - 16*Zeta[3]^2 + 
-          4*Zeta[3]*(11/4 - (7*Log[u])/4 + 4*Zeta[3]) + 
-          4*(-3/2 - Log[u])*Zeta[5] + 4*Log[u]*Zeta[5]) + 
-       4*(-2*Zeta[3] + 2*Log[u]*Zeta[3] - 8*Zeta[3]^2 + 
-          2*Zeta[3]*(-1/4 + 2*Zeta[3]) + 
-          2*Zeta[3]*(3/4 - Log[u]/2 + 2*Zeta[3]) - (9*Zeta[5])/2 + 
-          8*(-3/2 - Log[u])*Zeta[5] + 8*Log[u]*Zeta[5]) - 
-       4*(-2*Zeta[3] + 3*Zeta[5] + 8*(-3/2 - Log[u])*Zeta[5] + 
-          8*Log[u]*Zeta[5]) + (-9 + 2*Log[u] - 22*Zeta[3] + 
-          14*Log[u]*Zeta[3] - 16*Zeta[3]^2 - 12*Zeta[5] + 24*Log[u]*Zeta[5]\
-)/4 + (-23 + 12*Log[u] - 2*Log[u]^2 - 176*Zeta[3] + 112*Log[u]*Zeta[3] - 
-          128*Zeta[3]^2 + 96*Zeta[5] + 64*Log[u]*Zeta[5])/16 + 
-       (-7 + 2*Log[u] - 384*Zeta[3] + 168*Log[u]*Zeta[3] - 256*Zeta[3]^2 + 
-          264*Zeta[5] + 176*Log[u]*Zeta[5])/16 + 
-       (-147 + 102*Log[u] - 30*Log[u]^2 + 4*Log[u]^3 - 168*Zeta[3] + 
-          240*Log[u]*Zeta[3] + 32*Log[u]^3*Zeta[3] - 192*Zeta[3]^2 + 
-          216*Zeta[5] + 528*Log[u]*Zeta[5])/48 + 
-       2*((13*Zeta[3])/4 + ((-7 + 6*Log[u] - 6*Log[u]^2 - 16*Zeta[3])*
-             Zeta[3])/8 + (-15/8 - 2*Zeta[3])*Zeta[3] + 4*Zeta[3]^2 - 
-          Log[u]*Zeta[5] + (3/2 + Log[u])*Zeta[5]) - 
-       2*((11*Zeta[3])/2 - (5*Log[u]*Zeta[3])/2 - 4*Zeta[3]^2 + 
-          3*Zeta[3]*(-1/4 + 2*Zeta[3]) + 
-          3*Zeta[3]*(3/4 - Log[u]/2 + 2*Zeta[3]) - 
-          2*Zeta[3]*(11/4 - (7*Log[u])/4 + 4*Zeta[3]) - 15*Zeta[5] - 
-          Log[u]*Zeta[5] + (3/2 + Log[u])*Zeta[5]) - 
-       2*(-1/8 - (15*Zeta[3])/4 - 2*Zeta[3]^2 - 9*(-3/2 - Log[u])*Zeta[5] + 
-          (31 - 14*Log[u] + 2*Log[u]^2 + 14*Zeta[3] - 12*Log[u]*Zeta[3] + 
-             12*Log[u]^2*Zeta[3] + 16*Zeta[3]^2 + 36*Zeta[5] - 
-             72*Log[u]*Zeta[5])/8) - 
-       2*((-13*Zeta[3])/4 - 4*Zeta[3]^2 + Zeta[3]*(-1/4 + 2*Zeta[3]) + 
-          Zeta[3]*(15/8 + 2*Zeta[3]) + 
-          Zeta[3]*(3/4 - Log[u]/2 + 2*Zeta[3]) + 
-          (Zeta[3]*(7 - 6*Log[u] + 6*Log[u]^2 + 16*Zeta[3]))/8 + 
-          4*(-3/2 - Log[u])*Zeta[5] + 
-          (-13*Zeta[3] + 10*Log[u]*Zeta[3] - 6*Log[u]^2*Zeta[3] - 
-             16*Zeta[3]^2 + 16*Log[u]*Zeta[5])/4) - 
-       2*(-12*Zeta[3] + 7*Log[u]*Zeta[3] - 4*Zeta[3]^2 + 
-          4*Zeta[3]*(11/4 - (7*Log[u])/4 + 4*Zeta[3]) + (27*Zeta[5])/2 + 
-          20*(-3/2 - Log[u])*Zeta[5] + 9*Log[u]*Zeta[5] + 
-          (-33*Zeta[3] + 21*Log[u]*Zeta[3] - 24*Zeta[3]^2 + 33*Zeta[5] + 
-             22*Log[u]*Zeta[5])/2) + 
-       2*((-45*Zeta[3])/4 - 6*Zeta[3]^2 + Zeta[3]*(15/8 + 2*Zeta[3]) + 
-          (Zeta[3]*(7 - 6*Log[u] + 6*Log[u]^2 + 16*Zeta[3]))/8 + 
-          9*(-3/2 - Log[u])*Zeta[5] + 
-          (-3*Zeta[3] + 6*Log[u]*Zeta[3] - 6*Log[u]^2*Zeta[3] + 
-             8*Zeta[3]^2 + 60*Zeta[5] + 36*Log[u]*Zeta[5])/4) + 
-       2*(((6*Log[u] + 9*Log[u]^2 + 2*Log[u]^3)*Zeta[3])/6 + 
-          2*Zeta[3]*(11/4 - (7*Log[u])/4 + 4*Zeta[3]) + 
-          5*(-3/2 - Log[u])*Zeta[5] + 
-          (-39 + 33*Log[u] - 12*Log[u]^2 + 2*Log[u]^3 - 264*Zeta[3] + 
-             120*Log[u]*Zeta[3] - 72*Log[u]^2*Zeta[3] - 
-             16*Log[u]^3*Zeta[3] - 192*Zeta[3]^2 + 72*Zeta[5] + 
-             48*Log[u]*Zeta[5])/48 + 
-          (3 - Log[u] - 88*Zeta[3] + 56*Log[u]*Zeta[3] - 64*Zeta[3]^2 + 
-             96*Zeta[5] + 64*Log[u]*Zeta[5])/16)) + 
-    Y^2*(-521/648 + ((-2 - 12*Log[u] - 11*Log[u]^2 - 2*Log[u]^3)*Zeta[3])/
-        6 + ((-197 + 78*Log[u] - 198*Log[u]^2 - 432*Zeta[3])*Zeta[3])/108 + 
-       8*Zeta[3]*(83/27 - (85*Log[u])/36 + 4*Zeta[3]) + 
-       (Zeta[3]*(197 - 78*Log[u] + 198*Log[u]^2 + 432*Zeta[3]))/108 + 
-       (-117356 + 68871*Log[u] - 15759*Log[u]^2 + 1449*Log[u]^3 + 
-          69552*Zeta[3])/11664 - 
-       2*(((-197 + 78*Log[u] - 198*Log[u]^2 - 432*Zeta[3])*Zeta[3])/108 - 
-          6*(-13/12 - 4*Zeta[3])*Zeta[3] + 
-          2*(-575/216 - 2*Zeta[3])*Zeta[3] + 
-          (9 + 682*Zeta[3] - 432*Zeta[3]^2 - 1782*Zeta[5])/108 + 
-          (-1 - 156*Zeta[3] - 288*Zeta[3]^2 - 484*Zeta[5])/24) + 
-       12*(-11/6 - Log[u])*Zeta[5] + 
-       2*(7/48 - (233*Zeta[3])/108 + 2*(-13/12 - 4*Zeta[3])*Zeta[3] + 
-          (7/12 - 2*Zeta[3])*Zeta[3] + 
-          (-7/6 + Log[u] - 2*Zeta[3])*Zeta[3] + 8*Zeta[3]^2 + 
-          Zeta[3]*(575/216 + 2*Zeta[3]) + 
-          (Zeta[3]*(197 - 78*Log[u] + 198*Log[u]^2 + 432*Zeta[3]))/216 + 
-          (55*Zeta[5])/3) - 4*((17*Zeta[3])/2 + 
-          4*(-13/12 - 4*Zeta[3])*Zeta[3] + 24*Zeta[3]^2 - 
-          2*Zeta[3]*(-7/12 + 2*Zeta[3]) - 
-          2*Zeta[3]*(7/6 - Log[u] + 2*Zeta[3]) + (55*Zeta[5])/2) + 
-       (378671 - 248436*Log[u] + 71145*Log[u]^2 - 10350*Log[u]^3 - 
-          7776*Zeta[3] - 46656*Log[u]*Zeta[3] - 42768*Log[u]^2*Zeta[3] - 
-          7776*Log[u]^3*Zeta[3] - 513216*Zeta[5] - 279936*Log[u]*Zeta[5])/
-        23328 + (470525 - 214710*Log[u] + 32949*Log[u]^2 - 
-          342144*Zeta[5] - 186624*Log[u]*Zeta[5])/23328 + 
-       4*(-3*Zeta[3] + 4*Log[u]*Zeta[3] - 8*Zeta[3]^2 + 
-          2*Zeta[3]*(-7/12 + 2*Zeta[3]) + 
-          2*Zeta[3]*(7/6 - Log[u] + 2*Zeta[3]) - (11*Zeta[5])/2 + 
-          8*(-11/6 - Log[u])*Zeta[5] + 8*Log[u]*Zeta[5]) - 
-       4*((-9*Zeta[3])/2 + (11*Zeta[5])/3 + 8*(-11/6 - Log[u])*Zeta[5] + 
-          8*Log[u]*Zeta[5]) + (-647 + 358*Log[u] - 66*Log[u]^2 - 
-          2656*Zeta[3] + 2040*Log[u]*Zeta[3] - 1728*Zeta[3]^2 + 
-          1584*Zeta[5] + 864*Log[u]*Zeta[5])/216 + 
-       (-2055 + 495*Log[u] - 2656*Zeta[3] + 2040*Log[u]*Zeta[3] - 
-          1728*Zeta[3]^2 - 1584*Zeta[5] + 2592*Log[u]*Zeta[5])/432 + 
-       (-457 + 142*Log[u] - 12568*Zeta[3] + 6120*Log[u]*Zeta[3] - 
-          6912*Zeta[3]^2 + 8712*Zeta[5] + 4752*Log[u]*Zeta[5])/432 + 
-       (-6784 + 4881*Log[u] - 1530*Log[u]^2 + 234*Log[u]^3 - 
-          3864*Zeta[3] + 7056*Log[u]*Zeta[3] + 864*Log[u]^3*Zeta[3] - 
-          5184*Zeta[3]^2 + 7128*Zeta[5] + 14256*Log[u]*Zeta[5])/1296 + 
-       2*(-25/144 + Log[u]/24 + (449*Zeta[3])/108 + 
-          ((-197 + 78*Log[u] - 198*Log[u]^2 - 432*Zeta[3])*Zeta[3])/216 + 
-          (-575/216 - 2*Zeta[3])*Zeta[3] + 4*Zeta[3]^2 - Log[u]*Zeta[5] + 
-          (11/6 + Log[u])*Zeta[5]) - 
-       2*(-1/3 - (575*Zeta[3])/108 - 2*Zeta[3]^2 - 
-          9*(-11/6 - Log[u])*Zeta[5] + 
-          (3204 - 1539*Log[u] + 243*Log[u]^2 + 788*Zeta[3] - 
-             312*Log[u]*Zeta[3] + 792*Log[u]^2*Zeta[3] + 864*Zeta[3]^2 + 
-             2376*Zeta[5] - 3888*Log[u]*Zeta[5])/432) + 
-       2*(-1/108 + (449*Zeta[3])/36 + 
-          ((-197 + 78*Log[u] - 198*Log[u]^2 - 432*Zeta[3])*Zeta[3])/108 + 
-          2*(-575/216 - 2*Zeta[3])*Zeta[3] + 12*Zeta[3]^2 - 
-          3*Zeta[3]*(-7/12 + 2*Zeta[3]) - 
-          3*Zeta[3]*(7/6 - Log[u] + 2*Zeta[3]) - 
-          11*(-11/6 - Log[u])*Zeta[5] + 
-          (187 - 102*Log[u] + 18*Log[u]^2 + 1796*Zeta[3] - 
-             1176*Log[u]*Zeta[3] + 792*Log[u]^2*Zeta[3] + 1728*Zeta[3]^2 - 
-             2376*Log[u]*Zeta[5])/216) - 
-       2*(-2*Zeta[3]*(83/27 - (85*Log[u])/36 + 4*Zeta[3]) - 
-          10*(-11/6 - Log[u])*Zeta[5] + 
-          (37 - 26*Log[u] + 6*Log[u]^2 + 1580*Zeta[3] - 
-             1020*Log[u]*Zeta[3] + 432*Zeta[3]^2 - 2376*Zeta[5] - 
-             1296*Log[u]*Zeta[5])/216 + 
-          (5 - 2*Log[u] + 1239*Zeta[3] - 510*Log[u]*Zeta[3] + 
-             648*Zeta[3]^2 - 792*Zeta[5] - 432*Log[u]*Zeta[5])/108) - 
-       2*(-1/72 + (7*Zeta[3])/2 - 6*Zeta[3]^2 + 
-          3*Zeta[3]*(-7/12 + 2*Zeta[3]) + 
-          3*Zeta[3]*(7/6 - Log[u] + 2*Zeta[3]) - 
-          2*Zeta[3]*(83/27 - (85*Log[u])/36 + 4*Zeta[3]) + 
-          (11/6 + Log[u])*Zeta[5] + 
-          (-69 + 18*Log[u] + 412*Zeta[3] - 294*Log[u]*Zeta[3] + 
-             216*Zeta[3]^2 - 1980*Zeta[5] - 108*Log[u]*Zeta[5])/108) - 
-       2*(-1/36 + 4*Zeta[3]*(83/27 - (85*Log[u])/36 + 4*Zeta[3]) + 
-          4*(-11/6 - Log[u])*Zeta[5] + 
-          (-30 + 9*Log[u] - 1796*Zeta[3] + 1020*Log[u]*Zeta[3] - 
-             1728*Zeta[3]^2 + 432*Log[u]*Zeta[5])/108) - 
-       2*(4*Zeta[3]*(83/27 - (85*Log[u])/36 + 4*Zeta[3]) + 
-          20*(-11/6 - Log[u])*Zeta[5] + 
-          (-19 + 6*Log[u] - 1580*Zeta[3] + 1020*Log[u]*Zeta[3] - 
-             432*Zeta[3]^2 + 1782*Zeta[5] + 972*Log[u]*Zeta[5])/108 + 
-          (8 - 3*Log[u] - 1992*Zeta[3] + 1530*Log[u]*Zeta[3] - 
-             1296*Zeta[3]^2 + 2178*Zeta[5] + 1188*Log[u]*Zeta[5])/108) + 
-       2*(-1/54 - (575*Zeta[3])/36 - 6*Zeta[3]^2 + 
-          Zeta[3]*(575/216 + 2*Zeta[3]) + 
-          (Zeta[3]*(197 - 78*Log[u] + 198*Log[u]^2 + 432*Zeta[3]))/216 + 
-          9*(-11/6 - Log[u])*Zeta[5] + 
-          (127 - 84*Log[u] + 18*Log[u]^2 + 148*Zeta[3] + 
-             312*Log[u]*Zeta[3] - 792*Log[u]^2*Zeta[3] + 864*Zeta[3]^2 + 
-             7920*Zeta[5] + 3888*Log[u]*Zeta[5])/432) - 
-       2*(-1/162 - (449*Zeta[3])/108 - 4*Zeta[3]^2 + 
-          Zeta[3]*(-7/12 + 2*Zeta[3]) + Zeta[3]*(575/216 + 2*Zeta[3]) + 
-          Zeta[3]*(7/6 - Log[u] + 2*Zeta[3]) + 
-          (Zeta[3]*(197 - 78*Log[u] + 198*Log[u]^2 + 432*Zeta[3]))/216 + 
-          4*(-11/6 - Log[u])*Zeta[5] + 
-          (-575 + 510*Log[u] - 198*Log[u]^2 + 36*Log[u]^3 - 5388*Zeta[3] + 
-             3528*Log[u]*Zeta[3] - 2376*Log[u]^2*Zeta[3] - 
-             5184*Zeta[3]^2 + 5184*Log[u]*Zeta[5])/1296) + 
-       2*(((2 + 12*Log[u] + 11*Log[u]^2 + 2*Log[u]^3)*Zeta[3])/6 + 
-          2*Zeta[3]*(83/27 - (85*Log[u])/36 + 4*Zeta[3]) + 
-          5*(-11/6 - Log[u])*Zeta[5] + 
-          (-1915 + 1671*Log[u] - 648*Log[u]^2 + 126*Log[u]^3 - 
-             8400*Zeta[3] + 3528*Log[u]*Zeta[3] - 2376*Log[u]^2*Zeta[3] - 
-             432*Log[u]^3*Zeta[3] - 5184*Zeta[3]^2 + 2376*Zeta[5] + 
-             1296*Log[u]*Zeta[5])/1296 + 
-          (596 - 219*Log[u] - 7968*Zeta[3] + 6120*Log[u]*Zeta[3] - 
-             5184*Zeta[3]^2 + 9504*Zeta[5] + 5184*Log[u]*Zeta[5])/1296)) + 
-    Y^3*(-117245/82944 + ((-10 - 35*Log[u] - 25*Log[u]^2 - 4*Log[u]^3)*
-          Zeta[3])/12 + ((-1837 - 60*Log[u] - 1800*Log[u]^2 - 3456*Zeta[3])*
-          Zeta[3])/864 + 8*Zeta[3]*
-        (2761/864 - (415*Log[u])/144 + 4*Zeta[3]) + 
-       (Zeta[3]*(1837 + 60*Log[u] + 1800*Log[u]^2 + 3456*Zeta[3]))/864 + 
-       (-6026015 + 3682110*Log[u] - 868392*Log[u]^2 + 80424*Log[u]^3 + 
-          3860352*Zeta[3])/746496 - 
-       2*(((-1837 - 60*Log[u] - 1800*Log[u]^2 - 3456*Zeta[3])*Zeta[3])/864 - 
-          6*(-241/144 - 4*Zeta[3])*Zeta[3] + 
-          2*(-5845/1728 - 2*Zeta[3])*Zeta[3] + 
-          (-107 - 8676*Zeta[3] - 10368*Zeta[3]^2 - 19800*Zeta[5])/864 + 
-          (207 + 5906*Zeta[3] - 3456*Zeta[3]^2 - 16200*Zeta[5])/864) + 
-       12*(-25/12 - Log[u])*Zeta[5] + 
-       (26853059 - 17952660*Log[u] + 5284116*Log[u]^2 - 841680*Log[u]^3 - 
-          1244160*Zeta[3] - 4354560*Log[u]*Zeta[3] - 
-          3110400*Log[u]^2*Zeta[3] - 497664*Log[u]^3*Zeta[3] - 
-          37324800*Zeta[5] - 17915904*Log[u]*Zeta[5])/1492992 + 
-       (35341187 - 16699128*Log[u] + 2739996*Log[u]^2 - 24883200*Zeta[5] - 
-          11943936*Log[u]*Zeta[5])/1492992 + 
-       (-124117 + 71368*Log[u] - 14232*Log[u]^2 - 353408*Zeta[3] + 
-          318720*Log[u]*Zeta[3] - 221184*Zeta[3]^2 + 230400*Zeta[5] + 
-          110592*Log[u]*Zeta[5])/27648 + 
-       (-48869 + 16204*Log[u] - 904192*Zeta[3] + 478080*Log[u]*Zeta[3] - 
-          442368*Zeta[3]^2 + 633600*Zeta[5] + 304128*Log[u]*Zeta[5])/27648 + 
-       (-450043 + 115212*Log[u] - 397584*Zeta[3] + 358560*Log[u]*Zeta[3] - 
-          248832*Zeta[3]^2 - 259200*Zeta[5] + 373248*Log[u]*Zeta[5])/62208 + 
-       (-1713979 + 1256940*Log[u] - 407736*Log[u]^2 + 69408*Log[u]^3 - 
-          643392*Zeta[3] + 1416960*Log[u]*Zeta[3] + 
-          165888*Log[u]^3*Zeta[3] - 995328*Zeta[3]^2 + 1555200*Zeta[5] + 
-          2737152*Log[u]*Zeta[5])/248832 + 
-       2*(-835/1728 + (35*Log[u])/288 + (4207*Zeta[3])/864 + 
-          ((-1837 - 60*Log[u] - 1800*Log[u]^2 - 3456*Zeta[3])*Zeta[3])/
-           1728 + (-5845/1728 - 2*Zeta[3])*Zeta[3] + 4*Zeta[3]^2 - 
-          Log[u]*Zeta[5] + (25/12 + Log[u])*Zeta[5]) - 
-       4*(4*(-241/144 - 4*Zeta[3])*Zeta[3] - 
-          2*Zeta[3]*(-91/96 + 2*Zeta[3]) - 
-          2*Zeta[3]*(395/288 - (35*Log[u])/24 + 2*Zeta[3]) + 
-          (3 + 964*Zeta[3] + 1152*Zeta[3]^2 + 1200*Zeta[5])/144 + 
-          (-1 + 900*Zeta[3] + 2304*Zeta[3]^2 + 3300*Zeta[5])/144) + 
-       2*(2*(-241/144 - 4*Zeta[3])*Zeta[3] + (91/96 - 2*Zeta[3])*Zeta[3] + 
-          (-395/288 + (35*Log[u])/24 - 2*Zeta[3])*Zeta[3] + 
-          Zeta[3]*(5845/1728 + 2*Zeta[3]) + 
-          (Zeta[3]*(1837 + 60*Log[u] + 1800*Log[u]^2 + 3456*Zeta[3]))/1728 + 
-          (-109 + 2508*Zeta[3] + 10368*Zeta[3]^2 + 14400*Zeta[5])/1728 + 
-          (783 - 5906*Zeta[3] + 3456*Zeta[3]^2 + 21600*Zeta[5])/1728) - 
-       2*(-8315/13824 - (5845*Zeta[3])/864 - 2*Zeta[3]^2 - 
-          9*(-25/12 - Log[u])*Zeta[5] + 
-          (435535 - 217884*Log[u] + 37128*Log[u]^2 + 88176*Zeta[3] + 
-             2880*Log[u]*Zeta[3] + 86400*Log[u]^2*Zeta[3] + 
-             82944*Zeta[3]^2 + 259200*Zeta[5] - 373248*Log[u]*Zeta[5])/41472) \
-+ 2*(-211/6912 + (4207*Zeta[3])/288 + 
-          ((-1837 - 60*Log[u] - 1800*Log[u]^2 - 3456*Zeta[3])*Zeta[3])/864 + 
-          2*(-5845/1728 - 2*Zeta[3])*Zeta[3] + 12*Zeta[3]^2 - 
-          3*Zeta[3]*(-91/96 + 2*Zeta[3]) - 
-          3*Zeta[3]*(395/288 - (35*Log[u])/24 + 2*Zeta[3]) - 
-          11*(-25/12 - Log[u])*Zeta[5] + 
-          (13629 - 7812*Log[u] + 1512*Log[u]^2 + 67312*Zeta[3] - 
-             39360*Log[u]*Zeta[3] + 28800*Log[u]^2*Zeta[3] + 
-             55296*Zeta[3]^2 - 76032*Log[u]*Zeta[5])/6912) - 
-       2*(-2*Zeta[3]*(2761/864 - (415*Log[u])/144 + 4*Zeta[3]) - 
-          10*(-25/12 - Log[u])*Zeta[5] + 
-          (2911 - 2152*Log[u] + 552*Log[u]^2 + 57280*Zeta[3] - 
-             39840*Log[u]*Zeta[3] + 13824*Zeta[3]^2 - 86400*Zeta[5] - 
-             41472*Log[u]*Zeta[5])/6912 + 
-          (927 - 404*Log[u] + 90936*Zeta[3] - 39840*Log[u]*Zeta[3] + 
-             41472*Zeta[3]^2 - 57600*Zeta[5] - 27648*Log[u]*Zeta[5])/6912) - 
-       2*(-17/384 + (91*Zeta[3])/16 - 6*Zeta[3]^2 + 
-          3*Zeta[3]*(-91/96 + 2*Zeta[3]) + 
-          3*Zeta[3]*(395/288 - (35*Log[u])/24 + 2*Zeta[3]) - 
-          2*Zeta[3]*(2761/864 - (415*Log[u])/144 + 4*Zeta[3]) + 
-          (25/12 + Log[u])*Zeta[5] + 
-          (-5529 + 1548*Log[u] + 12608*Zeta[3] - 9840*Log[u]*Zeta[3] + 
-             6912*Zeta[3]^2 - 72000*Zeta[5] - 3456*Log[u]*Zeta[5])/3456) + 
-       4*(-1/288 + (91*Zeta[3])/24 - 4*Zeta[3]^2 + 
-          2*Zeta[3]*(-91/96 + 2*Zeta[3]) + 
-          2*Zeta[3]*(395/288 - (35*Log[u])/24 + 2*Zeta[3]) + 
-          8*(-25/12 - Log[u])*Zeta[5] + 
-          (-37 + 12*Log[u] - 2060*Zeta[3] + 1680*Log[u]*Zeta[3] - 
-             1152*Zeta[3]^2 - 1800*Zeta[5] + 2304*Log[u]*Zeta[5])/288) - 
-       2*(-25/288 + 4*Zeta[3]*(2761/864 - (415*Log[u])/144 + 4*Zeta[3]) + 
-          4*(-25/12 - Log[u])*Zeta[5] + 
-          (-631 + 204*Log[u] - 16828*Zeta[3] + 9960*Log[u]*Zeta[3] - 
-             13824*Zeta[3]^2 + 3456*Log[u]*Zeta[5])/864) - 
-       4*(-1/96 - (91*Zeta[3])/24 + 4*Zeta[3]^2 + 
-          8*(-25/12 - Log[u])*Zeta[5] + 
-          (-29 + 12*Log[u] - 2892*Zeta[3] - 3456*Zeta[3]^2 + 3600*Zeta[5] + 
-             6912*Log[u]*Zeta[5])/864) - 
-       2*(4*Zeta[3]*(2761/864 - (415*Log[u])/144 + 4*Zeta[3]) + 
-          20*(-25/12 - Log[u])*Zeta[5] + 
-          (-1679 + 570*Log[u] - 57280*Zeta[3] + 39840*Log[u]*Zeta[3] - 
-             13824*Zeta[3]^2 + 64800*Zeta[5] + 31104*Log[u]*Zeta[5])/3456 + 
-          (721 - 294*Log[u] - 66264*Zeta[3] + 59760*Log[u]*Zeta[3] - 
-             41472*Zeta[3]^2 + 79200*Zeta[5] + 38016*Log[u]*Zeta[5])/3456) + 
-       2*(-413/6912 - (5845*Zeta[3])/288 - 6*Zeta[3]^2 + 
-          Zeta[3]*(5845/1728 + 2*Zeta[3]) + 
-          (Zeta[3]*(1837 + 60*Log[u] + 1800*Log[u]^2 + 3456*Zeta[3]))/1728 + 
-          9*(-25/12 - Log[u])*Zeta[5] + 
-          (4755 - 3324*Log[u] + 792*Log[u]^2 + 8440*Zeta[3] - 
-             480*Log[u]*Zeta[3] - 14400*Log[u]^2*Zeta[3] + 
-             13824*Zeta[3]^2 + 144000*Zeta[5] + 62208*Log[u]*Zeta[5])/6912) - 
-       2*(-431/20736 - (4207*Zeta[3])/864 - 4*Zeta[3]^2 + 
-          Zeta[3]*(-91/96 + 2*Zeta[3]) + Zeta[3]*(5845/1728 + 2*Zeta[3]) + 
-          Zeta[3]*(395/288 - (35*Log[u])/24 + 2*Zeta[3]) + 
-          (Zeta[3]*(1837 + 60*Log[u] + 1800*Log[u]^2 + 3456*Zeta[3]))/1728 + 
-          4*(-25/12 - Log[u])*Zeta[5] + 
-          (-18575 + 16764*Log[u] - 6840*Log[u]^2 + 1440*Log[u]^3 - 
-             100968*Zeta[3] + 59040*Log[u]*Zeta[3] - 
-             43200*Log[u]^2*Zeta[3] - 82944*Zeta[3]^2 + 82944*Log[u]*Zeta[5]\
-)/20736) + 2*(((10 + 35*Log[u] + 25*Log[u]^2 + 4*Log[u]^3)*Zeta[3])/12 + 
-          2*Zeta[3]*(2761/864 - (415*Log[u])/144 + 4*Zeta[3]) + 
-          5*(-25/12 - Log[u])*Zeta[5] + 
-          (-168293 + 148806*Log[u] - 59472*Log[u]^2 + 13104*Log[u]^3 - 
-             599232*Zeta[3] + 236160*Log[u]*Zeta[3] - 
-             172800*Log[u]^2*Zeta[3] - 27648*Log[u]^3*Zeta[3] - 
-             331776*Zeta[3]^2 + 172800*Zeta[5] + 82944*Log[u]*Zeta[5])/82944 \
-+ (64427 - 25554*Log[u] - 530112*Zeta[3] + 478080*Log[u]*Zeta[3] - 
-             331776*Zeta[3]^2 + 691200*Zeta[5] + 331776*Log[u]*Zeta[5])/82944)\
-)]
-"Limit "6" mismatch: "InputForm[-10 + 6*Log[u] - (3*Log[u]^2)/2 + 
-    Log[u]^3/6 + (60 - 36*Log[u] + 9*Log[u]^2 - Log[u]^3)/6 + 8*Zeta[3] + 
-    12*(-2 + Log[u])*Zeta[3] - 2*Log[u]^2*Zeta[3] - 
-    2*(2*Zeta[3] - 2*(-2 + Log[u])*Zeta[3]) - 
-    2*(-4*Zeta[3] + 4*(-2 + Log[u])*Zeta[3] + 2*Log[u]*Zeta[3]) - 
-    2*(-2*Zeta[3] + 4*Log[u]*Zeta[3] - 2*Log[u]^2*Zeta[3] + 
-       2*(1 - Log[u] + Log[u]^2/2)*Zeta[3] - 20*Zeta[5]) - 
-    2*(-4*Zeta[3] - 2*(-2 + Log[u])*Zeta[3] + 2*Log[u]*Zeta[3] - 9*Zeta[5]) - 
-    2*(8*Zeta[3] + 4*(-2 + Log[u])*Zeta[3] - 4*Log[u]*Zeta[3] - 4*Zeta[5]) - 
-    2*(-Zeta[3] + (-1 + Log[u] - Log[u]^2/2)*Zeta[3] - 4*Zeta[5]) - 
-    96*Zeta[5] + 2*(-5*Zeta[3] + (-1 + Log[u] - Log[u]^2/2)*Zeta[3] + 
-       Zeta[5]) + 2*(-Zeta[3] + 2*Log[u]*Zeta[3] - Log[u]^2*Zeta[3] + 
-       (1 - Log[u] + Log[u]^2/2)*Zeta[3] + Zeta[5]) + 
-    2*(Zeta[3] - 2*Log[u]*Zeta[3] + Log[u]^2*Zeta[3] + 
-       (-1 + Log[u] - Log[u]^2/2)*Zeta[3] + 10*Zeta[5]) + 
-    2*(4*Zeta[3] + 2*(1 - Log[u] + Log[u]^2/2)*Zeta[3] + 11*Zeta[5]) - 
-    2*(-2*Log[u]*Zeta[3] + Log[u]^2*Zeta[3] + 12*Zeta[5]) + 
-    Y*(1/16 + (5 - 4*Log[u] + Log[u]^2)/32 + 
-       (15 - 18*Log[u] + 9*Log[u]^2 - 2*Log[u]^3)/96 + 
-       (7 - 2*Log[u] - 8*Zeta[3])/16 + 2*(-1 + Log[u])*Zeta[3] + 
-       ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/4 + 
-       ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/4 + 
-       (-265 + 137*Log[u] - 30*Log[u]^2 + 3*Log[u]^3 + 144*Zeta[3])/16 - 
-       2*(-1/4*Zeta[3] + ((1 - Log[u])*Zeta[3])/2) + 
-       2*(-3/16 + Log[u]/16 + (39 - 33*Log[u] + 12*Log[u]^2 - 2*Log[u]^3)/
-           48 + ((-1 + Log[u])*Zeta[3])/2) + 
-       (23 - 12*Log[u] + 2*Log[u]^2 + 8*Zeta[3] - 8*Log[u]*Zeta[3])/16 + 
-       (1 + 2*Zeta[3] - 2*Log[u]*Zeta[3])/4 - 
-       2*(Zeta[3] + (-1 + Log[u])*Zeta[3] + (-Zeta[3] + Log[u]*Zeta[3])/2) + 
-       (147 - 102*Log[u] + 30*Log[u]^2 - 4*Log[u]^3 - 192*Zeta[5])/48 + 
-       (9 - 2*Log[u] - 2*Zeta[3] + 4*Log[u]*Zeta[3] - 4*Log[u]^2*Zeta[3] - 
-          16*Zeta[5])/4 + 4*(-1/2*Zeta[3] + 2*(3/4 - Log[u]/2)*Zeta[3] - 
-          (11*Zeta[5])/2) - 2*((-15*Zeta[3])/4 + ((1 - Log[u])*Zeta[3])/2 + 
-          3*(3/4 - Log[u]/2)*Zeta[3] + 2*Log[u]*Zeta[3] + 
-          (-Zeta[3] + Log[u]*Zeta[3])/2 - (9*Zeta[5])/2) - 
-       2*((9*Zeta[3])/4 + ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/4 + 
-          (-Zeta[3] + 2*Log[u]*Zeta[3] - 2*Log[u]^2*Zeta[3] - 11*Zeta[5])/
-           2 - (9*Zeta[5])/2) - 4*(2*Zeta[3] - 3*Zeta[5]) - 
-       2*(3*Zeta[3] + (-1 + Log[u])*Zeta[3] - Log[u]*Zeta[3] - 2*Zeta[5]) - 
-       2*((-3*Zeta[3])/8 + (3/4 - Log[u]/2)*Zeta[3] + 
-          ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/8 - 2*Zeta[5]) + 
-       2*((-13*Zeta[3])/8 + ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/8 + 
-          Zeta[5]/2) + 2*((11*Zeta[3])/4 - 3*(3/4 - Log[u]/2)*Zeta[3] - 
-          Log[u]*Zeta[3] + ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/4 + 
-          (11*Zeta[5])/2) - 4*(Zeta[3]/2 - 2*(3/4 - Log[u]/2)*Zeta[3] - 
-          2*Log[u]*Zeta[3] + (15*Zeta[5])/2) + 
-       2*((5*Zeta[3])/8 + ((1 - 2*Log[u] + 2*Log[u]^2)*Zeta[3])/8 + 
-          (-Zeta[3] + 2*Log[u]*Zeta[3] - 2*Log[u]^2*Zeta[3] + 2*Zeta[5])/4) \
-+ 2*((5*Zeta[3])/8 + (-3/4 + Log[u]/2)*Zeta[3] - Log[u]*Zeta[3] + 
-          ((-1 + 2*Log[u] - 2*Log[u]^2)*Zeta[3])/8 + 3*Zeta[5] + 
-          (Zeta[3] - 2*Log[u]*Zeta[3] + 2*Log[u]^2*Zeta[3] + 8*Zeta[5])/4) - 
-       2*(1/8 - Zeta[3]/4 + (-31 + 14*Log[u] - 2*Log[u]^2 + 2*Zeta[3] - 
-             4*Log[u]*Zeta[3] + 4*Log[u]^2*Zeta[3] + 48*Zeta[5])/8)) + 
-    Y^2*(5/324 + (20 - 24*Log[u] + 9*Log[u]^2)/1458 + 
-       (20 - 36*Log[u] + 27*Log[u]^2 - 9*Log[u]^3)/1458 + 
-       (14 - 5*Log[u] - 16*Zeta[3])/108 + 8*(-2/27 + Log[u]/9)*Zeta[3] + 
-       ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/27 + 
-       ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/27 + 
-       (-82735 + 42819*Log[u] - 9702*Log[u]^2 + 1089*Log[u]^3 + 
-          52272*Zeta[3])/5832 + 
-       2*(-13/324 + Log[u]/54 + 
-          (353 - 354*Log[u] + 162*Log[u]^2 - 36*Log[u]^3)/1296 + 
-          2*(-2/27 + Log[u]/9)*Zeta[3]) + 
-       (51 + 64*Zeta[3] - 96*Log[u]*Zeta[3])/432 + 
-       (245 - 148*Log[u] + 30*Log[u]^2 + 64*Zeta[3] - 96*Log[u]*Zeta[3])/
-        432 - 2*((37 - 26*Log[u] + 6*Log[u]^2 - 72*Zeta[3])/216 - 
-          2*(-2/27 + Log[u]/9)*Zeta[3] + (5 - 2*Log[u] + 8*Zeta[3])/108) - 
-       2*(4*(-2/27 + Log[u]/9)*Zeta[3] + 
-          (-19 + 6*Log[u] + 72*Zeta[3])/108 + 
-          (8 - 3*Log[u] - 16*Zeta[3] + 24*Log[u]*Zeta[3])/108) - 
-       2*(-1/162 - (11*Zeta[3])/54 + (7/12 - Log[u]/2)*Zeta[3] + 
-          ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/54 + 
-          (-575 + 510*Log[u] - 198*Log[u]^2 + 36*Log[u]^3 - 1728*Zeta[5])/
-           1296) - 2*(-1/2*Zeta[3] + 3*(7/12 - Log[u]/2)*Zeta[3] - 
-          2*(-2/27 + Log[u]/9)*Zeta[3] + 
-          (-3 - 32*Zeta[3] + 48*Log[u]*Zeta[3])/216 + 
-          (-23 + 6*Log[u] - 84*Zeta[3] + 72*Log[u]*Zeta[3] - 108*Zeta[5])/36\
-) - 2*(4*(-2/27 + Log[u]/9)*Zeta[3] + 
-          (-3 + 32*Zeta[3] - 48*Log[u]*Zeta[3])/108 + 
-          (-10 + 3*Log[u] + 60*Zeta[3] - 48*Zeta[5])/36) + 
-       (2369 - 1761*Log[u] + 576*Log[u]^2 - 90*Log[u]^3 - 3456*Zeta[5])/
-        1296 + (645 - 153*Log[u] - 64*Zeta[3] + 192*Log[u]*Zeta[3] - 
-          288*Log[u]^2*Zeta[3] - 1152*Zeta[5])/432 + 
-       4*(-Zeta[3] + 2*(7/12 - Log[u]/2)*Zeta[3] - (11*Zeta[5])/3) - 
-       2*(1/12 + (47*Zeta[3])/27 + 
-          ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/27 + 
-          (-9 - 32*Zeta[3] + 96*Log[u]*Zeta[3] - 144*Log[u]^2*Zeta[3] - 
-             792*Zeta[5])/216 - 3*Zeta[5]) - 4*((3*Zeta[3])/2 - 2*Zeta[5]) - 
-       4*(Zeta[3]/6 - 2*(7/12 - Log[u]/2)*Zeta[3] - 2*Log[u]*Zeta[3] + 
-          5*Zeta[5]) + 2*(-1/54 - (5*Zeta[3])/27 + 
-          ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/54 + 
-          (127 - 84*Log[u] + 18*Log[u]^2 - 360*Zeta[3] + 144*Zeta[5])/432) + 
-       2*(-1/18 + (10*Zeta[3])/27 + 
-          ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/54 + 
-          (-51 + 18*Log[u] - 32*Zeta[3] + 96*Log[u]*Zeta[3] - 
-             144*Log[u]^2*Zeta[3] + 144*Zeta[5])/432) + 
-       2*(1/6 + (25*Zeta[3])/54 + (-7/12 + Log[u]/2)*Zeta[3] - 
-          Log[u]*Zeta[3] + ((-2 + 6*Log[u] - 9*Log[u]^2)*Zeta[3])/54 + 
-          2*Zeta[5] + (-9 + 32*Zeta[3] - 96*Log[u]*Zeta[3] + 
-             144*Log[u]^2*Zeta[3] + 576*Zeta[5])/432) + 
-       2*(-1/108 + (35*Zeta[3])/54 - 3*(7/12 - Log[u]/2)*Zeta[3] + 
-          ((2 - 6*Log[u] + 9*Log[u]^2)*Zeta[3])/27 + 
-          (187 - 102*Log[u] + 18*Log[u]^2 + 252*Zeta[3] - 
-             216*Log[u]*Zeta[3] + 792*Zeta[5])/216) - 
-       2*(1/24 - (2*Zeta[3])/27 + 
-          (-1062 + 513*Log[u] - 81*Log[u]^2 + 32*Zeta[3] - 
-             96*Log[u]*Zeta[3] + 144*Log[u]^2*Zeta[3] + 1728*Zeta[5])/432)) + 
-    Y^3*(49/9216 + (5 - 8*Log[u] + 4*Log[u]^2)/2048 + 
-       (15 - 36*Log[u] + 36*Log[u]^2 - 16*Log[u]^3)/6144 + 
-       (1445 - 588*Log[u] - 1728*Zeta[3])/27648 + 
-       8*(-1/32 + Log[u]/16)*Zeta[3] + 
-       ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/32 + 
-       ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/32 + 
-       (5*(-624559 + 321630*Log[u] - 73800*Log[u]^2 + 9000*Log[u]^3 + 
-            432000*Zeta[3]))/248832 + 
-       2*(-115/9216 + (11*Log[u])/1536 + 
-          (10501 - 11334*Log[u] + 5904*Log[u]^2 - 1584*Log[u]^3)/82944 + 
-          2*(-1/32 + Log[u]/16)*Zeta[3]) + 
-       (8021 - 5192*Log[u] + 1176*Log[u]^2 + 1728*Zeta[3] - 
-          3456*Log[u]*Zeta[3])/27648 + 
-       (1393 + 1296*Zeta[3] - 2592*Log[u]*Zeta[3])/20736 - 
-       2*((331 - 264*Log[u] + 72*Log[u]^2 - 528*Zeta[3])/2304 - 
-          2*(-1/32 + Log[u]/16)*Zeta[3] + (25 - 12*Log[u] + 24*Zeta[3])/768) \
-- 2*(4*(-1/32 + Log[u]/16)*Zeta[3] + 
-          (11*(-17 + 6*Log[u] + 48*Zeta[3]))/1152 + 
-          (23 - 10*Log[u] - 24*Zeta[3] + 48*Log[u]*Zeta[3])/384) - 
-       2*(-1/256 - (25*Zeta[3])/192 + (131/288 - (11*Log[u])/24)*Zeta[3] + 
-          ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/64 + 
-          (-3355 + 3180*Log[u] - 1368*Log[u]^2 + 288*Log[u]^3 - 
-             6912*Zeta[5])/6912) - 
-       2*((-11*Zeta[3])/32 + 3*(131/288 - (11*Log[u])/24)*Zeta[3] - 
-          2*(-1/32 + Log[u]/16)*Zeta[3] + 
-          (-13 - 72*Zeta[3] + 144*Log[u]*Zeta[3])/1152 + 
-          (-909 + 252*Log[u] - 2096*Zeta[3] + 2112*Log[u]*Zeta[3] - 
-             2592*Zeta[5])/1152) - 
-       4*(1/96 + (11*Zeta[3])/24 + 
-          (29 - 12*Log[u] + 588*Zeta[3] - 1296*Zeta[5])/864) - 
-       2*(4*(-1/32 + Log[u]/16)*Zeta[3] + 
-          (-7 + 36*Zeta[3] - 72*Log[u]*Zeta[3])/288 + 
-          (-257 + 84*Log[u] + 1176*Zeta[3] - 864*Zeta[5])/864) + 
-       4*(1/288 - (11*Zeta[3])/48 + 2*(131/288 - (11*Log[u])/24)*Zeta[3] + 
-          (37 - 12*Log[u] - 288*Zeta[3] - 792*Zeta[5])/288) - 
-       2*((199*Zeta[3])/96 + ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/32 + 
-          (-37 - 54*Zeta[3] + 216*Log[u]*Zeta[3] - 432*Log[u]^2*Zeta[3] - 
-             2376*Zeta[5])/864 + (27 - 196*Zeta[3] - 648*Zeta[5])/288) + 
-       (318139 - 242028*Log[u] + 82872*Log[u]^2 - 14112*Log[u]^3 - 
-          497664*Zeta[5])/248832 + 
-       (68587 - 16716*Log[u] - 3888*Zeta[3] + 15552*Log[u]*Zeta[3] - 
-          31104*Log[u]^2*Zeta[3] - 124416*Zeta[5])/62208 - 
-       4*(-1/48 + (11*Zeta[3])/16 - 2*(131/288 - (11*Log[u])/24)*Zeta[3] - 
-          (11*Log[u]*Zeta[3])/6 + Zeta[5] + 
-          (1 - 98*Zeta[3] + 396*Zeta[5])/144) + 
-       2*(-7/128 + (47*Zeta[3])/192 + 
-          ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/64 + 
-          (-397 + 156*Log[u] - 108*Zeta[3] + 432*Log[u]*Zeta[3] - 
-             864*Log[u]^2*Zeta[3] + 864*Zeta[5])/3456) + 
-       2*(-11/768 - (5*Zeta[3])/64 + 
-          ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/64 + 
-          (2029 - 1476*Log[u] + 360*Log[u]^2 - 4704*Zeta[3] + 1728*Zeta[5])/
-           6912) + 2*((-335*Zeta[3])/576 + 
-          (-131/288 + (11*Log[u])/24)*Zeta[3] + 
-          ((-1 + 4*Log[u] - 8*Log[u]^2)*Zeta[3])/64 + 
-          (123 + 524*Zeta[3] - 528*Log[u]*Zeta[3] + 864*Zeta[5])/576 + 
-          (-35 + 54*Zeta[3] - 216*Log[u]*Zeta[3] + 432*Log[u]^2*Zeta[3] + 
-             1728*Zeta[5])/1728) + 
-       2*(-5/768 + (13*Zeta[3])/32 - 3*(131/288 - (11*Log[u])/24)*Zeta[3] + 
-          ((1 - 4*Log[u] + 8*Log[u]^2)*Zeta[3])/32 + 
-          (7043 - 4092*Log[u] + 792*Log[u]^2 + 6288*Zeta[3] - 
-             6336*Log[u]*Zeta[3] + 19008*Zeta[5])/6912) - 
-       2*(251/13824 - Zeta[3]/32 + 
-          (-73519 + 36444*Log[u] - 6024*Log[u]^2 + 1296*Zeta[3] - 
-             5184*Log[u]*Zeta[3] + 10368*Log[u]^2*Zeta[3] + 124416*Zeta[5])/
-           41472))]
 "Solution written to ""/Users/windfolgen/Documents/AntiGravity/svbwalkthrough\
 /solve_agent/threeloopI5_sol.m"
 "Final result.m and coeff_sol.m saved to runs/""threeloopI5""/"
+"[ReviewGate] ""solve"" stage: ""PASS"" (PASS:"1" WARN:"0" FAIL:"0")"
+"[Time Record] Stage 3 (Solving System) took: "3.73098`6.120277927506017
+  " seconds."
+"[Time Record] Total workflow execution time: "98.812429`8.145326573053433
+  " seconds."
+"End Date and Time: ""Mon 8 Jun 2026 18:52:13"
+"=== Workflow Engine Complete for: ""threeloopI5"" ==="

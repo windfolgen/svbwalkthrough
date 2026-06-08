@@ -15,9 +15,17 @@ g /: g[m_, n_]*g[n_, l_] := g[m, l];
 g /: Power[g[m_, n_], 2] := D;
 g[a_, a_] := D;
 
+ClearAll[toAssoc];
+toAssoc[rec_] := Which[
+  AssociationQ[rec], rec,
+  ListQ[rec] && Length[rec] > 0 && ListQ[rec[[1]]], Association[#[[1]] -> {#[[2]], #[[3]]} & /@ rec],
+  True, <||>
+];
+
 
 Options[ClassifyTopology] = {"loops" -> {}, "ClassifySub" -> True, "subloops" -> {}, "resetconst" -> False, "deBug" -> False};
 (*the loop momenta in subloops specify one of the factorized 2-point integral family*)
+(*exp is an integrand which is rational function of d and d2. list is the topology specified by a list of d2[..]. tag is the tag of the abstracted integral, e.g. 1 in G[1,]*)
 ClassifyTopology[exp_, list_, tag_, OptionsPattern[]] := 
   Module[{const, den, num, init, pos, tem, tem1, tensor, i, l, loops, subloops, mask},
    loops = OptionValue["loops"];
@@ -27,19 +35,19 @@ ClassifyTopology[exp_, list_, tag_, OptionsPattern[]] :=
    mask = Table[If[IntersectingQ[List@@list[[i]],subloops],1,0],{i,1,Length[list]}];
    {num, den} = NumeratorDenominator[exp // Factor];
    tem = CoefficientRules[num,list];
-   If[tem === {}, Return[{0, 0, 0, $Failed}]];
+   If[tem === {}, Return[{0, 0, 0, 0}]]; (*in case a term which is 0*)
    tem1 = CoefficientRules[den,list];
    If[Length[tem]>1 || Length[tem1]>1,Print["numerator or denominator expected to be monomial!"];Return[$Failed]];
    init = tem1[[1,1]]-tem[[1,1]];
    init = init * mask; (*mask will keep those relevant to subloops*)
    const = tem[[1,2]]/tem1[[1,2]];(*remaining terms that can not be described by scalar integrals*)
    
-   If[Union[init] === {0}, Return[{0, 0, 0, $Failed}]];
-   pos = Position[init, _?(# > 0 &), 1] // Flatten;
+   If[Union[init] === {0}, Return[{0, 0, 0, 0}]]; (*not relevant to a topology or the subtopology we select, actually still scaleless*)
+   pos = Position[init, _?(# > 0 &), 1] // Flatten; (*denominators*)
    If[OptionValue["deBug"], Print["pos: ", pos]];
    If[AnyTrue[subloops, (Count[Table[FreeQ[list[[pos[[i]]]], #], {i, 1, Length[pos]}], False] < 2) &], Return[{0, 0, 0, 0}]];(*scaleless integrals*)
    
-   If[const === 0, Return[{0, 0, 0, $Failed}]];
+   If[const === 0, Return[{0, 0, 0, 0}]];
    tensor = const/(const/.{d[__]->1})//Cancel; (*extract the d[,] structures in the numerator*)
    const = const/tensor//Cancel;(*the remaining constant term*)
  
@@ -50,11 +58,11 @@ ClassifyTopology[exp_, list_, tag_, OptionsPattern[]] :=
    ];
 
 
-Options[RegionExpand] = {"order" -> 4, "deBug" -> False, "check" -> False, "keepr" -> False};
+Options[RegionExpand] = {"order" -> 4, "deBug" -> False, "check" -> False, "keepr" -> False, "verbose" -> True};
 RegionExpand[oint_, loops_, OptionsPattern[]] := 
   Module[{int, intl, den, num, subset = {}, rep, result = 0, pos, com, tem, tem1, tem2, top, top1, top2, check, start, i, j},
-   Print["set 1 to 0, 4 to infinity."];
-   Print["performing region expansion..."];
+   If[OptionValue["verbose"], Print["set 1 to 0, 4 to infinity."]];
+   If[OptionValue["verbose"], Print["performing region expansion..."]];
    start = SessionTime[];
    intl=oint//Expand;
    If[Head[intl]===Plus, intl = List@@intl, intl = {intl}];
@@ -62,8 +70,10 @@ RegionExpand[oint_, loops_, OptionsPattern[]] :=
    top1 = Join[Table[{d2[loops[[i]], 1], d2[loops[[i]], 2]}, {i, 1, Length[loops]}] // Flatten, Table[d2[loops[[i]], loops[[j]]], {i, 1, Length[loops]}, {j, i + 1, Length[loops]}] // Flatten];
    top2 = Join[Table[{d2[loops[[i]], 1], d2[loops[[i]], 3]}, {i, 1, Length[loops]}] // Flatten, Table[d2[loops[[i]], loops[[j]]], {i, 1, Length[loops]}, {j, i + 1, Length[loops]}] // Flatten];
    kinRep = {invd2[a_, b_] :> 1/d2[a, b], d2[1, 3] -> 1, d2[1, 2] -> u, d2[2, 3] -> v};
-   Print["topology: ", top, " can be split into"];(*Print["topology 2: ",top2];*)
-   Print["topo1: ", top1]; Print["topo2: ", top2];
+   If[OptionValue["verbose"],
+     Print["topology: ", top, " can be split into"];
+     Print["topo1: ", top1]; Print["topo2: ", top2];
+   ];
    subset = Tuples[{0, 1}, Length[loops]];
    result = Reap[
         Do[
@@ -75,8 +85,10 @@ RegionExpand[oint_, loops_, OptionsPattern[]] :=
             num = DeleteCases[num, _?(! FreeQ[#, d2[_,4]] &)];
             den = DeleteCases[den, _?(! FreeQ[#, invd2[_,4]] &)];
             If[OptionValue["deBug"], Print["den: ", den]; Print["num: ", num]];
-            Print["Loops: ", Subscript[x, #] & /@ loops, ". There are totally ", Power[2, Length[loops]], " regions."];
-            Print["classifying topologies: "];
+            If[OptionValue["verbose"],
+              Print["Loops: ", Subscript[x, #] & /@ loops, ". There are totally ", Power[2, Length[loops]], " regions."];
+              Print["classifying topologies: "];
+            ];
             Do[
                 pos = Position[subset[[i]], 0, 1] // Flatten;
                 com = Complement[loops, loops[[pos]]];
@@ -87,16 +99,16 @@ RegionExpand[oint_, loops_, OptionsPattern[]] :=
                 };
                 tem = (Normal[Series[(((Times @@ den)*(Times @@ num) /. rep) //. kinRep), {r, 0, OptionValue["order"]}]] // Expand);
                 If[Head[tem] === Plus, 
-                    tem = List @@ tem // Factor,
-                    tem = {tem} // Factor;
+                    tem = List @@ tem,
+                    tem = {tem};
                 ];
                 If[OptionValue["deBug"], Print["tem: ", tem]];
                 If[Not@OptionValue["keepr"], tem = tem /. {r -> 1}];
-                Print["region ", i, ": total terms ", Length[tem]];
+                If[OptionValue["verbose"], Print["region ", i, ": total terms ", Length[tem]]];
                 
                 Do[
                     tem1 = ClassifyTopology[tem[[j]], top, 1, "loops" -> loops, "subloops" -> loops[[pos]], "ClassifySub" -> False];
-                    If[tem1 === {0, 0, 0, $Failed}, Print["this term cannot be classified: ", {tem[[j]], loops[[pos]], com}]; Continue[]];
+                    If[tem1 === $Failed, Print["this term cannot be classified: ", {tem[[j]], loops[[pos]], com}]; Continue[]];
                     If[tem1[[1]] === 0, Continue[]];
                     If[OptionValue["check"],
                         (*self consistency check*)
@@ -308,24 +320,33 @@ GenTensorProjection[indexlist_, tagp_, OptionsPattern[]] := Module[
     {i, 1, l}
   ];
   sol = Flatten[Solve[sys, cv]];
+  If[l == 1,
+    Print["[GenTensorProjection l=1 debug]"];
+    Print["  cv: ", InputForm[cv]];
+    Print["  tensor: ", InputForm[tensor]];
+    Print["  cv . tensor: ", InputForm[cv . tensor]];
+    Print["  sol: ", InputForm[sol]];
+    Print["  cv . tensor /. sol: ", InputForm[cv . tensor /. sol]];
+    Print["  Normal[CoefficientArrays[cv.tensor/.sol, bv]]: ", InputForm[Normal[CoefficientArrays[cv . tensor /. sol, bv]]]];
+  ];
   If[l > 24, 
     Print["time consuming: ", SessionTime[] - start]
   ];
   Return[{Normal[CoefficientArrays[cv . tensor /. sol, bv]][[2]] // Factor, tensor}]
 ];
 
-FindTensor::usage = "FindTensor[tensor,record] finds a tensor structure in the list record.";
+FindTensor::usage = "FindTensor[tensor,record] finds a tensor structure in the hashed record.";
 FindTensor[tensor_, record_] := Module[
-  {tem, pos, rep},
-  If[record === {}, Return[{False, {}}]];
+  {tem, val, rep},
+  If[Length[record] == 0, Return[{False, {}}]];
   tem = Length /@ tensor;
-  pos = Position[record[[All, 1]], tem, 1] // Flatten;
-  If[pos === {}, Return[{False, {}}]];
+  If[!KeyExistsQ[record, tem], Return[{False, {}}]];
+  val = record[tem];
   rep = Thread@Rule[
-    record[[pos[[1]], 2]] /. {vc[a_, b_] :> b} // Flatten,
+    val[[1]] /. {vc[a_, b_] :> b} // Flatten,
     tensor /. {vc[a_, b_] :> b} // Flatten
   ];
-  Return[{True, rep, record[[pos[[1]], 3]] /. rep}]
+  Return[{True, rep, val[[2]] /. rep}]
 ];
 
 (*SpecialMultiply[temlist_, h_, rep_] := Module[
@@ -346,7 +367,7 @@ FindTensor[tensor_, record_] := Module[
   ]
 ];*)
 SpecialMultiply[temlist_, h_, rep_] := Module[
-  {scalar, listA, listB, totalB},
+  {scalar, listA, listB, totalB, res},
   
   scalar = temlist[[1]]/.rep;
   
@@ -362,12 +383,22 @@ SpecialMultiply[temlist_, h_, rep_] := Module[
   (* 2. PRECOMPUTE the sum of the smaller list ONCE outside the loop *)
   totalB = Total[listB]/.rep;
   
-  (* 3. Map functionally instead of using Reap/Sow *)
-  Total @ Map[
-    (* Consider applying /. rep before Expand if your replacements reduce term size *)
-    Collect[Expand[scalar * # * totalB] /. rep, _h, Together] &, 
-    listA
-  ] // Collect[#, _h, Factor] &
+  Check[
+    res = Total @ Map[
+      (* Consider applying /. rep before Expand if your replacements reduce term size *)
+      Collect[Expand[scalar * # * totalB] /. rep, _h, Together] &, 
+      listA
+    ] // Collect[#, _h, Factor] &;
+    res
+  ,
+    Print["[SpecialMultiply Debug Failure]"];
+    Print["temlist[[2]]: ", InputForm[temlist[[2]]]];
+    Print["temlist[[3]]: ", InputForm[temlist[[3]]]];
+    Print["listA: ", InputForm[listA]];
+    Print["listB: ", InputForm[listB]];
+    Print["totalB: ", InputForm[totalB]];
+    Exit[1];
+  ]
 ];
 
 
@@ -379,8 +410,8 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
    Module[{commonDir, commonCache},
      commonDir = If[StringEndsQ[OptionValue["dir"], "tmp/"], OptionValue["dir"], ParentDirectory[OptionValue["dir"]]];
      commonCache = FileNameJoin[{commonDir, "cache_tensor_record_noremove.mx"}];
-     record = If[FileExistsQ[commonCache], Import[commonCache], {}];
-     If[Not[ListQ[record]], record = {}];
+     record = If[FileExistsQ[commonCache], Import[commonCache], <||>];
+     record = toAssoc[record];
    ];
 
    (*we further split the results into smaller size*)
@@ -419,7 +450,7 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
             tp = flag[[3]](*if it is known in record*),
             
             tp = GenTensorProjection[tem, tagp, "krep" -> {d2[1, tagp] -> u}];(*if it is not known in record, generate it*)
-            AppendTo[record, {Length /@ tem, tem, tp}]];
+            AssociateTo[record, Length /@ tem -> {tem, tp}]];
            
            If[i == 2, tp = tp /. {u -> 1, tagp -> 3}, tp = tp /. {tagp -> 2}];
            
@@ -439,12 +470,12 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
                tem1 = tem[[j]] // Expand;
                
                If[Head[tem1] === Plus, tem1 = List @@ tem1, tem1 = {tem1}];
-               Sow[Plus @@ Reap[
+               Sow[Total @ Reap[
                    Do[
                     
                     tem2 = ClassifyTopology[tem1[[l]], top[[i]], i, "loops" -> list[[k, -1, i]], "ClassifySub" -> False];
                     
-                    If[tem2 === {0, 0, 0, $Failed},(*Print["Check the reason!: this term has not been classified ",tem1[[l]]];*)Continue[]];
+                    If[tem2 === {0, 0, 0, $Failed},(*Print["Check the reason!: this term has not been classified ",tem1[[l]]];*)Sow[0];Continue[]];
                     
                     If[OptionValue[deBug] && tem2 === {0, 0, 0, 0}, Print["This term is 0: ", tem1[[l]], " topology :", i]];
                     (*check the result*)
@@ -500,7 +531,7 @@ ProjectTensor[list_, tagp_, top1_, top2_, OptionsPattern[]] :=
     , {mm, 1, Quotient[len, OptionValue["chunksize"]] + 1}];
    revrep = AssociationMap[Reverse, rep];
    fresult = Table[Import[OptionValue["dir"] <> "tensor_" <> ToString[mm] <> ".mx"], {mm, 1, Quotient[len, OptionValue["chunksize"]] + 1}] /. revrep // Flatten;
-   If[record =!= {},
+   If[Length[record] > 0,
      Module[{localCache},
        localCache = FileNameJoin[{OptionValue["dir"], "tensor_record_cache_local.mx"}];
        Export[localCache, record];
@@ -662,7 +693,7 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
         Do[
           intCase = integrand /. {x[a__] :> (x[a] /. Thread@Rule[{1, 2, 3, 4}, c])};
           Quiet[
-            terms = Length[RegionExpand[intCase, loops, "order" -> order, "check" -> False][[2]]];
+            terms = Length[RegionExpand[intCase, loops, "order" -> order, "check" -> False, "verbose" -> False][[2]]];
           ];
           If[terms < minTerms,
             minTerms = terms;
@@ -782,32 +813,32 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
 
     CloseKernels[];
     
-    (* Merge caches on master kernel *)
-    Module[{commonDir, commonCache, record = {}, localCache, localRecord, i},
-      commonDir = FileNameJoin[{filepath, "tmp"}];
-      commonCache = FileNameJoin[{commonDir, "cache_tensor_record_noremove.mx"}];
-      If[FileExistsQ[commonCache],
-        record = Import[commonCache];
+     (* Merge caches on master kernel *)
+     Module[{commonDir, commonCache, record = <||>, localCache, localRecord, i},
+       commonDir = FileNameJoin[{filepath, "tmp"}];
+       commonCache = FileNameJoin[{commonDir, "cache_tensor_record_noremove.mx"}];
+       If[FileExistsQ[commonCache],
+         record = Import[commonCache];
+       ];
+       record = toAssoc[record];
+       
+       Do[
+         localCache = FileNameJoin[{filepath, "tmp", "tensor_" <> names[[i]], "tensor_record_cache_local.mx"}];
+         If[FileExistsQ[localCache],
+           localRecord = Import[localCache];
+           localRecord = toAssoc[localRecord];
+           If[Length[localRecord] > 0,
+             record = Join[record, localRecord];
+           ];
+           Quiet[DeleteFile[localCache]];
+         ]
+       , {i, 1, Length[perms]}];
+       
+       If[Length[record] > 0,
+         Export[commonCache, record];
+         Print["[Global Cache] Merged and updated cache with ", Length[record], " records."];
+       ];
       ];
-      If[Not[ListQ[record]], record = {}];
-      
-      Do[
-        localCache = FileNameJoin[{filepath, "tmp", "tensor_" <> names[[i]], "tensor_record_cache_local.mx"}];
-        If[FileExistsQ[localCache],
-          localRecord = Import[localCache];
-          If[ListQ[localRecord],
-            record = Join[record, localRecord];
-          ];
-          Quiet[DeleteFile[localCache]];
-        ]
-      , {i, 1, Length[perms]}];
-      
-      If[record =!= {},
-        record = DeleteDuplicatesBy[record, #[[1]] &];
-        Export[commonCache, record];
-        Print["[Global Cache] Merged and updated cache with ", Length[record], " records."];
-      ];
-    ];
     
     Print["=== Done Parallel Expansion! time: ", SessionTime[] - starttime, " ==="];
     fresults

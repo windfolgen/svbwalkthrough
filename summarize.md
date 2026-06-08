@@ -379,7 +379,30 @@ The external directory is gitignored and aetherignored, while `asym/tmp/` (tenso
 
 ### 2.5 Parallel Workload Balancing and Persistent Caching
 To optimize execution speed and resource usage, `RunAsymExpansionParallel` incorporates two performance features:
-1. **Workload Balancing via Symmetry Selection**: The integrand is mathematically invariant under coordinate exchanges of external legs $\{1 \leftrightarrow 3, 2 \leftrightarrow 4\}$, $\{1 \leftrightarrow 2, 3 \leftrightarrow 4\}$, and $\{1 \leftrightarrow 4, 2 \leftrightarrow 3\}$. For each of the 6 permutations, the orchestrator checks all 4 coordinate exchange representations, computes the term count in `RegionExpand[..., "check" -> False]`, and runs the calculation using the representation that minimizes terms. For `fourloopI41`, this selects representations with **4,286 terms** instead of **8,971 terms** (a **52% term reduction**), cutting runtime by more than 2x.
+1. **Workload Balancing via Symmetry Selection**: The integrand is mathematically invariant under coordinate exchanges of external legs $\{1 \leftrightarrow 3, 2 \leftrightarrow 4\}$, $\{1 \leftrightarrow 2, 3 \leftrightarrow 4\}$, and $\{1 \leftrightarrow 4, 2 \leftrightarrow 3\}$. For each of the 6 permutations, the orchestrator checks all 4 coordinate exchange representations (cases) and selects the one that minimizes the true computational bottleneck.
+   * *Selection Criterion Update*: Initially, the orchestrator evaluated the number of terms in `RegionExpand`. However, we discovered a major discrepancy because `RegionExpand` counts terms with unexpanded dot products, whereas the actual bottleneck of the subsequent `ProjectTensor` step depends on the number of Lorentz component terms after `ToTensorProduct`. The dot products expand combinatorially/factorially with the tensor rank.
+   * *The {3,2,1,4} Permutation Discrepancy*: For permutation `{3, 2, 1, 4}`, we analyzed all 4 symmetry cases for both `fourloopI41` and `fourloopI42` (Component 1) at `order = 4`:
+
+     #### Permutation `{3, 2, 1, 4}` Case Study:
+     
+     **`fourloopI41`:**
+     | Case | Target Permutation | RegionExpand Terms | ToTensorProduct Terms | Status/Role |
+     | :--- | :--- | :---: | :---: | :--- |
+     | **Case 1** | `{3, 2, 1, 4}` | 3,586 | 6,481 | Selected by old `RegionExpand` metric |
+     | **Case 2** | `{1, 4, 3, 2}` | 5,037 | 22,765 | |
+     | **Case 3** | `{4, 1, 2, 3}` | 4,248 | 24,187 | |
+     | **Case 4** | `{2, 3, 4, 1}` | 3,662 | **6,258** | **Selected by new `ToTensorProduct` metric** |
+
+     **`fourloopI42` (Component 1):**
+     | Case | Target Permutation | RegionExpand Terms | ToTensorProduct Terms | Status/Role |
+     | :--- | :--- | :---: | :---: | :--- |
+     | **Case 1** | `{3, 2, 1, 4}` | **1,961** (Minimum!) | 14,302 (Maximum!) | Selected by old `RegionExpand` metric (Suboptimal) |
+     | **Case 2** | `{1, 4, 3, 2}` | 3,636 | 8,158 | |
+     | **Case 3** | `{4, 1, 2, 3}` | 3,387 | **7,864** (Minimum!) | **Selected by new `ToTensorProduct` metric (Optimal)** |
+     | **Case 4** | `{2, 3, 4, 1}` | 2,157 | 11,149 | |
+
+   * *Key Insight*: For `fourloopI42` Component 1, Case 1 appears to be the best under the old `RegionExpand` metric with only **1,961** terms. However, due to rank explosion, it expands to **14,302** terms in `ToTensorProduct`. On the other hand, Case 3 has more `RegionExpand` terms (**3,387**), but yields only **7,864** `ToTensorProduct` terms.
+   * By switching the selection criterion to `Length[ToTensorProduct]`, the engine automatically selects Case 3 instead of Case 1, reducing the peak tensor reduction workload from **14,302** terms to **7,864** terms (a **45% reduction** in workload and avoidance of rank explosion).
 2. **Persistent Global Tensor Caching**: Tensor projection records generated during reduction are loaded from a global cache (`asym/tmp/cache_tensor_record_noremove.mx`) at the start of `ProjectTensor` and written to local caches (`tensor_record_cache_local.mx`) in parallel worker directories. When parallel kernels finish, the master kernel merges and deduplicates all local caches using `DeleteDuplicatesBy[..., #[[1]] &]` and saves the result back to the global cache file.
 
 For verification, see the following test scripts:
@@ -465,7 +488,9 @@ The agent strictly follows the syntax of `svbwalkthrough.nb` Section 6. Only fil
    ```
    Only `c[i]`-like symbols are passed to `Solve`; `I[z,...]`, `u`, `Y`, `Log[u]` are excluded.
 
-8. **Verify**: substitute `solt` back into `setup` for each limit and check `temp === 0`.
+8. **Verify**: Substitute `solt` back into `setup` for each limit and check that the difference simplifies to zero.
+   > [!IMPORTANT]
+   > Do **not** check raw structural equality (`temp === 0`) because the unsimplified difference of logarithms, polylogarithms, and zetas will evaluate to `False` even when algebraically zero. Use `// Simplify` before checking `temp =!= 0`.
 
 ### 3.3 Output
 - `solve_agent/<label>_sol.m`: Raw solved numeric values for all coefficients `c[i]`.
@@ -733,3 +758,17 @@ Only the run directory and project-root files (e.g., `<label>_ans.m`) should rem
 * **Three-loop runs:** `Y` is evaluated to `Y^3` by default. This is because the available boundary constraints (`boundary.m`) are only provided up to $O(Y^3)$.
 * **Four-loop runs:** `Y` is evaluated to `Y^4` by default.
 * **Overrides:** If the user specifically instructs to evaluate a certain run at a different expansion order, always follow their explicit instructions over the defaults.
+
+---
+
+## 8. Major Bugs & Resolutions
+
+### 8.1 Verification "Limit Mismatch" False Positive
+* **Issue:** The verification step in `solve_agent.wl` reported false-positive `Limit X mismatch` warnings (e.g. `Limit 1 mismatch`) in the log, even when the linear system was solved successfully.
+* **Root Cause:** The script checked structural equivalence `temp =!= 0` on the raw, unsimplified limit difference. Because the difference contained nested polylogarithms, logarithms, and constants that Mathematica does not expand automatically, it remained structurally non-zero despite being algebraically zero.
+* **Resolution:** Modified the verification in `solve_agent.wl` to run `// Simplify` on the limit differences. All six limits for `fourloopI41` now simplify to exactly `0` under `Simplify`, validating the solver's output.
+
+### 8.2 Logging Truncation (Overwriting Stage Logs)
+* **Issue:** Run logs (`run.log` in the run folders) only contained log lines after the start of Skill 3, losing the log history from Preflight, Boundary (Skill 2), and Series (Skill 1) stages.
+* **Root Cause:** At the start of `RunCoefficientSolving`, `solve_agent.wl` opened `run.log` using `OpenWrite`, which truncated the file and erased all existing content. Since the main orchestrator/shell command already redirects standard output to `run.log`, this manual redirect was redundant.
+* **Resolution:** Removed the manual `OpenWrite` log stream initialization and `$Output` manipulation from `solve_agent.wl`. This allows all stages of the workflow to log sequentially and append naturally to `run.log`.

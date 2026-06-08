@@ -231,7 +231,8 @@ AuditPreBoundary[rootDir_, label_, config_] := Module[
 AuditPreSeries[rootDir_, label_, config_] := Module[
   {checks = {}, path, fname, lsConfig, k, cAnsatz, basisElements = {},
    svNames = {}, mplFiles, bestCount = 0, bestFile = None, 
-   mplTry, idx, mplPrefix, mplBaseLength, ext, expPath, expData, foundMatch},
+   mplTry, idx, mplPrefix, mplBaseLength, ext, expPath, expData,
+   suffixes, expectedFile, sfxSuffix, s},
 
   (* 1. Check SVHPL text files *)
   Do[
@@ -250,7 +251,9 @@ AuditPreSeries[rootDir_, label_, config_] := Module[
     {fname, svNames}
   ];
 
-  (* 2. Strict MPL Inference *)
+  (* 2. Strict MPL Inference & Cache Validation *)
+  bestFile = Lookup[config, "BestFile", None];
+
   (* Collect all basis elements from all leading singularities in config *)
   Do[
     cAnsatz = config["LeadingSingularities"][[k, 3]];
@@ -262,49 +265,77 @@ AuditPreSeries[rootDir_, label_, config_] := Module[
   If[Length[basisElements] == 0,
     AppendTo[checks, Association["Status"->"WARN", "Check"->"preseries-mpl-none", "Message"->"No basis elements found in ansatz."]];
   ,
-    mplFiles = FileNames[FileNameJoin[{$DataDir, "allsvlistmpl_*.m"}]];
-    mplFiles = Select[mplFiles, !StringMatchQ[#, ___ ~~ ("e0.m" | "e1.m" | "einf.m")] &];
-
-    Do[
-      mplTry = Import[f];
-      idx = Function[e, If[# === {}, 0, #[[1,1]]] & @ Position[mplTry, e, {1}]] /@ basisElements;
-      idx = Select[idx, Positive];
-      If[Length[idx] == Length[basisElements],
-        bestFile = f;
-        Break[];
-      ];
-    , {f, mplFiles}];
-
-    If[bestFile === None,
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-missing-basis", 
-        "Message"->"FAIL: No MPL basis file fully covers the required elements from your ansatz! Please generate a matching allsvlistmpl_*.m in ./data/"]];
-    ,
-      mplTry = Import[bestFile];
-      mplBaseLength = Length[mplTry];
-      mplPrefix = FileBaseName[bestFile];
+    Module[{mplElements, fullBasisSV},
+      fullBasisSV = Import[FileNameJoin[{$DataDir, "allsvlist_fourloop.m"}]];
+      mplElements = Select[basisElements, Head[#] === I && FreeQ[fullBasisSV, #] &];
       
-      AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-basis-found", 
-        "Message"->"Found covering MPL basis: " <> bestFile <> " (Length=" <> ToString[mplBaseLength] <> ")"]];
-        
-      (* Check expansions e0, e1, einf *)
-      foundMatch = True;
-      Do[
-        expPath = FileNameJoin[{$DataDir, mplPrefix <> ext <> ".m"}];
-        If[FileExistsQ[expPath],
-          expData = Import[expPath];
-          If[ListQ[expData] && Length[expData] == mplBaseLength,
-            AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-expansion-" <> ext, "Message"->"Expansion " <> ext <> " exists and matches length " <> ToString[mplBaseLength]]];
-          ,
-            AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-expansion-lengthmismatch-" <> ext, 
-              "Message"->"FAIL: Expansion " <> ext <> " length (" <> ToString[If[ListQ[expData], Length[expData], "Invalid"]] <> ") does NOT match base length (" <> ToString[mplBaseLength] <> "). Please recreate it in proper format!"]];
-            foundMatch = False;
-          ];
-        ,
-          AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-expansion-missing-" <> ext, 
-            "Message"->"FAIL: Missing required expansion file: " <> expPath <> ". Please generate it!"]];
-          foundMatch = False;
+      If[Length[mplElements] == 0,
+        AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-none-needed", "Message"->"No MPL elements in ansatz; all elements covered by HPL basis."]];
+      ,
+        (* If bestFile was not passed, search for covering basis *)
+        If[bestFile === None,
+          mplFiles = FileNames[FileNameJoin[{$DataDir, "allsvlistmpl_*.m"}]];
+          mplFiles = Select[mplFiles, !StringMatchQ[#, ___ ~~ ("e0.m" | "e1.m" | "einf.m")] &];
+
+          Do[
+            mplTry = Import[f];
+            idx = Function[e, If[# === {}, 0, #[[1,1]]] & @ Position[mplTry, e, {1}]] /@ mplElements;
+            idx = Select[idx, Positive];
+            If[Length[idx] == Length[mplElements],
+              bestFile = f;
+              Break[];
+            ];
+          , {f, mplFiles}];
         ];
-      , {ext, $Limits}];
+
+        If[bestFile === None,
+          AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-missing-basis", 
+            "Message"->"FAIL: No MPL basis file fully covers the required elements from your ansatz! Please generate a matching allsvlistmpl_*.m in ./data/"]];
+        ,
+          mplTry = Import[bestFile];
+          mplBaseLength = Length[mplTry];
+          mplPrefix = FileBaseName[bestFile];
+          
+          AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-basis-found", 
+            "Message"->"Found covering MPL basis: " <> bestFile <> " (Length=" <> ToString[mplBaseLength] <> ")"]];
+            
+          (* Check expansions e0, e1, einf *)
+          Do[
+            expPath = FileNameJoin[{$DataDir, mplPrefix <> ext <> ".m"}];
+            If[FileExistsQ[expPath],
+              expData = Import[expPath];
+              If[ListQ[expData] && Length[expData] == mplBaseLength,
+                AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-expansion-" <> ext, "Message"->"Expansion " <> ext <> " exists and matches length " <> ToString[mplBaseLength]]],
+                AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-expansion-lengthmismatch-" <> ext, 
+                  "Message"->"FAIL: Expansion " <> ext <> " length (" <> ToString[If[ListQ[expData], Length[expData], "Invalid"]] <> ") does NOT match base length (" <> ToString[mplBaseLength] <> ")."]]
+              ];
+            ,
+              expPath = FileNameJoin[{$DataDir, mplPrefix <> ext <> ".txt"}];
+              If[FileExistsQ[expPath],
+                AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-expansion-" <> ext, "Message"->"Expansion " <> ext <> " exists as .txt"]],
+                AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-expansion-missing-" <> ext, 
+                  "Message"->"FAIL: Missing required expansion file: " <> expPath]]
+              ];
+            ];
+          , {ext, $Limits}];
+
+          (* Check coordinate transformed caches *)
+          suffixes = {
+            {"e0", "_inuv"}, {"e0", "_inuvp"},
+            {"einf", "_inuv"}, {"einf", "_inuvp"},
+            {"e1", "_inuv"}, {"e1", "_inuvp"}
+          };
+          
+          Do[
+            ext = s[[1]]; sfxSuffix = s[[2]];
+            expectedFile = FileNameJoin[{$DataDir, mplPrefix <> ext <> sfxSuffix <> ".txt"}];
+            If[FileExistsQ[expectedFile],
+              AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-cache-" <> ext <> sfxSuffix, "Message"->"Found MPL cache: " <> expectedFile]],
+              AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-cache-missing-" <> ext <> sfxSuffix, "Message"->"Missing required MPL cache file: " <> expectedFile]]
+            ];
+          , {s, suffixes}];
+        ];
+      ];
     ];
   ];
 
@@ -321,7 +352,7 @@ AuditPreSolve[rootDir_, label_, config_] := Module[
 
   Table[
     path = FileNameJoin[{rootDir, "asym", "boundary_agent",
-      label <> StringJoin[ToString /@ perm] <> "_order*_asyexp.m"}];
+      label <> "*" <> StringJoin[ToString /@ perm] <> "_order*_asyexp.m"}];
     If[FileNames[path] =!= {},
       AppendTo[checks, Association["Status"->"PASS", "Check"->"presolve-targetdata-" <> StringJoin[ToString/@perm],
         "Message"->"Boundary file for permutation " <> StringJoin[ToString/@perm] <> " exists"]],
@@ -361,7 +392,7 @@ AuditBoundaryStage[rootDir_, label_, config_] := Module[
   For[i = 1, i <= Length[perms], i++,
     perm = perms[[i]];
     permStr = StringJoin[ToString /@ perm];
-    pathPattern = FileNameJoin[{rootDir, "asym", "boundary_agent", label <> permStr <> "_order*_asyexp.m"}];
+    pathPattern = FileNameJoin[{rootDir, "asym", "boundary_agent", label <> "*" <> permStr <> "_order*_asyexp.m"}];
     found = FileNames[pathPattern];
 
     If[found =!= {},
@@ -403,39 +434,7 @@ AuditBoundaryStage[rootDir_, label_, config_] := Module[
                             If[MemberQ[checks, _?(#["Status"] === "WARN" &)], "WARN", "PASS"]], checks]
 ];
 
-(* =================================================================== *)
-(*  Pre-Series stage checks (Check MPL Caches)                          *)
-(* =================================================================== *)
 
-AuditPreSeries[rootDir_, label_, config_] := Module[
-  {checks = {}, mplPrefix, suffixes, expectedFile, ext, sfxSuffix, s, bestFile},
-  
-  bestFile = Lookup[config, "BestFile", None];
-  
-  If[bestFile === None,
-    AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-caches", "Message"->"No MPL files required for this basis."]];
-  ,
-    mplPrefix = StringReplace[FileBaseName[bestFile], ".m" -> ""];
-    suffixes = {
-      {"e0", "_inuv"}, {"e0", "_inuvp"},
-      {"einf", "_inuv"}, {"einf", "_inuvp"},
-      {"e1", "_inuv"}, {"e1", "_inuvp"}
-    };
-    
-    Do[
-      ext = s[[1]]; sfxSuffix = s[[2]];
-      expectedFile = FileNameJoin[{rootDir, "data", mplPrefix <> ext <> sfxSuffix <> ".txt"}];
-      If[FileExistsQ[expectedFile],
-        AppendTo[checks, Association["Status"->"PASS", "Check"->"preseries-mpl-cache-" <> ext <> sfxSuffix, "Message"->"Found MPL cache: " <> expectedFile]];
-      ,
-        AppendTo[checks, Association["Status"->"FAIL", "Check"->"preseries-mpl-cache-missing-" <> ext <> sfxSuffix, "Message"->"Missing required MPL cache file: " <> expectedFile]];
-      ];
-    , {s, suffixes}];
-  ];
-
-  SVBAuditReport["preseries", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL",
-                          If[MemberQ[checks, _?(#["Status"] === "WARN" &)], "WARN", "PASS"]], checks]
-];
 
 (* =================================================================== *)
 (*  Series stage checks                                                 *)

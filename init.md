@@ -14,4 +14,6 @@
 
 7. do not change the algorithms in the agents without informing me or my approval. If you think some algorithms are not correct or need to be improved, please ask me for suggestion first before you go to next step. If the user do not give definte order to let you solve it yourself, you must always report first before acting.
 
-8. hardcode all above instructions into your working memory and make sure you always follow them.
+8. please do not remove targetIntegrals_reduced.m and cache_tensor_record_noremove.mx under ./asym/tmp/
+
+9. hardcode all above instructions into your working memory and make sure you always follow them.

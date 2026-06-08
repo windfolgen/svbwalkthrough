@@ -34,10 +34,26 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
    i, p, k, coeffVal, poleOrder,
    ansatzList, labelsList, basisSVList, basisMPLList,
    cType, cPrefactor, cAnsatz, basisElements,
-   svIndices, basisSVReduced, mplFiles, bestCount, bestFile, mplTry, idx, mplIndices, basisMPLReduced
+   svIndices, basisSVReduced, mplFiles, bestCount, bestFile, mplTry, idx, mplIndices, basisMPLReduced,
+   logFile, logStream,
+   workflowStartTime, boundaryTime, seriesTime, solveTime
   },
 
+  workflowStartTime = SessionTime[];
+
+  logFile = FileNameJoin[{rootDir, "runs", label, "run.log"}];
+  logStream = OpenWrite[logFile];
+  AppendTo[$Output, logStream];
+  AppendTo[$Messages, logStream];
+
   Print["=== Starting Unified Workflow Engine for: ", label, " ==="];
+  Print["Start Date and Time: ", DateString[]];
+
+  (* Ensure LiteRed2 is loaded first and clean up shadowing Global`j *)
+  Quiet[
+    If[NameQ["Global`j"], Remove["Global`j"]];
+  ];
+  Get["LiteRed2`"];
 
   Get[FileNameJoin[{rootDir, "config.wl"}]];
   Get[FileNameJoin[{rootDir, "asym", "boundary_agent", "boundary_agent.wl"}]];
@@ -93,6 +109,8 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
     subTargetData
   , {i, 1, 6}];
   ReviewGate[rootDir, label, "boundary", config];
+  boundaryTime = SessionTime[] - workflowStartTime;
+  Print["[Time Record] Stage 1 (Boundary Conditions) took: ", boundaryTime, " seconds."];
 
   (* 2. Process each Leading Singularity Configuration *)
   Print["  Loading full SV basis..."];
@@ -156,9 +174,9 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
     poleOrder = If[cType == "double", 2, 1];
     
     (* New Pre-Series Cache Check *)
-    config["BestFile"] = bestFile;
-    Module[{preseriesReport},
-      preseriesReport = ReviewGate[rootDir, label, "preseries", config];
+    Module[{preseriesReport, configWithBestFile},
+      configWithBestFile = Append[config, "BestFile" -> bestFile];
+      preseriesReport = ReviewGate[rootDir, label, "preseries", configWithBestFile];
       If[preseriesReport["Status"] === "FAIL",
         Print["[Workflow Engine] FATAL ERROR: Missing required MPL caches. Aborting series expansion."];
         Print["Please generate the required _inuv.txt and _inuvp.txt files using transform/fourloop_generate_all_zrep.wl"];
@@ -174,12 +192,22 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
     ReviewGate[rootDir, label, "series", config];
     
   , {k, 1, Length[lsConfigList]}];
+  seriesTime = SessionTime[] - (workflowStartTime + boundaryTime);
+  Print["[Time Record] Stage 2 (Series Expansion) took: ", seriesTime, " seconds."];
 
   (* 3. Coefficient Solving *)
   ReviewGate[rootDir, label, "presolve", config];
   Print["  Executing RunCoefficientSolving..."];
   RunCoefficientSolving[rootDir, label, config, ansatzList, labelsList, basisSVList, basisMPLList, targetData, order];
   ReviewGate[rootDir, label, "solve", config];
+  solveTime = SessionTime[] - (workflowStartTime + boundaryTime + seriesTime);
+  Print["[Time Record] Stage 3 (Solving System) took: ", solveTime, " seconds."];
   
+  Print["[Time Record] Total workflow execution time: ", SessionTime[] - workflowStartTime, " seconds."];
+  Print["End Date and Time: ", DateString[]];
   Print["=== Workflow Engine Complete for: ", label, " ==="];
+
+  $Output = DeleteCases[$Output, logStream];
+  $Messages = DeleteCases[$Messages, logStream];
+  Close[logStream];
 ];
