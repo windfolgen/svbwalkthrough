@@ -15,7 +15,7 @@ $LiteRedBases = {"asym", "asym3L", "asym2L", "asym1L"};
 $GmaterrepFiles = {"Gmaterrep4L.m", "Gmaterrep3L.m", "Gmaterrep2L.m", "Gmaterrep1L.m"};
 
 (* Global S4 Permutations *)
-$Perms = {{1, 2, 3, 4}, {2, 1, 3, 4}, {1, 3, 2, 4}, {2, 3, 1, 4}, {3, 1, 2, 4}, {3, 2, 1, 4}};
+$Perms = {{1, 2, 3, 4}, {1, 3, 2, 4}, {2, 1, 3, 4}, {2, 3, 1, 4}, {3, 1, 2, 4}, {3, 2, 1, 4}};
 
 (* Limit points corresponding to conformal cross ratios (0, 1, infinity) *)
 $Limits = {"e0", "e1", "einf"};

@@ -367,38 +367,42 @@ FindTensor[tensor_, record_] := Module[
   ]
 ];*)
 SpecialMultiply[temlist_, h_, rep_] := Module[
-  {scalar, listA, listB, totalB, res},
+  {scalar, listA, listB, splitTerm, termsA, termsB, scalarTens, scalarCoeff, total, i, j, coeffA, tensA, coeffB, tensB, contracted, splitScalar},
   
-  scalar = temlist[[1]]/.rep;
+  scalar = temlist[[1]] /. rep;
+  listA = temlist[[2]] /. rep;
+  listB = temlist[[3]] /. rep;
   
-  (* 1. Determine which list to iterate over to minimize loop overhead *)
-  If[Length[temlist[[2]]] > Length[temlist[[3]]],
-    listA = temlist[[2]]/.rep; 
-    listB = temlist[[3]]/.rep,
-    
-    listA = temlist[[3]]/.rep; 
-    listB = temlist[[2]]/.rep
+  splitTerm[term_] := Which[
+    term === 0, {0, 1},
+    FreeQ[term, vc] && FreeQ[term, g], {term, 1},
+    Head[term] === Times, 
+      Module[{factors = List @@ term, tensParts, coeffParts},
+        tensParts = Select[factors, !FreeQ[#, vc] || !FreeQ[#, g] &];
+        coeffParts = Select[factors, FreeQ[#, vc] && FreeQ[#, g] &];
+        {Times @@ coeffParts, Times @@ tensParts}
+      ],
+    True, {1, term}
   ];
   
-  (* 2. PRECOMPUTE the sum of the smaller list ONCE outside the loop *)
-  totalB = Total[listB]/.rep;
+  splitScalar = splitTerm[scalar];
+  scalarCoeff = splitScalar[[1]];
+  scalarTens = splitScalar[[2]];
   
-  Check[
-    res = Total @ Map[
-      (* Consider applying /. rep before Expand if your replacements reduce term size *)
-      Collect[Expand[scalar * # * totalB] /. rep, _h, Together] &, 
-      listA
-    ] // Collect[#, _h, Factor] &;
-    res
-  ,
-    Print["[SpecialMultiply Debug Failure]"];
-    Print["temlist[[2]]: ", InputForm[temlist[[2]]]];
-    Print["temlist[[3]]: ", InputForm[temlist[[3]]]];
-    Print["listA: ", InputForm[listA]];
-    Print["listB: ", InputForm[listB]];
-    Print["totalB: ", InputForm[totalB]];
-    Exit[1];
-  ]
+  termsA = splitTerm /@ listA;
+  termsB = splitTerm /@ listB;
+  
+  total = Sum[
+    coeffA = termsA[[i, 1]];
+    tensA = termsA[[i, 2]];
+    coeffB = termsB[[j, 1]];
+    tensB = termsB[[j, 2]];
+    
+    contracted = (scalarTens * tensA * tensB // Expand) /. rep;
+    coeffA * coeffB * scalarCoeff * contracted
+  , {i, 1, Length[termsA]}, {j, 1, Length[termsB]}];
+  
+  Return[Collect[total, _h, Factor]]
 ];
 
 
@@ -693,7 +697,11 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
         Do[
           intCase = integrand /. {x[a__] :> (x[a] /. Thread@Rule[{1, 2, 3, 4}, c])};
           Quiet[
-            terms = Length[RegionExpand[intCase, loops, "order" -> order, "check" -> False, "verbose" -> False][[2]]];
+            Module[{exp, top, top1, top2},
+              exp = RegionExpand[intCase, loops, "order" -> order, "check" -> False, "verbose" -> False];
+              {top, top1, top2} = exp[[1]];
+              terms = Length[Flatten[ToTensorProduct[#, top, top1, top2, "check" -> False] & /@ (exp[[2]]), 1]];
+            ]
           ];
           If[terms < minTerms,
             minTerms = terms;
