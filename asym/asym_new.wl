@@ -633,6 +633,12 @@ RunAsymExpansion[intname_String, integrand_, perm_List, order_Integer:3, loops_L
     (* Step 3: IBP reduction (with caching) *)
     If[FileExistsQ[filepath <> "tmp/targetIntegrals_reduced.m"],
         trep = Import[filepath <> "tmp/targetIntegrals_reduced.m"];
+        trep = Replace[trep, {
+          Rule[G[1, {a__}], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[1, a__], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[2, {a__}], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[2, a__], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val]
+        }, {1}];
         Print["reduced results loaded! ", "time: ", SessionTime[] - starttime];
         reducedg = Keys[trep],
         Print["no IBP reduced results found! ", "time: ", SessionTime[] - starttime];
@@ -650,15 +656,50 @@ RunAsymExpansion[intname_String, integrand_, perm_List, order_Integer:3, loops_L
     trep1L = Thread@Rule[#, IBPReduce[#]] &[Complement[target1L, reducedg]];
     trep = Join[trep, trep4L, trep3L, trep2L, trep1L];
     Export[filepath <> "tmp/targetIntegrals_reduced.m", trep];
-    trep1 = trep /. {j[_, a__] :> G[1, {a}]} /. {d -> 4 - 2 ep};
-    trep2 = trep /. {j[_, a__] :> G[2, {a}]} /. {u -> 1} /. {d -> 4 - 2 ep};
+    trep1 = trep /. {j[_, a_List] :> G[1, a], j[_, a__] :> G[1, {a}], G[1, a_List] :> G[1, a], G[1, a__] :> G[1, {a}]} /. {d -> 4 - 2 ep};
+    trep2 = trep /. {j[_, a_List] :> G[2, a], j[_, a__] :> G[2, {a}], G[1, a_List] :> G[2, a], G[1, a__] :> G[2, {a}]} /. {u -> 1} /. {d -> 4 - 2 ep};
     Grep = Join[trep1, trep2] // Dispatch;
     Print["target integrals reduced! ", "time: ", SessionTime[] - starttime];
 
     (* Step 4: Series expansion *)
-    Gmasterrep = Join @@ (Import[FileNameJoin[{filepath, #}]] & /@ $GmaterrepFiles) // Dispatch;
-    fresult = Series[(test /. gtransform /. {D -> 4 - 2 ep} /. Grep // Collect[#, _G] &) /. basischange /. Gmasterrep, {u, 0, 0}];
-    fresults = Series[((fresult // Total) + O[ep]) // Normal // Expand, {Y, 0, order}] // ExpandAll;
+    Block[{exprSum, exprA, exprB, exprC, exprD, exprE, exprECollected, exprDist, termList, rules, optTerms, fresult, fresultTrunc},
+      exprSum = Total[test];
+      exprA = exprSum /. gtransform;
+      exprB = exprA /. {D -> 4 - 2 ep};
+      exprC = exprB /. Grep;
+      exprD = Collect[exprC, _G];
+      exprE = exprD /. basischange;
+      exprECollected = Collect[exprE, _G];
+      
+      Gmasterrep = Join @@ (Import[FileNameJoin[{filepath, #}]] & /@ $GmaterrepFiles) // Dispatch;
+      
+      exprDist = Distribute[exprECollected, Plus];
+      termList = If[Head[exprDist] === Plus, List @@ exprDist, {exprDist}];
+      
+      rules = {
+        u^a_?Positive * Log[u]^b_. :> 0,
+        u * Log[u]^b_. :> 0,
+        u^a_?Positive :> 0,
+        u^a_?Negative * Log[u]^b_. :> u^a * Log[u]^b,
+        u^a_?Negative :> u^a,
+        Log[u]^b_. :> Log[u]^b,
+        u :> 0
+      };
+      
+      optTerms = Table[
+        Block[{m, mNormal, tU, tY},
+          m = term /. Gmasterrep;
+          mNormal = Normal[m];
+          tU = (mNormal // Expand) /. rules;
+          tY = If[tU === 0 || FreeQ[tU, Y], tU, Normal[Series[tU, {Y, 0, order}]]];
+          tY
+        ]
+      , {term, termList}];
+      
+      fresult = Total[optTerms];
+      fresultTrunc = Series[fresult, {ep, 0, 0}] // Normal;
+      fresults = Series[fresultTrunc // Expand, {Y, 0, order}] // ExpandAll;
+    ];
 
     Export[filepath <> "check" <> name <> "_order" <> ToString[order] <> "_asyexp.m", fresults];
     Print["series expansion finished ", "time: ", SessionTime[] - starttime];
@@ -774,6 +815,12 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
     (* Step 3: Sequentially IBP reduce collected unique target integrals to protect cache bounds *)
     If[FileExistsQ[filepath <> "tmp/targetIntegrals_reduced.m"],
         trep = Import[filepath <> "tmp/targetIntegrals_reduced.m"];
+        trep = Replace[trep, {
+          Rule[G[1, {a__}], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[1, a__], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[2, {a__}], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[2, a__], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val]
+        }, {1}];
         reducedg = Keys[trep];
         Print["reduced results loaded!"];
         ,
@@ -789,8 +836,8 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
     trep = Join[trep, trep4L, trep3L, trep2L, trep1L];
     Export[filepath <> "tmp/targetIntegrals_reduced.m", trep];
     
-    trep1 = trep /. {j[_, a__] :> G[1, {a}]} /. {d -> 4 - 2 ep};
-    trep2 = trep /. {j[_, a__] :> G[2, {a}]} /. {u -> 1} /. {d -> 4 - 2 ep};
+    trep1 = trep /. {j[_, a_List] :> G[1, a], j[_, a__] :> G[1, {a}], G[1, a_List] :> G[1, a], G[1, a__] :> G[1, {a}]} /. {d -> 4 - 2 ep};
+    trep2 = trep /. {j[_, a_List] :> G[2, a], j[_, a__] :> G[2, {a}], G[1, a_List] :> G[2, a], G[1, a__] :> G[2, {a}]} /. {u -> 1} /. {d -> 4 - 2 ep};
     Grep = Join[trep1, trep2] // Dispatch;
     Print["target integrals reduced! time: ", SessionTime[] - starttime];
 
@@ -805,16 +852,67 @@ RunAsymExpansionParallel[intname_String, integrand_, perms_List, order_Integer:3
     Clear[testAll, topAll, top1All, top2All];
 
     fresults = ParallelTable[
-       Block[{fresult, fres, localTest},
+       Block[{localTest, exprSum, exprA, exprB, exprC, exprD, exprE, exprECollected,
+              exprDist, termList, rules, optTerms, fresult, fresultTrunc, fres,
+              tStart, t0},
            
-           (* Load the uniquely solved tensor results straight off local storage to bypass parallel link congestion *)
+           Print[names[[i]], ": [Step 4] Starting series expansion..."];
+           tStart = AbsoluteTime[];
+           
+           t0 = AbsoluteTime[];
            localTest = Import[filepath <> "tmp/tensor_" <> names[[i]] <> "_order" <> ToString[order] <> "_results.m"][[2]];
+           Print[names[[i]], ":   [1/7] Loaded tensor results in ", Round[AbsoluteTime[] - t0, 0.01], "s"];
 
-           fresult = Series[(localTest /. gtransformAll[[i]] /. {D -> 4 - 2 ep} /. Grep // Collect[#, _G] &) /. basischange /. Gmasterrep, {u, 0, 0}];
-           fres = Series[((fresult // Total) + O[ep]) // Normal // Expand, {Y, 0, order}] // ExpandAll;
+           t0 = AbsoluteTime[];
+           exprSum = Total[localTest];
+           exprA = exprSum /. gtransformAll[[i]];
+           exprB = exprA /. {D -> 4 - 2 ep};
+           exprC = exprB /. Grep;
+           exprD = Collect[exprC, _G];
+           exprE = exprD /. basischange;
+           Print[names[[i]], ":   [2/7] Applied initial transformations in ", Round[AbsoluteTime[] - t0, 0.01], "s"];
+
+           t0 = AbsoluteTime[];
+           exprECollected = Collect[exprE, _G];
+           Print[names[[i]], ":   [3/7] Collected expression by _G in ", Round[AbsoluteTime[] - t0, 0.01], "s"];
+
+           t0 = AbsoluteTime[];
+           exprDist = Distribute[exprECollected, Plus];
+           termList = If[Head[exprDist] === Plus, List @@ exprDist, {exprDist}];
+           Print[names[[i]], ":   [4/7] Distributed over Plus (", Length[termList], " terms) in ", Round[AbsoluteTime[] - t0, 0.01], "s"];
+
+           t0 = AbsoluteTime[];
+           rules = {
+             u^a_?Positive * Log[u]^b_. :> 0,
+             u * Log[u]^b_. :> 0,
+             u^a_?Positive :> 0,
+             u^a_?Negative * Log[u]^b_. :> u^a * Log[u]^b,
+             u^a_?Negative :> u^a,
+             Log[u]^b_. :> Log[u]^b,
+             u :> 0
+           };
+           optTerms = Table[
+             Block[{m, mNormal, tU, tY},
+               m = term /. Gmasterrep;
+               mNormal = Normal[m];
+               tU = (mNormal // Expand) /. rules;
+               tY = If[tU === 0 || FreeQ[tU, Y], tU, Normal[Series[tU, {Y, 0, order}]]];
+               tY
+             ]
+           , {term, termList}];
+           Print[names[[i]], ":   [5/7] Expanded all terms in ", Round[AbsoluteTime[] - t0, 0.01], "s"];
+
+           t0 = AbsoluteTime[];
+           fresult = Total[optTerms];
+           fresultTrunc = Series[fresult, {ep, 0, 0}] // Normal;
+           fres = Series[fresultTrunc // Expand, {Y, 0, order}] // ExpandAll;
+           Print[names[[i]], ":   [6/7] Summed and computed ep/Y expansion in ", Round[AbsoluteTime[] - t0, 0.01], "s"];
            
+           t0 = AbsoluteTime[];
            Export[filepath <> "check" <> names[[i]] <> "_order" <> ToString[order] <> "_asyexp.m", fres];
-           Print[names[[i]], ": series expansion finished!"];
+           Print[names[[i]], ":   [7/7] Exported check file in ", Round[AbsoluteTime[] - t0, 0.01], "s"];
+           Print[names[[i]], ": [Step 4] Series expansion finished! Total time: ", Round[AbsoluteTime[] - tStart, 0.01], "s"];
+           
            fres
        ]
     , {i, 1, Length[perms]}];
@@ -879,6 +977,12 @@ RunAsymExpansionTest[intname_String, integrand_, perm_List, order_Integer:3, loo
 
     If[FileExistsQ[filepath <> "tmp/targetIntegrals_reduced.m"],
         trep = Import[filepath <> "tmp/targetIntegrals_reduced.m"];
+        trep = Replace[trep, {
+          Rule[G[1, {a__}], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[1, a__], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[2, {a__}], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val],
+          Rule[G[2, a__], val_] :> Rule[j[Which[Length[{a}] == 14, asym, Length[{a}] == 9, asym3L, Length[{a}] == 5, asym2L, Length[{a}] == 2, asym1L, True, asym], a], val]
+        }, {1}];
         reducedg = Keys[trep],
         trep = {};
         reducedg = {};
@@ -894,8 +998,8 @@ RunAsymExpansionTest[intname_String, integrand_, perm_List, order_Integer:3, loo
     trep1L = Thread@Rule[#, IBPReduce[#]] &[Complement[target1L, reducedg]];
     trep = Join[trep, trep4L, trep3L, trep2L, trep1L];
     Export[filepath <> "tmp/targetIntegrals_reduced.m", trep];
-    trep1 = trep /. {j[_, a__] :> G[1, {a}]} /. {d -> 4 - 2 ep};
-    trep2 = trep /. {j[_, a__] :> G[2, {a}]} /. {u -> 1} /. {d -> 4 - 2 ep};
+    trep1 = trep /. {j[_, a__] :> G[1, {a}], G[1, a__] :> G[1, {a}]} /. {d -> 4 - 2 ep};
+    trep2 = trep /. {j[_, a__] :> G[2, {a}], G[1, a__] :> G[2, {a}]} /. {u -> 1} /. {d -> 4 - 2 ep};
     Grep = Join[trep1, trep2] // Dispatch;
 
     Gmasterrep = Join @@ (Import[FileNameJoin[{filepath, #}]] & /@ $GmaterrepFiles) // Dispatch;
