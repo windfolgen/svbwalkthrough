@@ -1,42 +1,66 @@
+(* scratch/test_scaling_reconstruct.wl *)
 $HistoryLength = 0;
 rootDir = "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough";
-SetDirectory[rootDir];
+asymDir = FileNameJoin[{rootDir, "asym"}];
 
-Get[FileNameJoin[{rootDir, "config.wl"}]];
 Get["LiteRed2`"];
 SetDim[d];
 Declare[{l1, l2, l3, l4, p}, Vector, {u}, Number];
 SetConstraints[{p}, sp[p, p] = u];
+
 Do[
-  Get[FileNameJoin[{rootDir, "asym", "Bases", b, b}]];
+  Get[FileNameJoin[{asymDir, "Bases", b, b}]];
   Quiet[ExecuteDefinitions[ToExpression[b]]];
-, {b, $LiteRedBases}];
+, {b, {"asym", "asym3L", "asym2L", "asym1L"}}];
 
-Get[FileNameJoin[{rootDir, "asym", "asym_new.wl"}]];
+Get[FileNameJoin[{asymDir, "asym_new.wl"}]];
 
-k = 4074;
-i = 1; (* Topology 1 *)
+idxList = {{m[1], m[2]}, {m[3], m[4]}};
+tag = 2;
 
-vclist = {Cases[{result[[k, 2]]}, vc[__], Infinity] // DeleteDuplicates, Cases[{result[[k, 3]]}, vc[__], Infinity] // DeleteDuplicates};
-tem = GatherBy[vclist[[i]], First] /. {vc[a_, b_] :> b} // SortBy[#, Length] &;
+(* Solve with u *)
+tpU = GenTensorProjection[idxList, tag, "krep" -> {d2[1, tag] -> u}];
 
-(* Method A: u symbolic in GenTensorProjection *)
-tpA = GenTensorProjection[tem, p, "krep" -> {d2[1, p] -> u}];
-tpA = tpA /. {p -> 2};
-matA = tpA[[1]];
+(* Solve with u -> 1 using GenTensorProjection *)
+tp1 = GenTensorProjection[idxList, tag, "krep" -> {d2[1, tag] -> 1}];
 
-(* Method B: u -> 1 in GenTensorProjection *)
-tpB = GenTensorProjection[tem, p, "krep" -> {d2[1, p] -> 1}];
-tpB = tpB /. {p -> 2};
-matB = tpB[[1]];
+tensor = tpU[[2]];
+l = Length[tensor];
 
-(* Reconstruct matA from matB *)
-tensorBasis = tpB[[2]];
-L = Length[tensorBasis];
-ranks = Table[Count[tensorBasis[[jj]], _vc, Infinity], {jj, 1, L}];
-scalingMat = Table[u^((ranks[[col]] - ranks[[row]])/2), {row, 1, L}, {col, 1, L}];
-matReconstructed = matB * scalingMat;
+(* Count vector occurrences *)
+kList = Table[
+  Module[{expanded = Expand[tensor[[i]]], firstTerm},
+    firstTerm = If[Head[expanded] === Plus, expanded[[1]], expanded];
+    Length[Cases[{firstTerm}, vc[tag, _], Infinity]]
+  ],
+  {i, 1, l}
+];
 
-Print["Are the reconstructed matrix and original symbolic matrix identical? ", Expand[matReconstructed - matA] === Table[0, {L}, {L}]];
-Print["Matrix A: ", matA // Short[#, 5] &];
-Print["Reconstructed: ", matReconstructed // Short[#, 5] &];
+(* Retrieve the coefficient matrix for u -> 1 *)
+(* We know cv . tensor /. sol = sum_j bv[[j]] * tp[[1]][[j]] *)
+(* So the coefficient of bv[[j]] and tensor[[i]] is the matrix elements of tp_coeff *)
+sys1 = Table[
+  ((tensor[[i]]*(c /@ Range[l] . tensor) // Expand) /. {d2[1, tag] -> 1}) == b[i],
+  {i, 1, l}
+];
+sol1 = Flatten[Solve[sys1, c /@ Range[l]]];
+sol1 = Together[sol1];
+mat1 = Normal[CoefficientArrays[c /@ Range[l] /. sol1, b /@ Range[l]]][[2]];
+
+(* Scale the coefficient matrix *)
+matUScaled = Table[
+  mat1[[i, j]] * u^(-(kList[[i]] + kList[[j]])/2),
+  {i, 1, l}, {j, 1, l}
+];
+
+(* Reconstruct cvU *)
+cvUReconstructed = matUScaled . (b /@ Range[l]);
+solUReconstructed = Thread[Rule[c /@ Range[l], cvUReconstructed]];
+
+(* Compare the final projection tensors *)
+projUOrig = tpU[[1]];
+projURecon = Normal[CoefficientArrays[cvUReconstructed . tensor, b /@ Range[l]]][[2]];
+
+diff = projUOrig - projURecon // Expand // Simplify;
+Print["Max difference: ", Max[Abs[diff /. {d -> 4, u -> 2}]]];
+Print["Are the reconstructed projection tensors algebraically identical? ", diff === Table[0, {l}]];

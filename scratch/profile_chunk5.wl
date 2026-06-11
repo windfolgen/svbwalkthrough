@@ -1,85 +1,99 @@
+(* scratch/profile_chunk5.wl *)
 $HistoryLength = 0;
-rootDir = "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough";
-SetDirectory[rootDir];
-
+rootDir = "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough/";
+asymDir = FileNameJoin[{rootDir, "asym"}];
 Get[FileNameJoin[{rootDir, "config.wl"}]];
-Get["LiteRed2`"];
+If[!MemberQ[$Packages, "LiteRed`"], Get["LiteRed2`"]];
 SetDim[d];
-Declare[{l1, l2, l3, l4, vecP}, Vector, {u}, Number];
-SetConstraints[{vecP}, sp[vecP, vecP] = u];
+Declare[{l1, l2, l3, l4, p}, Vector, {u}, Number];
+SetConstraints[{p}, sp[p, p] = u];
 Do[
-  Get[FileNameJoin[{rootDir, "asym", "Bases", b, b}]];
-  Quiet[ExecuteDefinitions[ToExpression[b]]];
+  Get[FileNameJoin[{asymDir, "Bases", b, b}]];
+  Quiet[ExecuteDefinitions[ToExpression["LiteRed2`" <> b]]];
 , {b, $LiteRedBases}];
-
-Get[FileNameJoin[{rootDir, "asym", "asym_new.wl"}]];
+Get[FileNameJoin[{asymDir, "asym_new.wl"}]];
 
 integrand = (x[1,7] x[2,4] x[3,4] x[5,6])/(x[1,5] x[1,6] x[2,5] x[2,7] x[3,6] x[3,7] x[4,5] x[4,6] x[4,8] x[5,7] x[5,8] x[6,7] x[6,8] x[7,8]);
-perm = {2, 1, 3, 4};
 loops = {5, 6, 7, 8};
 order = 4;
 
-intCase = integrand /. {x[a__] :> (x[a] /. Thread@Rule[{1, 2, 3, 4}, perm])};
-Print["Performing RegionExpand..."];
-exp = RegionExpand[intCase, loops, "order" -> order, "check" -> False];
-{topOverall, top1, top2} = exp[[1]];
-topArray = {top1, top2};
+perm = {2, 1, 3, 4}; (* permutation 2134 *)
+int1 = integrand /. {x[a__] :> (x[a] /. Thread@Rule[{1, 2, 3, 4}, perm])};
+exp1 = RegionExpand[int1, loops, "order" -> order, "check" -> True];
+{topVal, top1, top2} = exp1[[1]];
+result1 = Flatten[ToTensorProduct[#, topVal, top1, top2, "check" -> True] & /@ (exp1[[2]]), 1];
 
-Print["Performing ToTensorProduct..."];
-result = Flatten[ToTensorProduct[#, topOverall, top1, top2, "check" -> False] & /@ (exp[[2]]), 1];
-Print["Total terms: ", Length[result]];
+list = result1[[4001;;5000]];
+top = {top1, top2};
+tagp = p;
+gtotal = {};
+rep = Association[{}];
 
-(* Load record *)
-commonCache = FileNameJoin[{rootDir, "asym", "tmp", "cache_tensor_record_noremove.mx"}];
-record = If[FileExistsQ[commonCache], Import[commonCache], {}];
-If[Not[ListQ[record]], record = {}];
-Print["Loaded record of length: ", Length[record]];
+(* We will also load the MX cache to simulate the real run *)
+commonDir = "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough/asym/tmp/";
+commonCache = FileNameJoin[{commonDir, "cache_tensor_record_noremove.mx"}];
+record = If[FileExistsQ[commonCache], Import[commonCache], <||>];
+record = toAssoc[record];
 
-Print["=== Scanning Chunk 5 (Terms 4001 - 4100) ==="];
-slowCount = 0;
+mrep = {d2[1, 3] -> 1, d2[2, 1] -> u, d2[2, 3] -> 1 - Y, d[a_, 1] :> 0, d[2, 3] -> (u + Y)/2, v -> 1 - Y};
+
+Print["=== Profiling Chunk 5 (Terms 4001-5000) ==="];
+slowTermsCount = 0;
+
 Do[
-  t0 = SessionTime[];
+  k = 4000 + idx;
+  tTerm = SessionTime[];
   
-  vclist = {Cases[{result[[k, 2]]}, vc[__], Infinity] // DeleteDuplicates, Cases[{result[[k, 3]]}, vc[__], Infinity] // DeleteDuplicates};
+  temlist = Take[list[[idx]], 3];
+  vclist = {Cases[{list[[idx, 2]]}, vc[__], Infinity] // DeleteDuplicates, Cases[{list[[idx, 3]]}, vc[__], Infinity] // DeleteDuplicates};
   
   Do[
     If[vclist[[i]] === {}, Continue[]];
     tem = GatherBy[vclist[[i]], First] /. {vc[a_, b_] :> b} // SortBy[#, Length] &;
     
-    tGen0 = SessionTime[];
     flag = FindTensor[tem, record];
     If[flag[[1]],
-      tp = flag[[3]];
-    ,
-      tGen = SessionTime[];
-      tp = GenTensorProjection[tem, vecP, "krep" -> {d2[1, vecP] -> u}];
-      Print["  [GEN TENSOR] Term ", k, " top ", i, " profile ", Length /@ tem, " took ", SessionTime[] - tGen, "s"];
-      AppendTo[record, {Length /@ tem, tem, tp}];
+      tp = flag[[3]],
+      tp = GenTensorProjection[tem, tagp, "krep" -> {d2[1, tagp] -> u}];
+      AssociateTo[record, Length /@ tem -> {tem, tp}]
     ];
     
-    If[i == 2, tp = tp /. {u -> 1, vecP -> 3}, tp = tp /. {vecP -> 2}];
+    If[i == 2, tp = tp /. {u -> 1, tagp -> 3}, tp = tp /. {tagp -> 2}];
     
-    tExp = SessionTime[];
-    temExpr = (result[[k, i + 1]]*tp[[2]] /. {vecP -> (i + 1)} // Expand) /. {d[a_, b_] :> (d2[1, a] + d2[1, b] - d2[a, b])/2} /. {d2[1, 3] -> 1, d2[1, 2] -> u, d2[2, 3] -> v, d[a_, 1] :> 0} /. {G[i, a_] :> Times @@ (Thread@Power[topArray[[i]], -a])} // Expand;
-    dtExp = SessionTime[] - tExp;
+    temVal = (list[[idx, i + 1]]*tp[[2]] /. {tagp -> (i + 1)} // Expand) /. {d[a_, b_] :> (d2[1, a] + d2[1, b] - d2[a, b])/2} /. {d2[1, 3] -> 1, d2[1, 2] -> u, d2[2, 3] -> v, d[a_, 1] :> 0} /. {G[i, a_] :> Times @@ (Thread@Power[top[[i]], -a])} // Expand;
     
-    tClass = SessionTime[];
-    Do[
-      tem1 = temExpr[[j]] // Expand;
-      If[Head[tem1] === Plus, tem1List = List @@ tem1, tem1List = {tem1}];
-      Do[
-        tem2 = ClassifyTopology[tem1List[[l]], topArray[[i]], i, "loops" -> result[[k, -1, i]], "ClassifySub" -> False];
-      , {l, 1, Length[tem1List]}];
-    , {j, 1, Length[temExpr]}];
-    dtClass = SessionTime[] - tClass;
+    temp = Reap[
+       Do[
+        tem1 = temVal[[j]] // Expand;
+        If[Head[tem1] === Plus, tem1 = List @@ tem1, tem1 = {tem1}];
+        Sow[Total @ Reap[
+            Do[
+             tem2 = ClassifyTopology[tem1[[l]], top[[i]], i, "loops" -> list[[idx, -1, i]], "ClassifySub" -> False];
+             If[tem2 === {0, 0, 0, $Failed}, Sow[0]; Continue[]];
+             Sow[Times @@ Take[tem2, 3]]
+            , {l, 1, Length[tem1]}]
+           ][[2, 1]]]
+       , {j, 1, Length[temVal]}]
+    ][[2, 1]];
     
+    glist = Complement[Cases[{temp}, _G, Infinity] // DeleteDuplicates, gtotal];
+    If[glist =!= {}, rep = Join[rep, AssociationMap[h[Hash[#]] &, glist]]];
+    gtotal = Join[gtotal, glist];
+    
+    dist = Distribute[(temp /. rep) . tp[[1]], Plus];
+    temlist[[i + 1]] = If[Head[dist] === Plus, List @@ dist, {dist}];
   , {i, 1, 2}];
   
-  dtTotal = SessionTime[] - t0;
-  If[dtTotal > 0.1,
-    Print["[SLOW TERM] Term ", k, " took ", dtTotal, "s (Exp: ", dtExp, "s, Classify: ", dtClass, "s, vc rank profile: ", InputForm[vclist]];
-    slowCount++;
+  res = SpecialMultiply[temlist, h, mrep];
+  
+  dt = SessionTime[] - tTerm;
+  If[dt > 1.0,
+    Print["[SLOW] Term ", k, " took ", dt, "s"];
+    slowTermsCount++;
   ];
-, {k, 4001, 4100}];
+  If[Mod[idx, 100] == 0,
+    Print["Progress: ", idx, "/1000 terms done. Cumulative slow terms: ", slowTermsCount];
+  ];
+, {idx, 1, Length[list]}];
 
-Print["Scan complete. Found ", slowCount, " slow terms in 4001-4100."];
+Print["Done profiling! Total slow terms (>1s): ", slowTermsCount];

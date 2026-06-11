@@ -1,41 +1,50 @@
+(* scratch/test_inverse_method.wl *)
 $HistoryLength = 0;
 rootDir = "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough";
-SetDirectory[rootDir];
+asymDir = FileNameJoin[{rootDir, "asym"}];
 
-Get[FileNameJoin[{rootDir, "config.wl"}]];
 Get["LiteRed2`"];
 SetDim[d];
 Declare[{l1, l2, l3, l4, p}, Vector, {u}, Number];
 SetConstraints[{p}, sp[p, p] = u];
+
 Do[
-  Get[FileNameJoin[{rootDir, "asym", "Bases", b, b}]];
+  Get[FileNameJoin[{asymDir, "Bases", b, b}]];
   Quiet[ExecuteDefinitions[ToExpression[b]]];
-, {b, $LiteRedBases}];
+, {b, {"asym", "asym3L", "asym2L", "asym1L"}}];
 
-Get[FileNameJoin[{rootDir, "asym", "asym_new.wl"}]];
+Get[FileNameJoin[{asymDir, "asym_new.wl"}]];
 
-shapes = {
-  {{m[1]}, {m[2]}, {m[3]}, {m[4]}} (* shape {4}, rank 4 *)
-};
+idxList = {{m[1], m[3]}, {m[2], m[5]}, {m[7], m[9]}};
+tag = 2;
+krep = {d2[1, tag] -> u};
 
-tem = shapes[[1]];
-
-(* Original method *)
-tpA = GenTensorProjection[tem, p, "krep" -> {d2[1, p] -> 1}];
-tpA = tpA /. {p -> 2};
-matA = tpA[[1]];
-
-(* New direct Inverse method *)
-tensor = MPartition[tem, p];
+tensor = MPartition[idxList, tag];
 l = Length[tensor];
-bv = b /@ Range[l];
-cv = c /@ Range[l];
-sys = Table[
-  ((tensor[[i]]*(cv . tensor) // Expand) /. {d2[1, p] -> 1}) == bv[[i]], 
-  {i, 1, l}
-];
-{rhs, lhsMat} = CoefficientArrays[sys[[All, 1]], cv];
-matDirect = Inverse[Normal[lhsMat]];
-matDirect = matDirect /. {p -> 2};
 
-Print["Are the two matrices identical? ", Expand[matDirect - matA] === Table[0, {l}, {l}]];
+M = Table[
+  ((tensor[[i]] * tensor[[j]] // Expand) /. krep),
+  {i, 1, l}, {j, 1, l}
+];
+
+Print["Basis size (L): ", l];
+
+t0 = SessionTime[];
+Print["Trying Inverse[M]..."];
+invM = Inverse[M];
+Print["Inverse[M] took: ", SessionTime[] - t0, "s"];
+
+t0 = SessionTime[];
+Print["Trying LinearSolve[M, IdentityMatrix[L]]..."];
+invM2 = LinearSolve[M, IdentityMatrix[l]];
+Print["LinearSolve took: ", SessionTime[] - t0, "s"];
+
+t0 = SessionTime[];
+Print["Computing sol = invM . tensor..."];
+sol = invM . tensor;
+Print["Multiplication took: ", SessionTime[] - t0, "s"];
+
+t0 = SessionTime[];
+Print["Factoring sol..."];
+solFactored = Factor /@ sol;
+Print["Factoring took: ", SessionTime[] - t0, "s"];

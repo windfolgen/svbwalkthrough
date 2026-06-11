@@ -51,15 +51,18 @@ RunCoefficientSolving[rootDir_, label_, config_,
         filePrefix = FileNameJoin[{rootDir, "series_agent", labelsList[[k]]}];
         
         mplRules = If[basisMPLList[[k]] =!= {},
-          Thread @ Rule[basisMPLList[[k]], ((Series[#, {Y, 0, $Order}]) &) /@ Import[filePrefix <> "_svlistmpl" <> suffix <> ".m"]],
+          Thread @ Rule[basisMPLList[[k]], Normal /@ Import[filePrefix <> "_svlistmpl" <> suffix <> ".m"]],
           {}
         ];
         svrepK = Join[
-          Thread @ Rule[basisSVList[[k]], ((Series[#, {Y, 0, $Order}]) &) /@ Import[filePrefix <> "_svlist" <> suffix <> ".m"]],
+          Thread @ Rule[basisSVList[[k]], Normal /@ Import[filePrefix <> "_svlist" <> suffix <> ".m"]],
           mplRules
         ];
         
-        setup = setup + ((c /@ Range[offset + 1, offset + Length[ansatzK]]) . ansatzK) /. svrepK /. solt;
+        ansatzKRep = ansatzK /. svrepK;
+        ansatzKSeries = (Expand /@ ansatzKRep) /. Y^a_ /; a > $Order :> 0;
+        
+        setup = setup + ((c /@ Range[offset + 1, offset + Length[ansatzK]]) . ansatzKSeries) /. solt;
         offset = offset + Length[ansatzK];
       , {k, 1, Length[ansatzList]}];
     ];
@@ -140,15 +143,18 @@ RunCoefficientSolving[rootDir_, label_, config_,
         filePrefix = FileNameJoin[{rootDir, "series_agent", labelsList[[k]]}];
         
         mplRules = If[basisMPLList[[k]] =!= {},
-          Thread @ Rule[basisMPLList[[k]], ((Series[#, {Y, 0, $Order}]) &) /@ Import[filePrefix <> "_svlistmpl" <> suffix <> ".m"]],
+          Thread @ Rule[basisMPLList[[k]], Normal /@ Import[filePrefix <> "_svlistmpl" <> suffix <> ".m"]],
           {}
         ];
         svrepK = Join[
-          Thread @ Rule[basisSVList[[k]], ((Series[#, {Y, 0, $Order}]) &) /@ Import[filePrefix <> "_svlist" <> suffix <> ".m"]],
+          Thread @ Rule[basisSVList[[k]], Normal /@ Import[filePrefix <> "_svlist" <> suffix <> ".m"]],
           mplRules
         ];
         
-        setup = setup + ((c /@ Range[offset + 1, offset + Length[ansatzK]]) . ansatzK) /. svrepK /. solt;
+        ansatzKRep = ansatzK /. svrepK;
+        ansatzKSeries = (Expand /@ ansatzKRep) /. Y^a_ /; a > $Order :> 0;
+        
+        setup = setup + ((c /@ Range[offset + 1, offset + Length[ansatzK]]) . ansatzKSeries) /. solt;
         offset = offset + Length[ansatzK];
       , {k, 1, Length[ansatzList]}];
     ];
@@ -175,6 +181,7 @@ RunCoefficientSolving[rootDir_, label_, config_,
       ansatzK = ansatzList[[k]];
       coeffK = Table[values[[offset + i]], {i, 1, Length[ansatzK]}];
       resK = Sum[coeffK[[i]] * ansatzK[[i]], {i, 1, Length[ansatzK]}];
+      resK = resK /. f[a_, a_] :> f[a]^2/2;
       
       AppendTo[finalResultList, Expand[resK]];
       AppendTo[coeffListAll, coeffK];

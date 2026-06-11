@@ -707,6 +707,7 @@ The run script `runs/<label>/run.wl`:
 | 12 SeriesExpansion functions verbatim from `svbwalkthrough.wl` | Skill 1 |
 | 6 `zrep` definitions per limit | Skill 1 |
 | `filepath` shadowing removed from `boundary_agent.wl` | Skill 2 |
+| Simplify final result constants: replace `f[a_, a_] :> f[a]^2 / 2` | Skill 3 (solve_agent.wl) |
 
 ### Loop-order convention
 
@@ -772,3 +773,26 @@ Only the run directory and project-root files (e.g., `<label>_ans.m`) should rem
 * **Issue:** Run logs (`run.log` in the run folders) only contained log lines after the start of Skill 3, losing the log history from Preflight, Boundary (Skill 2), and Series (Skill 1) stages.
 * **Root Cause:** At the start of `RunCoefficientSolving`, `solve_agent.wl` opened `run.log` using `OpenWrite`, which truncated the file and erased all existing content. Since the main orchestrator/shell command already redirects standard output to `run.log`, this manual redirect was redundant.
 * **Resolution:** Removed the manual `OpenWrite` log stream initialization and `$Output` manipulation from `solve_agent.wl`. This allows all stages of the workflow to log sequentially and append naturally to `run.log`.
+
+### 8.3 Permutation Order Mismatch & Double Inversion
+* **Issue:** In the multi-component bootstrap problem `fourloopI42`, the verification stage reported mismatches for Limits 2, 3, and 4, and the solver log showed `ComplexInfinity` for the target data on Limits 3 and 4.
+* **Root Cause:** Two related coordinate mapping bugs existed in the workflow orchestration:
+  1. **Permutation Order Clash:** The `$Perms` list in `config.wl` was sorted lexicographically, whereas the limit suffix order in `solve_agent.wl` and `workflow_engine.wl` was hardcoded to group limits by proximity:
+     - 1, 2: $u \to 0$ limits (Perms `{1,2,3,4}` and `{2,1,3,4}`)
+     - 3, 4: $u \to \infty$ limits (Perms `{1,3,2,4}` and `{2,3,1,4}`)
+     - 5, 6: $u \to 1$ limits (Perms `{3,1,2,4}` and `{3,2,1,4}`)
+     Due to this clash, `solve_agent.wl` mapped the ansatz and target data for Limits 2 and 3 using swapped permutations.
+  2. **Double Inversion Bug:** `workflow_engine.wl` evaluated coefficients at `u -> 1/invu` for Limits 3 and 4. However, `EvaluateCoeff` already transforms the coefficient into the permuted frame where the expansion limit is *always* $u_{new} \to 0$ (for both original $u \to 0$ and $u \to \infty$ limits). Performing a second coordinate inversion on the coefficient generated a pole at `invu -> 0`, evaluating to `ComplexInfinity`.
+* **Hardcoded Rules & Resolutions:**
+  1. **Strict Permutation Solving Order:** The global `$Perms` list in `config.wl` is hardcoded to always align with the limit suffix solving order:
+     ```wolfram
+     $Perms = {{1, 2, 3, 4}, {2, 1, 3, 4}, {1, 3, 2, 4}, {2, 3, 1, 4}, {3, 1, 2, 4}, {3, 2, 1, 4}};
+     ```
+  2. **Coefficient Limit Evaluation:** In `workflow_engine.wl`, the coefficient `coeffVal` is evaluated at `u -> 0` for all $u \to 0$ and $u \to \infty$ limits (Limits 1, 2, 3, and 4):
+     ```wolfram
+     coeffVal = Switch[i,
+       1 | 2 | 3 | 4, coeffValRaw /. {u -> 0},
+       5 | 6, coeffValRaw
+     ];
+     ```
+

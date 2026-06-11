@@ -103,8 +103,14 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
       ];
       
       data = Import[subPath] // Normal;
-      coeffVal = EvaluateCoeff[coeffList[[p]], perm];
-      subTargetData = subTargetData + Expand[coeffVal * data];
+      Module[{coeffValRaw},
+        coeffValRaw = EvaluateCoeff[coeffList[[p]], perm];
+        coeffVal = Switch[i,
+          1 | 2 | 3 | 4, coeffValRaw /. {u -> 0},
+          5 | 6, coeffValRaw
+        ];
+        subTargetData = subTargetData + Expand[Normal[Series[coeffVal * data, {Y, 0, order}]]];
+      ];
     , {p, 1, Length[integrandList]}];
     subTargetData
   , {i, 1, 6}];

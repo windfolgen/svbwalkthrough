@@ -304,7 +304,7 @@ MPartition[olist_, tag_] := Module[
 
 Options[GenTensorProjection] = {"krep" -> {}, "outputrank" -> 0};
 GenTensorProjection[indexlist_, tagp_, OptionsPattern[]] := Module[
-  {tensor, l, b, bv, rep, c, cv, sys, sol, start},
+  {tensor, l, M, sol, start, krep1, uVal, kList, invM, invMScaled, solFactored},
   start = SessionTime[];
   tensor = MPartition[indexlist, tagp];
   l = Length[tensor];
@@ -312,27 +312,36 @@ GenTensorProjection[indexlist_, tagp_, OptionsPattern[]] := Module[
     Print["dimensions: ", l];
     Print["indexlist: ", indexlist]
   ];
-  bv = b /@ Range[l];
-  cv = c /@ Range[l];
-  rep = Thread@Rule[bv, tensor];
-  sys = Table[
-    ((tensor[[i]]*(cv . tensor) // Expand) /. OptionValue["krep"]) == bv[[i]], 
+  
+  uVal = d2[1, tagp] /. OptionValue["krep"];
+  krep1 = {d2[1, tagp] -> 1};
+  M = Table[
+    ((tensor[[i]] * tensor[[j]] // Expand) /. krep1),
+    {i, 1, l}, {j, 1, l}
+  ];
+  
+  invM = Inverse[M];
+  
+  kList = Table[
+    Module[{expanded = Expand[tensor[[i]]], firstTerm},
+      firstTerm = If[Head[expanded] === Plus, expanded[[1]], expanded];
+      Length[Cases[{firstTerm}, vc[tagp, _], Infinity]]
+    ],
     {i, 1, l}
   ];
-  sol = Flatten[Solve[sys, cv]];
-  If[l == 1,
-    Print["[GenTensorProjection l=1 debug]"];
-    Print["  cv: ", InputForm[cv]];
-    Print["  tensor: ", InputForm[tensor]];
-    Print["  cv . tensor: ", InputForm[cv . tensor]];
-    Print["  sol: ", InputForm[sol]];
-    Print["  cv . tensor /. sol: ", InputForm[cv . tensor /. sol]];
-    Print["  Normal[CoefficientArrays[cv.tensor/.sol, bv]]: ", InputForm[Normal[CoefficientArrays[cv . tensor /. sol, bv]]]];
+  
+  invMScaled = Table[
+    invM[[i, j]] * uVal^(-(kList[[i]] + kList[[j]])/2),
+    {i, 1, l}, {j, 1, l}
   ];
+  
+  sol = invMScaled . tensor;
+  solFactored = Factor /@ sol;
+  
   If[l > 24, 
     Print["time consuming: ", SessionTime[] - start]
   ];
-  Return[{Normal[CoefficientArrays[cv . tensor /. sol, bv]][[2]] // Factor, tensor}]
+  Return[{solFactored, tensor}]
 ];
 
 FindTensor::usage = "FindTensor[tensor,record] finds a tensor structure in the hashed record.";

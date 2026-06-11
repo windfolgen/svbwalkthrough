@@ -1,75 +1,56 @@
+(* scratch/test_u_scaling.wl *)
 $HistoryLength = 0;
 rootDir = "/Users/windfolgen/Documents/AntiGravity/svbwalkthrough";
-SetDirectory[rootDir];
+asymDir = FileNameJoin[{rootDir, "asym"}];
 
-Get[FileNameJoin[{rootDir, "config.wl"}]];
 Get["LiteRed2`"];
 SetDim[d];
 Declare[{l1, l2, l3, l4, p}, Vector, {u}, Number];
 SetConstraints[{p}, sp[p, p] = u];
+
 Do[
-  Get[FileNameJoin[{rootDir, "asym", "Bases", b, b}]];
+  Get[FileNameJoin[{asymDir, "Bases", b, b}]];
   Quiet[ExecuteDefinitions[ToExpression[b]]];
-, {b, $LiteRedBases}];
+, {b, {"asym", "asym3L", "asym2L", "asym1L"}}];
 
-Get[FileNameJoin[{rootDir, "asym", "asym_new.wl"}]];
+Get[FileNameJoin[{asymDir, "asym_new.wl"}]];
 
-integrand = (x[1,7] x[2,4] x[3,4] x[5,6])/(x[1,5] x[1,6] x[2,5] x[2,7] x[3,6] x[3,7] x[4,5] x[4,6] x[4,8] x[5,7] x[5,8] x[6,7] x[6,8] x[7,8]);
-perm = {2, 1, 3, 4};
-loops = {5, 6, 7, 8};
-order = 4;
+(* Rank 4 shape: {2, 2} *)
+idxList = {{m[1], m[2]}, {m[3], m[4]}};
+tag = 2;
 
-intCase = integrand /. {x[a__] :> (x[a] /. Thread@Rule[{1, 2, 3, 4}, perm])};
-exp = RegionExpand[intCase, loops, "order" -> order, "check" -> False];
-{topOverall, top1, top2} = exp[[1]];
-topArray = {top1, top2};
-result = Flatten[ToTensorProduct[#, topOverall, top1, top2, "check" -> False] & /@ (exp[[2]]), 1];
+Print["Running GenTensorProjection with u..."];
+t0 = SessionTime[];
+tpWithU = GenTensorProjection[idxList, tag, "krep" -> {d2[1, tag] -> u}];
+Print["Done in ", SessionTime[] - t0, "s"];
 
-k = 4074;
-i = 1; (* Topology 1 *)
+Print["Running GenTensorProjection with u -> 1..."];
+t0 = SessionTime[];
+tpWith1 = GenTensorProjection[idxList, tag, "krep" -> {d2[1, tag] -> 1}];
+Print["Done in ", SessionTime[] - t0, "s"];
 
-vclist = {Cases[{result[[k, 2]]}, vc[__], Infinity] // DeleteDuplicates, Cases[{result[[k, 3]]}, vc[__], Infinity] // DeleteDuplicates};
-tem = GatherBy[vclist[[i]], First] /. {vc[a_, b_] :> b} // SortBy[#, Length] &;
-Print["vc list shape for top 1: ", Length /@ tem];
+matU = tpWithU[[1]];
+mat1 = tpWith1[[1]];
+tensor = tpWithU[[2]];
+l = Length[tensor];
 
-(* Method A: u symbolic in GenTensorProjection *)
-tpA = GenTensorProjection[tem, p, "krep" -> {d2[1, p] -> u}];
-tpA = tpA /. {p -> 2};
+(* Count vector occurrences in each tensor basis element *)
+kList = Table[
+  Module[{expanded = Expand[tensor[[i]]], firstTerm},
+    firstTerm = If[Head[expanded] === Plus, expanded[[1]], expanded];
+    Length[Cases[{firstTerm}, vc[tag, _], Infinity]]
+  ],
+  {i, 1, l}
+];
 
-(* Method B: u -> 1 in GenTensorProjection *)
-tpB = GenTensorProjection[tem, p, "krep" -> {d2[1, p] -> 1}];
-tpB = tpB /. {p -> 2};
+Print["kList: ", kList];
 
-(* Check difference between matrices tpA[[1]] and tpB[[1]] *)
-Print["Are the matrices identical if we set u->1 in tpA[[1]]? ", (tpA[[1]] /. u -> 1) === tpB[[1]]];
+(* Scale tpWith1[[1]] and compare *)
+tpReconstructed = Table[
+  mat1[[j]] * u^(-kList[[j]]/2),
+  {j, 1, l}
+];
 
-(* Let's run the full contraction for both methods *)
-temExpr = (result[[k, i + 1]]*(tpA[[2]]) /. {p -> (i + 1)} // Expand) /. {d[a_, b_] :> (d2[1, a] + d2[1, b] - d2[a, b])/2} /. {d2[1, 3] -> 1, d2[1, 2] -> u, d2[2, 3] -> v, d[a_, 1] :> 0} /. {G[i, a_] :> Times @@ (Thread@Power[topArray[[i]], -a])} // Expand;
-
-temp = Reap[
-  Do[
-    tem1 = temExpr[[j]] // Expand;
-    If[Head[tem1] === Plus, tem1List = List @@ tem1, tem1List = {tem1}];
-    Sow[Plus @@ Reap[
-      Do[
-        tem2 = ClassifyTopology[tem1List[[l]], topArray[[i]], i, "loops" -> result[[k, -1, i]], "ClassifySub" -> False];
-        Sow[Times @@ Take[tem2, 3]]
-      , {l, 1, Length[tem1List]}]
-    ][[2, 1]]]
-  , {j, 1, Length[temExpr]}]
-][[2, 1]];
-
-glist = Cases[{temp}, _G, Infinity] // DeleteDuplicates;
-repG = AssociationMap[h[Hash[#]] &, glist];
-tempHashed = temp /. repG;
-
-(* Contraction with A *)
-coeffA = tpA[[1]] . tempHashed;
-resA = Table[coeffA[[jj]] * tpA[[2]][[jj]], {jj, 1, Length[tpA[[2]]]}];
-
-(* Contraction with B *)
-coeffB = tpB[[1]] . tempHashed;
-resB = Table[coeffB[[jj]] * tpB[[2]][[jj]], {jj, 1, Length[tpB[[2]]]}];
-
-Print["Are the full contracted results identical? ", resA === resB];
-Print["If not, is the difference zero? ", Expand[Total[resA] - Total[resB]] === 0];
+diff = matU - tpReconstructed // Expand // Simplify;
+Print["Max difference: ", Max[Abs[diff /. {d -> 4, u -> 2}]]];
+Print["Are they algebraically identical? ", diff === Table[0, {l}]];

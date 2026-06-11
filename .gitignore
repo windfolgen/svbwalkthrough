@@ -15,7 +15,8 @@
 
 # Large intermediate data
 IBPReduction*/
-asym/
+scratch/
+test/
 
 # Large data archives
 *.tar.gz

@@ -93,7 +93,7 @@ res1 = ParallelTable[
   ],
   {i, 1, len1}
 ];
-Export["data/test_exact/allsvlistmpl_fourloop_invzze1_inuv.txt", ToString[InputForm[res1], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_fourloop_invzze1_inuv.txt", ToString[InputForm[res1], PageWidth -> Infinity], "String"];
 Print["Finished e1uv."];
 
 (* === e1uvp === *)
@@ -109,7 +109,7 @@ res1P = ParallelTable[
   ],
   {i, 1, len1}
 ];
-Export["data/test_exact/allsvlistmpl_fourloop_invzze1_inuvp.txt", ToString[InputForm[res1P], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_fourloop_invzze1_inuvp.txt", ToString[InputForm[res1P], PageWidth -> Infinity], "String"];
 Print["Finished e1uvp."];
 
 (* === e0uv === *)
@@ -125,7 +125,7 @@ res0 = ParallelTable[
   ],
   {i, 1, len0}
 ];
-Export["data/test_exact/allsvlistmpl_fourloop_invzze0_inuv.txt", ToString[InputForm[res0], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_fourloop_invzze0_inuv.txt", ToString[InputForm[res0], PageWidth -> Infinity], "String"];
 Print["Finished e0uv."];
 
 (* === e0uvp === *)
@@ -141,7 +141,7 @@ res0P = ParallelTable[
   ],
   {i, 1, len0}
 ];
-Export["data/test_exact/allsvlistmpl_fourloop_invzze0_inuvp.txt", ToString[InputForm[res0P], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_fourloop_invzze0_inuvp.txt", ToString[InputForm[res0P], PageWidth -> Infinity], "String"];
 Print["Finished e0uvp."];
 
 (* === einfuv === *)
@@ -157,7 +157,7 @@ resInf = ParallelTable[
   ],
   {i, 1, lenInf}
 ];
-Export["data/test_exact/allsvlistmpl_fourloop_invzzeinf_inuv.txt", ToString[InputForm[resInf], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_fourloop_invzzeinf_inuv.txt", ToString[InputForm[resInf], PageWidth -> Infinity], "String"];
 Print["Finished einfuv."];
 
 (* === einfuvp === *)
@@ -173,7 +173,7 @@ resInfP = ParallelTable[
   ],
   {i, 1, lenInf}
 ];
-Export["data/test_exact/allsvlistmpl_fourloop_invzzeinf_inuvp.txt", ToString[InputForm[resInfP], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_fourloop_invzzeinf_inuvp.txt", ToString[InputForm[resInfP], PageWidth -> Infinity], "String"];
 Print["Finished einfuvp."];
 
 CloseKernels[];
