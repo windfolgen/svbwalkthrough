@@ -1,4 +1,5 @@
 filepath = DirectoryName[$InputFileName];
+If[$KernelID === 0, If[!MemberQ[$Packages, "FiniteFlow`"], Needs["FiniteFlow`"]]];
 
 (*the functions for asymptotic expansion*)
 ClearAll[d, d2, invd2];
@@ -320,7 +321,7 @@ GenTensorProjection[indexlist_, tagp_, OptionsPattern[]] := Module[
     {i, 1, l}, {j, 1, l}
   ];
   
-  invM = Inverse[M];
+  invM = FFInverse[M];
   
   kList = Table[
     Module[{expanded = Expand[tensor[[i]]], firstTerm},

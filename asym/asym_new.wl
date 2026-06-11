@@ -1,4 +1,15 @@
 filepath = DirectoryName[$InputFileName];
+$hasFiniteFlow = False;
+If[$KernelID === 0,
+  If[FindFile["FiniteFlow`"] =!= $Failed,
+    If[Quiet[Needs["FiniteFlow`"]] =!= $Failed,
+      $hasFiniteFlow = True;
+    ]
+  ];
+  If[!$hasFiniteFlow,
+    Print["[Warning] FiniteFlow is not installed or could not be loaded. Falling back to standard Inverse[]. Installing FiniteFlow is highly recommended for optimal performance."]
+  ]
+];
 
 (*the functions for asymptotic expansion*)
 ClearAll[d, d2, invd2];
@@ -320,7 +331,11 @@ GenTensorProjection[indexlist_, tagp_, OptionsPattern[]] := Module[
     {i, 1, l}, {j, 1, l}
   ];
   
-  invM = Inverse[M];
+  If[TrueQ[$hasFiniteFlow] && $KernelID === 0,
+    invM = FFInverse[M];
+  ,
+    invM = Inverse[M];
+  ];
   
   kList = Table[
     Module[{expanded = Expand[tensor[[i]]], firstTerm},
