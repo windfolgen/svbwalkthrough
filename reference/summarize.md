@@ -357,7 +357,7 @@ The agent strictly follows the template. Only the integrand expression varies pe
 Temporary results in `asym/tmp/` (e.g., `targetIntegrals_reduced.m`) are reused across bootstrap problems.
 
 ### 2.4 IBP Output Redirection
-`RunBoundaryConditions` supports a `"IBPDir"` option (default: `"/Users/<user>/Documents/aether/svbwalkthrough_ibp"`) to redirect LiteRed2 IBP reduction tables out of the workspace. Before `RunAsymExpansionParallel` runs, the working directory is temporarily changed to `"IBPDir"` so that LiteRed2's `IBPReduce` writes its `.mx` caches there instead of creating `IBPReduction*/` directories in the project root.
+`RunBoundaryConditions` supports a `"IBPDir"` option (default: `Automatic`, dynamically falling back to `$IBPDir` in `config.wl` or `./IBPReduction`) to redirect LiteRed2 IBP reduction tables out of the workspace. Before `RunAsymExpansionParallel` runs, the working directory is temporarily changed to `"IBPDir"` so that LiteRed2's `IBPReduce` writes its `.mx` caches there instead of creating `IBPReduction*/` directories in the project root.
 
 ```mathematica
 RunBoundaryConditions[rootDir, label, order, loopPoints,
@@ -629,6 +629,12 @@ The run script:
 - Basis: `allsvlist_fourloop.m` (510 SVHPL), `allsvlistmpl_fourloop_invzz.m` (280 MPL)
 - Result: 146-term combination, 105 non-zero coefficients
 - IBP output: redirected to `~/Documents/aether/svbwalkthrough_ibp/` via `"IBPDir"` option
+
+### Run: `fourloopI108`
+- Integrand: `(x[1,2] x[1,3] x[1,4] x[5,6]) / (x[1,5] x[1,6] x[1,7] x[1,8] x[2,6] x[2,8] x[3,5] x[3,7] x[4,5] x[4,6] x[5,7] x[5,8] x[6,7] x[6,8])` (14 propagators)
+- LS: `1/(z-zz)`, n=2, poleType=`"simple"`, k=1
+- Ansatz: `allsvlistoddans.m` (nested list grouped by weight, flattened to 225 elements in parser)
+- Status: Boundary conditions and series expansions successfully computed and cached. The solving stage was executed and verified up to Limit 1 but is currently suspended (awaiting the correct ansatz from the user).
 
 ### Key fixes baked into the pipeline
 | Fix | Where |

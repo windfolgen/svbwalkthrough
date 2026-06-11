@@ -368,7 +368,7 @@ The agent strictly follows the template. Only the integrand expression varies pe
 Temporary results in `asym/tmp/` (e.g., `targetIntegrals_reduced.m`) are reused across bootstrap problems.
 
 ### 2.4 IBP Output Redirection
-`RunBoundaryConditions` supports a `"IBPDir"` option (default: `"/Users/<user>/Documents/aether/svbwalkthrough_ibp"`) to redirect LiteRed2 IBP reduction tables out of the workspace. Before `RunAsymExpansionParallel` runs, the working directory is temporarily changed to `"IBPDir"` so that LiteRed2's `IBPReduce` writes its `.mx` caches there instead of creating `IBPReduction*/` directories in the project root.
+`RunBoundaryConditions` supports a `"IBPDir"` option (default: `Automatic`, dynamically falling back to `$IBPDir` in `config.wl` or `./IBPReduction`) to redirect LiteRed2 IBP reduction tables out of the workspace. Before `RunAsymExpansionParallel` runs, the working directory is temporarily changed to `"IBPDir"` so that LiteRed2's `IBPReduce` writes its `.mx` caches there instead of creating `IBPReduction*/` directories in the project root.
 
 ```mathematica
 RunBoundaryConditions[rootDir, label, order, loopPoints,
@@ -683,6 +683,12 @@ The run script `runs/<label>/run.wl`:
 - Result: 146-term combination, 105 non-zero coefficients
 - IBP output: redirected to `~/Documents/aether/svbwalkthrough_ibp/` via `"IBPDir"` option
 
+### Run: `fourloopI108`
+- Integrand: `(x[1,2] x[1,3] x[1,4] x[5,6]) / (x[1,5] x[1,6] x[1,7] x[1,8] x[2,6] x[2,8] x[3,5] x[3,7] x[4,5] x[4,6] x[5,7] x[5,8] x[6,7] x[6,8])` (14 propagators)
+- LS: `1/(z-zz)`, n=2, poleType=`"simple"`, k=1
+- Ansatz: `allsvlistoddans.m` (nested list grouped by weight, flattened to 225 elements in parser)
+- Status: Boundary conditions and series expansions successfully computed and cached. The solving stage was executed and verified up to Limit 1 but is currently suspended (awaiting the correct ansatz from the user).
+
 ### Key fixes baked into the pipeline
 | Fix | Where |
 |-----|-------|
@@ -795,4 +801,9 @@ Only the run directory and project-root files (e.g., `<label>_ans.m`) should rem
        5 | 6, coeffValRaw
      ];
      ```
+
+### 8.4 Nested Ansatz Flatness Incompatibility
+* **Issue:** When running a bootstrap task with a nested ansatz (e.g. grouped by transcendental weight, like `allsvlistoddans.m`), the coefficient solver constructed dummy coefficients like `{{{}[[1]], {}[[2]], ...}}` in `coeff_sol.m` and failed to solve the system.
+* **Root Cause:** `input_parser.wl` passed the nested list directly as the ansatz for a leading singularity. In `solve_agent.wl`, `Length[ansatz]` evaluated to the number of sublists (e.g. 4) instead of the total number of terms (e.g. 225). This caused dimension mismatches during dot products, leading `Variables` to find zero variables and returning empty solutions.
+* **Resolution:** Updated `input_parser.wl` to wrap all parsed ansatz arrays with `Flatten`, ensuring downstream solvers receive a flat list of elements regardless of the file's internal grouping.
 

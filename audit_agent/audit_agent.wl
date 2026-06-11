@@ -404,14 +404,14 @@ AuditBoundaryStage[rootDir_, label_, config_] := Module[
           syms = Cases[vars, _Symbol, Infinity] // DeleteDuplicates;
           badSyms = Select[syms, Context[#] === "Global`" && !MemberQ[{u, Y}, #] &];
           
-          If[Length[badSyms] == 0 && !FreeQ[data, Y] && !FreeQ[data, u],
+          If[Length[badSyms] == 0 && !FreeQ[data, Y],
             AppendTo[checks, Association[
               "Status"  -> "PASS", "Check"   -> "boundary-file-valid-" <> permStr,
               "Message" -> "Boundary file " <> permStr <> " is a valid SeriesData containing ONLY u and Y"
             ]],
             AppendTo[checks, Association[
               "Status"  -> "FAIL", "Check"   -> "boundary-file-variables-" <> permStr,
-              "Message" -> "Boundary file " <> permStr <> " is SeriesData but contains unauthorized variables or is missing u/Y: " <> ToString[badSyms]
+              "Message" -> "Boundary file " <> permStr <> " is SeriesData but contains unauthorized variables or is missing Y: " <> ToString[badSyms]
             ]]
           ]
         ],

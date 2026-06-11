@@ -1,8 +1,8 @@
 BasisDirectory[asym] = StringDrop[DirectoryName[$Input], -1]
 asym /: BasisSectors[asym] := Get[StringJoin[BasisDirectory[asym], 
     "/BasisSectors[asym]"]]
-asym /: CurrentState[asym] := <|NewDsBasis -> True, GenerateIBP -> True, 
-   AnalyzeSectors -> True, FindSymmetries -> False|>
+asym /: CurrentState[asym] := Association[NewDsBasis -> True, 
+   GenerateIBP -> True, AnalyzeSectors -> True, FindSymmetries -> False]
 asym /: CutDs[asym] := {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 asym /: Definitions[asym] := {Hold[MetricTensor[] === d, SetDim[d]], 
    Hold[VecQ[l1], Declare[l1, Vector]], Hold[VecQ[l2], Declare[l2, Vector]], 
@@ -32837,7 +32837,30 @@ asym /: LI[asym] := Get[StringJoin[BasisDirectory[asym], "/LI[asym]"]]
 asym /: LMs[asym] := {l1, l2, l3, l4}
 asym /: MappedSectors[asym] := Get[StringJoin[BasisDirectory[asym], 
     "/MappedSectors[asym]"]]
-asym /: MIs[asym] := Get[StringJoin[BasisDirectory[asym], "/MIs[asym]"]]
+asym /: MIs[asym] := {j[asym, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0], 
+   j[asym, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0], 
+   j[asym, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0], 
+   j[asym, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0], 
+   j[asym, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0], 
+   j[asym, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0], 
+   j[asym, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1], 
+   j[asym, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0], 
+   j[asym, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1], 
+   j[asym, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0], 
+   j[asym, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0], 
+   j[asym, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0], 
+   j[asym, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0], 
+   j[asym, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0], 
+   j[asym, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0], 
+   j[asym, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0], 
+   j[asym, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0], 
+   j[asym, 0, 2, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0], 
+   j[asym, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1], 
+   j[asym, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0], 
+   j[asym, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0], 
+   j[asym, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0], 
+   j[asym, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0], 
+   j[asym, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0]}
 asym /: NDs[asym] := 14
 asym /: NonZeroSectors[asym] := Get[StringJoin[BasisDirectory[asym], 
     "/NonZeroSectors[asym]"]]

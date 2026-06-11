@@ -26,7 +26,7 @@
 (* =================================================================== *)
 
 ClearAll[RunBoundaryConditions, VerifyOrConstructAssociation, CheckIntegrandCache];
-Options[RunBoundaryConditions] = {"InputDir" -> None, "IBPDir" -> "/Users/windfolgen/Documents/aether/svbwalkthrough_ibp"};
+Options[RunBoundaryConditions] = {"InputDir" -> None, "IBPDir" -> Automatic};
 
 VerifyOrConstructAssociation[rootDir_] := Module[
   {boundaryDir, assocFile, assoc, runsDir, runs, label, inputPath, integrandVal, p, integrandList, files},
@@ -227,6 +227,9 @@ RunBoundaryConditions[rootDir_, label_, config_, order_:3, opts : OptionsPattern
 
   (* redirect IBP reduction output to external directory *)
   ibpDir = OptionValue["IBPDir"];
+  If[ibpDir === Automatic || ibpDir === None,
+    ibpDir = If[ValueQ[$IBPDir] && $IBPDir =!= None, $IBPDir, FileNameJoin[{rootDir, "IBPReduction"}]]
+  ];
   If[!DirectoryQ[ibpDir], CreateDirectory[ibpDir]];
   origDir = Directory[];
   SetDirectory[ibpDir];

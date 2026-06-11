@@ -6,6 +6,6 @@ integrand=(x[1,6] x[2,3] x[2,4])/(x[1,7] x[1,8] x[2,5] x[2,6] x[2,8] x[3,6] x[3,
 leadingsingularity=1/(z-zz);
 
 
-ansatz=Import[FileNameJoin[{DirectoryName[$InputFileName], "allsvlistoddans.m"}]];
+ansatz=Import[FileNameJoin[{DirectoryName[$InputFileName], "svlistoddansatz_w8.m"}]];
 
 OrderY=4;

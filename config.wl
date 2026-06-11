@@ -8,6 +8,9 @@
 (* The data directory for all SV/MPL basis and series expansion files *)
 $DataDir = FileNameJoin[{rootDir, "data"}];
 
+(* The directory to store IBP reduction files (caching for LiteRed2) *)
+$IBPDir = "/Users/windfolgen/Documents/aether/svbwalkthrough_ibp";
+
 (* LiteRed topology bases loaded by boundary_agent *)
 $LiteRedBases = {"asym", "asym3L", "asym2L", "asym1L"};
 

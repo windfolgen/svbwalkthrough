@@ -57,7 +57,10 @@ ParseInput[runDir_String] := Module[
 
   (* 4. Parse Leading Singularities & Ansatz *)
   If[ValueQ[lsConfigList],
-    outLsConfigList = lsConfigList;
+    outLsConfigList = Table[
+      {lsConfigList[[k, 1]], lsConfigList[[k, 2]], Flatten[lsConfigList[[k, 3]]]},
+      {k, 1, Length[lsConfigList]}
+    ];
   ,
     (* Helper to extract cType and cPrefactor from a single LS expression *)
     ExtractPole[expr_, integr_] := Module[{den, pOrder, primaryPoleOrder, pref, cType, zRoot0, zzRoot0},
@@ -90,7 +93,7 @@ ParseInput[runDir_String] := Module[
       outLsConfigList = Table[
         Module[{extracted},
           extracted = ExtractPole[leadingsingularitylist[[k]], outIntegrandList[[k]]];
-          {extracted[[1]], extracted[[2]], ansatzlist[[k]]}
+          {extracted[[1]], extracted[[2]], Flatten[ansatzlist[[k]]]}
         ],
         {k, 1, Length[leadingsingularitylist]}
       ];
@@ -106,7 +109,7 @@ ParseInput[runDir_String] := Module[
       
       Module[{extracted},
         extracted = ExtractPole[leadingsingularity, outIntegrandList[[1]]];
-        outLsConfigList = {{extracted[[1]], extracted[[2]], ansatz}};
+        outLsConfigList = {{extracted[[1]], extracted[[2]], Flatten[ansatz]}};
       ];
     ];
   ];
