@@ -172,26 +172,49 @@ RunCoefficientSolving[rootDir_, label_, config_,
   Export[FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}], solt /. c[i_] :> Symbol["c"][i]];
   Print["Solution written to ", FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}]];
 
-  Module[{values, offset, finalResultList, coeffListAll, ansatzK, resK, coeffK},
-    values = varsList /. solt;
-    finalResultList = {};
-    coeffListAll = {};
-    offset = 0;
-    Do[
-      ansatzK = ansatzList[[k]];
-      coeffK = Table[values[[offset + i]], {i, 1, Length[ansatzK]}];
-      resK = Sum[coeffK[[i]] * ansatzK[[i]], {i, 1, Length[ansatzK]}];
-      resK = resK /. f[a_, a_] :> f[a]^2/2;
+  Module[{isSolved = True, totalCoeffs = $LEN, lhsVars, unsolvedVars, missingCoeffs},
+    If[solt === {} || Head[solt] =!= List,
+      isSolved = False;
+    ,
+      lhsVars = solt[[All, 1]];
+      missingCoeffs = Select[Table[c[i], {i, 1, totalCoeffs}], !MemberQ[lhsVars, #] &];
+      unsolvedVars = Cases[solt[[All, 2]], _c | _C | _(c$[_]) | _(C$[_]) | _Symbol?((StringStartsQ[SymbolName[#], "c"] || StringStartsQ[SymbolName[#], "c$"] || StringStartsQ[SymbolName[#], "C"] || StringStartsQ[SymbolName[#], "C$"]) &), Infinity] // DeleteDuplicates;
       
-      AppendTo[finalResultList, Expand[resK]];
-      AppendTo[coeffListAll, coeffK];
-      
-      offset = offset + Length[ansatzK];
-    , {k, 1, Length[ansatzList]}];
-    
-    Export[FileNameJoin[{rootDir, "runs", label, "result.m"}], finalResultList];
-    Export[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}], coeffListAll];
-    Print["Final result.m and coeff_sol.m saved to runs/", label, "/"];
+      If[Length[missingCoeffs] > 0 || Length[unsolvedVars] > 0,
+        isSolved = False;
+      ];
+    ];
+
+    If[isSolved,
+      (* Export results *)
+      Module[{values, offset, finalResultList, coeffListAll, ansatzK, resK, coeffK},
+        values = varsList /. solt;
+        finalResultList = {};
+        coeffListAll = {};
+        offset = 0;
+        Do[
+          ansatzK = ansatzList[[k]];
+          coeffK = Table[values[[offset + i]], {i, 1, Length[ansatzK]}];
+          resK = Sum[coeffK[[i]] * ansatzK[[i]], {i, 1, Length[ansatzK]}];
+          resK = resK /. f[a_, a_] :> f[a]^2/2;
+          
+          AppendTo[finalResultList, Expand[resK]];
+          AppendTo[coeffListAll, coeffK];
+          
+          offset = offset + Length[ansatzK];
+        , {k, 1, Length[ansatzList]}];
+        
+        Export[FileNameJoin[{rootDir, "runs", label, "result.m"}], finalResultList];
+        Export[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}], coeffListAll];
+        Print["Final result.m and coeff_sol.m saved to runs/", label, "/"];
+      ];
+    ,
+      Print["[WARNING] Coefficients are not totally solved! Skipping export of result.m and coeff_sol.m."];
+      Quiet[
+        If[FileExistsQ[FileNameJoin[{rootDir, "runs", label, "result.m"}]], DeleteFile[FileNameJoin[{rootDir, "runs", label, "result.m"}]]];
+        If[FileExistsQ[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}]], DeleteFile[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}]]];
+      ];
+    ];
   ];
 
 ];
