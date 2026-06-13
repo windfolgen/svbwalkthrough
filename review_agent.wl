@@ -25,7 +25,7 @@ LoadReviewAgent[rootDir_] := Module[{auditFile},
 (*  ReviewGate — unified entry point for per-stage review              *)
 (*    stage: "preflight" | "boundary" | "series" | "solve" | "pipeline" *)
 (* ------------------------------------------------------------------- *)
-ReviewGate[rootDir_, label_, stage_String, config_Association] := Module[
+ReviewGate[rootDir_, label_, stage_String, config_Association : <||>] := Module[
   {report},
 
   (* use full audit agent when available *)

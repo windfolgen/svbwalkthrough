@@ -21,3 +21,18 @@ test/
 # Large data archives
 *.tar.gz
 *.zip
+
+# Agent cache files and intermediate folders
+asym/tmp/*
+!asym/tmp/targetIntegrals_reduced.m
+asym/Bases/
+asym/logs/
+asym/boundary_agent/*
+!asym/boundary_agent/*.wl
+series_agent/*
+!series_agent/*.wl
+solve_agent/*
+!solve_agent/*.wl
+
+# Exclude large run result files exceeding GitHub limits
+runs/fourloopI108/result.m

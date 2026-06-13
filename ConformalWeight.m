@@ -73,13 +73,4 @@ IsNormalized[integrand_] := Module[
 
 (* Determine the appropriate additional prefactor based on normalization *)
 ClearAll[GetAdditionalPrefactor];
-GetAdditionalPrefactor[integrand_, basePrefactor_] := Module[
-  {normalized},
-  normalized = IsNormalized[integrand];
-  If[normalized,
-    (* If normalized with x[1,3]x[2,4], the v factor is already absorbed *)
-    Return[1],
-    (* Otherwise, use the base prefactor from leading singularity analysis *)
-    Return[basePrefactor]
-  ];
-];
+GetAdditionalPrefactor[integrand_, basePrefactor_] := basePrefactor;

@@ -479,7 +479,42 @@ AuditSolveStage[rootDir_, label_, config_] := Module[
   If[FileExistsQ[path],
     Quiet[data = Import[path], Import::nffil];
     If[ListQ[data] && AllTrue[data, MatchQ[#, _Rule | _RuleDelayed] &],
-      AppendTo[checks, Association["Status"  -> "PASS", "Check"   -> "solve-file-exists", "Message" -> "Solution file exists with " <> ToString[Length[data]] <> " rules"]],
+      AppendTo[checks, Association["Status"  -> "PASS", "Check"   -> "solve-file-exists", "Message" -> "Solution file exists with " <> ToString[Length[data]] <> " rules"]];
+      
+      (* Check for unsolved coefficients / free parameters *)
+      Module[{totalCoeffs, missingCoeffs, unsolvedVars},
+        totalCoeffs = If[KeyExistsQ[config, "LeadingSingularities"],
+          Total[Length /@ config["LeadingSingularities"][[All, 3]]],
+          Max[Cases[data[[All, 1]], Symbol["c"][i_Integer] :> i]]
+        ];
+        If[!IntegerQ[totalCoeffs] || totalCoeffs <= 0, totalCoeffs = 0];
+        
+        missingCoeffs = Select[Table[Symbol["c"][i], {i, 1, totalCoeffs}], !MemberQ[data[[All, 1]], #] &];
+        unsolvedVars = Cases[data[[All, 2]], _c | _C | _(c$[_]) | _(C$[_]) | _Symbol?((StringStartsQ[SymbolName[#], "c"] || StringStartsQ[SymbolName[#], "c$"] || StringStartsQ[SymbolName[#], "C"] || StringStartsQ[SymbolName[#], "C$"]) &), Infinity] // DeleteDuplicates;
+        
+        If[Length[missingCoeffs] > 0 || Length[unsolvedVars] > 0,
+          If[Length[missingCoeffs] > 0,
+            AppendTo[checks, Association[
+              "Status"  -> "WARN",
+              "Check"   -> "solve-coefficients-missing",
+              "Message" -> "Warning: some coefficients are missing from the solution: " <> ToString[missingCoeffs]
+            ]]
+          ];
+          If[Length[unsolvedVars] > 0,
+            AppendTo[checks, Association[
+              "Status"  -> "WARN",
+              "Check"   -> "solve-coefficients-unsolved",
+              "Message" -> "Warning: not all coefficients are uniquely solved. Free parameters remaining: " <> ToString[unsolvedVars]
+            ]]
+          ];
+        ,
+          AppendTo[checks, Association[
+            "Status"  -> "PASS",
+            "Check"   -> "solve-coefficients-complete",
+            "Message" -> "All " <> ToString[totalCoeffs] <> " coefficients are uniquely solved."
+          ]]
+        ];
+      ],
       AppendTo[checks, Association["Status"  -> "WARN", "Check"   -> "solve-file-format", "Message" -> "Solution file exists but not a list of rules"]]
     ],
     AppendTo[checks, Association["Status"  -> "FAIL", "Check"   -> "solve-file-missing", "Message" -> "Missing solution file: " <> path]]

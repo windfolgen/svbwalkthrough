@@ -1,2 +1,0 @@
-{{j[asym1L, (n1_)?Positive, (n2_)?Positive] :> Expand[j[asym1L, n1, n2]]}, 
- {j[asym1L, (n1_)?Positive, (n2_)?Positive] :> Expand[j[asym1L, n2, n1]]}}

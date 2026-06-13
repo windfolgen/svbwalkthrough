@@ -1,8 +1,0 @@
-{{j[asym2L, (n1_)?Positive, (n2_)?Positive, (n3_)?Positive, (n4_)?Positive, 
-    (n5_)?Positive] :> Expand[j[asym2L, n1, n2, n3, n4, n5]]}, 
- {j[asym2L, (n1_)?Positive, (n2_)?Positive, (n3_)?Positive, (n4_)?Positive, 
-    (n5_)?Positive] :> Expand[j[asym2L, n2, n1, n4, n3, n5]]}, 
- {j[asym2L, (n1_)?Positive, (n2_)?Positive, (n3_)?Positive, (n4_)?Positive, 
-    (n5_)?Positive] :> Expand[j[asym2L, n3, n4, n1, n2, n5]]}, 
- {j[asym2L, (n1_)?Positive, (n2_)?Positive, (n3_)?Positive, (n4_)?Positive, 
-    (n5_)?Positive] :> Expand[j[asym2L, n4, n3, n2, n1, n5]]}}

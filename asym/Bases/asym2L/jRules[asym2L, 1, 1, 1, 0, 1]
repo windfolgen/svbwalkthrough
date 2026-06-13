@@ -1,2 +1,0 @@
-{j[asym2L, (n1_)?Positive, (n2_)?Positive, (n3_)?Positive, (n4_)?NonPositive, 
-   (n5_)?Positive] :> Expand[j[asym2L, n4, n3, n2, n1, n5]]}

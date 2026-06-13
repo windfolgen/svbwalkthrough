@@ -7,4 +7,4 @@ leadingsingularity = 1/((z-zz)*(1-u));
 
 ansatz = Import[FileNameJoin[{DirectoryName[$InputFileName], "fourloopI41ansatz.m"}]];
 
-OrderY = 5;
+OrderY = 4;

@@ -105,6 +105,8 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
   Print["[Skill 1] Starting 6 expansions, poleType=", poleType, ", n=", weightN,
     ", k=", poleOrder, ", SVHPL indices=", Length[svIndices], ", MPL indices=", Length[mplIndices]];
     
+  If[Length[Kernels[]] == 0, LaunchKernels[]];
+    
   For[i = 1, i <= 6, i++,
     Module[{uRule, vRule, F, transformed, ptr, svFile, mplFile, svList, mplList, ExpandInuvList, svResList, mplResList,
             radical, sqrtSeries, expTerm, ext, sfxSuffix},
@@ -232,5 +234,6 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
     ]
   ];
 
+  CloseKernels[];
   Print["Series expansion files written to ", FileNameJoin[{rootDir, "series_agent"}]];
 ];
