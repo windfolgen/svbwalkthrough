@@ -149,7 +149,11 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
     svIndices = DeleteDuplicates[Select[svIndices, Positive]];
     
     basisSVReduced = fullBasisSV[[svIndices]];
-    AppendTo[basisSVList, basisSVReduced];
+    If[!FreeQ[cAnsatz, I0constant],
+      AppendTo[basisSVList, Append[basisSVReduced, I0constant]];
+    ,
+      AppendTo[basisSVList, basisSVReduced];
+    ];
     
     bestCount = 0;
     bestFile = None;
@@ -192,10 +196,11 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
     
     If[Length[lsConfigList] > 1,
       RunSeriesExpansion[rootDir, label <> "_ls" <> ToString[k], config, cPrefactor, cType, yOrder, svIndices, mplIndices, poleOrder, bestFile];
+      ReviewGate[rootDir, label <> "_ls" <> ToString[k], "series", config];
     ,
       RunSeriesExpansion[rootDir, label, config, cPrefactor, cType, yOrder, svIndices, mplIndices, poleOrder, bestFile];
+      ReviewGate[rootDir, label, "series", config];
     ];
-    ReviewGate[rootDir, label, "series", config];
     
   , {k, 1, Length[lsConfigList]}];
   seriesTime = SessionTime[] - (workflowStartTime + boundaryTime);

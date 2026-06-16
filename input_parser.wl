@@ -84,6 +84,14 @@ ParseInput[runDir_String] := Module[
       {cType, pref}
     ];
 
+    (* Normalize variable names if they are lists representing multiple LS *)
+    If[!ValueQ[leadingsingularitylist] && ValueQ[leadingsingularity] && ListQ[leadingsingularity],
+      leadingsingularitylist = leadingsingularity;
+    ];
+    If[!ValueQ[ansatzlist] && ValueQ[ansatz] && ListQ[ansatz] && And @@ (ListQ /@ ansatz),
+      ansatzlist = ansatz;
+    ];
+
     (* Handle Multi-LS mode from lists *)
     If[ValueQ[leadingsingularitylist] && ValueQ[ansatzlist],
       If[Length[leadingsingularitylist] =!= Length[ansatzlist],
@@ -92,7 +100,7 @@ ParseInput[runDir_String] := Module[
       ];
       outLsConfigList = Table[
         Module[{extracted},
-          extracted = ExtractPole[leadingsingularitylist[[k]], outIntegrandList[[k]]];
+          extracted = ExtractPole[leadingsingularitylist[[k]], outIntegrandList[[Min[k, Length[outIntegrandList]]]]];
           {extracted[[1]], extracted[[2]], Flatten[ansatzlist[[k]]]}
         ],
         {k, 1, Length[leadingsingularitylist]}
@@ -112,6 +120,21 @@ ParseInput[runDir_String] := Module[
         outLsConfigList = {{extracted[[1]], extracted[[2]], Flatten[ansatz]}};
       ];
     ];
+  ];
+
+  (* Tag terms free of I[...] with I0constant placeholder *)
+  outLsConfigList = Table[
+    Module[{ans = outLsConfigList[[k, 3]], newAns},
+      newAns = Table[
+        If[FreeQ[term, I],
+          term * I0constant,
+          term
+        ],
+        {term, ans}
+      ];
+      {outLsConfigList[[k, 1]], outLsConfigList[[k, 2]], newAns}
+    ],
+    {k, 1, Length[outLsConfigList]}
   ];
 
   config = <|

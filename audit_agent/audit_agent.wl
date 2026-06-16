@@ -364,17 +364,34 @@ AuditPreSolve[rootDir_, label_, config_] := Module[
   ];
 
   suffixes = {"e0uv","e0uvp","einfuv","einfuvp","e1uv","e1uvp"};
-  Table[
-    path = FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}];
-    If[FileExistsQ[path],
-      Quiet[data = Import[path], Import::nffil];
-      If[ListQ[data] && data =!= $Failed,
-        AppendTo[checks, Association["Status"->"PASS", "Check"->"presolve-series-" <> sfx, "Message"->"Series svlist " <> sfx <> " loaded (" <> ToString[Length[data]] <> " elements)"]],
-        AppendTo[checks, Association["Status"->"WARN", "Check"->"presolve-series-format-" <> sfx, "Message"->"Series svlist " <> sfx <> " exists but not a valid list"]]
+  If[KeyExistsQ[config, "LeadingSingularities"] && Length[config["LeadingSingularities"]] > 1,
+    Do[
+      Table[
+        path = FileNameJoin[{rootDir, "series_agent", label <> "_ls" <> ToString[k] <> "_svlist" <> sfx <> ".m"}];
+        If[FileExistsQ[path],
+          Quiet[data = Import[path], Import::nffil];
+          If[ListQ[data] && data =!= $Failed,
+            AppendTo[checks, Association["Status"->"PASS", "Check"->"presolve-series-ls"<>ToString[k]<>"-"<>sfx, "Message"->"Series svlist ls"<>ToString[k]<>" " <> sfx <> " loaded (" <> ToString[Length[data]] <> " elements)"]],
+            AppendTo[checks, Association["Status"->"WARN", "Check"->"presolve-series-format-ls"<>ToString[k]<>"-"<>sfx, "Message"->"Series svlist ls"<>ToString[k]<>" " <> sfx <> " exists but not a valid list"]]
+          ],
+          AppendTo[checks, Association["Status"->"FAIL", "Check"->"presolve-series-missing-ls"<>ToString[k]<>"-"<>sfx, "Message"->"Missing series file: " <> path]]
+        ],
+        {sfx, suffixes}
+      ]
+    , {k, 1, Length[config["LeadingSingularities"]]}]
+  ,
+    Table[
+      path = FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}];
+      If[FileExistsQ[path],
+        Quiet[data = Import[path], Import::nffil];
+        If[ListQ[data] && data =!= $Failed,
+          AppendTo[checks, Association["Status"->"PASS", "Check"->"presolve-series-" <> sfx, "Message"->"Series svlist " <> sfx <> " loaded (" <> ToString[Length[data]] <> " elements)"]],
+          AppendTo[checks, Association["Status"->"WARN", "Check"->"presolve-series-format-" <> sfx, "Message"->"Series svlist " <> sfx <> " exists but not a valid list"]]
+        ],
+        AppendTo[checks, Association["Status"->"FAIL", "Check"->"presolve-series-missing-" <> sfx, "Message"->"Missing series file: " <> path]]
       ],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"presolve-series-missing-" <> sfx, "Message"->"Missing series file: " <> path]]
-    ],
-    {sfx, suffixes}
+      {sfx, suffixes}
+    ]
   ];
 
   SVBAuditReport["presolve", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL",
@@ -443,26 +460,52 @@ AuditBoundaryStage[rootDir_, label_, config_] := Module[
 AuditSeriesStage[rootDir_, label_, config_] := Module[
   {checks = {}, suffixes, sfx, svPath, mplPath, svData, mplData},
   suffixes = {"e0uv","e0uvp","einfuv","einfuvp","e1uv","e1uvp"};
-  Do[
-    svPath  = FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}];
-    mplPath = FileNameJoin[{rootDir, "series_agent", label <> "_svlistmpl" <> sfx <> ".m"}];
+  If[KeyExistsQ[config, "LeadingSingularities"] && Length[config["LeadingSingularities"]] > 1 && !StringContainsQ[label, "_ls"],
+    Do[
+      Do[
+        svPath  = FileNameJoin[{rootDir, "series_agent", label <> "_ls" <> ToString[k] <> "_svlist" <> sfx <> ".m"}];
+        mplPath = FileNameJoin[{rootDir, "series_agent", label <> "_ls" <> ToString[k] <> "_svlistmpl" <> sfx <> ".m"}];
 
-    If[FileExistsQ[svPath],
-      Quiet[svData = Import[svPath], Import::nffil];
-      If[ListQ[svData],
-        AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlist-"<>sfx, "Message"->"svlist " <> sfx <> " exists (Length="<>ToString[Length[svData]]<>")"]],
-        AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlist-"<>sfx, "Message"->"svlist " <> sfx <> " exists but not a list"]]
-      ],
-      AppendTo[checks, Association["Status"->"FAIL", "Check"->"series-file-missing-svlist-"<>sfx, "Message"->"Missing: " <> svPath]]
-    ];
-    If[FileExistsQ[mplPath],
-      Quiet[mplData = Import[mplPath], Import::nffil];
-      If[ListQ[mplData],
-        AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlistmpl-"<>sfx, "Message"->"svlistmpl " <> sfx <> " exists (Length="<>ToString[Length[mplData]]<>")"]],
-        AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlistmpl-"<>sfx, "Message"->"svlistmpl " <> sfx <> " exists but not a list"]]
+        If[FileExistsQ[svPath],
+          Quiet[svData = Import[svPath], Import::nffil];
+          If[ListQ[svData],
+            AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlist-ls"<>ToString[k]<>"-"<>sfx, "Message"->"svlist ls"<>ToString[k]<>" " <> sfx <> " exists (Length="<>ToString[Length[svData]]<>")"]],
+            AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlist-ls"<>ToString[k]<>"-"<>sfx, "Message"->"svlist ls"<>ToString[k]<>" " <> sfx <> " exists but not a list"]]
+          ],
+          AppendTo[checks, Association["Status"->"FAIL", "Check"->"series-file-missing-svlist-ls"<>ToString[k]<>"-"<>sfx, "Message"->"Missing: " <> svPath]]
+        ];
+        If[FileExistsQ[mplPath],
+          Quiet[mplData = Import[mplPath], Import::nffil];
+          If[ListQ[mplData],
+            AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlistmpl-ls"<>ToString[k]<>"-"<>sfx, "Message"->"svlistmpl ls"<>ToString[k]<>" " <> sfx <> " exists (Length="<>ToString[Length[mplData]]<>")"]],
+            AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlistmpl-ls"<>ToString[k]<>"-"<>sfx, "Message"->"svlistmpl ls"<>ToString[k]<>" " <> sfx <> " exists but not a list"]]
+          ]
+        ],
+        {sfx, suffixes}
       ]
-    ],
-    {sfx, suffixes}
+    , {k, 1, Length[config["LeadingSingularities"]]}]
+  ,
+    Do[
+      svPath  = FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}];
+      mplPath = FileNameJoin[{rootDir, "series_agent", label <> "_svlistmpl" <> sfx <> ".m"}];
+
+      If[FileExistsQ[svPath],
+        Quiet[svData = Import[svPath], Import::nffil];
+        If[ListQ[svData],
+          AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlist-"<>sfx, "Message"->"svlist " <> sfx <> " exists (Length="<>ToString[Length[svData]]<>")"]],
+          AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlist-"<>sfx, "Message"->"svlist " <> sfx <> " exists but not a list"]]
+        ],
+        AppendTo[checks, Association["Status"->"FAIL", "Check"->"series-file-missing-svlist-"<>sfx, "Message"->"Missing: " <> svPath]]
+      ];
+      If[FileExistsQ[mplPath],
+        Quiet[mplData = Import[mplPath], Import::nffil];
+        If[ListQ[mplData],
+          AppendTo[checks, Association["Status"->"PASS", "Check"->"series-file-exists-svlistmpl-"<>sfx, "Message"->"svlistmpl " <> sfx <> " exists (Length="<>ToString[Length[mplData]]<>")"]],
+          AppendTo[checks, Association["Status"->"WARN", "Check"->"series-file-format-svlistmpl-"<>sfx, "Message"->"svlistmpl " <> sfx <> " exists but not a list"]]
+        ]
+      ],
+      {sfx, suffixes}
+    ]
   ];
 
   SVBAuditReport["series", If[MemberQ[checks, _?(#["Status"] === "FAIL" &)], "FAIL",

@@ -6,4 +6,4 @@ integrand=-((x[1,2] x[1,4] x[3,7] x[1,3] x[2,4] (-x[1,7] x[5,4]+x[1,4] x[5,7]-x[
 leadingsingularity=u*v/(z-zz);
 
 
-ansatz=Import["/Users/windfolgen/Documents/aether/svbwalkthrough/runs/fourloopI6boxing/threeloopoddansatz.m"];
+ansatz=Import[FileNameJoin[{DirectoryName[$InputFileName], "threeloopoddansatz.m"}]];

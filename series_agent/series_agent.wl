@@ -70,11 +70,20 @@ ParseListString[s_String] := Module[{trim = StringTrim[s]},
 
 RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svIndices_:{}, mplIndices_:{}, poleOrder_:1, mplBasisFile_:None] := Module[
   {weightN, i, add, svRes, mplRes, suffix, mplPrefix, mplFormat,
-   suffixes, existingFiles, response, dataDir},
+   suffixes, existingFiles, response, dataDir, hasI0constant, lsIdx},
 
   Get[FileNameJoin[{rootDir, "config.wl"}]];
   dataDir = $DataDir;
   weightN = config["WeightN"];
+
+  lsIdx = 1;
+  If[Length[config["LeadingSingularities"]] > 1,
+    Module[{match},
+      match = StringCases[label, "_ls" ~~ n : NumberString :> ToExpression[n]];
+      If[Length[match] > 0, lsIdx = match[[-1]]];
+    ];
+  ];
+  hasI0constant = !FreeQ[config["LeadingSingularities"][[lsIdx, 3]], I0constant];
 
   If[mplBasisFile =!= None,
     mplPrefix = FileBaseName[mplBasisFile]; (* e.g., allsvlistmpl_threeloop *)
@@ -93,8 +102,28 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
   ]];
   
   If[Length[existingFiles] == 12,
-    Print["[Skill 1] All ", Length[existingFiles], " series expansion files already exist. Skipping expansion!"];
-    Return[];
+    Module[{cacheValid = True, expectedSVLen, expectedMPLLen, svData, mplData},
+      expectedSVLen = Length[svIndices] + If[hasI0constant, 1, 0];
+      expectedMPLLen = Length[mplIndices];
+      Do[
+        With[{sfx = s},
+          Quiet[
+            svData = Import[FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}]];
+            mplData = Import[FileNameJoin[{rootDir, "series_agent", label <> "_svlistmpl" <> sfx <> ".m"}]];
+            If[Length[svData] =!= expectedSVLen || Length[mplData] =!= expectedMPLLen,
+              cacheValid = False;
+            ];
+          ];
+        ],
+        {s, suffixes}
+      ];
+      If[cacheValid,
+        Print["[Skill 1] All ", Length[existingFiles], " series expansion files already exist. Skipping expansion!"];
+        Return[];
+      ,
+        Print["[Skill 1] Stale series cache detected (length mismatch). Forcing regeneration..."];
+      ];
+    ];
   ];
   If[existingFiles =!= {},
     Print["[Skill 1] WARNING: ", Length[existingFiles], " existing series expansion files will be overwritten:"];
@@ -124,6 +153,9 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
       
       svList = ParseListString[Import[FileNameJoin[{dataDir, svFile}], "String"]];
       If[svIndices =!= {}, svList = svList[[svIndices]]];
+      If[hasI0constant,
+        AppendTo[svList, I0constant];
+      ];
 
       If[mplBasisFile =!= None && mplIndices =!= {},
         mplFile = mplPrefix <> ext <> sfxSuffix <> ".txt";
@@ -159,10 +191,11 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
       Print["[Skill 1] Limit ", i, "/6: additional = ", add // InputForm];
 
       ExpandInuvList[basisList_, sqrtSer_, expT_] := ParallelTable[
-        Module[{test, test2, seriesY},
+        Module[{test, test2, seriesY, basisTerm},
+          basisTerm = If[basisList[[j]] === I0constant, 1, basisList[[j]]];
           test = If[poleType === "simple",
-            basisList[[j]] * add * (-sqrtSer) / expT,
-            basisList[[j]] * add / expT
+            basisTerm * add * (-sqrtSer) / expT,
+            basisTerm * add / expT
           ];
           
           (* Apply limit-specific algebraic rules for MPL/SVHPL elements before expanding *)

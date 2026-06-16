@@ -165,15 +165,6 @@ Get[FileNameJoin[{rootDir, "solve_agent", "solve_agent.wl"}]];
 RunCoefficientSolving[rootDir, label, ansatzExpr, basisSVReduced, basisMPLReduced, targetData, order];
 ReviewGate[rootDir, label, "solve"];
 
-(* ====== Save Final Result and Solved Coefficients ====== *)
-Print["\n=== SAVE RESULT ==="];
-sol = Import[FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}]];
-values = sol /. Rule[_[_], v_] :> v;
-finalResult = Expand[Sum[values[[i]] * ansatzExpr[[i]], {i, 1, Length[ansatzExpr]}]];
-Export[FileNameJoin[{runDir, "result.m"}], finalResult];
-Print["Result saved to ", FileNameJoin[{runDir, "result.m"}]];
-Print["Solved coefficients saved to ", FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}]];
-
 Print["\nRun complete."];
 Close[logStream];
 ```

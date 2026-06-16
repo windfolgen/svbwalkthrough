@@ -195,17 +195,48 @@ If[result=!={},Return[result[[1]]],Return[{}]];
 
 ClearAll[RunSeriesExpansion];
 
-RunSeriesExpansion[rootDir_, label_, lsBase_, poleType_, weightN_, yOrder_:4, svIndices_:{}, mplIndices_:{}, poleOrder_:1] := Module[
+RunSeriesExpansion[rootDir_, label_, lsBase_, poleType_, weightN_, yOrder_:4, svIndices_:{}, mplIndices_:{}, poleOrder_:1, mplBasisFile_:None] := Module[
   {svliste0, svlistmple0, svliste1, svlistmple1, svlisteinf, svlistmpleinf,
-   i, add, svRes, mplRes, suffix, zrep},
+   i, add, svRes, mplRes, suffix, zrep, mplPrefix},
 
   (* ---- load pre-computed .txt files from root ---- *)
   svliste0     = Import[FileNameJoin[{rootDir, "allsvliste0_uptow8.txt"}],    "String"] // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
   svliste1     = Import[FileNameJoin[{rootDir, "allsvliste1_uptow8.txt"}],    "String"] // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
   svlisteinf   = Import[FileNameJoin[{rootDir, "allsvlisteinf_uptow8.txt"}],  "String"] // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
-  svlistmple0   = Import[FileNameJoin[{rootDir, "allsvlistmpl_threeloopharde0.txt"}],  "String"] // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
-  svlistmple1   = Import[FileNameJoin[{rootDir, "allsvlistmpl_threeloopharde1.txt"}],  "String"] // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
-  svlistmpleinf = Import[FileNameJoin[{rootDir, "allsvlistmpl_threeloophardeinf.txt"}],"String"] // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
+
+  (* ---- load MPL expansion files (if a basis is provided) ---- *)
+  If[mplBasisFile =!= None && mplIndices =!= {},
+    mplPrefix = FileBaseName[mplBasisFile] <> "e";  (* strip .m + path, append e *)
+    (* .txt format: string-wrapped list, needs parsing.
+       .m   format: Mathematica expression list, no parsing needed. *)
+    mplLoad[fname_] := Module[{txtPath = fname <> ".txt", mPath = fname <> ".m", raw, fmt},
+      raw = If[FileExistsQ[txtPath], {Import[txtPath, "String"], "txt"},
+              If[FileExistsQ[mPath], {Import[mPath], "m"}, Return[$Failed]]];
+      fmt = raw[[2]];
+      If[fmt === "txt",
+        (* .txt files: string-wrapped list, parse via StringTrim + ToExpression *)
+        StringTrim[raw[[1]], "["|"]"] // ("{" <> # <> "}" &) // ToExpression,
+        (* .m files: already valid Mathematica expressions *)
+        raw[[1]]
+      ]
+    ];
+    (* detect format for output log *)
+    mplFormat = If[FileExistsQ[FileNameJoin[{rootDir, mplPrefix <> "0.m"}]], ".m", ".txt"];
+    svlistmple0   = mplLoad[FileNameJoin[{rootDir, mplPrefix <> "0"}]];
+    svlistmple1   = mplLoad[FileNameJoin[{rootDir, mplPrefix <> "1"}]];
+    svlistmpleinf = mplLoad[FileNameJoin[{rootDir, mplPrefix <> "inf"}]];
+    If[svlistmple0 === $Failed || svlistmple1 === $Failed || svlistmpleinf === $Failed,
+      Print["[Skill 1] ERROR: Missing MPL expansions for '", mplPrefix, "{0,1,inf}.txt/.m'. ",
+        "The three series expansions of SVMPL around z=0, z=1 and z=inf need to be provided to cover the ansatz."];
+      Return[$Failed]
+    ];
+    Print["[Skill 1] Loaded MPL expansions: ", mplPrefix, "{0,1,inf} (format: ",
+      mplFormat <> If[mplFormat === ".m", ", no parsing needed", ", parsed from string-wrapped list"], ")"];
+  ,
+    svlistmple0   = {};
+    svlistmple1   = {};
+    svlistmpleinf = {};
+  ];
 
   (* ---- optionally reduce to only ansatz-relevant indices ---- *)
   If[svIndices =!= {},
@@ -223,6 +254,29 @@ RunSeriesExpansion[rootDir_, label_, lsBase_, poleType_, weightN_, yOrder_:4, sv
     svlistmple0   = {};
     svlistmple1   = {};
     svlistmpleinf = {};
+  ];
+
+  (* ---- warn if overwriting existing output files ---- *)
+  suffixes = {"e0uv","e0uvp","einfuv","einfuvp","e1uv","e1uvp"};
+  existingFiles = Flatten[Table[
+    With[{sfx = s},
+      Select[{
+        FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}],
+        FileNameJoin[{rootDir, "series_agent", label <> "_svlistmpl" <> sfx <> ".m"}]
+      }, FileExistsQ]
+    ],
+    {s, suffixes}
+  ]];
+  If[existingFiles =!= {},
+    Print["[Skill 1] WARNING: ", Length[existingFiles], " existing series expansion files will be overwritten:"];
+    Do[Print["  - ", f], {f, existingFiles}];
+    Print["[Skill 1] Proceed and overwrite? (y/n)"];
+    response = InputString[];
+    If[!StringMatchQ[response, "y" | "Y" | "yes" | "Yes"],
+      Print["[Skill 1] ABORTED by user — existing files preserved."];
+      Return[$Failed]
+    ];
+    Print["[Skill 1] Overwriting " , Length[existingFiles], " existing files."];
   ];
 
   (* ---- compute six additional prefactors ---- *)

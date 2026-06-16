@@ -78,7 +78,7 @@ RunCoefficientSolving[rootDir_, label_, config_,
     ] // DeleteCases[#, 0] &;
 
     If[temp === {},
-      Print["Limit ", i, " (", suffix, "): temp is empty, skipping."];
+      Print["Limit ", i, " (", suffix, "): temp is empty. Verified that no new conditions are given under the current solution."];
       Continue[];
     ];
 
@@ -175,6 +175,7 @@ RunCoefficientSolving[rootDir_, label_, config_,
   Module[{isSolved = True, totalCoeffs = $LEN, lhsVars, unsolvedVars, missingCoeffs},
     If[solt === {} || Head[solt] =!= List,
       isSolved = False;
+      Print["[FATAL ERROR] Solve returned empty or failed."];
     ,
       lhsVars = solt[[All, 1]];
       missingCoeffs = Select[Table[c[i], {i, 1, totalCoeffs}], !MemberQ[lhsVars, #] &];
@@ -182,37 +183,42 @@ RunCoefficientSolving[rootDir_, label_, config_,
       
       If[Length[missingCoeffs] > 0 || Length[unsolvedVars] > 0,
         isSolved = False;
+        Print["[WARNING] Coefficients are not totally solved! Free parameters remaining: ", unsolvedVars];
       ];
-    ];
 
-    If[isSolved,
-      (* Export results *)
-      Module[{values, offset, finalResultList, coeffListAll, ansatzK, resK, coeffK},
-        values = varsList /. solt;
-        finalResultList = {};
-        coeffListAll = {};
-        offset = 0;
-        Do[
-          ansatzK = ansatzList[[k]];
-          coeffK = Table[values[[offset + i]], {i, 1, Length[ansatzK]}];
-          resK = Sum[coeffK[[i]] * ansatzK[[i]], {i, 1, Length[ansatzK]}];
-          resK = resK /. f[a_, a_] :> f[a]^2/2;
+      If[isSolved,
+        (* Export results *)
+        Module[{values, offset, finalResultList, coeffListAll, ansatzK, resK, coeffK},
+          values = Table[c[i], {i, 1, totalCoeffs}] /. solt;
+          finalResultList = {};
+          coeffListAll = {};
+          offset = 0;
+          Do[
+            ansatzK = ansatzList[[k]];
+            coeffK = Table[values[[offset + i]], {i, 1, Length[ansatzK]}];
+            resK = Sum[coeffK[[i]] * ansatzK[[i]], {i, 1, Length[ansatzK]}];
+            resK = resK /. f[a_, a_] :> f[a]^2/2;
+            
+            AppendTo[finalResultList, Expand[resK]];
+            AppendTo[coeffListAll, coeffK];
+            
+            offset = offset + Length[ansatzK];
+          , {k, 1, Length[ansatzList]}];
           
-          AppendTo[finalResultList, Expand[resK]];
-          AppendTo[coeffListAll, coeffK];
+          (* Replace Module-local c with global c *)
+          finalResultList = finalResultList /. c[i_] :> Symbol["c"][i];
+          coeffListAll = coeffListAll /. c[i_] :> Symbol["c"][i];
           
-          offset = offset + Length[ansatzK];
-        , {k, 1, Length[ansatzList]}];
-        
-        Export[FileNameJoin[{rootDir, "runs", label, "result.m"}], finalResultList];
-        Export[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}], coeffListAll];
-        Print["Final result.m and coeff_sol.m saved to runs/", label, "/"];
-      ];
-    ,
-      Print["[WARNING] Coefficients are not totally solved! Skipping export of result.m and coeff_sol.m."];
-      Quiet[
-        If[FileExistsQ[FileNameJoin[{rootDir, "runs", label, "result.m"}]], DeleteFile[FileNameJoin[{rootDir, "runs", label, "result.m"}]]];
-        If[FileExistsQ[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}]], DeleteFile[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}]]];
+          Export[FileNameJoin[{rootDir, "runs", label, "result.m"}], finalResultList];
+          Export[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}], coeffListAll];
+          Print["Final result.m and coeff_sol.m saved to runs/", label, "/"];
+        ];
+      ,
+        Print["[WARNING] Skipping export of result.m and coeff_sol.m due to unsolved parameters."];
+        Quiet[
+          If[FileExistsQ[FileNameJoin[{rootDir, "runs", label, "result.m"}]], DeleteFile[FileNameJoin[{rootDir, "runs", label, "result.m"}]]];
+          If[FileExistsQ[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}]], DeleteFile[FileNameJoin[{rootDir, "runs", label, "coeff_sol.m"}]]];
+        ];
       ];
     ];
   ];

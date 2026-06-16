@@ -1,0 +1,5 @@
+- [x] Fix path scoping bug in `test/solve_agent_modified.wl`
+- [x] Run `test/test_solver_modified.wl` to verify combined ansatz rank (expected 274, 30 free parameters)
+- [x] Verify that mismatches on Zeta values and constants are resolved
+- [x] Promote the conformal division factor scaling fix to the main `series_agent/series_agent.wl`
+- [x] Run the main workflow to verify everything is correct and resolved
