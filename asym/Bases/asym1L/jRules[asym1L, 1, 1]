@@ -1,0 +1,5 @@
+Last[{{{1, 1}, {-1, 0}}, {j[asym1L, (n1_)?Positive, (n2_)?Positive] /; 
+     n1 != 1 :> ((-1 - d + n1 + 2*n2)*j[asym1L, -1 + n1, n2])/((-1 + n1)*u) + 
+     j[asym1L, n1, -1 + n2]/u, j[asym1L, (n1_)?Positive, (n2_)?Positive] /; 
+     n1 == 1 && n2 != 1 :> j[asym1L, 0, n2]/u + 
+     ((1 - d + n2)*j[asym1L, 1, -1 + n2])/((-1 + n2)*u)}}]

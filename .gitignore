@@ -25,7 +25,7 @@ test/
 # Agent cache files and intermediate folders
 asym/tmp/*
 !asym/tmp/targetIntegrals_reduced.m
-asym/Bases/
+# asym/Bases/
 asym/logs/
 asym/boundary_agent/*
 !asym/boundary_agent/*.wl

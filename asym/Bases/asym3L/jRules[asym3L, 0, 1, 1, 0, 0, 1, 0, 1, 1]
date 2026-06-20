@@ -1,0 +1,12 @@
+{j[asym3L, (n1_)?NonPositive, (n2_)?Positive, (n3_)?Positive, 
+   (n4_)?NonPositive, (n5_)?NonPositive, (n6_)?Positive, (n7_)?NonPositive, 
+   (n8_)?Positive, (n9_)?Positive] :> 
+  Expand[j[asym3L, 0, n7, 0, n9, n3, n4, n8, n2, n6]/
+    ((-j[asym3L, -1, 0, 0, 0, 0, 0, 0, 0, 0] + j[asym3L, 0, -1, 0, 0, 0, 0, 
+        0, 0, 0] + j[asym3L, 0, 0, 0, 0, -1, 0, 0, 0, 0] - 
+       j[asym3L, 0, 0, 0, 0, 0, -1, 0, 0, 0] + j[asym3L, 0, 0, 0, 0, 0, 0, 0, 
+        -1, 0] + u*j[asym3L, 0, 0, 0, 0, 0, 0, 0, 0, 0])^n1*
+     (-j[asym3L, 0, 0, -1, 0, 0, 0, 0, 0, 0] + j[asym3L, 0, 0, 0, -1, 0, 0, 
+        0, 0, 0] + j[asym3L, 0, 0, 0, 0, -1, 0, 0, 0, 0] - 
+       j[asym3L, 0, 0, 0, 0, 0, -1, 0, 0, 0] + j[asym3L, 0, 0, 0, 0, 0, 0, 0, 
+        0, -1] + u*j[asym3L, 0, 0, 0, 0, 0, 0, 0, 0, 0])^n5)]}

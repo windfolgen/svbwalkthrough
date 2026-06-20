@@ -1,0 +1,1342 @@
+BasisDirectory[asym3L] = StringDrop[DirectoryName[$Input], -1]
+asym3L /: BasisSectors[asym3L] := Get[StringJoin[BasisDirectory[asym3L], 
+    "/BasisSectors[asym3L]"]]
+asym3L /: CurrentState[asym3L] := <|NewDsBasis -> True, GenerateIBP -> True, 
+   AnalyzeSectors -> True, FindSymmetries -> False|>
+asym3L /: CutDs[asym3L] := {0, 0, 0, 0, 0, 0, 0, 0, 0}
+asym3L /: Definitions[asym3L] := {Hold[MetricTensor[] === d, SetDim[d]], 
+   Hold[VecQ[l1], Declare[l1, Vector]], Hold[VecQ[l2], Declare[l2, Vector]], 
+   Hold[VecQ[l4], Declare[l4, Vector]], Hold[VecQ[p], Declare[p, Vector]], 
+   Hold[LiteRed`Private`ExpresionType[p] === LiteRed`Private`ExpresionType[
+      p], Declare[p, LiteRed`Private`ExpresionType[p]]], 
+   Hold[LiteRed`Private`ExpresionType[u] === LiteRed`Private`ExpresionType[
+      u], Declare[u, LiteRed`Private`ExpresionType[u]]], 
+   Hold[sp[p, p] === u, sp[p, p] = u]}
+asym3L /: Ds[asym3L] := {sp[l1, l1], sp[l1 - p, l1 - p], sp[l2, l2], 
+   sp[l2 - p, l2 - p], sp[l4, l4], sp[l4 - p, l4 - p], sp[l1 - l2, l1 - l2], 
+   sp[l1 - l4, l1 - l4], sp[l2 - l4, l2 - l4]}
+asym3L /: DsBasisQ[asym3L] := True
+asym3L /: EMs[asym3L] := {p}
+asym3L /: ExtMappedSectors[asym3L] := {}
+asym3L /: ExtSectorsMappings[asym3L] := {}
+asym3L /: IBP[asym3L] := Get[StringJoin[BasisDirectory[asym3L], 
+    "/IBP[asym3L]"]]
+asym3L /: Information[asym3L] := 
+  (If[ValueQ[asym3L::usage], Information[asym3L, LongForm -> False]]; 
+   Print[Grid[Partition[Union[Replace[Replace[First /@ UpValues[asym3L] /. 
+          HoldPattern -> HoldForm, 
+         {HoldPattern[HoldForm[(LiteRed`Private`f$_)[asym3L, __]]] :> 
+           HoldForm[LiteRed`Private`f$[asym3L, "\[Ellipsis]"]]}, {1}], 
+        {HoldPattern[LiteRed`Private`x$:HoldForm[(LiteRed`Private`f$_)[
+              asym3L, ___]]] :> Button[LiteRed`Private`x$, 
+           (SelectionMove[ButtonNotebook[], All, GeneratedCell]; 
+             NotebookDelete[]; Information[Evaluate[LiteRed`Private`x$[[1,
+                0]]], LongForm -> False]; Print[TableForm[Cases[UpValues[
+                  asym3L], HoldPattern[LiteRed`Private`a$_ :> 
+                    LiteRed`Private`b$_] /; MatchQ[LiteRed`Private`a$[[1,0]], 
+                   LiteRed`Private`x$[[1,0]]]] /. HoldPattern -> 
+                 HoldForm]]) & , Appearance -> "Frameless", 
+           BaseStyle -> "InformationLink"]}, {1}]], 5], 
+     DefaultBaseStyle -> "InfoGrid"]])
+asym3L /: jRules[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 0, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 0, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 0, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 0, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 0, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 0, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 0, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 0, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 1, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 1, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 1, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 1, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 0, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 0, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 0, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 0, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 0, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 0, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 0, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 0, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 1, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 1, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 1, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 1, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 0, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 0, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 0, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 0, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 0, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 0, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 0, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 0, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 0, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 0, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 0, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 0, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 0, 0, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 0, 0, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 1, 1, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 1, 1, 0, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 0, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 0, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 0, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 0, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 0, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 0, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 0, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 0, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 0, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 0, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 0, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 0, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 0, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 0, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 1, 1, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 1, 1, 0, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 0, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 0, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 0, 0, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 0, 0, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 0, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 0, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 0, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 0, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 0, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 0, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 0, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 0, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 0, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 0, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 0, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 0, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 0, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 0, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 0, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 0, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 0, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 0, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 0, 1, 0, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 0, 1, 0, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 0, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 0, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 1, 0, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 1, 0, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 1, 1, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 1, 1, 0, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 0, 1, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 0, 1, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 0, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 0, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 0, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 0, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 0, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 0, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 0, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 0, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 0, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 0, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 0, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 0, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 0, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 0, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 0, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 0, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 0, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 0, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 0, 0, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 0, 0, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 1, 0, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 1, 0, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 1, 1, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 1, 1, 0, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 0, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 0, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 0, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 0, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 0, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 0, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 0, 1, 0, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 0, 1, 0, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 0, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 0, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 1, 0, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 1, 0, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 1, 1, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 1, 1, 0, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 0, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 0, 1, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 0, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 0, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 0, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 0, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 0, 1, 0, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 0, 1, 0, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 0, 1, 0, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 0, 1, 0, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 0, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 0, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 0, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 0, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 0, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 0, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 0, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 0, 1, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 0, 0, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 0, 0, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 0, 0, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 0, 0, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 0, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 0, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 0, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 1, 1, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 1, 1, 0, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 1, 1, 0, 1]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jRules[asym3L, 1, 1, 1, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jRules[asym3L, 1, 1, 1, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jsOrder[asym3L] := {"np", "cp", "-ds", "-ns"}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 0, 1, 0, 1, 1, 0] := 
+  {{-1, -1, -1, -1, 1, -1, 1, 1, -1}, {-1, -1, -1, -1, 0, -1, 0, 0, -1}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 0, 1, 0, 1, 1, 1] := 
+  {{-1, -1, -1, -1, 1, -1, 1, 1, 1}, {-1, -1, -1, -1, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 0, 1, 1, 1, 1, 0] := 
+  {{-1, -1, -1, -1, 1, 1, 1, 1, -1}, {-1, -1, -1, -1, 0, 0, 0, 0, -1}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 0, 0, 1, 1, 0] := 
+  {{-1, -1, -1, 1, -1, -1, 1, 1, -1}, {-1, -1, -1, 0, -1, -1, 0, 0, -1}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 0, 0, 1, 1, 1] := 
+  {{-1, -1, -1, 1, -1, -1, 1, 1, 1}, {-1, -1, -1, 0, -1, -1, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 1, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 0, 1, 1, 1, 0] := 
+  {{-1, -1, -1, 1, -1, 1, 1, 1, -1}, {-1, -1, -1, 0, -1, 0, 0, 0, -1}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 1, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 0, 0, 1, 0] := 
+  {{-1, -1, -1, 1, 1, -1, -1, 1, -1}, {-1, -1, -1, 0, 0, -1, -1, 0, -1}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 0, 0, 1, 1] := 
+  {{-1, -1, -1, 1, 1, -1, -1, 1, 1}, {-1, -1, -1, 0, 0, -1, -1, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 0, 1, 0, 0] := 
+  {{-1, -1, -1, 1, 1, -1, 1, -1, -1}, {-1, -1, -1, 0, 0, -1, 0, -1, -1}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 0, 1, 0, 1] := 
+  {{-1, -1, -1, 1, 1, -1, 1, -1, 1}, {-1, -1, -1, 0, 0, -1, 0, -1, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0] := 
+  {{-1, -1, -1, 1, 1, -1, 1, 1, -1}, {-1, -1, -1, 0, 0, -1, 0, 0, -1}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1] := 
+  {{-1, -1, -1, 1, 1, -1, 1, 1, 1}, {-1, -1, -1, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, -1, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 1, 0, 1, 0] := 
+  {{-1, -1, -1, 1, 1, 1, -1, 1, -1}, {-1, -1, -1, 0, 0, 0, -1, 0, -1}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 1, 1, 0, 0] := 
+  {{-1, -1, -1, 1, 1, 1, 1, -1, -1}, {-1, -1, -1, 0, 0, 0, 0, -1, -1}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0] := 
+  {{-1, -1, -1, 1, 1, 1, 1, 1, -1}, {-1, -1, -1, 0, 0, 0, 0, 0, -1}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1] := 
+  {{-1, -1, -1, 1, 1, 1, 1, 1, 1}, {-1, -1, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 0, 0, 1, 1, 1, 0] := 
+  {{-1, -1, 1, -1, -1, 1, 1, 1, -1}, {-1, -1, 0, -1, -1, 0, 0, 0, -1}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 1, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 0, 1, 1, 1, 0, 0] := 
+  {{-1, -1, 1, -1, 1, 1, 1, -1, -1}, {-1, -1, 0, -1, 0, 0, 0, -1, -1}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 0, 1, 1, 1, 0, 1] := 
+  {{-1, -1, 1, -1, 1, 1, 1, -1, 1}, {-1, -1, 0, -1, 0, 0, 0, -1, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 0, 1, 1, 1, 1, 0] := 
+  {{-1, -1, 1, -1, 1, 1, 1, 1, -1}, {-1, -1, 0, -1, 0, 0, 0, 0, -1}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 1, 0, 1, 1, 1, 0] := 
+  {{-1, -1, 1, 1, -1, 1, 1, 1, -1}, {-1, -1, 0, 0, -1, 0, 0, 0, -1}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 1, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 1, 1, 0, 1, 1, 0] := 
+  {{-1, -1, 1, 1, 1, -1, 1, 1, -1}, {-1, -1, 0, 0, 0, -1, 0, 0, -1}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 1, 1, 1, 0, 1, 0] := 
+  {{-1, -1, 1, 1, 1, 1, -1, 1, -1}, {-1, -1, 0, 0, 0, 0, -1, 0, -1}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 1, 1, 1, 1, 0, 0] := 
+  {{-1, -1, 1, 1, 1, 1, 1, -1, -1}, {-1, -1, 0, 0, 0, 0, 0, -1, -1}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 0] := 
+  {{-1, -1, 1, 1, 1, 1, 1, 1, -1}, {-1, -1, 0, 0, 0, 0, 0, 0, -1}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 1] := 
+  {{-1, -1, 1, 1, 1, 1, 1, 1, 1}, {-1, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, -1, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 0, 1, 0, 0, 1, 1] := 
+  {{-1, 1, -1, -1, 1, -1, -1, 1, 1}, {-1, 0, -1, -1, 0, -1, -1, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 0, 1, 0, 1, 1, 1] := 
+  {{-1, 1, -1, -1, 1, -1, 1, 1, 1}, {-1, 0, -1, -1, 0, -1, 0, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, -1, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 0, 1, 1, 1, 0, 0] := 
+  {{-1, 1, -1, -1, 1, 1, 1, -1, -1}, {-1, 0, -1, -1, 0, 0, 0, -1, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 0, 1, 1, 1, 0, 1] := 
+  {{-1, 1, -1, -1, 1, 1, 1, -1, 1}, {-1, 0, -1, -1, 0, 0, 0, -1, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 0, 0, 0, 1, 1] := 
+  {{-1, 1, -1, 1, -1, -1, -1, 1, 1}, {-1, 0, -1, 0, -1, -1, -1, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 0, 0, 1, 1, 1] := 
+  {{-1, 1, -1, 1, -1, -1, 1, 1, 1}, {-1, 0, -1, 0, -1, -1, 0, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, -1, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 1, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 0, 0, 0, 1] := 
+  {{-1, 1, -1, 1, 1, -1, -1, -1, 1}, {-1, 0, -1, 0, 0, -1, -1, -1, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 0] := 
+  {{-1, 1, -1, 1, 1, -1, -1, 1, -1}, {-1, 0, -1, 0, 0, -1, -1, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1] := 
+  {{-1, 1, -1, 1, 1, -1, -1, 1, 1}, {-1, 0, -1, 0, 0, -1, -1, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, -1, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 0, 1, 0, 1] := 
+  {{-1, 1, -1, 1, 1, -1, 1, -1, 1}, {-1, 0, -1, 0, 0, -1, 0, -1, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 0] := 
+  {{-1, 1, -1, 1, 1, -1, 1, 1, -1}, {-1, 0, -1, 0, 0, -1, 0, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 1] := 
+  {{-1, 1, -1, 1, 1, -1, 1, 1, 1}, {-1, 0, -1, 0, 0, -1, 0, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 1, 0, 1, 0] := 
+  {{-1, 1, -1, 1, 1, 1, -1, 1, -1}, {-1, 0, -1, 0, 0, 0, -1, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 1, 0, 1, 1] := 
+  {{-1, 1, -1, 1, 1, 1, -1, 1, 1}, {-1, 0, -1, 0, 0, 0, -1, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 0] := 
+  {{-1, 1, -1, 1, 1, 1, 1, 1, -1}, {-1, 0, -1, 0, 0, 0, 0, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 1] := 
+  {{-1, 1, -1, 1, 1, 1, 1, 1, 1}, {-1, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, -1, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 0, 1, 1, 0, 0] := 
+  {{-1, 1, 1, -1, -1, 1, 1, -1, -1}, {-1, 0, 0, -1, -1, 0, 0, -1, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 0, 1, 1, 0, 1] := 
+  {{-1, 1, 1, -1, -1, 1, 1, -1, 1}, {-1, 0, 0, -1, -1, 0, 0, -1, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 1, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 0, 1, 0, 0] := 
+  {{-1, 1, 1, -1, 1, -1, 1, -1, -1}, {-1, 0, 0, -1, 0, -1, 0, -1, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 0, 1, 0, 1] := 
+  {{-1, 1, 1, -1, 1, -1, 1, -1, 1}, {-1, 0, 0, -1, 0, -1, 0, -1, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 1, 0, 0, 0] := 
+  {{-1, 1, 1, -1, 1, 1, -1, -1, -1}, {-1, 0, 0, -1, 0, 0, -1, -1, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 1, 0, 0, 1] := 
+  {{-1, 1, 1, -1, 1, 1, -1, -1, 1}, {-1, 0, 0, -1, 0, 0, -1, -1, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 0] := 
+  {{-1, 1, 1, -1, 1, 1, -1, 1, -1}, {-1, 0, 0, -1, 0, 0, -1, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 1] := 
+  {{-1, 1, 1, -1, 1, 1, -1, 1, 1}, {-1, 0, 0, -1, 0, 0, -1, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 0] := 
+  {{-1, 1, 1, -1, 1, 1, 1, -1, -1}, {-1, 0, 0, -1, 0, 0, 0, -1, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1] := 
+  {{-1, 1, 1, -1, 1, 1, 1, -1, 1}, {-1, 0, 0, -1, 0, 0, 0, -1, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 0] := 
+  {{-1, 1, 1, -1, 1, 1, 1, 1, -1}, {-1, 0, 0, -1, 0, 0, 0, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 1] := 
+  {{-1, 1, 1, -1, 1, 1, 1, 1, 1}, {-1, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, -1, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 0, 1, 0, 1, 0] := 
+  {{-1, 1, 1, 1, -1, 1, -1, 1, -1}, {-1, 0, 0, 0, -1, 0, -1, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 0, 1, 1, 1, 0] := 
+  {{-1, 1, 1, 1, -1, 1, 1, 1, -1}, {-1, 0, 0, 0, -1, 0, 0, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 1, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 1, 0, 1, 1, 0] := 
+  {{-1, 1, 1, 1, 1, -1, 1, 1, -1}, {-1, 0, 0, 0, 0, -1, 0, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, -1, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 1, 1, 0, 0, 0] := 
+  {{-1, 1, 1, 1, 1, 1, -1, -1, -1}, {-1, 0, 0, 0, 0, 0, -1, -1, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 1, 1, 0, 0, 1] := 
+  {{-1, 1, 1, 1, 1, 1, -1, -1, 1}, {-1, 0, 0, 0, 0, 0, -1, -1, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0] := 
+  {{-1, 1, 1, 1, 1, 1, -1, 1, -1}, {-1, 0, 0, 0, 0, 0, -1, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1] := 
+  {{-1, 1, 1, 1, 1, 1, -1, 1, 1}, {-1, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, -1, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 1, 1, 1, 0, 0] := 
+  {{-1, 1, 1, 1, 1, 1, 1, -1, -1}, {-1, 0, 0, 0, 0, 0, 0, -1, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 0] := 
+  {{-1, 1, 1, 1, 1, 1, 1, 1, -1}, {-1, 0, 0, 0, 0, 0, 0, 0, -1}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {1, 0, 0, 0, 0, 0, 0, 0, 0}}
+asym3L /: jsOrder[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 1] := 
+  {{-1, 1, 1, 1, 1, 1, 1, 1, 1}, {-1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}}
+asym3L /: jsOrder[asym3L, 1, 0, 1, 1, 1, 1, 0, 0, 0] := 
+  {{1, -1, 1, 1, 1, 1, -1, -1, -1}, {0, -1, 0, 0, 0, 0, -1, -1, -1}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 1, 0, 1, 1, 1, 1, 0, 0, 1] := 
+  {{1, -1, 1, 1, 1, 1, -1, -1, 1}, {0, -1, 0, 0, 0, 0, -1, -1, 0}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 0, 1, 1, 1, 0, 0, 0] := 
+  {{1, 1, -1, 1, 1, 1, -1, -1, -1}, {0, 0, -1, 0, 0, 0, -1, -1, -1}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 0, 1, 1, 1, 0, 0, 1] := 
+  {{1, 1, -1, 1, 1, 1, -1, -1, 1}, {0, 0, -1, 0, 0, 0, -1, -1, 0}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 0, 1, 1, 0, 0, 0] := 
+  {{1, 1, 1, -1, 1, 1, -1, -1, -1}, {0, 0, 0, -1, 0, 0, -1, -1, -1}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 0, 1, 1, 0, 0, 1] := 
+  {{1, 1, 1, -1, 1, 1, -1, -1, 1}, {0, 0, 0, -1, 0, 0, -1, -1, 0}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 1, 0, 1, 0, 0, 0] := 
+  {{1, 1, 1, 1, -1, 1, -1, -1, -1}, {0, 0, 0, 0, -1, 0, -1, -1, -1}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 1, 0, 1, 0, 0, 1] := 
+  {{1, 1, 1, 1, -1, 1, -1, -1, 1}, {0, 0, 0, 0, -1, 0, -1, -1, 0}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 1, 1, 0, 0, 0, 0] := 
+  {{1, 1, 1, 1, 1, -1, -1, -1, -1}, {0, 0, 0, 0, 0, -1, -1, -1, -1}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 1, 1, 0, 0, 0, 1] := 
+  {{1, 1, 1, 1, 1, -1, -1, -1, 1}, {0, 0, 0, 0, 0, -1, -1, -1, 0}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 0] := 
+  {{1, 1, 1, 1, 1, 1, -1, -1, -1}, {0, 0, 0, 0, 0, 0, -1, -1, -1}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, 1, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 1] := 
+  {{1, 1, 1, 1, 1, 1, -1, -1, 1}, {0, 0, 0, 0, 0, 0, -1, -1, 0}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 1, 0, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 1] := 
+  {{1, 1, 1, 1, 1, 1, -1, 1, 1}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {-1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, -1, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, -1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, -1, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, -1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, -1, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}}
+asym3L /: jsOrder[asym3L, 1, 1, 1, 1, 1, 1, 1, 1, 1] := 
+  {{1, 1, 1, 1, 1, 1, 1, 1, 1}, {-1, 0, 0, 0, 0, 0, 0, 0, 0}, 
+   {0, -1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, -1, 0, 0, 0, 0, 0, 0}, 
+   {0, 0, 0, -1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, -1, 0, 0, 0, 0}, 
+   {0, 0, 0, 0, 0, -1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, -1, 0, 0}, 
+   {0, 0, 0, 0, 0, 0, 0, -1, 0}}
+asym3L /: jSymmetries[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0]"]]
+asym3L /: jSymmetries[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jSymmetries[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jSymmetries[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 0, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 0, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 0]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 0]"]]
+asym3L /: jSymmetries[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 0] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 0]"]]
+asym3L /: jSymmetries[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 1]"]]
+asym3L /: jSymmetries[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 1]"]]
+asym3L /: jSymmetries[asym3L, 1, 1, 1, 1, 1, 1, 1, 1, 1] := 
+  Get[StringJoin[BasisDirectory[asym3L], 
+    "/jSymmetries[asym3L, 1, 1, 1, 1, 1, 1, 1, 1, 1]"]]
+asym3L /: LI[asym3L] := Get[StringJoin[BasisDirectory[asym3L], "/LI[asym3L]"]]
+asym3L /: LMs[asym3L] := {l1, l2, l4}
+asym3L /: MappedSectors[asym3L] := Get[StringJoin[BasisDirectory[asym3L], 
+    "/MappedSectors[asym3L]"]]
+asym3L /: MIs[asym3L] := Get[StringJoin[BasisDirectory[asym3L], 
+    "/MIs[asym3L]"]]
+asym3L /: NDs[asym3L] := 9
+asym3L /: NonZeroSectors[asym3L] := Get[StringJoin[BasisDirectory[asym3L], 
+    "/NonZeroSectors[asym3L]"]]
+asym3L /: Parameters[asym3L] := {u, d}
+asym3L /: PowerShifts[asym3L] := {0, 0, 0, 0, 0, 0, 0, 0, 0}
+asym3L /: SectorsMappings[asym3L] := 
+  {js[asym3L, 1, 1, 1, 1, 1, 1, 1, 0, 1] -> js[asym3L, 1, 1, 1, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 1, 1, 1, 1, 1, 1, 1, 0] -> 
+    js[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 0, 1, 1, 1, 1, 1, 1, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 0, 1, 1, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 1, 0, 1, 1, 1, 1, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 1, 1, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 1, 1, 1, 0, 1, 1, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 1, 1, 1, 1, 0, 1, 0] -> 
+    js[asym3L, 1, 1, 1, 1, 1, 1, 0, 0, 1], 
+   js[asym3L, 1, 1, 1, 1, 1, 1, 1, 0, 0] -> js[asym3L, 1, 1, 1, 1, 1, 1, 0, 
+     0, 1], js[asym3L, 1, 0, 1, 1, 1, 1, 1, 1, 0] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 1, 1, 0, 1, 1, 1, 1, 0, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 1, 
+     1, 0], js[asym3L, 1, 1, 1, 0, 1, 1, 1, 0, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 1, 1, 1, 1, 0, 1, 0, 1, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 1, 
+     1, 0], js[asym3L, 1, 1, 1, 1, 1, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 0, 1, 1, 1, 1, 1, 1, 0, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 0, 1, 1, 1, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 0, 1, 1, 1, 1, 1, 0, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 1, 0, 1, 1, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 1, 0, 1, 1, 1, 1, 1, 0] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 1, 1, 0, 1, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 1, 1, 0, 1, 1, 1, 1, 0] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 1, 1, 1, 0, 1, 1, 0, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 1, 1, 1, 0, 1, 1, 1, 0] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 1, 1, 1, 1, 0, 1, 0, 1] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 1, 1, 1, 1, 0, 1, 1, 0] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 0, 1, 1, 1, 1, 0, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 0, 0, 1, 1, 1, 1, 1, 1] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 0, 1, 1, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 0, 1, 1, 0, 1, 1, 1] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 1, 0, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 1], 
+   js[asym3L, 0, 1, 1, 1, 0, 1, 1, 1, 1] -> js[asym3L, 0, 1, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 0, 1, 0, 1, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 0, 1, 1, 1, 0, 1, 1, 1] -> js[asym3L, 0, 1, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 0, 1, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 1, 0, 1, 0, 1, 1, 1] -> js[asym3L, 0, 1, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 0, 0, 1, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 1, 1, 0, 0, 1, 1, 1] -> js[asym3L, 0, 0, 1, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 0, 1, 1, 1, 1, 1, 1, 0, 0] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0], 
+   js[asym3L, 1, 0, 1, 1, 1, 1, 0, 1, 0] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 0], js[asym3L, 1, 0, 1, 1, 1, 1, 1, 0, 0] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0], 
+   js[asym3L, 1, 1, 0, 1, 1, 1, 0, 0, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 0], js[asym3L, 1, 1, 0, 1, 1, 1, 1, 0, 0] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0], 
+   js[asym3L, 1, 1, 1, 0, 1, 1, 0, 0, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 0], js[asym3L, 1, 1, 1, 0, 1, 1, 1, 0, 0] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0], 
+   js[asym3L, 1, 1, 1, 1, 0, 1, 0, 0, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 0], js[asym3L, 1, 1, 1, 1, 0, 1, 0, 1, 0] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0], 
+   js[asym3L, 1, 1, 1, 1, 1, 0, 0, 0, 1] -> js[asym3L, 0, 1, 1, 1, 1, 1, 0, 
+     1, 0], js[asym3L, 1, 1, 1, 1, 1, 0, 0, 1, 0] -> 
+    js[asym3L, 0, 1, 1, 1, 1, 1, 0, 1, 0], 
+   js[asym3L, 0, 1, 1, 0, 1, 1, 1, 1, 0] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 1], js[asym3L, 0, 1, 1, 1, 1, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1], 
+   js[asym3L, 0, 1, 1, 1, 1, 0, 1, 1, 0] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 1], js[asym3L, 1, 0, 0, 1, 1, 1, 1, 0, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1], 
+   js[asym3L, 1, 0, 0, 1, 1, 1, 1, 1, 0] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 1], js[asym3L, 1, 0, 1, 1, 0, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1], 
+   js[asym3L, 1, 0, 1, 1, 0, 1, 1, 1, 0] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 1], js[asym3L, 1, 1, 0, 1, 1, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1], 
+   js[asym3L, 1, 1, 0, 1, 1, 0, 1, 0, 1] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 1], js[asym3L, 1, 1, 1, 0, 0, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 1], 
+   js[asym3L, 1, 1, 1, 0, 0, 1, 1, 0, 1] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 1], js[asym3L, 0, 1, 1, 1, 1, 0, 1, 0, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 0, 0, 1, 1, 1, 0, 1, 1] -> js[asym3L, 0, 1, 1, 0, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 0, 1, 1, 0, 1, 1, 0, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 1, 0, 1, 1, 0, 1, 1, 0] -> js[asym3L, 0, 1, 1, 0, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 1, 1, 0, 0, 1, 1, 1, 0] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 0, 1, 1], 
+   js[asym3L, 0, 1, 1, 1, 0, 1, 1, 0, 1] -> js[asym3L, 0, 1, 0, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 0, 1, 0, 1, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 0, 1, 1, 1, 0, 1, 0, 1] -> js[asym3L, 0, 1, 0, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 1, 1, 0, 1, 0, 1, 1, 1, 0] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 1, 0, 1, 1], 
+   js[asym3L, 1, 1, 1, 0, 1, 0, 1, 1, 0] -> js[asym3L, 0, 1, 0, 1, 1, 1, 0, 
+     1, 1], js[asym3L, 0, 1, 1, 0, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 0, 1, 1, 0, 1, 0, 1, 1, 1] -> js[asym3L, 0, 1, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 1, 0, 0, 1, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 1, 0, 0, 1, 1, 0, 1, 1, 1] -> js[asym3L, 0, 1, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 1, 0, 1, 0, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 1, 1, 0, 0, 1, 1, 1, 0, 1] -> js[asym3L, 0, 0, 1, 1, 1, 1, 1, 
+     1, 0], js[asym3L, 1, 1, 1, 1, 0, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 1, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 0, 0, 1, 0, 1, 1, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 0, 0, 1, 1, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 0, 0, 1, 1, 1, 0, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 0, 1, 0, 0, 1, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 0, 1, 1, 1, 0, 0, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 0, 0, 0, 1, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 0, 1, 1, 0, 0, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 0, 0, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 0, 0, 1, 0, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 0, 1, 0, 0, 1, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 1, 0, 0, 0, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 0, 1, 0, 1, 1, 1, 1, 0, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 0, 1, 0, 1, 1, 1, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 0, 1, 1, 1, 0, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 0, 1, 1, 1, 0, 1, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 0, 1, 0, 1, 1, 1, 0, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 0, 1, 0, 1, 1, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 0, 1, 1, 1, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 0, 1, 1, 1, 0, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 0, 1, 0, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 0, 1, 0, 1, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 1, 1, 1, 0, 1, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 1], 
+   js[asym3L, 1, 1, 1, 0, 1, 0, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 1], js[asym3L, 0, 0, 1, 0, 1, 1, 1, 1, 0] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 0, 0, 1, 1, 0, 1, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 0], js[asym3L, 0, 0, 1, 1, 1, 0, 1, 1, 0] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 0, 1, 0, 0, 1, 1, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 0], js[asym3L, 0, 1, 1, 1, 0, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 1, 0, 0, 0, 1, 1, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 0], js[asym3L, 1, 0, 1, 1, 0, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 1, 1, 0, 0, 0, 1, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 0], js[asym3L, 1, 1, 0, 0, 1, 0, 1, 0, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 1, 1, 0, 1, 0, 0, 0, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 1, 1, 
+     1, 0], js[asym3L, 1, 1, 1, 0, 0, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 1, 1, 1, 0], 
+   js[asym3L, 0, 0, 1, 0, 0, 1, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 0, 1, 0, 0, 1, 0, 1, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 0, 1, 1, 0, 0, 0, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 1, 0, 0, 0, 0, 1, 1, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 1, 0, 0, 1, 0, 0, 1, 1, 1] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 0, 1, 0, 1, 1, 0, 1, 0, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 0, 1, 0, 1, 1, 0, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 0, 1, 1, 0, 0, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 0, 1, 1, 0, 0, 1, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 0, 1, 1, 0, 1, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 0, 1, 1, 0, 1, 0, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 1, 0, 0, 1, 0, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 1, 0, 0, 1, 0, 1, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 1, 0, 0, 1, 1, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 1, 0, 0, 1, 1, 0, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 1, 0, 1, 0, 0, 1, 1, 0, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 1], 
+   js[asym3L, 1, 0, 1, 0, 0, 1, 1, 1, 0] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 1], js[asym3L, 0, 1, 1, 0, 0, 1, 1, 0, 1] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1], 
+   js[asym3L, 0, 1, 1, 0, 1, 0, 1, 1, 0] -> js[asym3L, 0, 1, 0, 1, 1, 0, 0, 
+     1, 1], js[asym3L, 1, 0, 0, 1, 0, 1, 1, 1, 0] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1], 
+   js[asym3L, 1, 0, 0, 1, 1, 0, 1, 0, 1] -> js[asym3L, 0, 1, 0, 1, 1, 0, 0, 
+     1, 1], js[asym3L, 1, 0, 1, 0, 0, 1, 0, 1, 1] -> 
+    js[asym3L, 0, 1, 0, 1, 1, 0, 0, 1, 1], 
+   js[asym3L, 0, 1, 1, 1, 1, 0, 0, 1, 0] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 0], js[asym3L, 1, 0, 0, 1, 1, 1, 1, 0, 0] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 0], 
+   js[asym3L, 1, 0, 1, 1, 0, 1, 0, 1, 0] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 0], js[asym3L, 1, 1, 0, 1, 1, 0, 0, 0, 1] -> 
+    js[asym3L, 0, 1, 1, 0, 1, 1, 1, 0, 0], 
+   js[asym3L, 1, 1, 1, 0, 0, 1, 0, 0, 1] -> js[asym3L, 0, 1, 1, 0, 1, 1, 1, 
+     0, 0], js[asym3L, 0, 0, 1, 0, 0, 1, 1, 1, 0] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0], 
+   js[asym3L, 0, 1, 0, 0, 1, 0, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 0], js[asym3L, 0, 1, 1, 0, 0, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0], 
+   js[asym3L, 1, 0, 0, 0, 0, 1, 1, 0, 1] -> js[asym3L, 0, 0, 0, 1, 1, 0, 1, 
+     1, 0], js[asym3L, 1, 0, 0, 1, 0, 0, 0, 1, 1] -> 
+    js[asym3L, 0, 0, 0, 1, 1, 0, 1, 1, 0]}
+asym3L /: SectorsPattern[asym3L] := {___}
+asym3L /: SimpleSectors[asym3L] := Get[StringJoin[BasisDirectory[asym3L], 
+    "/SimpleSectors[asym3L]"]]
+asym3L /: SPs[asym3L] := {sp[l1, l1], sp[l1, l2], sp[l1, l4], sp[l1, p], 
+   sp[l2, l2], sp[l2, l4], sp[l2, p], sp[l4, l4], sp[l4, p]}
+asym3L /: SR[asym3L] := Get[StringJoin[BasisDirectory[asym3L], "/SR[asym3L]"]]
+asym3L /: Toj[asym3L] := {sp[l1, l1] -> j[asym3L, -1, 0, 0, 0, 0, 0, 0, 0, 
+     0], sp[l1, l2] -> (j[asym3L, -1, 0, 0, 0, 0, 0, 0, 0, 0] + 
+      j[asym3L, 0, 0, -1, 0, 0, 0, 0, 0, 0] - j[asym3L, 0, 0, 0, 0, 0, 0, -1, 
+       0, 0])/2, sp[l1, l4] -> (j[asym3L, -1, 0, 0, 0, 0, 0, 0, 0, 0] + 
+      j[asym3L, 0, 0, 0, 0, -1, 0, 0, 0, 0] - j[asym3L, 0, 0, 0, 0, 0, 0, 0, 
+       -1, 0])/2, sp[l1, p] -> (u + j[asym3L, -1, 0, 0, 0, 0, 0, 0, 0, 0] - 
+      j[asym3L, 0, -1, 0, 0, 0, 0, 0, 0, 0])/2, 
+   sp[l2, l2] -> j[asym3L, 0, 0, -1, 0, 0, 0, 0, 0, 0], 
+   sp[l2, l4] -> (j[asym3L, 0, 0, -1, 0, 0, 0, 0, 0, 0] + 
+      j[asym3L, 0, 0, 0, 0, -1, 0, 0, 0, 0] - j[asym3L, 0, 0, 0, 0, 0, 0, 0, 
+       0, -1])/2, sp[l2, p] -> (u + j[asym3L, 0, 0, -1, 0, 0, 0, 0, 0, 0] - 
+      j[asym3L, 0, 0, 0, -1, 0, 0, 0, 0, 0])/2, 
+   sp[l4, l4] -> j[asym3L, 0, 0, 0, 0, -1, 0, 0, 0, 0], 
+   sp[l4, p] -> (u + j[asym3L, 0, 0, 0, 0, -1, 0, 0, 0, 0] - 
+      j[asym3L, 0, 0, 0, 0, 0, -1, 0, 0, 0])/2}
+asym3L /: UniqueSectors[asym3L] := Get[StringJoin[BasisDirectory[asym3L], 
+    "/UniqueSectors[asym3L]"]]
+asym3L /: ZerojRule[asym3L] := LiteRed`Private`jjj:j[asym3L, __] :> 
+   0 /; Module[{LiteRed`Private`jjs = 
+       Rest[List @@ jSector[LiteRed`Private`jjj]]}, 
+     Or @@ (BitOr[LiteRed`Private`jjs, #1] === #1 & ) /@ 
+       {{0, 0, 0, 0, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 0, 1, 0, 0}, 
+        {1, 1, 1, 1, 0, 1, 1, 0, 0}, {1, 1, 1, 1, 0, 0, 1, 1, 0}, 
+        {1, 1, 1, 1, 0, 0, 1, 0, 1}, {0, 0, 1, 1, 0, 0, 1, 1, 1}, 
+        {1, 1, 1, 0, 1, 1, 0, 1, 0}, {1, 1, 1, 0, 1, 0, 0, 0, 1}, 
+        {0, 0, 1, 1, 1, 1, 0, 1, 1}, {1, 1, 0, 1, 1, 1, 0, 1, 0}, 
+        {0, 0, 1, 1, 1, 1, 1, 0, 1}, {1, 1, 0, 1, 0, 1, 0, 0, 1}, 
+        {1, 1, 0, 0, 1, 1, 0, 1, 1}, {1, 1, 0, 0, 1, 1, 1, 1, 0}, 
+        {0, 1, 0, 1, 0, 1, 1, 1, 1}, {1, 1, 0, 0, 0, 0, 1, 1, 1}, 
+        {0, 1, 0, 1, 1, 1, 1, 0, 0}, {1, 0, 1, 1, 1, 1, 0, 0, 1}, 
+        {1, 0, 1, 1, 1, 0, 0, 1, 0}, {1, 0, 1, 0, 1, 1, 1, 0, 0}, 
+        {1, 0, 1, 0, 1, 0, 1, 1, 1}, {0, 1, 1, 1, 0, 1, 0, 1, 0}, 
+        {0, 1, 1, 1, 1, 1, 0, 0, 1}}]
+asym3L /: ZeroSectors[asym3L] := Get[StringJoin[BasisDirectory[asym3L], 
+    "/ZeroSectors[asym3L]"]]
+asym3L /: SectorsMappings[asym3L, LiteRed`Private`ns$:(0 | 1)..] := 
+  Cases[SectorsMappings[asym3L], HoldPattern[
+    js[asym3L, LiteRed`Private`ns$] -> _]]
+asym3L::usage = "3-loop basis with 1 external momenta.\nUse \
+Information[asym3L] to get basis summary.\nThis string can be redefined by \
+setting asym3L::usage=\"\[Ellipsis]\""; Information[asym3L, 
+  LongForm -> False]; 
+LiteRed`Private`CheckDefs[asym3L]
+BasisDirectory[asym3L]
