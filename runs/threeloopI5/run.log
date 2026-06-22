@@ -1,8 +1,6 @@
-"=== Starting Unified Workflow Engine for: ""threeloopI5"" ==="
-"Start Date and Time: ""Tue 16 Jun 2026 20:01:13"
-
-FrontEndObject::notavail: 
-   A front end is not available; certain operations require a front end.
+"=== Running Workflow Engine Audits ==="
+"  Mathematica version: ""14.0.0 for Mac OS X ARM (64-bit) (December 13, \
+2023)"
 "**************** "Style["LiteRed v2.025\[Beta]", 
    {Bold, RGBColor[1, 1/3, 1/3]}]" ********************\nAuthor: Roman N. \
 Lee, Budker Institute of Nuclear Physics, Novosibirsk.\nRelease Date: \
@@ -15,6 +13,10 @@ from:/Users/windfolgen/GitRepos/LiteRed2/Source/LiteRed2025.m \
   "uction.\nThe package is designed for the search and application of the \
 Integration-By-Part reduction rules. It also contains some other useful \
 tools.\n\nSee ?LiteRed`* for a list of functions. "
+"  LiteRed2 package loaded successfully."
+"  FiniteFlow package loaded successfully."
+"=== Starting Unified Workflow Engine for: ""threeloopI5"" ==="
+"Start Date and Time: ""Mon 22 Jun 2026 21:28:41"
 "Review agent loaded from ""/Users/windfolgen/Documents/AntiGravity/svbwalkth\
 rough/audit_agent/audit_agent.wl"
 "[ReviewGate] ""preflight"" stage: ""PASS"" (PASS:"2" WARN:"0" FAIL:"0")"
@@ -22,7 +24,7 @@ rough/audit_agent/audit_agent.wl"
 "  Checking for boundary target data..."
 "[ReviewGate] ""preboundary"" stage: ""PASS"" (PASS:"10" WARN:"0" FAIL:"0")"
 "[ReviewGate] ""boundary"" stage: ""PASS"" (PASS:"6" WARN:"0" FAIL:"0")"
-"[Time Record] Stage 1 (Boundary Conditions) took: "1.964922`6.443860313031002
+"[Time Record] Stage 1 (Boundary Conditions) took: "2.10389`6.473538027210151
   " seconds."
 "  Loading full SV basis..."
 "  [Leading Singularity "1"/"1" (""simple"")]"
@@ -31,7 +33,7 @@ rough/audit_agent/audit_agent.wl"
 "[ReviewGate] ""preseries"" stage: ""PASS"" (PASS:"7" WARN:"0" FAIL:"0")"
 "[Skill 1] All "12" series expansion files already exist. Skipping expansion!"
 "[ReviewGate] ""series"" stage: ""PASS"" (PASS:"12" WARN:"0" FAIL:"0")"
-"[Time Record] Stage 2 (Series Expansion) took: "0.062543`4.645663711377412
+"[Time Record] Stage 2 (Series Expansion) took: "0.103692`4.865230253350902
   " seconds."
 "[ReviewGate] ""presolve"" stage: ""PASS"" (PASS:"12" WARN:"0" FAIL:"0")"
 "  Executing RunCoefficientSolving..."
@@ -50,9 +52,9 @@ given under the current solution."
 /solve_agent/threeloopI5_sol.m"
 "Final result.m and coeff_sol.m saved to runs/""threeloopI5""/"
 "[ReviewGate] ""solve"" stage: ""PASS"" (PASS:"2" WARN:"0" FAIL:"0")"
-"[Time Record] Stage 3 (Solving System) took: "0.262809`4.9680952402357965
+"[Time Record] Stage 3 (Solving System) took: "0.261905`4.96659879607734
   " seconds."
-"[Time Record] Total workflow execution time: "2.290326`6.510412301099623
+"[Time Record] Total workflow execution time: "2.469535`6.5431301835023294
   " seconds."
-"End Date and Time: ""Tue 16 Jun 2026 20:01:16"
+"End Date and Time: ""Mon 22 Jun 2026 21:28:42"
 "=== Workflow Engine Complete for: ""threeloopI5"" ==="

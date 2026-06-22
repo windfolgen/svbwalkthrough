@@ -46,14 +46,42 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
   AppendTo[$Output, logStream];
   AppendTo[$Messages, logStream];
 
-  Print["=== Starting Unified Workflow Engine for: ", label, " ==="];
-  Print["Start Date and Time: ", DateString[]];
+  Print["=== Running Workflow Engine Audits ==="];
 
-  (* Ensure LiteRed2 is loaded first and clean up shadowing Global`j *)
+  (* 0.1 Check if Mathematica kernel runs correctly *)
+  If[1 + 1 =!= 2 || !StringQ[$Version] || !ListQ[$Path],
+    Print["[AUDIT ERROR] Mathematica kernel is not running correctly or the environment is invalid!"];
+    $Output = DeleteCases[$Output, logStream];
+    $Messages = DeleteCases[$Messages, logStream];
+    Close[logStream];
+    Exit[1];
+  ];
+  Print["  Mathematica version: ", $Version];
+
+  (* 0.2 Check if LiteRed2 is installed and can be loaded *)
   Quiet[
     If[NameQ["Global`j"], Remove["Global`j"]];
   ];
-  Get["LiteRed2`"];
+  Quiet[Get["LiteRed2`"]];
+  If[!MemberQ[$Packages, "LiteRed`"],
+    Print["[AUDIT ERROR] LiteRed2 package could not be loaded! Please ensure LiteRed2 is installed and in your $Path."];
+    $Output = DeleteCases[$Output, logStream];
+    $Messages = DeleteCases[$Messages, logStream];
+    Close[logStream];
+    Exit[1];
+  ];
+  Print["  LiteRed2 package loaded successfully."];
+
+  (* 0.3 Check if FiniteFlow is installed *)
+  Quiet[Get["FiniteFlow`"]];
+  If[!MemberQ[$Packages, "FiniteFlow`"],
+    Print["[AUDIT WARNING] FiniteFlow package is not installed. Continuing calculation..."];
+  ,
+    Print["  FiniteFlow package loaded successfully."];
+  ];
+
+  Print["=== Starting Unified Workflow Engine for: ", label, " ==="];
+  Print["Start Date and Time: ", DateString[]];
 
   Get[FileNameJoin[{rootDir, "config.wl"}]];
   Get[FileNameJoin[{rootDir, "asym", "boundary_agent", "boundary_agent.wl"}]];
