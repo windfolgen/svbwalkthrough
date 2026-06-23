@@ -547,7 +547,7 @@ AuditSolveStage[rootDir_, label_, config_] := Module[
             AppendTo[checks, Association[
               "Status"  -> "WARN",
               "Check"   -> "solve-coefficients-unsolved",
-              "Message" -> "Warning: not all coefficients are uniquely solved. Free parameters remaining: " <> ToString[unsolvedVars]
+              "Message" -> "Warning: not all coefficients are uniquely solved. " <> ToString[Length[unsolvedVars]] <> " free parameters remaining: " <> ToString[unsolvedVars]
             ]]
           ];
         ,

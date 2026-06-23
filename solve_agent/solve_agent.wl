@@ -183,7 +183,7 @@ RunCoefficientSolving[rootDir_, label_, config_,
       
       If[Length[missingCoeffs] > 0 || Length[unsolvedVars] > 0,
         isSolved = False;
-        Print["[WARNING] Coefficients are not totally solved! Free parameters remaining: ", unsolvedVars];
+        Print["[WARNING] Coefficients are not totally solved! ", Length[unsolvedVars], " free parameters remaining: ", unsolvedVars];
       ];
 
       If[isSolved,
