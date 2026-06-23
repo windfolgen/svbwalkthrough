@@ -533,7 +533,7 @@ AuditSolveStage[rootDir_, label_, config_] := Module[
         If[!IntegerQ[totalCoeffs] || totalCoeffs <= 0, totalCoeffs = 0];
         
         missingCoeffs = Select[Table[Symbol["c"][i], {i, 1, totalCoeffs}], !MemberQ[data[[All, 1]], #] &];
-        unsolvedVars = Cases[data[[All, 2]], _c | _C | _(c$[_]) | _(C$[_]) | _Symbol?((StringStartsQ[SymbolName[#], "c"] || StringStartsQ[SymbolName[#], "c$"] || StringStartsQ[SymbolName[#], "C"] || StringStartsQ[SymbolName[#], "C$"]) &), Infinity] // DeleteDuplicates;
+        unsolvedVars = Cases[data[[All, 2]], Symbol["c"][i_Integer] :> Symbol["c"][i], Infinity] // DeleteDuplicates;
         
         If[Length[missingCoeffs] > 0 || Length[unsolvedVars] > 0,
           If[Length[missingCoeffs] > 0,

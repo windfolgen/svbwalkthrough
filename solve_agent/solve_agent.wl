@@ -179,7 +179,7 @@ RunCoefficientSolving[rootDir_, label_, config_,
     ,
       lhsVars = solt[[All, 1]];
       missingCoeffs = Select[Table[c[i], {i, 1, totalCoeffs}], !MemberQ[lhsVars, #] &];
-      unsolvedVars = Cases[solt[[All, 2]], _c | _C | _(c$[_]) | _(C$[_]) | _Symbol?((StringStartsQ[SymbolName[#], "c"] || StringStartsQ[SymbolName[#], "c$"] || StringStartsQ[SymbolName[#], "C"] || StringStartsQ[SymbolName[#], "C$"]) &), Infinity] // DeleteDuplicates;
+      unsolvedVars = Cases[solt[[All, 2]], c[i_Integer] :> c[i], Infinity] // DeleteDuplicates;
       
       If[Length[missingCoeffs] > 0 || Length[unsolvedVars] > 0,
         isSolved = False;
