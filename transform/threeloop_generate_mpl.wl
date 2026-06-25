@@ -24,27 +24,27 @@ lenInf = Length[evaluatedMPLInf];
 (* Pre-compute zrep definitions up to power 10 *)
 Print["Precomputing zrep definitions..."];
 zrep1 = Dispatch@Flatten@Table[{
-  Power[z, i] -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i] -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[z1, i] -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz1, i] -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i] -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i] -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[z1, i] -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz1, i] -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
 }, {i, 1, 10}];
 
 zrep1P = Dispatch@Flatten@Table[{
-  Power[z, i] -> (Power[1/2*(1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i] -> (Power[1/2*(1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[z1, i] -> (Power[1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz1, i] -> (Power[1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i] -> (Power[1/2*(1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i] -> (Power[1/2*(1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[z1, i] -> (Power[1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz1, i] -> (Power[1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
 }, {i, 1, 10}];
 
 zrep0 = Dispatch@Flatten@Table[{
-  Power[z, i] -> (Power[1/2*(1 + u - Sqrt[-4 u + (1 + u - v)^2] - v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i] -> (Power[1/2*(1 + u + Sqrt[-4 u + (1 + u - v)^2] - v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i] -> (Power[1/2*(1 + u + Sqrt[-4 u + (1 + u - v)^2] - v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i] -> (Power[1/2*(1 + u - Sqrt[-4 u + (1 + u - v)^2] - v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
 }, {i, 1, 10}];
 
 zrep0P = Dispatch@Flatten@Table[{
-  Power[z, i] -> (Power[(-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i] -> (Power[(-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i] -> (Power[(-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i] -> (Power[(-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
 }, {i, 1, 10}];
 
 zrepInf = Dispatch@Flatten@Table[{
@@ -57,7 +57,7 @@ zrepInfP = Dispatch@Flatten@Table[{
   Power[zz, i] -> (Power[(-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 u), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
 }, {i, 1, 10}];
 
-ProcessTerm[termOld_, repRulesA_, repRulesB_, repRulesC_, zzToZRule_, negZRules_, zrep_] := Module[
+ProcessTerm[termOld_, repRulesA_, repRulesB_, repRulesC_, zzToZRule_, negZRules_, zrep_, assumption_] := Module[
   {term1, term2, term3, exactExpr, s0, uPole, yOrderReq, finalSeriesEval},
   
   term1 = termOld /. repRulesA /. repRulesB /. repRulesC /. zzToZRule // Expand;
@@ -66,7 +66,7 @@ ProcessTerm[termOld_, repRulesA_, repRulesB_, repRulesC_, zzToZRule_, negZRules_
   
   exactExpr = term3 /. zrep /. {v -> 1 - Y};
   
-  s0 = Series[exactExpr /. {Log[u] -> 1, Zeta[_] -> 1}, {u, 0, 0}, {Y, 0, 1}, Assumptions -> {Y > 0, u > 0}];
+  s0 = Series[exactExpr /. {Log[u] -> 1, Zeta[_] -> 1}, {u, 0, 0}, {Y, 0, 1}, Assumptions -> {assumption, u > 0}];
   If[Head[s0] === SeriesData,
     uPole = Max[0, -s0[[4]]],
     uPole = Max[0, -Exponent[Normal[s0], u, Min]]
@@ -74,7 +74,7 @@ ProcessTerm[termOld_, repRulesA_, repRulesB_, repRulesC_, zzToZRule_, negZRules_
   
   yOrderReq = yOrderFinal + 2*uPole + 2;
   
-  finalSeriesEval = Series[exactExpr /. {Log[u] -> logU}, {u, 0, 0}, {Y, 0, yOrderReq}, Assumptions -> {Y > 0, u > 0}] /. {logU -> Log[u]};
+  finalSeriesEval = Series[exactExpr /. {Log[u] -> logU}, {u, 0, 0}, {Y, 0, yOrderReq}, Assumptions -> {assumption, u > 0}] /. {logU -> Log[u]};
   
   Expand[Normal[finalSeriesEval]]
 ];
@@ -89,7 +89,8 @@ res1 = ParallelTable[
     {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
     {zz1 -> u/v/z1}, 
     {Power[z1, a_ /; a < 0] :> Power[zz1*v/u, -a]},
-    zrep1
+    zrep1,
+    Y > 0
   ],
   {i, 1, len1}
 ];
@@ -105,7 +106,8 @@ res1P = ParallelTable[
     {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
     {zz1 -> u/z1}, 
     {Power[z1, a_ /; a < 0] :> Power[zz1/u, -a]},
-    zrep1P
+    zrep1P,
+    Y < 0
   ],
   {i, 1, len1}
 ];
@@ -121,7 +123,8 @@ res0 = ParallelTable[
     {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
     {zz -> u/z}, 
     {Power[z, a_ /; a < 0] :> Power[zz/u, -a]},
-    zrep0
+    zrep0,
+    Y > 0
   ],
   {i, 1, len0}
 ];
@@ -137,7 +140,8 @@ res0P = ParallelTable[
     {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
     {zz -> u/z/v}, 
     {Power[z, a_ /; a < 0] :> Power[zz*v/u, -a]},
-    zrep0P
+    zrep0P,
+    Y < 0
   ],
   {i, 1, len0}
 ];
@@ -153,7 +157,8 @@ resInf = ParallelTable[
     {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
     {zz -> 1/u/z}, 
     {Power[z, a_ /; a < 0] :> Power[zz*u, -a]},
-    zrepInf
+    zrepInf,
+    Y > 0
   ],
   {i, 1, lenInf}
 ];
@@ -169,7 +174,8 @@ resInfP = ParallelTable[
     {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
     {zz -> v/u/z}, 
     {Power[z, a_ /; a < 0] :> Power[zz*u/v, -a]},
-    zrepInfP
+    zrepInfP,
+    Y < 0
   ],
   {i, 1, lenInf}
 ];

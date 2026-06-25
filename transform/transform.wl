@@ -57,7 +57,7 @@ If[Head[evaluatedMPL] =!= List,
 len = Length[evaluatedMPL];
 Print["Loaded ", len, " elements."];
 
-ProcessTerm[term_, preSub_, logSub_, zetaSub_, midSub_, postSub_, zSub1_, zzSub1_, z1Sub1_, zz1Sub1_] := Module[
+ProcessTerm[term_, preSub_, logSub_, zetaSub_, midSub_, postSub_, zSub1_, zzSub1_, z1Sub1_, zz1Sub1_, assumption_] := Module[
   {term1, term2, term3, z1S0, zz1S0, zS0, zzS0, vS0, temp, tempNorm, uPole, yOrderReq, z1S, zz1S, zS, zzS, vS, finalSeries},
 
   term1 = term /. preSub /. logSub /. zetaSub /. midSub // Expand;
@@ -65,11 +65,11 @@ ProcessTerm[term_, preSub_, logSub_, zetaSub_, midSub_, postSub_, zSub1_, zzSub1
   term3 = Collect[term2, {z1, zz1, z, zz}, Factor];
 
   (* Base O(1) Taylor expansion to mathematically locate the depth of the 1/u pole *)
-  vS0 = Series[1 - Y, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {Y > 0, u > 0}];
-  zS0 = Series[zSub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {Y > 0, u > 0}];
-  zzS0 = Series[zzSub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {Y > 0, u > 0}];
-  z1S0 = Series[z1Sub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {Y > 0, u > 0}];
-  zz1S0 = Series[zz1Sub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {Y > 0, u > 0}];
+  vS0 = Series[1 - Y, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {assumption, u > 0}];
+  zS0 = Series[zSub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {assumption, u > 0}];
+  zzS0 = Series[zzSub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {assumption, u > 0}];
+  z1S0 = Series[z1Sub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {assumption, u > 0}];
+  zz1S0 = Series[zz1Sub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, 1}, Assumptions -> {assumption, u > 0}];
 
   temp = term3 /. {z1 -> z1S0, zz1 -> zz1S0, z -> zS0, zz -> zzS0, v -> vS0};
   tempNorm = Normal[temp /. {Log[u] -> 1, Zeta[_] -> 1}];
@@ -79,16 +79,16 @@ ProcessTerm[term_, preSub_, logSub_, zetaSub_, midSub_, postSub_, zSub1_, zzSub1
   yOrderReq = yOrderFinal + 2*uPole + 2;
 
   (* Full expansion with rigorous assumptions to prevent branch-cut evaluation crashes *)
-  vS = Series[1 - Y, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {Y > 0, u > 0}];
-  zS = Series[zSub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {Y > 0, u > 0}];
-  zzS = Series[zzSub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {Y > 0, u > 0}];
-  z1S = Series[z1Sub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {Y > 0, u > 0}];
-  zz1S = Series[zz1Sub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {Y > 0, u > 0}];
+  vS = Series[1 - Y, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {assumption, u > 0}];
+  zS = Series[zSub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {assumption, u > 0}];
+  zzS = Series[zzSub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {assumption, u > 0}];
+  z1S = Series[z1Sub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {assumption, u > 0}];
+  zz1S = Series[zz1Sub1 /. {v -> 1 - Y}, {u, 0, 10}, {Y, 0, yOrderReq}, Assumptions -> {assumption, u > 0}];
 
   finalSeries = term3 /. {z1 -> z1S, zz1 -> zz1S, z -> zS, zz -> zzS, v -> vS};
   
   (* The {u, 0, 0} bound mathematically prevents term swallowing across SeriesData limits *)
-  finalSeries = Series[finalSeries /. {Log[u] -> logU}, {u, 0, 0}, {Y, 0, yOrderReq}, Assumptions -> {Y > 0, u > 0}] /. {logU -> Log[u]};
+  finalSeries = Series[finalSeries /. {Log[u] -> logU}, {u, 0, 0}, {Y, 0, yOrderReq}, Assumptions -> {assumption, u > 0}] /. {logU -> Log[u]};
 
   finalSeries
 ];
@@ -106,10 +106,11 @@ Which[
       {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
       {zz1 -> u/v/z1}, 
       {Power[z1, a_ /; a < 0] :> Power[zz1*v/u, -a]},
-      (1 - u - Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v),
       (1 - u + Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v),
+      (1 - u - Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v),
+      (1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v),
       (1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v),
-      (1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v)
+      Y > 0
     ], {i, 1, len}];
   Export[outUV, ToString[InputForm[resUV], PageWidth -> Infinity], "String"];
 
@@ -121,10 +122,11 @@ Which[
       {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
       {zz1 -> u/z1}, 
       {Power[z1, a_ /; a < 0] :> Power[zz1/u, -a]},
-      1/2*(1 - u + v - Sqrt[-4 v + (1 - u + v)^2]),
       1/2*(1 - u + v + Sqrt[-4 v + (1 - u + v)^2]),
+      1/2*(1 - u + v - Sqrt[-4 v + (1 - u + v)^2]),
+      1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]),
       1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]),
-      1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2])
+      Y < 0
     ], {i, 1, len}];
   Export[outUVP, ToString[InputForm[resUVP], PageWidth -> Infinity], "String"];
   ,
@@ -137,9 +139,10 @@ Which[
       {I[z, 0, 0] -> Log[u]},
       {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
       {}, {},
-      1/2*(1 + u - Sqrt[-4 u + (1 + u - v)^2] - v),
       1/2*(1 + u + Sqrt[-4 u + (1 + u - v)^2] - v),
-      0, 0
+      1/2*(1 + u - Sqrt[-4 u + (1 + u - v)^2] - v),
+      0, 0,
+      Y > 0
     ], {i, 1, len}];
   Export[outUV, ToString[InputForm[resUV], PageWidth -> Infinity], "String"];
 
@@ -150,9 +153,10 @@ Which[
       {I[z, 0, 0] -> Log[u/v]},
       {f[a_] :> Zeta[a], f[3, 3] -> Zeta[3]^2/2, f[3, 5] -> Zeta[3]*Zeta[5] - f[5, 3]}, 
       {}, {},
-      (-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 v),
       (-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 v),
-      0, 0
+      (-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 v),
+      0, 0,
+      Y < 0
     ], {i, 1, len}];
   Export[outUVP, ToString[InputForm[resUVP], PageWidth -> Infinity], "String"];
   ,
@@ -167,7 +171,8 @@ Which[
       {}, {},
       (1 + u - v - Sqrt[-4 u + (-1 - u + v)^2])/(2 u),
       (1 + u - v + Sqrt[-4 u + (-1 - u + v)^2])/(2 u),
-      0, 0
+      0, 0,
+      Y > 0
     ], {i, 1, len}];
   Export[outUV, ToString[InputForm[resUV], PageWidth -> Infinity], "String"];
 
@@ -180,7 +185,8 @@ Which[
       {}, {},
       (-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 u),
       (-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 u),
-      0, 0
+      0, 0,
+      Y < 0
     ], {i, 1, len}];
   Export[outUVP, ToString[InputForm[resUVP], PageWidth -> Infinity], "String"];
 ];

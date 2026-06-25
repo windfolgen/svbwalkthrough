@@ -24,30 +24,30 @@ zrepInfP = Table[{
 
 (* zrep for e0: used by SeriesExpansion0, SeriesExpansion20 *)
 zrep0 = Table[{
-  Power[z, i]  -> (Power[1/2*(1 + u - Sqrt[-4 u + (1 + u - v)^2] - v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i] -> (Power[1/2*(1 + u + Sqrt[-4 u + (1 + u - v)^2] - v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i]  -> (Power[1/2*(1 + u + Sqrt[-4 u + (1 + u - v)^2] - v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i] -> (Power[1/2*(1 + u - Sqrt[-4 u + (1 + u - v)^2] - v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
   }, {i, 1, 10}] // Flatten;
 
 (* zrep for e0P: used by SeriesExpansion0P, SeriesExpansion20P *)
 zrep0P = Table[{
-  Power[z, i]  -> (Power[(-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i] -> (Power[(-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i]  -> (Power[(-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i] -> (Power[(-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
   }, {i, 1, 10}] // Flatten;
 
 (* zrep for e1: used by SeriesExpansion1, SeriesExpansion21 *)
 zrep1 = Table[{
-  Power[z, i]    -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i]   -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[z1, i]   -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz1, i]  -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i]    -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i]   -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[z1, i]   -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz1, i]  -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
   }, {i, 1, 10}] // Flatten;
 
 (* zrep for e1P: used by SeriesExpansion1P, SeriesExpansion21P *)
 zrep1P = Table[{
-  Power[z, i]    -> (Power[1/2*(1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i]    /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i]   -> (Power[1/2*(1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i]    /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[z1, i]   -> (Power[1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i]   /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz1, i]  -> (Power[1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i]   /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i]    -> (Power[1/2*(1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i]    /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i]   -> (Power[1/2*(1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i]    /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[z1, i]   -> (Power[1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i]   /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz1, i]  -> (Power[1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i]   /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
   }, {i, 1, 10}] // Flatten;
 
 (* =================================================================== *)
@@ -191,7 +191,7 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
       Print["[Skill 1] Limit ", i, "/6: additional = ", add // InputForm];
 
       ExpandInuvList[basisList_, sqrtSer_, expT_] := ParallelTable[
-        Module[{test, test2, seriesY, basisTerm},
+        Module[{test, test2, seriesY, basisTerm, assumption},
           basisTerm = If[basisList[[j]] === I0constant, 1, basisList[[j]]];
           test = If[poleType === "simple",
             basisTerm * add * (-sqrtSer) / expT,
@@ -203,20 +203,20 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
             0, If[OddQ[i],
                  test = test /. {f[5]->Zeta[5], f[7]->Zeta[7], f[3]->Zeta[3], I[z,0,0]->Log[u]} /. {zz->u/z} // Expand;
                  test = test /. {Power[z, a_ /; (a < 0)] :> Power[zz/u, -a]};
-                 test = test /. zrep0 /. {z -> 1/2 (1 + u - Sqrt[-4 u + (1 + u - v)^2] - v), zz -> 1/2 (1 + u + Sqrt[-4 u + (1 + u - v)^2] - v)} /. {v -> 1 - Y} // Expand;
+                 test = test /. zrep0 /. {z -> 1/2 (1 + u + Sqrt[-4 u + (1 + u - v)^2] - v), zz -> 1/2 (1 + u - Sqrt[-4 u + (1 + u - v)^2] - v)} /. {v -> 1 - Y} // Expand;
                ,
                  test = test /. {f[5]->Zeta[5], f[7]->Zeta[7], f[3]->Zeta[3], I[z,0,0]->Log[u/v]} /. {zz->u/z/v} // Expand;
                  test = test /. {Power[z, a_ /; (a < 0)] :> Power[zz*v/u, -a]};
-                 test = test /. zrep0P /. {z -> (-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), zz -> (-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 v)} /. {v -> 1 - Y} // Expand;
+                 test = test /. zrep0P /. {z -> (-1 + u + v + Sqrt[-4 u v + (-1 + u + v)^2])/(2 v), zz -> (-1 + u + v - Sqrt[-4 u v + (-1 + u + v)^2])/(2 v)} /. {v -> 1 - Y} // Expand;
                ],
             1, If[OddQ[i],
                  test = test /. {-1 + z -> z1, -1 + zz -> zz1} /. {I[z,1,0]->Log[u/v], f[a_]:>Zeta[a], f[3,3]->Zeta[3]^2/2, f[3,5]->Zeta[3]Zeta[5]-f[5,3]} /. {zz1 -> u/v/(z1)} // Expand;
                  test = test /. {Power[z1, a_ /; (a < 0)] :> Power[(zz1)*v/u, -a]};
-                 test = test /. zrep1 /. {z1 -> (1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), zz1 -> (1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v)} /. {v -> 1 - Y} // Expand;
+                 test = test /. zrep1 /. {z1 -> (1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), zz1 -> (1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v)} /. {v -> 1 - Y} // Expand;
                ,
                  test = test /. {-1 + z -> z1, -1 + zz -> zz1} /. {I[z,1,0]->Log[u], f[a_]:>Zeta[a], f[3,3]->Zeta[3]^2/2, f[3,5]->Zeta[3]Zeta[5]-f[5,3]} /. {zz1 -> u/(z1)} // Expand;
                  test = test /. {Power[z1, a_ /; (a < 0)] :> Power[(zz1)/u, -a]};
-                 test = test /. zrep1P /. {z1 -> 1/2 (-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), zz1 -> 1/2 (-1 - u + v + Sqrt[-4 v + (1 - u + v)^2])} /. {v -> 1 - Y} // Expand;
+                 test = test /. zrep1P /. {z1 -> 1/2 (-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), zz1 -> 1/2 (-1 - u + v - Sqrt[-4 v + (1 - u + v)^2])} /. {v -> 1 - Y} // Expand;
                ],
             2, If[OddQ[i],
                  test = test /. {zz -> 1/u/z} // Expand;
@@ -229,8 +229,9 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
                ]
           ];
           
+          assumption = If[OddQ[i], Y > 0, Y < 0];
           test2 = (test /. {Log[u] -> logU});
-          seriesY = Series[test2, {u, 0, 0}, {Y, 0, yOrder}, Assumptions -> {Y > 0}] // Normal;
+          seriesY = Series[test2, {u, 0, 0}, {Y, 0, yOrder}, Assumptions -> {assumption}] // Normal;
           (seriesY /. {logU -> Log[u]}) // Expand
         ],
         {j, 1, Length[basisList]}

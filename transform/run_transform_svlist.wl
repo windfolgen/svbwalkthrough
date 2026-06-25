@@ -33,17 +33,17 @@ Do[
 LaunchKernels[6];
 
 zrep1 = Dispatch@Flatten@Table[{
-  Power[z, i]    -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i]   -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[z1, i]   -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz1, i]  -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i]    -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i]   -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] + v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[z1, i]   -> (Power[(1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i]  /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz1, i]  -> (Power[(1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), i] /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
   }, {i, 1, 15}];
 
 zrep1P = Dispatch@Flatten@Table[{
-  Power[z, i]    -> (Power[1/2*(1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i]    /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz, i]   -> (Power[1/2*(1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i]    /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[z1, i]   -> (Power[1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i]   /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
-  Power[zz1, i]  -> (Power[1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i]   /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
+  Power[z, i]    -> (Power[1/2*(1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i]    /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz, i]   -> (Power[1/2*(1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i]    /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[z1, i]   -> (Power[1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), i]   /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &),
+  Power[zz1, i]  -> (Power[1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), i]   /. {v -> 1 - Y} // Expand // Collect[#, Power[_, 1/2], Factor] &)
   }, {i, 1, 15}];
 
 zrepInf = Dispatch@Flatten@Table[{
@@ -99,14 +99,14 @@ TransformEinfP[term_] := Module[{test, exp, zSub},
 TransformE1[term_] := Module[{test, exp, zSub},
   test = (((term /. {-1+z->z1, -1+zz->zz1} /. {I[z,1,0]->Log[u/v], f[a_]:>Zeta[a], f[3,3]->Zeta[3]^2/2, f[3,5]->Zeta[3]Zeta[5]-f[5,3]}) /. {zz1->u/v/z1} // Expand) /. {Power[z1,a_/;(a<0)]:>Power[zz1*v/u,-a]});
   exp = (-2 + u + Y)^2 - 4*(1 - Y);
-  zSub = {z1 -> (1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), zz1 -> (1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v)};
+  zSub = {z1 -> (1 - u + Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v), zz1 -> (1 - u - Sqrt[(-1 + u - v)^2 - 4 v] - v)/(2 v)};
   RobustTransform[test, zrep1, zSub, exp, sqrtSeries1]
 ];
 
 TransformE1P[term_] := Module[{test, exp, zSub},
   test = (((term /. {-1+z->z1, -1+zz->zz1} /. {I[z,1,0]->Log[u], f[a_]:>Zeta[a], f[3,3]->Zeta[3]^2/2, f[3,5]->Zeta[3]Zeta[5]-f[5,3]}) /. {zz1->u/z1} // Expand) /. {Power[z1,a_/;(a<0)]:>Power[zz1/u,-a]});
   exp = (-2 + u + Y)^2 - 4*(1 - Y);
-  zSub = {z1 -> 1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2]), zz1 -> 1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2])};
+  zSub = {z1 -> 1/2*(-1 - u + v + Sqrt[-4 v + (1 - u + v)^2]), zz1 -> 1/2*(-1 - u + v - Sqrt[-4 v + (1 - u + v)^2])};
   RobustTransform[test, zrep1P, zSub, exp, sqrtSeries1]
 ];
 

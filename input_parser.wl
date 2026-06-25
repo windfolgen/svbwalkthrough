@@ -74,8 +74,8 @@ ParseInput[runDir_String] := Module[
       pref = Simplify[expr * (z-zz)^primaryPoleOrder];
       
       (* Transform parity-even prefactor to pure u, v expressions *)
-      zRoot0 = 1/2 * (1 + u - v - Sqrt[-4u + (1+u-v)^2]);
-      zzRoot0 = 1/2 * (1 + u - v + Sqrt[-4u + (1+u-v)^2]);
+      zRoot0 = 1/2 * (1 + u - v + Sqrt[-4u + (1+u-v)^2]);
+      zzRoot0 = 1/2 * (1 + u - v - Sqrt[-4u + (1+u-v)^2]);
       pref = Simplify[pref /. {z -> zRoot0, zz -> zzRoot0}];
       
       (* Critical: apply additional normalization prefactor v if not normalized *)
