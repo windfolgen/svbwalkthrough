@@ -94,8 +94,8 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
   existingFiles = Flatten[Table[
     With[{sfx = s},
       Select[{
-        FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}],
-        FileNameJoin[{rootDir, "series_agent", label <> "_svlistmpl" <> sfx <> ".m"}]
+        FileNameJoin[{rootDir, "data", label <> "_svlist" <> sfx <> ".m"}],
+        FileNameJoin[{rootDir, "data", label <> "_svlistmpl" <> sfx <> ".m"}]
       }, FileExistsQ]
     ],
     {s, suffixes}
@@ -108,8 +108,8 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
       Do[
         With[{sfx = s},
           Quiet[
-            svData = Import[FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> sfx <> ".m"}]];
-            mplData = Import[FileNameJoin[{rootDir, "series_agent", label <> "_svlistmpl" <> sfx <> ".m"}]];
+            svData = Import[FileNameJoin[{rootDir, "data", label <> "_svlist" <> sfx <> ".m"}]];
+            mplData = Import[FileNameJoin[{rootDir, "data", label <> "_svlistmpl" <> sfx <> ".m"}]];
             If[Length[svData] =!= expectedSVLen || Length[mplData] =!= expectedMPLLen,
               cacheValid = False;
             ];
@@ -262,12 +262,12 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
         mplResList = {};
       ];
 
-      Export[FileNameJoin[{rootDir, "series_agent", label <> "_svlist" <> suffix <> ".m"}], svResList];
-      Export[FileNameJoin[{rootDir, "series_agent", label <> "_svlistmpl" <> suffix <> ".m"}], mplResList];
+      Export[FileNameJoin[{rootDir, "data", label <> "_svlist" <> suffix <> ".m"}], svResList];
+      Export[FileNameJoin[{rootDir, "data", label <> "_svlistmpl" <> suffix <> ".m"}], mplResList];
       Print["[Skill 1] Limit ", i, "/6 (", suffix, "): done."];
     ]
   ];
 
   CloseKernels[];
-  Print["Series expansion files written to ", FileNameJoin[{rootDir, "series_agent"}]];
+  Print["Series expansion files written to ", FileNameJoin[{rootDir, "data"}]];
 ];

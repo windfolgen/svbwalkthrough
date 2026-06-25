@@ -149,20 +149,20 @@ runFile[inName_, outName_, transFunc_] := Module[{list, t0, t1, res},
 ];
 
 (* Run all 12 transformations *)
-runFile["allsvliste0_uptow8.txt",           "allsvliste0_uptow8_inuv_e0uv.txt",           TransformE0];
-runFile["allsvliste0_uptow8.txt",           "allsvliste0_uptow8_inuv_e0uvp.txt",          TransformE0P];
-runFile["allsvlistmpl_threeloope0.txt",     "allsvlistmpl_threeloope0_inuv_e0uv.txt",     TransformE0];
-runFile["allsvlistmpl_threeloope0.txt",     "allsvlistmpl_threeloope0_inuv_e0uvp.txt",    TransformE0P];
+runFile["data/allsvliste0_uptow8.txt",           "data/allsvliste0_uptow8_inuv_e0uv.txt",           TransformE0];
+runFile["data/allsvliste0_uptow8.txt",           "data/allsvliste0_uptow8_inuv_e0uvp.txt",          TransformE0P];
+runFile["data/allsvlistmpl_threeloope0.txt",     "data/allsvlistmpl_threeloope0_inuv_e0uv.txt",     TransformE0];
+runFile["data/allsvlistmpl_threeloope0.txt",     "data/allsvlistmpl_threeloope0_inuv_e0uvp.txt",    TransformE0P];
 
-runFile["allsvliste1_uptow8.txt",           "allsvliste1_uptow8_inuv_e1uv.txt",           TransformE1];
-runFile["allsvliste1_uptow8.txt",           "allsvliste1_uptow8_inuv_e1uvp.txt",          TransformE1P];
-runFile["allsvlistmpl_threeloope1.txt",     "allsvlistmpl_threeloope1_inuv_e1uv.txt",     TransformE1];
-runFile["allsvlistmpl_threeloope1.txt",     "allsvlistmpl_threeloope1_inuv_e1uvp.txt",    TransformE1P];
+runFile["data/allsvliste1_uptow8.txt",           "data/allsvliste1_uptow8_inuv_e1uv.txt",           TransformE1];
+runFile["data/allsvliste1_uptow8.txt",           "data/allsvliste1_uptow8_inuv_e1uvp.txt",          TransformE1P];
+runFile["data/allsvlistmpl_threeloope1.txt",     "data/allsvlistmpl_threeloope1_inuv_e1uv.txt",     TransformE1];
+runFile["data/allsvlistmpl_threeloope1.txt",     "data/allsvlistmpl_threeloope1_inuv_e1uvp.txt",    TransformE1P];
 
-runFile["allsvlisteinf_uptow8.txt",         "allsvlisteinf_uptow8_inuv_einfuv.txt",         TransformEinf];
-runFile["allsvlisteinf_uptow8.txt",         "allsvlisteinf_uptow8_inuv_einfuvp.txt",        TransformEinfP];
-runFile["allsvlistmpl_threeloopeinf.txt",   "allsvlistmpl_threeloopeinf_inuv_einfuv.txt",   TransformEinf];
-runFile["allsvlistmpl_threeloopeinf.txt",   "allsvlistmpl_threeloopeinf_inuv_einfuvp.txt",  TransformEinfP];
+runFile["data/allsvlisteinf_uptow8.txt",         "data/allsvlisteinf_uptow8_inuv_einfuv.txt",         TransformEinf];
+runFile["data/allsvlisteinf_uptow8.txt",         "data/allsvlisteinf_uptow8_inuv_einfuvp.txt",        TransformEinfP];
+runFile["data/allsvlistmpl_threeloopeinf.txt",   "data/allsvlistmpl_threeloopeinf_inuv_einfuv.txt",   TransformEinf];
+runFile["data/allsvlistmpl_threeloopeinf.txt",   "data/allsvlistmpl_threeloopeinf_inuv_einfuvp.txt",  TransformEinfP];
 
 CloseKernels[];
 Print["All transformations complete!"];

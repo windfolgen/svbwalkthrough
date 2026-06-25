@@ -8,14 +8,14 @@ yOrderFinal = 5;
 LaunchKernels[6];
 
 ParallelEvaluate[
-  evaluatedMPL0 = Import["allsvlistmpl_threeloope0.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
-  evaluatedMPL1 = Import["allsvlistmpl_threeloope1.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
-  evaluatedMPLInf = Import["allsvlistmpl_threeloopeinf.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
+  evaluatedMPL0 = Import["data/allsvlistmpl_threeloope0.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
+  evaluatedMPL1 = Import["data/allsvlistmpl_threeloope1.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
+  evaluatedMPLInf = Import["data/allsvlistmpl_threeloopeinf.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
 ];
 
-evaluatedMPL0 = Import["allsvlistmpl_threeloope0.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
-evaluatedMPL1 = Import["allsvlistmpl_threeloope1.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
-evaluatedMPLInf = Import["allsvlistmpl_threeloopeinf.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
+evaluatedMPL0 = Import["data/allsvlistmpl_threeloope0.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
+evaluatedMPL1 = Import["data/allsvlistmpl_threeloope1.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
+evaluatedMPLInf = Import["data/allsvlistmpl_threeloopeinf.txt", "String"] // StringTrim // StringTrim[#, "["|"]"] & // "{" <> # <> "}" & // ToExpression;
 
 len0 = Length[evaluatedMPL0];
 len1 = Length[evaluatedMPL1];
@@ -94,7 +94,7 @@ res1 = ParallelTable[
   ],
   {i, 1, len1}
 ];
-Export["allsvlistmpl_threeloope1_inuv.txt", ToString[InputForm[res1], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_threeloope1_inuv.txt", ToString[InputForm[res1], PageWidth -> Infinity], "String"];
 Print["Finished e1uv."];
 
 (* === e1uvp === *)
@@ -111,7 +111,7 @@ res1P = ParallelTable[
   ],
   {i, 1, len1}
 ];
-Export["allsvlistmpl_threeloope1_inuvp.txt", ToString[InputForm[res1P], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_threeloope1_inuvp.txt", ToString[InputForm[res1P], PageWidth -> Infinity], "String"];
 Print["Finished e1uvp."];
 
 (* === e0uv === *)
@@ -128,7 +128,7 @@ res0 = ParallelTable[
   ],
   {i, 1, len0}
 ];
-Export["allsvlistmpl_threeloope0_inuv.txt", ToString[InputForm[res0], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_threeloope0_inuv.txt", ToString[InputForm[res0], PageWidth -> Infinity], "String"];
 Print["Finished e0uv."];
 
 (* === e0uvp === *)
@@ -145,7 +145,7 @@ res0P = ParallelTable[
   ],
   {i, 1, len0}
 ];
-Export["allsvlistmpl_threeloope0_inuvp.txt", ToString[InputForm[res0P], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_threeloope0_inuvp.txt", ToString[InputForm[res0P], PageWidth -> Infinity], "String"];
 Print["Finished e0uvp."];
 
 (* === einfuv === *)
@@ -162,7 +162,7 @@ resInf = ParallelTable[
   ],
   {i, 1, lenInf}
 ];
-Export["allsvlistmpl_threeloopeinf_inuv.txt", ToString[InputForm[resInf], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_threeloopeinf_inuv.txt", ToString[InputForm[resInf], PageWidth -> Infinity], "String"];
 Print["Finished einfuv."];
 
 (* === einfuvp === *)
@@ -179,7 +179,7 @@ resInfP = ParallelTable[
   ],
   {i, 1, lenInf}
 ];
-Export["allsvlistmpl_threeloopeinf_inuvp.txt", ToString[InputForm[resInfP], PageWidth -> Infinity], "String"];
+Export["data/allsvlistmpl_threeloopeinf_inuvp.txt", ToString[InputForm[resInfP], PageWidth -> Infinity], "String"];
 Print["Finished einfuvp."];
 
 CloseKernels[];
