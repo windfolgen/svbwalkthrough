@@ -36,3 +36,6 @@ solve_agent/*
 
 # Exclude large run result files exceeding GitHub limits
 runs/fourloopI108/result.m
+
+# Exclude generated up-to-weight-8 SV .m basis files
+data/*_uptow8_inuv*.m
