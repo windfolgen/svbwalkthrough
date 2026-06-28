@@ -807,3 +807,43 @@ Only the run directory and project-root files (e.g., `<label>_ans.m`) should rem
 * **Root Cause:** `input_parser.wl` passed the nested list directly as the ansatz for a leading singularity. In `solve_agent.wl`, `Length[ansatz]` evaluated to the number of sublists (e.g. 4) instead of the total number of terms (e.g. 225). This caused dimension mismatches during dot products, leading `Variables` to find zero variables and returning empty solutions.
 * **Resolution:** Updated `input_parser.wl` to wrap all parsed ansatz arrays with `Flatten`, ensuring downstream solvers receive a flat list of elements regardless of the file's internal grouping.
 
+## 9. Development Rules — PERMANENT ⚠️
+
+### 9.1 Never lose uncommitted file changes
+
+**Date:** 2026-06-28. **Severity:** Critical.
+
+After applying and testing the `limSign` fix in `series_agent.wl` (§1.8, §8.5), `git stash` was used to temporarily revert the working tree for comparison with the `main` branch. `git stash pop` was **never executed**—the fix silently disappeared from disk. Multiple subsequent runs used the old, broken code.
+
+**Symptoms when this happens:**
+- A fix that was working suddenly stops working
+- Runs that previously passed now fail with the exact same error the fix was meant to solve
+- The error reappears silently—no syntax error, no warning, just wrong results
+
+**Mandatory rule:**
+
+```
+After ANY git operation that modifies the working tree (stash, checkout,
+switch, reset), immediately verify the state of ALL modified source files:
+  - series_agent/series_agent.wl
+  - series_agent/series_agent_mirror.wl
+  - solve_agent/solve_agent.wl
+  - workflow_engine.wl
+  - audit_agent/audit_agent.wl
+```
+
+**Verification procedure:**
+```bash
+# After git stash pop, checkout, etc.:
+git diff HEAD -- series_agent/ solve_agent/ workflow_engine.wl audit_agent/
+# If empty → fix has been lost, re-apply immediately
+```
+
+**Alternative (safer):** For comparisons with another branch, use `git show <branch>:<path>` to read individual files without touching the working tree:
+```bash
+git show main:runs/fourloopI41/coeff_sol.m > /tmp/old.m
+# Compare without stashing
+```
+
+This is not a one-time rule. Every session, every git operation, verify.
+

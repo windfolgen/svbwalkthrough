@@ -190,11 +190,11 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
       add = If[F === 1, transformed, Simplify[transformed / F^(weightN - poleOrder)]] /. {v -> 1 - Y} // Expand;
       Print["[Skill 1] Limit ", i, "/6: additional = ", add // InputForm];
 
-      ExpandInuvList[basisList_, sqrtSer_, expT_] := ParallelTable[
+      ExpandInuvList[basisList_, sqrtSer_, expT_, limSign_] := ParallelTable[
         Module[{test, test2, seriesY, basisTerm, assumption},
           basisTerm = If[basisList[[j]] === I0constant, 1, basisList[[j]]];
           test = If[poleType === "simple",
-            basisTerm * add * (-sqrtSer) / expT,
+            basisTerm * add * (limSign * sqrtSer) / expT,
             basisTerm * add / expT
           ];
           
@@ -255,9 +255,9 @@ RunSeriesExpansion[rootDir_, label_, config_, lsBase_, poleType_, yOrder_:4, svI
               sqrtSeries = Series[radical, {u, 0, 7}, {Y, 0, 7}] // Normal // Expand}]
       ];
       
-      svResList = ExpandInuvList[svList, sqrtSeries, expTerm];
+      svResList = ExpandInuvList[svList, sqrtSeries, expTerm, If[MemberQ[{1,2,5,6}, i], 1, -1]];
       If[Length[mplList] > 0,
-        mplResList = ExpandInuvList[mplList, sqrtSeries, expTerm];
+        mplResList = ExpandInuvList[mplList, sqrtSeries, expTerm, If[MemberQ[{1,2,5,6}, i], 1, -1]];
       ,
         mplResList = {};
       ];

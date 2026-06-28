@@ -16,4 +16,6 @@
 
 8. please do not remove targetIntegrals_reduced.m and cache_tensor_record_noremove.mx under ./asym/tmp/
 
-9. hardcode all above instructions into your working memory and make sure you always follow them.
+9. ⚠️ NEVER use `git stash` or any other operation that modifies the working tree without immediately verifying all source files are intact. On 2026-06-28, `git stash` was used for a branch comparison. `git stash pop` was forgotten, causing the `limSign` fix in `series_agent.wl` and `Break[]` fix in `solve_agent.wl` to silently disappear. Multiple runs then executed with broken code. The correct approach for comparing branches is `git show <branch>:<path>` (read-only, no tree mutation). After ANY git operation, run: `git diff HEAD -- series_agent/ solve_agent/ workflow_engine.wl audit_agent/` to confirm all fixes are present. See summarize.md §9.1 for full documentation.
+
+10. hardcode all above instructions into your working memory and make sure you always follow them.

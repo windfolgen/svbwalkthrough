@@ -20,7 +20,7 @@ Get[FileNameJoin[{rootDir, "input_parser.wl"}]];
 
 label = "threeloophard2";
 order = 3;
-yOrder = 3;
+yOrder = 4;
 loopPoints = {5, 6, 7};
 
 parsed = ParseInput[runDir];

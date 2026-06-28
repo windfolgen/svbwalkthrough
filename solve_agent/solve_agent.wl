@@ -125,10 +125,15 @@ RunCoefficientSolving[rootDir_, label_, config_,
       
       solt = Quiet[Solve[sys, varsList]];
       If[solt === {},
-        Print["[FATAL ERROR] Solve returned an empty set on Limit ", i, ". System is inconsistent."];
+        Print["[FATAL ERROR] Solve returned an empty set on Limit ", i, ". System is inconsistent — aborting."];
+        Break[];
       ];
       solt = solt[[1]];
     ];
+  ];
+  
+  If[solt === {},
+    Return[$Failed];
   ];
 
   (* ---- verify: substitute back and check all limits ---- *)
