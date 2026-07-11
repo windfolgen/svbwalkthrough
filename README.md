@@ -44,6 +44,21 @@ On Apple Silicon Macs add `-DCMAKE_OSX_ARCHITECTURES=arm64` to the `cmake` comma
 
 ---
 
+## Leading Singularity Analysis (`leadingsingularity/`)
+
+The `leadingsingularity/` subfolder is a self-contained Mathematica module for computing the leading singularities of planar multi-loop integrands via the method of maximal cuts. It provides:
+
+- **`LeadingSingularities[integrand, opts]`** — the human-facing driver, printing a coloured step-by-step trace for inspection.
+- **`LeadingSingularityAssist[integrand, opts]`** — an AI-friendly wrapper (same algorithm, structured `Association` output with classified warnings and higher-pole / elliptic-cut feature flags).
+- Integrand data: `threeloopint.m` (15 basis), `fourloopint.m` (412 basis).
+- Batch summary scripts (`summary_3L.wl`, `summary_4L.wl`) that produce JHEP-style PDF reports.
+
+> **This package assists leading singularity analysis; it does not replace it.** The user should read and check the intermediate prints (warnings, higher-pole / elliptic-cut messages).
+
+See [leadingsingularity/README.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/leadingsingularity/README.md) for usage details and [leadingsingularity/leadingsingularity.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/leadingsingularity/leadingsingularity.md) for the full workflow documentation.
+
+---
+
 ## Function Series Expansion (User-Provided)
 
 These are series expansion data for svMPL functions appearing in the ansatz, pre-calculated by the user using the Maple package **Hyperlogprocedures** and stored as text files under `data/`. The workflow's `series_agent.wl` (Skill 1) loads these files, applies the leading-singularity prefactor and kinematic substitutions, and produces the final per-run series coefficients.
@@ -192,7 +207,7 @@ The mirror stage is controlled entirely by the `$MirrorInputFilesOverride` setti
 
 The mirror stage uses a **different expansion algorithm** from the standard `series_agent.wl`. Instead of re-expanding the ansatz from scratch, it loads **pre-computed series expansion files** in which the leading-singularity factor is already baked into each ansatz element. These files are **not** the same as the `_inuv` / `_inuvp` series files used by the standard series agent — they are a separate set, one per leading singularity per limit point.
 
-You must provide these files yourself (typically generated via the Maple package **Hyperlogprocedures**, same tool used for the standard series files). The expected naming convention is:
+You must provide these files yourself. They can be readily calculated by the Maple package **Hyperlogprocedures** (the same tool used for the standard series files) — see [project_skills/series_expansion/SKILL_hyperlog_series_expansion.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/project_skills/series_expansion/SKILL_hyperlog_series_expansion.md) for the detailed procedure. The expected naming convention is:
 
 ```
 svansatzw8_{ext}_{k}.txt

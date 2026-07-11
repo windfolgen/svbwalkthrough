@@ -53,3 +53,11 @@ resulthard3L.m
 
 # Reference/archive directory
 reference/
+
+# LaTeX build artifacts (leadingsingularity reports)
+leadingsingularity/*.aux
+leadingsingularity/*.bbl
+leadingsingularity/*.blg
+leadingsingularity/*.log
+leadingsingularity/*.out
+leadingsingularity/*.toc
