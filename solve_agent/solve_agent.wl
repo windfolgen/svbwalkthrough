@@ -176,6 +176,8 @@ RunCoefficientSolving[rootDir_, label_, config_,
   (* save to disk *)
   Export[FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}], solt /. c[i_] :> Symbol["c"][i]];
   Print["Solution written to ", FileNameJoin[{rootDir, "solve_agent", label <> "_sol.m"}]];
+  Export[FileNameJoin[{rootDir, "solve_agent", label <> "_partialsys.m"}], sys /. c[i_] :> Symbol["c"][i]];
+  Print["Equation system written to ", FileNameJoin[{rootDir, "solve_agent", label <> "_partialsys.m"}]];
 
   Module[{isSolved = True, totalCoeffs = $LEN, lhsVars, unsolvedVars, missingCoeffs},
     If[solt === {} || Head[solt] =!= List,
@@ -189,6 +191,9 @@ RunCoefficientSolving[rootDir_, label_, config_,
       If[Length[missingCoeffs] > 0 || Length[unsolvedVars] > 0,
         isSolved = False;
         Print["[WARNING] Coefficients are not totally solved! ", Length[unsolvedVars], " free parameters remaining: ", unsolvedVars];
+        Export[FileNameJoin[{rootDir, "solve_agent", label <> "_freevars.m"}], {missingCoeffs, unsolvedVars}];
+      ,
+        Export[FileNameJoin[{rootDir, "solve_agent", label <> "_freevars.m"}], {{}, {}}];
       ];
 
       If[isSolved,

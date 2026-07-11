@@ -36,7 +36,8 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
    cType, cPrefactor, cAnsatz, basisElements,
    svIndices, basisSVReduced, mplFiles, bestCount, bestFile, mplTry, idx, mplIndices, basisMPLReduced,
    logFile, logStream,
-   workflowStartTime, boundaryTime, seriesTime, solveTime
+   workflowStartTime, boundaryTime, seriesTime, solveTime,
+   freeVarsFile, missingCoeffs, unsolvedVars, freeCount, mirrorTime
   },
 
   workflowStartTime = SessionTime[];
@@ -87,6 +88,7 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
   Get[FileNameJoin[{rootDir, "asym", "boundary_agent", "boundary_agent.wl"}]];
   Get[FileNameJoin[{rootDir, "series_agent", "series_agent.wl"}]];
   Get[FileNameJoin[{rootDir, "solve_agent", "solve_agent.wl"}]];
+  Get[FileNameJoin[{rootDir, "solve_agent", "solve_agent_mirror_direct.wl"}]];
   Get[FileNameJoin[{rootDir, "review_agent.wl"}]];
   LoadReviewAgent[rootDir];
   
@@ -131,14 +133,8 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
       ];
       
       data = Import[subPath] // Normal;
-      Module[{coeffValRaw},
-        coeffValRaw = EvaluateCoeff[coeffList[[p]], perm];
-        coeffVal = Switch[i,
-          1 | 2 | 3 | 4, coeffValRaw /. {u -> 0},
-          5 | 6, coeffValRaw
-        ];
-        subTargetData = subTargetData + Expand[Normal[Series[coeffVal * data, {Y, 0, order}]]];
-      ];
+      coeffVal = EvaluateCoeff[coeffList[[p]], perm];
+      subTargetData = subTargetData + Expand[Normal[Series[coeffVal * data, {u, 0, 0}, {Y, 0, order}]]];
     , {p, 1, Length[integrandList]}];
     subTargetData
   , {i, 1, 6}];
@@ -241,6 +237,33 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
   ReviewGate[rootDir, label, "solve", config];
   solveTime = SessionTime[] - (workflowStartTime + boundaryTime + seriesTime);
   Print["[Time Record] Stage 3 (Solving System) took: ", solveTime, " seconds."];
+  
+  (* 4. Mirror Solve (optional — launched when free params remain after standard solve) *)
+  (* Restore $MirrorInputFiles here because ReviewGate calls above reload config.wl,
+     which resets $MirrorInputFiles to None. *)
+  If[ValueQ[$MirrorInputFilesOverride], $MirrorInputFiles = $MirrorInputFilesOverride];
+  If[ValueQ[$MirrorInputFiles] && $MirrorInputFiles =!= None,
+    (* Check if standard solve left free parameters *)
+    freeVarsFile = FileNameJoin[{rootDir, "solve_agent", label <> "_freevars.m"}];
+    freeCount = 0;
+    If[FileExistsQ[freeVarsFile],
+      {missingCoeffs, unsolvedVars} = Import[freeVarsFile];
+      freeCount = Length[Join[missingCoeffs, unsolvedVars] // DeleteDuplicates];
+    ];
+    
+    If[freeCount > 0,
+      Print[""];
+      Print["[Engine] Stage 4: Mirror Solve — ", freeCount, " free parameters remaining after standard solve."];
+      RunCoefficientSolvingMirror[rootDir, label, config,
+        ansatzList, labelsList, basisSVList, basisMPLList, targetData, order];
+      mirrorTime = SessionTime[] - (workflowStartTime + boundaryTime + seriesTime + solveTime);
+      Print["[Time Record] Stage 4 (Mirror Solve) took: ", mirrorTime, " seconds."];
+    ,
+      Print["[Engine] Stage 4: Mirror Solve skipped — standard solve fully solved (0 free params)."];
+    ];
+  ,
+    Print["[Engine] Stage 4: Mirror Solve disabled (no $MirrorInputFiles in run.wl)."];
+  ];
   
   Print["[Time Record] Total workflow execution time: ", SessionTime[] - workflowStartTime, " seconds."];
   Print["End Date and Time: ", DateString[]];

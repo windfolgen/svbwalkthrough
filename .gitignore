@@ -47,3 +47,9 @@ runs/fourloopI219/
 
 # Exclude generated up-to-weight-8 SV .m basis files
 data/*_uptow8_inuv*.m
+
+# Generated result file
+resulthard3L.m
+
+# Reference/archive directory
+reference/

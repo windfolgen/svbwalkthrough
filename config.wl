@@ -9,7 +9,7 @@
 $DataDir = FileNameJoin[{rootDir, "data"}];
 
 (* The directory to store IBP reduction files (caching for LiteRed2) *)
-$IBPDir = "/Users/windfolgen/Documents/aether/svbwalkthrough_ibp";
+$IBPDir = FileNameJoin[{rootDir, "IBPReduction"}];
 
 (* LiteRed topology bases loaded by boundary_agent *)
 $LiteRedBases = {"asym", "asym3L", "asym2L", "asym1L"};
@@ -32,3 +32,19 @@ $SVTextSuffixes = {"_uptow8_inuv.txt", "_uptow8_inuvp.txt"};
 (* MPL text formatting for series substitutions *)
 $MPLTextPrefix = "allsvlistmpl_";
 $MPLTextSuffixes = {"_inuv.txt", "_inuvp.txt"};
+
+(* Mirror limits: which limits to compute in mirror steps *)
+$MirrorLimits = {1, 6, 2, 3, 4, 5};
+
+(* Mirror: whether to multiply the leading-singularity factor (addInZZ) into
+   the ansatz during mirror expansion. True = multiply (default); False = the
+   factor is already accounted for in the input ansatz, so skip multiplication. *)
+$MirrorMultiplyLSFactor = False;
+
+(* Mirror input files: maps ext type to a list of per-LS input files.
+   None = mirror stage disabled (set in run.wl to enable).
+   The list length per ext must match the number of leading singularities. *)
+$MirrorInputFiles = None;
+
+(* Max parallel subkernels for mirror agents *)
+$MaxParallelKernels = 6;
