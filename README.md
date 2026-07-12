@@ -153,6 +153,8 @@ Series expansion files (base only, no `_inuv`/`_inuvp` variants):
 
 These are **raw ansatz** basis files. The ansatz for each specific problem is constructed from them — typically by selecting a subset of entries or combining even/odd lists. Each is a Wolfram Language `.m` file containing a list of basis functions. The `input.wl` for a run imports the constructed ansatz via `Import`.
 
+For a detailed recipe on how to construct parity-odd and parity-even SVMPL ansatz bases where the new letter (`zz` or `1/zz`) is restricted to the last N entries of the word, see [project_skills/ansatz_basis/SKILL.md](project_skills/ansatz_basis/SKILL.md). It covers the weight-6 (3-loop, N=2) reference construction from `data/reference_notebook/svbwalkthrough.wl` Section 3 and generalises it to weight 8 (4-loop, N=4) and to the `1/zz` letter.
+
 | File | Description |
 |------|-------------|
 | `allsvlistevenans.m` | Parity-even ansatz of svHPLs under `z ↔ zz`, up to weight 8 |

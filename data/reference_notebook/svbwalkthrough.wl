@@ -640,7 +640,7 @@ If[off==0.0,tagged->Automatic,With[{o=off},tagged->Function[{pts,e},{Dashed,Bezi
 ];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*GraphReduce*)
 
 
@@ -670,32 +670,32 @@ Return[select];
 (* ::Input::Initialization:: *)
 ClearAll[GraphReduce];
 Options[GraphReduce]={"external"->{1,2,3,4}};
-GraphReduce[int_,OptionsPattern[]]:=Module[{num,graph,list,result,temp},
-num=Numerator[int]//Cases[#,x[__],Infinity]&//DeleteDuplicates;
-graph=drawGraph[{int,OptionValue["external"]},"withoutnum"->False];
-list=FindSubgraphIsomorphism[Graph[{1\[UndirectedEdge]2,2\[UndirectedEdge]3,2\[UndirectedEdge]4,2\[UndirectedEdge]5,4\[UndirectedEdge]5}],graph,All];
-result=Reap[
-Do[
-If[Not@MemberQ[num,x[list[[i]][4],list[[i]][5]]],Continue[]];(*if this is not a numerator, then pass*)
-If[VertexDegree[graph,list[[i]][2]]=!=4||MemberQ[OptionValue["external"],list[[i]][3]],Continue[]];(*the degree of central vertex must be 4*)(*the vertex 3 must be internal*)
-Sow[list[[i]]]
-,{i,1,Length[list]}]
-][[2]];
-If[result==={},Return[{}],result=result[[1]]];
-list=result//DeleteDuplicatesBy[#,(#/@{1,2,3})&]&;
-Print[Length[list]," case(s) found after modding the symmetry"];
-(*Print["Reducing the graph ... "];*)
-result=Reap[
-Do[
-temp=list[[i]];
-Sow[int*x[temp[1],temp[2]]*x[temp[2],temp[3]]*x[temp[2],temp[4]]*x[temp[2],temp[5]]/x[temp[4],temp[5]]/x[temp[1],temp[3]]//Factor]
-,{i,1,Length[list]}]
-][[2,1]];
-Return[result];
+GraphReduce[int_,OptionsPattern[]]:=Module[{den,num,graph,list,result,temp},
+	num=Numerator[int]//Cases[#,x[__],Infinity]&//DeleteDuplicates;
+den=Denominator[int]//Cases[#,x[__],Infinity]&//DeleteDuplicates;
+	graph=drawGraph[{int,OptionValue["external"]},"withoutnum"->False];
+	list=FindSubgraphIsomorphism[Graph[{1\[UndirectedEdge]2,2\[UndirectedEdge]3,2\[UndirectedEdge]4,2\[UndirectedEdge]5,4\[UndirectedEdge]5}],graph,All];
+	result=Reap[
+		Do[
+If[Not@MemberQ[num,x[list[[i]][4],list[[i]][5]]||MemberQ[den,x[list[[i]][1],list[[i]][3]]]],Continue[]];(*if this is not a numerator, then pass*)
+If[VertexDegree[graph,list[[i]][2]]=!=4||Not@MemberQ[OptionValue["external"],list[[i]][1]],Continue[]];(*the degree of central vertex must be 4*)
+		Sow[list[[i]]]
+		,{i,1,Length[list]}]
+		][[2]];
+	If[result==={},Return[{}],result=result[[1]]];
+	list=result//DeleteDuplicatesBy[#,(#/@{1,2,3})&]&;
+	Print[Length[list]," case(s) found after modding the symmetry"];
+	(*Print["Reducing the graph ... "];*)
+	result=Reap[
+	Do[
+		temp=list[[i]];Sow[int*x[temp[1],temp[2]]*x[temp[2],temp[3]]*x[temp[2],temp[4]]*x[temp[2],temp[5]]/x[temp[4],temp[5]]/x[temp[1],temp[3]]//Factor]
+	,{i,1,Length[list]}]
+	][[2,1]];
+	Return[result];
 ];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Series expansions*)
 
 
@@ -894,7 +894,7 @@ If[result=!={},Return[result[[1]]],Return[{}]];
 (*Now we calculate inthard2 as a simple example, the calculation of inthard1 will be the same. inthard1 will be a little harder.*)
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Section 3: Construct the ansatz*)
 
 
@@ -914,7 +914,7 @@ If[result=!={},Return[result[[1]]],Return[{}]];
 (*The leading singularity is 1/(z-zz)^2, it indicate that for our integrals, there should be symbol letter z-zz, or zz should appear in our svmpl basis. Since inthard2 is invariant under  z<->zz, there is a 1/(z-zz) in its leading singularity, so the ansatz we construct should be odd so that it will cancel minus sign from 1/(z-zz) under z<->zz.*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*ansatz for SVMPL: parity odd and parity even: zz*)
 
 
@@ -965,7 +965,7 @@ If[result=!={},Return[result[[1]]],Return[{}]];
 
 
 (* ::Text:: *)
-(*The following part is calculated by my Openclaw agent, if you are interested, I can give you the skills used. If you have a Linux machine or Windows, I can also provide you the maple needed. You can also use the results I calculated here under current folder*)
+(*The following part is calculated following skill files under project_skills/series_expansion/SKILL_hyperlog_conjugate.md.  You can also use the results I calculated here under current folder*)
 
 
 (* ::Input:: *)
