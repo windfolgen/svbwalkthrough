@@ -90,6 +90,19 @@ Use `// Simplify` — not raw structural equality — because unsimplified polyl
 - Empty `temp` skip: don't build equations from vanishing limits.
 - Filter `True | False` from `sys1`.
 
-## Mirror Solve (In Development)
+## Mirror Solve
 
-[solve_agent/solve_agent_mirror.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/solve_agent/solve_agent_mirror.wl) is under development for mirror kinematics. Not yet integrated.
+The mirror stage extends the standard solve when free parameters remain. Only **one** mirror implementation is active and validated:
+
+- **ACTIVE**: [project_skills/mirror_solve_direct/SKILL.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/project_skills/mirror_solve_direct/SKILL.md) — `solve_agent/solve_agent_mirror_direct.wl`, validated on `fourloopI173` (all 6 limits, 304/304 solved, 0 benchmark violations).
+
+The following mirror files are **under development / not active** and have not been validated end-to-end:
+
+| File | Status |
+|------|--------|
+| [solve_agent/solve_agent_mirror.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/solve_agent/solve_agent_mirror.wl) | Under development — superseded by `solve_agent_mirror_direct.wl` |
+| [series_agent/series_agent_mirror.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/series_agent/series_agent_mirror.wl) | Under development |
+| [transform/transform_mirror.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/transform/transform_mirror.wl) | Under development |
+| [transform/generate_sv_mirror.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/transform/generate_sv_mirror.wl) | Under development |
+| [transform/threeloop_generate_mpl_mirror.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/transform/threeloop_generate_mpl_mirror.wl) | Under development |
+| [transform/fourloop_generate_all_zrep_mirror.wl](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/transform/fourloop_generate_all_zrep_mirror.wl) | Under development |
