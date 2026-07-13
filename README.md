@@ -422,3 +422,45 @@ runs/
 ├── fourloopI173/      multi-LS (odd + even ansatz)
 └── fourloopI6t/       4-loop single integrand
 ```
+
+---
+
+## Output Files: `<label>.txt` vs `result.m`
+
+Each run directory under `runs/<label>/` contains two distinct result files produced at different stages of the pipeline. They are **not** interchangeable — `result.m` is an intermediate per-leading-singularity output, while `<label>.txt` is the final assembled integral.
+
+### Difference
+
+| File | Produced by | Content | LS prefactor? | Status |
+|------|-------------|---------|---------------|--------|
+| `result.m` | Coefficient solving ([Skill 3](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/project_skills/coefficient_solving/SKILL.md)) | **List** `{result_1, result_2, ...}` — one pure transcendental expression per leading singularity, with the LS prefactor stripped away during series expansion | **No** (stripped) | Intermediate |
+| `<label>.txt` | Result assembly ([Skill 5](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/project_skills/result_assembly/SKILL.md)) | **Single expression** — the full reconstructed integral `Sum_k [ leadingsingularity_k * result_k ]`, with the LS prefactor reattached | **Yes** (reattached) | **Final physical result** |
+
+The output filename matches the run directory name, e.g. `runs/fourloopI41/fourloopI41.txt`.
+
+### Relationship
+
+```
+<label>.txt  =  Sum_k [ leadingsingularity_k * result.m[[k]] ]  /.  {u -> z*zz, v -> (1-z)*(1-zz)}
+```
+
+- **Single-LS runs** (e.g. `fourloopI41`, `fourloopI120`): `<label>.txt = leadingsingularity * result.m[[1]]` with `u,v` replaced by `z,zz`
+- **Multi-LS runs** (e.g. `fourloopI173` with 2 leading singularities): `<label>.txt = LS_1 * result.m[[1]] + LS_2 * result.m[[2]]` with `u,v` replaced by `z,zz`
+
+Before export, the kinematic cross-ratios `u`, `v` in the leading-singularity prefactor are replaced by the complex variables `z`, `zz` via `u -> z*zz`, `v -> (1-z)*(1-zz)`, so that `<label>.txt` is expressed entirely in `z, zz` (matching the `I[z,...]` basis symbols).
+
+### Why two files?
+
+`result.m` preserves the per-LS decomposition, which is useful for inspecting each leading singularity's contribution separately and for debugging the solver. `<label>.txt` is the complete integral ready for physics interpretation — it is the expression that would be compared against direct integration or literature results.
+
+### Regenerating `<label>.txt`
+
+The assembly is a lightweight post-processing step that does not re-run the solver. The script scans every subdirectory of `runs/`: it **skips** runs without `result.m` (not yet successfully solved), and **assembles** (or renews) `<label>.txt` for every run that has `result.m`. Existing `<label>.txt` files are overwritten with refreshed content.
+
+```bash
+MathKernel -noprompt -script project_skills/result_assembly/assemble_results.wl
+```
+
+The script is idempotent — re-running it refreshes all previously assembled outputs and picks up any newly solved runs without touching unsolved ones.
+
+See [project_skills/result_assembly/SKILL.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/project_skills/result_assembly/SKILL.md) for the full assembly recipe and verification checklist.
