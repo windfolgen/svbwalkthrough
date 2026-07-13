@@ -5,6 +5,9 @@
 # TRAE IDE local config (rules + skill metadata for the TRAE assistant)
 .trae/
 
+# Aether IDE local ignore file
+.aetherignore
+
 # Mathematica cache
 *.mx
 *.mx.bak
