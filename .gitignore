@@ -2,6 +2,9 @@
 .DS_Store
 **/.DS_Store
 
+# TRAE IDE local config (rules + skill metadata for the TRAE assistant)
+.trae/
+
 # Mathematica cache
 *.mx
 *.mx.bak
