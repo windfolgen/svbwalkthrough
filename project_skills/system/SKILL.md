@@ -19,12 +19,14 @@ If you generate temporary scripts to test something, they must be under `test/`.
 - External `"IBPDir"` — IBP reduction tables, reusable across runs
 
 ### Stale File Management
-After each job, maintain an index of all files and folders. Check whether something is stale or broken but not removed. Manage files carefully — do not mess up the workspace by putting similar scripts in different folders randomly.
+After each job, check whether something is stale or broken but not removed. Manage files carefully — do not mess up the workspace by putting similar scripts in different folders randomly.
 
-### External Data Source — Nutstore Share
-Pre-computed series expansion files (`svansatzw8_*.txt`, `allsvlist_fourloop_*.txt`, `svlistoddansatz_w8.m`, `svlistevenansatz_w8.m`) are shared via Nutstore at:
-`/Users/windfolgen/Library/CloudStorage/Nutstore-17801035153@163.com/NutFiles/series_expansion/test`
-When the user says "check the share folder" or "new files copied", look here. The order of list elements in these files matches the order of the ansatz (`svlistoddansatz_w8.m` + `svlistevenansatz_w8.m`).
+### External Data Source — Cloud Share Folder (user-configurable)
+Pre-computed series expansion files (`svansatzw8_*.txt`, `allsvlist_fourloop_*.txt`, `svlistoddansatz_w8.m`, `svlistevenansatz_w8.m`) are too large to track in git and are shared via a cloud drive (e.g. Nutstore, Dropbox, iCloud).
+
+**Path placeholder:** `<YOUR_CLOUD_SHARE_PATH>/series_expansion/test`
+
+> **Note:** Each user should connect their own cloud share folder and substitute the placeholder above with their local mount path. The coding assistant keeps the actual local path in `local_overrides/system_local.md` (gitignored, machine-local). When the user says "check the share folder" or "new files copied", the assistant looks there. The order of list elements in these files matches the order of the ansatz (`svlistoddansatz_w8.m` + `svlistevenansatz_w8.m`).
 
 ## Agent Algorithm Safety
 
@@ -37,17 +39,17 @@ NEVER kill or terminate Mathematica/WolframKernel processes with a blanket `kill
 When you need to clean up processes:
 1. Always save the PID of any process you launch (e.g., `MY_PID=$!`)
 2. Only kill specific PIDs that you launched yourself
-3. Use `cat /tmp/trae_mirror_pid.txt` to retrieve the PID of your background job if needed
+3. Use a project-scoped PID file (e.g. `/tmp/svbwalkthrough_<label>_pid.txt`) to retrieve the PID of your background job
 
 Safe cleanup example:
 ```bash
 MY_PID=$!
-echo "my_pid=$MY_PID" > /tmp/trae_mirror_pid.txt
+echo "my_pid=$MY_PID" > /tmp/svbwalkthrough_${label}_pid.txt
 
 # Kill only your own processes later
-kill -9 $(cat /tmp/trae_mirror_pid.txt) 2>/dev/null
+kill -9 $(cat /tmp/svbwalkthrough_${label}_pid.txt) 2>/dev/null
 # Also kill subkernels spawned by your job (they will be children of your PID)
-pkill -P $(cat /tmp/trae_mirror_pid.txt) 2>/dev/null
+pkill -P $(cat /tmp/svbwalkthrough_${label}_pid.txt) 2>/dev/null
 ```
 
 ## Git Safety — PERMANENT

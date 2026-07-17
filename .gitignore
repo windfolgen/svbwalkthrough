@@ -2,11 +2,14 @@
 .DS_Store
 **/.DS_Store
 
-# TRAE IDE local config (rules + skill metadata for the TRAE assistant)
+# IDE local config (TRAE/Aether/etc.)
 .trae/
 
 # Aether IDE local ignore file
 .aetherignore
+
+# Machine-local override files (cloud paths, etc.)
+local_overrides/
 
 # Mathematica cache
 *.mx
