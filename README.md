@@ -464,3 +464,33 @@ MathKernel -noprompt -script project_skills/result_assembly/assemble_results.wl
 The script is idempotent — re-running it refreshes all previously assembled outputs and picks up any newly solved runs without touching unsolved ones.
 
 See [project_skills/result_assembly/SKILL.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/project_skills/result_assembly/SKILL.md) for the full assembly recipe and verification checklist.
+
+---
+
+## Ancillary Files for the Manuscript (`anc/`)
+
+The `anc/` subfolder collects the ancillary files of the paper [arXiv:2607.11645](https://arxiv.org/abs/2607.11645). It contains the Mathematica input used to generate and display the results presented in the manuscript — the three-loop and four-loop integral bases, analytic results for the integrals analysed in the main text, and their numerical checks.
+
+### Integral Bases
+
+| File | Content |
+|------|---------|
+| `3Loop_int_basis.m` | The **15-element three-loop integral basis** used in the paper — a list of `{denominator, numerator}` pairs in the dual coordinates `x[i,j]` (same convention as `leadingsingularity/threeloopint.m`) |
+| `4Loop_int_basis.m` | The **412-element four-loop integral basis** used in the paper, in the same `{denominator, numerator}` format (same convention as `leadingsingularity/fourloopint.m`) |
+
+### Analytic Results
+
+| File | Content |
+|------|---------|
+| `3Loop_integral_insvmpl.m` | Analytic results of the three-loop integrals expressed in the svMPL basis (`I[z, ...]` and `f[...]` symbols) |
+| `4Loop_integral_results_by_hyperlog.m` | Analytic results of the four-loop integrals obtained by direct integration with the Maple package **Hyperlogprocedures**, including their ε-dependence |
+| `fourloopI117.txt`, `fourloopI120.txt`, `fourloopI173.txt`, `fourloopI176.txt`, `fourloopI181.txt` | Bootstrap results for individual four-loop integrals analysed in the main text — one file per integral, in the same single-expression `z`, `zz` format as the `<label>.txt` output of the corresponding runs under `runs/` |
+
+### Notebook and Identity System
+
+| File | Content |
+|------|---------|
+| `integral_basis&partial_results.nb` | The main Mathematica notebook: displays the integral bases and partial results in a readable form, generates the **magic identities, symmetry identities and Gram identities** for three and four loops, and performs the numerical checks of the analytic results |
+| `sysgram.m` | The four-loop **Gram-identity system** — a large list of linear relations among the basis integrals `I4[k][{σ}]` with permuted external legs `σ`, with rational-function coefficients in `z`, `zz` |
+
+The notebook itself points back to this repository (`https://github.com/windfolgen/svbwalkthrough.git`) for the detailed bootstrap workflow, and its sections mirror the pipeline: helper functions (`drawGraph`, `GraphReduce`, the multi-leg vertex differential equation) followed by worked three-loop and four-loop examples.
