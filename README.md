@@ -166,6 +166,173 @@ For a detailed recipe on how to construct parity-odd and parity-even SVMPL ansat
 | `svmplevenansatz_fourloophard_small.m` | Parity-even ansatz at weight 8 with `zz` possibly in the last four entries |
 | `svmploddansatz_fourloophard_small.m` | Parity-odd ansatz at weight 8 with `zz` possibly in the last four entries |
 
+### Alternative: match the boundary directly in z and zbar
+
+This is an alternative **final series and matching procedure**. The published
+`run.wl` scripts keep their existing workflows; this section does not introduce
+a new execution option. The original `u,Y` and mirror-stage instructions below
+remain applicable to those scripts.
+
+#### Coordinate and expansion convention
+
+Keep the names $z$ and $\bar z$ fixed (`zz` denotes $\bar z$ in the code). At the
+origin,
+
+$$
+u=z\bar z,\qquad v=(1-z)(1-\bar z),\qquad Y=1-v=z+\bar z-z\bar z.
+$$
+
+For each channel, include its coordinate map and normalization from the table
+above. Retain the svMPL expansion with **$\bar z$ expanded first**, and expand
+the rational leading singularity in the same order. Multiply the complete
+leading singularity, numerator and normalization before applying the final
+cutoff. If the input already includes the leading singularity, apply it only
+once. This matters for poles such as $(z-\bar z)^{-p}$.
+
+Convert the known boundary $B(u,Y)$ to $B(z\bar z,z+\bar z-z\bar z)$, with the
+corresponding map in other channels. Use the same formal logarithm and period
+basis on both sides, for example $\ell=\log u$. Include the analytic logarithm
+shifts associated with each channel or symmetry image before collecting
+coefficients. Keep the branch convention of the supplied function series;
+do not split logarithms into independent branches without justification.
+
+The full expressions describe the same matching problem in different
+coordinates. **Finite truncations are equivalent only when the retained
+coefficients are determined by the available data on both sides.**
+
+#### Retained terms and direct mirror constraints
+
+Write a full ansatz column as a Laurent series
+$\sum_{a,b} C_{ab}z^a\bar z^b$, at each formal logarithm/period monomial.
+The seven ordinary benchmark cases used the following windows:
+
+| Direct constraints | Keep powers in the original, fixed symbols |
+|---|---|
+| Standard | $a\le N,\ b\le0$ |
+| Mirror | $a\le0,\ b\le N$ |
+
+Here $N=3$ for the three-loop tests and $N=4$ for the four-loop tests.
+**Retain every negative Laurent power within the chosen window**, including
+poles that must cancel between ansatz columns. The lower powers follow from
+the actual Laurent support, rather than an artificial cutoff at zero.
+
+In this direct mirror test, both rows of the table use the **same
+$\bar z$-first expansion of the full leading-singularity-times-svMPL column**.
+Only the retained powers change. In particular, the mirror test does not
+re-expand the leading singularity with $z$ first, regenerate the svMPL in the
+opposite order, or exchange inverse square-root substitutions into `u,Y`.
+The name *mirror* refers to the complementary coefficient window. The
+implementation may exchange indices internally for extraction; the two
+windows above give its meaning without renaming $z$ and $\bar z$.
+
+Apply the selected window to the boundary as well. For a boundary regular in
+$u,Y$, its known $u^0$ polynomial through $Y^N$ supplies the $z^a\bar z^0$
+standard rows and the $z^0\bar z^b$ mirror rows; unwanted pole rows have zero
+right-hand side. This observation requires control of the omitted boundary
+terms, as explained next.
+
+The recorded ordinary tests covered I5, I8, hard1, hard2, I41, I42 and I173.
+For I173, standard rows had rank **221 of 304**; mirror-only rows had rank
+**304**, and the combined system reproduced the saved solution exactly.
+Thus mirror added **83** independent constraints after standard matching.
+The other six cases were already uniquely fixed by standard rows. These
+results validate those recorded systems; they do not certify the same window
+for an arbitrary new boundary or ansatz.
+
+#### How to choose a justified truncation
+
+Choose a coefficient window from the **known boundary precision**, then work
+backward through the complete rational prefactor to determine the required
+raw svMPL depth. Both of the following conditions are needed:
+
+1. **Boundary remainder:** if $R_B$ denotes all omitted boundary terms and
+   $P_D$ selects the chosen window, establish $P_D(R_B)=0$. An unknown
+   coefficient is not a zero right-hand side. Regular Taylor dependence in
+   $u,Y$ is sufficient for the two leading-boundary windows above. If singular
+   $Y$ dependence is possible, prove the needed bounds separately. For example,
+   an unknown $u/Y^2$ term expands with $\bar z$ first as
+   $\bar z/z+\cdots$ and contributes inside the mirror window, even though it
+   is beyond the $u^0$ boundary at fixed $Y$.
+2. **Ansatz remainder:** no omitted raw function coefficient may enter the
+   chosen window after multiplication by the leading singularity,
+   normalization or analytic logarithm shifts. For a window $a\le A,b\le B$,
+   let $\nu$ be the lowest $\bar z$ power of the full rational factor **before
+   any $z$ truncation**. Raw $\bar z$ degrees through $B-\nu$ can contribute.
+   At these levels, the kernel's lowest $z$ powers determine how many positive
+   raw $z$ degrees are needed. Conversely, negative raw $z$ powers require
+   sufficiently many positive kernel powers. Obtain these bounds from the
+   ordered Laurent expansion, including a justified lower support bound;
+   observing a lower power in a finite cache alone is not a proof.
+
+For instance,
+
+$$
+\frac{1}{z-\bar z}=\sum_{k\ge0}\frac{\bar z^k}{z^{k+1}}
+\quad\text{in the chosen }\bar z\text{-first order}.
+$$
+
+Consequently, a positive raw $z$ degree can contribute to a retained zero or
+negative $z$ degree. Truncating the bare svMPL to the final window before
+including the leading singularity can lose necessary equations. Increasing
+raw depth and checking stability is a useful additional check, but does not
+replace the remainder bounds.
+
+**Why not simply keep $a\le4,b\le4$?** That rectangle also requests mixed
+positive powers absent from a leading-$u$ boundary. An unknown $c\,u$ changes
+the $z\bar z$ coefficient. Even the unknown $c\,Y^5$ term changes the
+$z^4\bar z$ coefficient by $5c$. For a boundary regular in $u,Y$, knowing all
+$u^mY^n$ coefficients with $m,n\ge0$ and $2m+n\le8$ is a sufficient boundary
+region for the full nonnegative rectangle through degree four in each variable. Matching Laurent pole
+rows additionally requires their known cancellation or a specified singular
+boundary. Sufficient raw ansatz depth must still be established independently.
+
+#### Weighted boundaries and the I163/I169 distinction
+
+For a weighted boundary with certified leading power $u^m$, the original
+retained terms have the form $u^{m+r}Y^n$ with $0\le r\le\lfloor N/2\rfloor$
+and $2r+n\le N$. A corresponding native calculation can factor out $u^m$
+and expand in $\bar z/z$ and $z$, retaining ratio degree through
+$\lfloor N/2\rfloor$ and $z$ degree through $N$. This keeps the names of the
+original variables: a monomial $z^a\bar z^b$ after factoring out $u^m$ has
+ratio degree $b$ and total degree $a+b$. Retain the required negative total
+powers too. This construction needs analytic coordinate-unit and Laurent
+support checks; a uniform rectangle in $z,\bar z$ does not encode the same
+weighted precision.
+
+The recorded I163/I169 alternative tests used this weighted construction and
+exact parity identities of the **full** leading-singularity-times-numerator
+columns to infer an opposite-order interpretation. They did **not** perform
+the complementary-window mirror test in the preceding table. At matched
+weighted precision that parity-derived check added no independent boundary
+rank. I163 also needs the image-dependent shift of the logarithm ratio;
+its intermediate columns differ from the original formal-log columns, while
+the checked boundary solution spaces agree. Neither these checks nor the
+ordinary mirror tests establish that arbitrary iterated expansions commute.
+
+#### Matching and validation procedure
+
+1. Load the same graph boundary and ansatz as the original calculation;
+   reuse the designed IBP data.
+2. Specify the channel maps, logarithm convention, coefficient windows and
+   certified boundary/raw-series precision.
+3. Construct each full column in the $\bar z$-first order and independently
+   expand the boundary. Select standard and mirror coefficients as above.
+4. Equate coefficients at each retained power, logarithm and period monomial.
+   Include nonzero boundary monomials absent from all columns as contradiction
+   rows, and include ansatz-only monomials with their known zero targets.
+5. Solve the standard, mirror-only and combined systems independently; record
+   their ranks, remaining parameters and exact residuals on every row. Apply
+   any additional symmetry or regularity constraints consistently and report
+   their contribution separately.
+6. Compare the resulting solution space with the original method at compatible
+   precision. For a benchmark, use its saved solution only for validation.
+   Preserve the windows, input hashes and precision checks with the results.
+
+The direct-matching experiments remain separate from the published workflow.
+The new modules used by I163/I167/I169/I246 are described
+[in the example classification below](#i163-i167-i169-and-i246); selecting
+those modules does not select direct $z,\bar z$ matching.
+
 ---
 
 ## Quick Start: How to Write `input.wl`
@@ -498,9 +665,35 @@ The notebook itself points back to this repository (`https://github.com/windfolg
 
 ## I163, I167, I169 and I246
 
-The additional examples are in `runs/fourloopI163`, `runs/fourloopI167`,
-`runs/fourloopI169` and `runs/fourloopI246`. They retain the standard input,
-run, coefficient and pure numerator output format. Their inputs explicitly select the added constraint
-workflow; ordinary examples retain their original path. See the
-[review record](REVIEW.md), [extension guide](series_agent/WEIGHTED_BOOTSTRAP.md)
-and [regression checks](tests/bootstrap/README.md).
+The examples fall into the following workflow groups. The original run
+scripts and calculation bodies retain their existing behavior.
+
+| Examples under `runs/` | Workflow selected by `input.wl` | Additional modules and constraints |
+|---|---|---|
+| `threeloopI5`, `threeloopI8`, `threeloophard1`, `threeloophard2`, `fourloopI41`, `fourloopI42`, `fourloopI117`, `fourloopI120`, `fourloopI173`, `fourloopI6t` | Original workflow; no new `BootstrapMethod` selection | Existing boundary, series and coefficient agents, with the existing optional mirror stage where configured |
+| [`fourloopI163`](runs/fourloopI163/README.md) | `"Constrained"` | Shared orbit/profile/constraint modules; exact zero directions, diagonal regularity, circle logarithms and N2/N4/N6 boundaries |
+| [`fourloopI167`](runs/fourloopI167/README.md) | `"Weighted"` | Shared weighted boundary/series modules and exact constraint solver; crossing, maximal logarithms and N4/N6 boundaries, using the registered I167 = I246 identity |
+| [`fourloopI169`](runs/fourloopI169/README.md) | `"Weighted"` | The same shared modules, with crossing, diagonal/circle conditions, N4/N6 boundaries and deeper logarithm checks |
+| [`fourloopI246`](runs/fourloopI246/README.md) | `"Weighted"` | The same shared modules, with crossing, maximal logarithms and N4/N6 boundaries matched to the I246 graph |
+
+All four new examples retain the standard `input.wl`, ansatz, `run.wl`,
+`coeff_sol.m`, pure-numerator `result.m` and assembled `<label>.txt` layout.
+Run them through the usual entry point, for example:
+
+```sh
+wolframscript -file runs/fourloopI163/run.wl
+```
+
+Both new modes feed the shared
+[`constraint_agent`](constraint_agent/workflow.wl) and
+[`solve_agent/constrained_solve.wl`](solve_agent/constrained_solve.wl).
+Profiles supply the integral-specific data; the shared algorithms have no
+integral-number branches. The runs reuse certified graph-boundary and function
+series data, reconstruct equations, solve unknown coefficients and verify every
+row. They do not read saved coefficient solutions to perform the solve.
+
+These extensions are distinct from the alternative direct $z,\bar z$ matching
+procedure documented in the series-expansion section above. See the
+[extension guide](series_agent/WEIGHTED_BOOTSTRAP.md) for module interfaces and
+how to add profiles, the [integration record](REVIEW.md) for scope and limits,
+and the [regression instructions](tests/bootstrap/README.md) for validation.
