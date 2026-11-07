@@ -1,0 +1,9 @@
+{
+	"all_exact":true,
+	"candidate_residual_zero":true,
+	"known_I169_control_zero":true,
+	"order":3,
+	"active_bare_atoms_with_control":291,
+	"scope":"Direct exact cancellation of reciprocal-circle logarithms through order three",
+	"source_affine_sha256":"9d198a899e27f8407086218eeb49e94dcace5c090f707239021bd681c9e2e048"
+}

@@ -1,0 +1,14 @@
+=== SolveIntegrandSystem: weighted expansions for fourloopI246 ===
+[Preflight] LS profile 246; input basis dimensions {347, 409}
+[Boundary] Certified graph cache matched I246; normalization factor 1.
+[Boundary] PASS: required boundary expressions loaded.
+[Series] PASS: projected 7 blocks onto the supplied ansatz.
+  crossing: 349 free coefficients after rational elimination
+  maxlog4_e0: 317 free coefficients after rational elimination
+  maxlog4_e1: 300 free coefficients after rational elimination
+  N4_limit1: 183 free coefficients after rational elimination
+  N4_limit5: 20 free coefficients after rational elimination
+  N6_limit1: 0 free coefficients after rational elimination
+  N6_limit5_from3: 0 free coefficients after rational elimination
+[Solve] PASS: unique coefficients and every original row checked.
+Total weighted workflow seconds: 69.425998

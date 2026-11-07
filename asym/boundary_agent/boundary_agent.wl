@@ -26,7 +26,7 @@
 (* =================================================================== *)
 
 ClearAll[RunBoundaryConditions, VerifyOrConstructAssociation, CheckIntegrandCache];
-Options[RunBoundaryConditions] = {"InputDir" -> None, "IBPDir" -> Automatic};
+Options[RunBoundaryConditions] = {"InputDir" -> None, "IBPDir" -> Automatic, "WeightedSpec" -> None};
 
 VerifyOrConstructAssociation[rootDir_] := Module[
   {boundaryDir, assocFile, assoc, runsDir, runs, label, inputPath, integrandVal, p, integrandList, files},
@@ -160,6 +160,10 @@ RunBoundaryConditions[rootDir_, label_, config_, order_:3, opts : OptionsPattern
   {asymDir, tmpDir, boundaryDir, expectedFiles, altDir, altFiles,
    fullIntegrand, results, i, jIdx, perm, permStr, ibpDir, origDir, loopPoints, perms},
 
+  If[AssociationQ[OptionValue["WeightedSpec"]],
+    Get[FileNameJoin[{rootDir, "asym", "boundary_agent", "weighted_boundary.wl"}]];
+    Return[RunWeightedBoundaryConditions[rootDir, label, config, OptionValue["WeightedSpec"]]]
+  ];
   Get[FileNameJoin[{rootDir, "config.wl"}]];
   loopPoints = config["LoopPoints"];
   perms = $Perms;

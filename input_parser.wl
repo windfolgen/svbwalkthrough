@@ -5,16 +5,22 @@
 (*  the unified WorkflowConfig Association.                            *)
 (* =================================================================== *)
 
-ClearAll[ParseInput];
+ClearAll[ParseInput, ParseInputValues];
 
-ParseInput[runDir_String] := Module[
-  {inputFile, outIntegrandList, outCoeffList, outLsConfigList, outWeightN, loopPoints, maxIndex, config},
+(* File-based inputs are isolated so consecutive runs cannot inherit an old
+   integrandlist, ansatzlist, or optional configuration. Direct-global use stays supported. *)
+ParseInput[inputDirectory_String] := If[FileExistsQ[FileNameJoin[{inputDirectory, "input.wl"}]],
+  Block[{runDir = inputDirectory,
+      rootDir = ParentDirectory[ParentDirectory[ExpandFileName[inputDirectory]]],
+      integrand, integrandlist, coeff, leadingsingularity, leadingsingularitylist,
+      ansatz, ansatzlist, lsConfigList, OrderY, bootstrapOptions, bootstrapSystem},
+    Get[FileNameJoin[{inputDirectory, "input.wl"}]];
+    ParseInputValues[inputDirectory]
+  ], ParseInputValues[inputDirectory]];
+
+ParseInputValues[runDir_String] := Module[
+  {inputFile, outIntegrandList, outCoeffList, outLsConfigList, outWeightN, loopPoints, maxIndex, config, report},
   
-  (* Load input.wl if it exists in the run directory *)
-  inputFile = FileNameJoin[{runDir, "input.wl"}];
-  If[FileExistsQ[inputFile],
-    Get[inputFile];
-  ];
   
   (* Use Directory[] as fallback if runDir is relative, or derive from runDir *)
   rootDir = If[AbsoluteFileName[runDir] =!= $Failed,
@@ -58,7 +64,7 @@ ParseInput[runDir_String] := Module[
   (* 4. Parse Leading Singularities & Ansatz *)
   If[ValueQ[lsConfigList],
     outLsConfigList = Table[
-      {lsConfigList[[k, 1]], lsConfigList[[k, 2]], Flatten[lsConfigList[[k, 3]]]},
+      {lsConfigList[[k, 1]], lsConfigList[[k, 2]], If[ListQ[lsConfigList[[k, 3]]], Flatten[lsConfigList[[k, 3]]], $Failed]},
       {k, 1, Length[lsConfigList]}
     ];
   ,
@@ -101,7 +107,7 @@ ParseInput[runDir_String] := Module[
       outLsConfigList = Table[
         Module[{extracted},
           extracted = ExtractPole[leadingsingularitylist[[k]], outIntegrandList[[Min[k, Length[outIntegrandList]]]]];
-          {extracted[[1]], extracted[[2]], Flatten[ansatzlist[[k]]]}
+          {extracted[[1]], extracted[[2]], If[ListQ[ansatzlist[[k]]], Flatten[ansatzlist[[k]]], $Failed]}
         ],
         {k, 1, Length[leadingsingularitylist]}
       ];
@@ -117,9 +123,15 @@ ParseInput[runDir_String] := Module[
       
       Module[{extracted},
         extracted = ExtractPole[leadingsingularity, outIntegrandList[[1]]];
-        outLsConfigList = {{extracted[[1]], extracted[[2]], Flatten[ansatz]}};
+        outLsConfigList = {{extracted[[1]], extracted[[2]], If[ListQ[ansatz], Flatten[ansatz], $Failed]}};
       ];
     ];
+  ];
+
+  If[!FreeQ[outLsConfigList, $Failed] ||
+      !AllTrue[outLsConfigList, ListQ[#[[3]]] && Length[#[[3]]] > 0 &],
+    Print["Error: Every leading singularity needs a nonempty, successfully loaded ansatz list."];
+    Return[$Failed]
   ];
 
   (* Tag terms free of I[...] with I0constant placeholder *)
@@ -144,6 +156,12 @@ ParseInput[runDir_String] := Module[
     "WeightN" -> outWeightN,
     "LoopPoints" -> loopPoints
   |>;
+
+  If[ValueQ[bootstrapOptions] && AssociationQ[bootstrapOptions],
+    (* Optional execution settings cannot replace the parsed mathematical input. *)
+    config = Join[KeyTake[bootstrapOptions,
+      {"BootstrapMethod", "BoundaryData", "ConstraintProfile", "RegionOrder"}], config]
+  ];
 
   Return[config];
 ];

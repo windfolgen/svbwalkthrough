@@ -1,0 +1,20 @@
+{
+	"pure_HPL_function_dimensions":[
+		135,
+		169
+	],
+	"pure_HPL_seed_directions":529,
+	"exact_zero_generators_removed":349,
+	"S3_group_relations_exact":[
+		true,
+		true,
+		true
+	],
+	"projector_idempotent_exact":true,
+	"N6_jet_annihilates_zero_generators":true,
+	"particular_solution_jet_unchanged":true,
+	"affine_family_jet_unchanged":true,
+	"free_before":379,
+	"free_after":30,
+	"qualification":"These directions are proved to vanish as whole functions using the pure-SVHPL transformation representation. Gauge fixing changes coordinates, not physical constraints. Other exact dependencies may remain."
+}

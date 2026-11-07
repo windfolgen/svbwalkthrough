@@ -1,0 +1,7 @@
+{
+	"circle_logarithms_through_numerator_order_3_cancel_exactly":true,
+	"prefactor_identity_exact":true,
+	"source_controls_passed":true,
+	"analytic_residue_argument":"The B numerator is odd under conjugation and invariant under inversion. On z*zz=1 inversion exchanges z and zz, so its regular value vanishes. A direct local seed expansion is run separately.",
+	"qualification":"This checks finite-order logarithm cancellation only; the native CircleJet(seed,4) calculation also checks the analytic pole residue."
+}

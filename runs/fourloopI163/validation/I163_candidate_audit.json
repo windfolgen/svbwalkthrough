@@ -1,0 +1,21 @@
+{
+	"independent_diagonal_solutions_identical":true,
+	"full_diagonal_residual_exact":true,
+	"native_boundary_checks":[
+		{
+			"weighted_order":2,
+			"limit":1,
+			"exact_residual_zero":true
+		},
+		{
+			"weighted_order":4,
+			"limit":1,
+			"exact_residual_zero":true
+		},
+		{
+			"weighted_order":6,
+			"limit":1,
+			"exact_residual_zero":true
+		}
+	]
+}

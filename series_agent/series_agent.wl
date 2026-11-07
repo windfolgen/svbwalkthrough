@@ -58,6 +58,12 @@ zrep1P = Table[{
 
 ClearAll[RunSeriesExpansion, ParseListString];
 
+RunSeriesExpansion[rootDir_, label_, config_, spec_Association, boundaries_Association] := (
+  Get[FileNameJoin[{rootDir, "series_agent", "weighted_series.wl"}]];
+  RunWeightedSeriesExpansion[rootDir, label, config, spec, boundaries]
+);
+
+
 ParseListString[s_String] := Module[{trim = StringTrim[s]},
   If[StringStartsQ[trim, "["] && StringEndsQ[trim, "]"],
     ToExpression["{" <> StringTrim[trim, "["|"]"] <> "}"],

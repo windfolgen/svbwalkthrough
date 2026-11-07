@@ -1,0 +1,35 @@
+{
+	"coordinate_frame":"w=1-z_original",
+	"integration_index_convention":"positions counted from the front of I[w,a1,...,an,0], excluding endpoints",
+	"numerators":[
+		{
+			"numerator":"odd_reciprocal_pole",
+			"distinct_words":366,
+			"HPL_words":151,
+			"moving_letter_words":0,
+			"reciprocal_letter_words":215,
+			"both_letter_words":0,
+			"moving_positions":[],
+			"reciprocal_positions":[
+				1,
+				2
+			]
+		},
+		{
+			"numerator":"even_double_pole",
+			"distinct_words":691,
+			"HPL_words":190,
+			"moving_letter_words":501,
+			"reciprocal_letter_words":0,
+			"both_letter_words":0,
+			"moving_positions":[
+				1,
+				2,
+				3,
+				4
+			],
+			"reciprocal_positions":[]
+		}
+	],
+	"no_mixed_words":true
+}

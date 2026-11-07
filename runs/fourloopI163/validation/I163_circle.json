@@ -1,0 +1,11 @@
+{
+	"matrix_shape":[
+		331,
+		608
+	],
+	"prefactor_identity_exact":true,
+	"candidate_residual_exact":true,
+	"zero_generators_annihilated":true,
+	"numerator_order":3,
+	"qualification":"Necessary generic circle logarithm conditions, not an all-orders monodromy proof."
+}

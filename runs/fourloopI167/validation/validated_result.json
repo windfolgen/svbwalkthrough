@@ -1,0 +1,25 @@
+{
+  "status": "unique_bootstrap_formula_with_analytic_and_numerical_checks",
+  "indices": [
+    167,
+    246
+  ],
+  "fit_dimension": 756,
+  "remaining_free": 0,
+  "all_required_candidate_checks_pass": true,
+  "unique_broader_1063_fit_has_identical_numerators": true,
+  "scope": "Exact uniqueness within the stated Ansatz; local checks are through order three and Monte Carlo checks have reported errors.",
+  "files": {
+    "fit.json": "94dd08f94aa566f8c6aa7a64cd11bde5ece158822955f2817eeef0bf97f24aa3",
+    "I246_ansatz_structure.json": "7b9d2b77875f32a656a072bf29f641ab869431be3dfd6c9ad1f9fd5933899807",
+    "formal_parity_validation.json": "12db5adf8de540e25191fd5ca9e7874ea262d330048ab61b56f889f82f9425a2",
+    "fixed_diagonal_validation.json": "22522181927da30c2cdbdebec29d03b3b3b822c9b517351d2eaa83a476d4441a",
+    "fixed_circle_validation.json": "194d7554377acff1fa1a1c9dfb1f0bb59f3aa85076a26cd8d3be1db96db3d382",
+    "I246_numerical_comparison.json": "d3a3cd86a8054491d48f7caf784017e24b6323154df4e5d4043f38c650adf927",
+    "candidate_I246_w.m": "0b76b5a0f8541c1ae3d6bd7800a75def38e01336da4efa01ac444bac2bd0bb54",
+    "candidate_I246_original.m": "f94224378ca89456afd3b465e6afdbecdb0c507964483410f224db2f366aed00",
+    "candidate_I246_numerators.m": "b720677f31bc5aaf75b6c03dc245db34d588e8090b3a37c52fb51ada9a21d47c",
+    "I246_737_coefficients.m": "c6272aa9b321cd152f0f8a2ebdbcc120d29bbfb7938bfcd6e93c2cb709605779",
+    "I246_new_odd_directions.m": "299e933550b96501da4444a56b8ef659015b221e76da4324dc30795c36adb05a"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "index": 169,
+  "arithmetic": "Python fractions.Fraction and integer modular elimination",
+  "unknowns": 25,
+  "equations": 38,
+  "all_rational_residuals_zero": true,
+  "full_column_rank_certified": true,
+  "determinant_mod_prime": 729041,
+  "all_exact": true,
+  "coefficient_rank": 25,
+  "augmented_rank": 25,
+  "augmented_sha256": "8009ccec0dc294a46d4ee4a858564ae6387f52214c26d65fd9343863628fbab3"
+}

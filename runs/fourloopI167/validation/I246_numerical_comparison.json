@@ -1,0 +1,62 @@
+{
+  "index": 246,
+  "scope": "Exploratory Monte Carlo comparison; production Trillo default is 100M samples.",
+  "checks": [
+    {
+      "u": ".3",
+      "v": ".4",
+      "Maple_real": "89.301012619289263805880169959973251519314940935016175607208",
+      "Maple_imaginary": "1.27879991622667236375416139590955392432076189478525777982986E-56",
+      "reality_check": true,
+      "trillo_value": 89.23761308299333,
+      "trillo_reported_standard_error": 0.07109963916172687,
+      "samples": 2000000,
+      "trillo_file": "trillo_I246_p1_2M_20260928.result.json",
+      "absolute_standardized_difference": 0.8916998320022512,
+      "trillo_result_sha256": "409df5ed44fd6432f382b7c575de2255d89eba608381b9dd9603b2092d5b36f8"
+    },
+    {
+      "u": ".6",
+      "v": ".3",
+      "Maple_real": "60.7986648699009549074037917948381359196354256237754266177389",
+      "Maple_imaginary": "1E-57",
+      "reality_check": true,
+      "trillo_value": 60.64558608617662,
+      "trillo_reported_standard_error": 0.09533458837803763,
+      "samples": 500000,
+      "trillo_file": "trillo_I246_p2.result.json",
+      "absolute_standardized_difference": 1.605700368866305,
+      "trillo_result_sha256": "a6af27192828eda3b6fb755c39864425678deef6cbd1e8a43b44c316bd66a935"
+    },
+    {
+      "u": ".13",
+      "v": ".53",
+      "Maple_real": "127.489638522438030644643940274375480809707945324753625641138",
+      "Maple_imaginary": "3.73263454474792218460301305235574750766815869536917851465823E-56",
+      "reality_check": true,
+      "trillo_value": 128.0090768008939,
+      "trillo_reported_standard_error": 1.0483050880333298,
+      "samples": 500000,
+      "trillo_file": "trillo_I246_p3.result.json",
+      "absolute_standardized_difference": 0.4955029641517399,
+      "trillo_result_sha256": "1d7b458eb5638cf6e352a6a23869b619770cefc409c5b376c33feaf160c711db"
+    },
+    {
+      "u": "1.5",
+      "v": "1.2",
+      "Maple_real": "58.219283378629168780927986618035804252392925919028353466943",
+      "Maple_imaginary": "5.2E-56",
+      "reality_check": true,
+      "trillo_value": 58.237511637410044,
+      "trillo_reported_standard_error": 0.017049146925615394,
+      "samples": 2000000,
+      "trillo_file": "trillo_I246_p4_2M_20260928.result.json",
+      "absolute_standardized_difference": 1.0691595808518677,
+      "trillo_result_sha256": "465a24b38b1e890ad1eefeb1a49e05399bbf4e1defe980bf8ab0b84f233c0c15"
+    }
+  ],
+  "digits": 60,
+  "all_reality_checks_pass": true,
+  "all_within_3_reported_standard_errors": true,
+  "candidate_sha256": "c8929d77254dedd8d78d99bb664c112685b1d91bc23134e5a5be949889188a8b"
+}

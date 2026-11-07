@@ -1,0 +1,16 @@
+{
+  "solve_agent/solve_agent.wl:legacy_body_unchanged": true,
+  "series_agent/series_agent.wl:legacy_body_unchanged": true,
+  "asym/asym_new.wl:unchanged": true,
+  "config.wl:unchanged": true,
+  "solve_agent/solve_agent_mirror_direct.wl:unchanged": true,
+  "all_original_run_files_unchanged": true,
+  "original_test_index_preserved": true,
+  "original_test_working_preserved": true,
+  "original_review_index_preserved": true,
+  "original_review_working_preserved": true,
+  "original_run_file_count_checked": 73,
+  "only_six_existing_integration_files_modified": true,
+  "matching_experiments_excluded": true,
+  "I347_excluded": true
+}

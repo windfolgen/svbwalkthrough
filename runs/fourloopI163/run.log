@@ -1,0 +1,8 @@
+"=== SolveIntegrandSystem: additional constraints for ""fourloopI163"" ==="
+"  ""remove_exact_zero_generators"": "259" free coefficients after rational elimination"
+"  ""full_diagonal_regularity"": "133" free coefficients after rational elimination"
+"  ""circle_logarithms"": "131" free coefficients after rational elimination"
+"  ""N2_limit1"": "79" free coefficients after rational elimination"
+"  ""N4_limit1"": "41" free coefficients after rational elimination"
+"  ""N6_limit1"": "0" free coefficients after rational elimination"
+"[Solve] PASS: unique generators; every original constraint checked."

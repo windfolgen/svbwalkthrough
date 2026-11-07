@@ -1,0 +1,14 @@
+{
+	"status":"consistent",
+	"matrix_shape":[
+		4329,
+		608
+	],
+	"crossing_images":6,
+	"pure_zero_generators_annihilated":true,
+	"prefactor_identity_exact":true,
+	"free_before":30,
+	"free_after":0,
+	"exact_affine_residual":true,
+	"qualification":"Full rational coefficient identity at generic z=zz, including level-two crossing periods. Even parity removes the simple diagonal pole once its double-pole coefficient vanishes. Other apparent pole divisors and independent numerics remain separate tests."
+}

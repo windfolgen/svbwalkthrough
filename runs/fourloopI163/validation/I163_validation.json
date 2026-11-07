@@ -1,0 +1,128 @@
+{
+  "updated": "2026-10-01T05:49:18.146239+00:00",
+  "index": 163,
+  "free_parameters": 0,
+  "exact_checks": {
+    "no_free_parameters": true,
+    "full_six_image_diagonal_exact": true,
+    "zero_generator_control_exact": true,
+    "independent_diagonal_solutions_identical": true,
+    "N2_N4_N6_boundaries_exact": true,
+    "circle_log_operator_exact": true,
+    "direct_circle_poles_and_logs_through_order_4_zero": true,
+    "weighted_inversion_whole_function_exact": true
+  },
+  "exact_checks_passed": true,
+  "formula": "I163_result.m",
+  "maple_formula": "I163_result.txt",
+  "full_six_image_formula": "I163_candidate.m",
+  "regularity_first_counts": [
+    {
+      "stage": "remove_exact_zero_generators",
+      "free": 259
+    },
+    {
+      "stage": "full_diagonal_regularity_first",
+      "free": 133
+    },
+    {
+      "stage": "N2_limit1",
+      "free": 79
+    },
+    {
+      "stage": "N4_limit1",
+      "free": 41
+    },
+    {
+      "stage": "N6_limit1",
+      "free": 0
+    }
+  ],
+  "regularity_and_circle_first_counts": [
+    {
+      "stage": "remove_exact_zero_generators",
+      "free": 259
+    },
+    {
+      "stage": "full_diagonal_regularity_first",
+      "free": 133
+    },
+    {
+      "stage": "circle_logarithms_first",
+      "free": 131
+    },
+    {
+      "stage": "N2_limit1",
+      "free": 79
+    },
+    {
+      "stage": "N4_limit1",
+      "free": 41
+    },
+    {
+      "stage": "N6_limit1",
+      "free": 0
+    }
+  ],
+  "qualification": "Unique within the specified S3-averaged reciprocal-last-two ansatz. Circle checks are finite-order; alphabet completeness is a bootstrap assumption.",
+  "analytic_numeric": {
+    "u": 0.3,
+    "v": 0.4,
+    "working_precision": 50,
+    "real_value": "147.56155423715933469695018432484539296662664114368",
+    "raw_value": "147.56155423715933469695018432484539296662664114368-.41020476221446476300306919193199108242993843873045e-45*I"
+  },
+  "independent_numeric_comparisons": [
+    {
+      "label": "pilot_1M",
+      "started": "20261001T014942Z",
+      "driver_pid": 635203,
+      "samples": 1000000,
+      "seed": 16301,
+      "threads": 4,
+      "state": "completed",
+      "pid": 635204,
+      "ended": "2026-10-01T01:57:04.005297+00:00",
+      "exit_code": 0,
+      "u": 0.3,
+      "v": 0.4,
+      "prefactor": "gamma(5+4*eps)",
+      "gamma_multiplier": 24,
+      "value": 147.8680147468819,
+      "error": 0.3318173432499098,
+      "imaginary_value": 0.0,
+      "difference": -0.30646050972256944,
+      "standard_errors": 0.9235819524109602
+    },
+    {
+      "label": "production_100M",
+      "index": 163,
+      "u": 0.3,
+      "v": 0.4,
+      "gamma_argument_at_epsilon_zero": 5,
+      "gamma_multiplier": 24,
+      "external_coefficient_in_config": 0.4,
+      "samples": 100000000,
+      "seed": 163,
+      "threads": 16,
+      "prefactor": "gamma(5+4*eps)",
+      "value": 147.54213484118844,
+      "error": 0.02535306455528602,
+      "imaginary_value": 0.0,
+      "difference": 0.01941939597088549,
+      "standard_errors": 0.7659585265733336
+    }
+  ],
+  "status": "unique_bootstrap_result_with_numerical_agreement",
+  "production_job": {
+    "started": "20261001T015842Z",
+    "state": "completed",
+    "driver_pid": 636472,
+    "threads": 16,
+    "samples": 100000000,
+    "seed": 163,
+    "pid": 636539,
+    "ended": "2026-10-01T05:49:18.130381+00:00",
+    "exit_code": 0
+  }
+}

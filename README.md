@@ -494,3 +494,13 @@ The `anc/` subfolder collects the ancillary files of the paper [arXiv:2607.11645
 | `sysgram.m` | The four-loop **Gram-identity system** — a large list of linear relations among the basis integrals `I4[k][{σ}]` with permuted external legs `σ`, with rational-function coefficients in `z`, `zz` |
 
 The notebook itself points back to this repository (`https://github.com/windfolgen/svbwalkthrough.git`) for the detailed bootstrap workflow, and its sections mirror the pipeline: helper functions (`drawGraph`, `GraphReduce`, the multi-leg vertex differential equation) followed by worked three-loop and four-loop examples.
+
+
+## I163, I167, I169 and I246
+
+The additional examples are in `runs/fourloopI163`, `runs/fourloopI167`,
+`runs/fourloopI169` and `runs/fourloopI246`. They retain the standard input,
+run, coefficient and pure numerator output format. Their inputs explicitly select the added constraint
+workflow; ordinary examples retain their original path. See the
+[review record](REVIEW.md), [extension guide](series_agent/WEIGHTED_BOOTSTRAP.md)
+and [regression checks](tests/bootstrap/README.md).

@@ -17,6 +17,13 @@
 
 ClearAll[RunCoefficientSolving];
 
+(* Additional matrix/constraint solve; the original signature below is unchanged. *)
+RunCoefficientSolving[rootDir_, label_, config_, blocks_List, parameterMap_:Automatic] := (
+  Get[FileNameJoin[{rootDir, "solve_agent", "constrained_solve.wl"}]];
+  RunConstrainedCoefficientSolving[rootDir, label, config, blocks, parameterMap]
+);
+
+
 RunCoefficientSolving[rootDir_, label_, config_,
                       ansatzList_List, labelsList_List,
                       basisSVList_List, basisMPLList_List,

@@ -1,0 +1,12 @@
+{
+	"index":246,
+	"all_exact":true,
+	"ancillary_integrand_exact":true,
+	"coefficient_vector_matches_research":true,
+	"numerators_match_research_in_original_coordinates":true,
+	"basis_dot_coefficients_matches_result":true,
+	"ordinary_result_assembly_matches_export":true,
+	"assembled_formula_matches_research":true,
+	"no_reflected_coordinate_symbols_in_outputs":true,
+	"all_replay_rows_satisfied":true
+}

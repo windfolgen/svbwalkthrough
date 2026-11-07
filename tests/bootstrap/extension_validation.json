@@ -1,0 +1,9 @@
+{
+	"RenamedScaledRunCompleted":true,
+	"ScaledCoefficientsMatch":true,
+	"InsufficientOrderRejected":true,
+	"StaleOutputsMarkedInvalid":true,
+	"EarlierResultPreserved":true,
+	"InconsistentPhysicalBoundariesRejected":true,
+	"LegacyAfterExtendedRunUnchanged":true
+}

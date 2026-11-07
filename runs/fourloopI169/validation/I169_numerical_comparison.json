@@ -1,0 +1,72 @@
+{
+  "index": 169,
+  "scope": "Exploratory numerical checks, not a proof of the integral representation. The production Trillo default is 100M samples.",
+  "all_reality_checks_pass": true,
+  "all_preferred_runs_within_3_reported_standard_errors": true,
+  "point1_independent_precision_refinement_complete": true,
+  "checks": [
+    {
+      "u": "0.3",
+      "v": "0.4",
+      "Maple_real_40_digits": "256.4570564790223721205860714486292939019",
+      "Maple_imaginary_remainder": "6.455045569967021312596593927316486450408E-37",
+      "reality_check": true,
+      "trillo_runs": [
+        {
+          "samples": 500000,
+          "value": 254.73073767056695,
+          "reported_standard_error": 0.6014204314421409,
+          "absolute_standardized_difference": 2.870402663766973,
+          "result_file": "trillo_I169_p1.result.json",
+          "result_sha256": "883eb8473d640b554386c3fa7a8f02548c7e78f58e88a860efa27c6c07446d23"
+        },
+        {
+          "samples": 2000000,
+          "value": 256.6230080902644,
+          "reported_standard_error": 0.44196233813209296,
+          "absolute_standardized_difference": 0.3754881285664331,
+          "result_file": "trillo_I169_p1_2M_20260928.result.json",
+          "result_sha256": "c162385d933f67e618238dbb6a3f57f957a5a609bc48dd36be2744c6e2678ce0"
+        }
+      ],
+      "preferred_run": 1
+    },
+    {
+      "u": "0.6",
+      "v": "0.3",
+      "Maple_real_40_digits": "100.8673511161308160542051675273998948659",
+      "Maple_imaginary_remainder": "-9.066765020370967066301771062188669248749E-37",
+      "reality_check": true,
+      "trillo_runs": [
+        {
+          "samples": 500000,
+          "value": 100.50747237055745,
+          "reported_standard_error": 0.303299515935464,
+          "absolute_standardized_difference": 1.1865457300958682,
+          "result_file": "trillo_I169_p2.result.json",
+          "result_sha256": "237a6b4cd53ddfef906fd3fcdf7bc18ee253d58e7e40639cd1ce80bf3434eb1e"
+        }
+      ],
+      "preferred_run": 0
+    },
+    {
+      "u": "0.13",
+      "v": "0.53",
+      "Maple_real_40_digits": "704.838962896077785480021210120242645665",
+      "Maple_imaginary_remainder": "2.240411380631918857079947632302289998153E-34",
+      "reality_check": true,
+      "trillo_runs": [
+        {
+          "samples": 500000,
+          "value": 694.3195301671284,
+          "reported_standard_error": 10.241346239874085,
+          "absolute_standardized_difference": 1.027153313886857,
+          "result_file": "trillo_I169_p3_20260928.result.json",
+          "result_sha256": "cd30cc870f6871f0e55c98954c1855eaf6ea51020424349b2c59be8940b0b525"
+        }
+      ],
+      "preferred_run": 0
+    }
+  ],
+  "candidate_sha256": "41753dc5d2a8fe1635cc658d776991c256a05061738267654520228480d320c7"
+}

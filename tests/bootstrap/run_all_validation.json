@@ -1,0 +1,58 @@
+{
+  "started_utc": "2026-11-07T05:38:27.941095+00:00",
+  "certified_inputs_reused": true,
+  "runs": [
+    {
+      "name": "fourloopI163",
+      "exit_code": 0,
+      "wall_seconds": 15.38406659301836
+    },
+    {
+      "name": "fourloopI167",
+      "exit_code": 0,
+      "wall_seconds": 74.36641789507121
+    },
+    {
+      "name": "fourloopI169",
+      "exit_code": 0,
+      "wall_seconds": 122.64725915505551
+    },
+    {
+      "name": "fourloopI246",
+      "exit_code": 0,
+      "wall_seconds": 73.96772919502109
+    },
+    {
+      "name": "checks",
+      "exit_code": 0,
+      "wall_seconds": 50.28574761596974
+    },
+    {
+      "name": "assembly",
+      "exit_code": 0,
+      "wall_seconds": 2.002186162979342
+    },
+    {
+      "name": "weighted_jets",
+      "exit_code": 0,
+      "wall_seconds": 0.8934472149703652
+    },
+    {
+      "name": "prepare_legacy",
+      "exit_code": 0,
+      "wall_seconds": 0.048011321923695505
+    },
+    {
+      "name": "legacy",
+      "exit_code": 0,
+      "wall_seconds": 48.17859157291241
+    },
+    {
+      "name": "extension",
+      "exit_code": 0,
+      "wall_seconds": 37.69095553597435
+    }
+  ],
+  "passed": true,
+  "finished_utc": "2026-11-07T05:45:33.409464+00:00"
+}

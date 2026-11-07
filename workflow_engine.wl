@@ -40,6 +40,12 @@ SolveIntegrandSystem[rootDir_, label_String, config_Association, order_:3, yOrde
    freeVarsFile, missingCoeffs, unsolvedVars, freeCount, mirrorTime
   },
 
+  (* New constraint workflows are explicitly selected by input.wl. *)
+  If[MemberQ[{"Weighted", "Constrained"}, Lookup[config, "BootstrapMethod", "Legacy"]],
+    Get[FileNameJoin[{rootDir, "constraint_agent", "workflow.wl"}]];
+    Return[RunExtendedWorkflow[rootDir, label, config, order, yOrder]]
+  ];
+
   workflowStartTime = SessionTime[];
 
   logFile = FileNameJoin[{rootDir, "runs", label, "run.log"}];
