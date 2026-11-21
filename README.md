@@ -6,7 +6,7 @@ See [summary.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/s
 
 ## Planar four-loop bootstrap record
 
-Of the 32 diagram entries in the planar correlator, 10 have bootstrap results, 13 have known direct-integration results and 6 are products of lower-loop integrals. The three open entries are I168, I214 and I260. I49 appears twice with different kinematic multipliers. The labels below are indices in the [four-loop ancillary basis](anc/4Loop_int_basis.m).
+Of the 32 diagram entries in the planar correlator, 11 have bootstrap results, 13 have known direct-integration results and 6 are products of lower-loop integrals. The two open entries are I168 and I260. I49 appears twice with different kinematic multipliers. The labels below are indices in the [four-loop ancillary basis](anc/4Loop_int_basis.m).
 
 | Bootstrapped integrals | Result or check |
 |---|---|
@@ -15,12 +15,11 @@ Of the 32 diagram entries in the planar correlator, 10 have bootstrap results, 1
 | I212 | The primary double-logarithm predictions at orders 20, 21 and 22 agree with independent graph calculations. |
 | [I144](runs/fourloopI144/README.md) | The order-four graph boundary agrees in all 72 nonzero components in frame 1324, including 40 beyond the order-two overlap. |
 | [I233](runs/fourloopI233/README.md) | The cubic logarithm agrees in 154 angular components through degrees 13, 12 and 12 in frames 1234, 4132 and 1324. |
+| I214 | The weight-eight symbol and its single-valued period completion are fixed within the tested ansatz. With the symbol fixed, orderings 1234 and 4132 predict all 3,123 omitted period equations in ordering 1324. |
 
 The I144 and I233 run directories contain the Wolfram and Maple expressions, the coefficient reconstruction and two numerical comparisons per integral.
 
-I214 remains open. A weight-eight symbol with the three rational prefactors passes 2,019 equations with the coefficient of the 1/y prefactor set to zero. Its rational letters are u, v, z/zbar, (1−z)/(1−zbar) and 1−u, with 1−u allowed in every entry after the first. The checks include unequal powers through graph order 14 in frames 1234 and 1324. The fitted conditions also predict the withheld coefficient of u Y²⁷ log³(u) in frame 4132, which agrees exactly with independent angular integration. The boundary data therefore admit a symbol without algebraic letters. Its single-valued completion and period terms remain open.
-
-Earlier trials with the algebraic letters restricted 1−u to the last three or four rational entries. Their coefficient and augmented ranks at graph order 13 are 774 and 775 on 1,239 columns, and 843 and 844 on 1,344 columns, respectively.
+For I214, 2,899 equations fix all 643 symbol coefficients. Enlarging the allowed positions of the two channel letters gives the same four tensors. The complete period fit has rank 832, equal to the dimension of the single-valued function space after identities among the words. The original basis integral has values 77.46214 and 73.16852 at `(u,v) = (0.3,0.4)` and `(0.6,0.8)`. Independent Trillo integrations give 77.45271 ± 0.06555 and 73.16953 ± 0.01926. The multiplier for its planar-correlator term is `1/v`.
 
 ---
 
