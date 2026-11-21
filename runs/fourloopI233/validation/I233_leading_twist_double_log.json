@@ -1,0 +1,69 @@
+{
+ "frame_hpl": [
+  1,
+  4,
+  3,
+  2
+ ],
+ "arithmetic": "Q",
+ "native_formula_first": [
+  [
+   "0",
+   "3"
+  ],
+  [
+   "0",
+   "3/8"
+  ],
+  [
+   "11/432",
+   "-1/72"
+  ]
+ ],
+ "native_graph_tests": [
+  {
+   "frame": [
+    4,
+    1,
+    3,
+    2
+   ],
+   "crossing": "Y -> -Y/(1-Y), prefactor 1/(1-Y)",
+   "differences": 0,
+   "first_native": [
+    [
+     "0",
+     "3"
+    ],
+    [
+     "0",
+     "21/8"
+    ]
+   ]
+  },
+  {
+   "frame": [
+    1,
+    4,
+    3,
+    2
+   ],
+   "crossing": "identity",
+   "differences": 0,
+   "first_native": [
+    [
+     "0",
+     "3"
+    ],
+    [
+     "0",
+     "3/8"
+    ]
+   ]
+  }
+ ],
+ "HPL_discrepancies": 0,
+ "HPL_examples": [],
+ "nonzero_HPL_monomials": 162,
+ "moments_checked": 85
+}

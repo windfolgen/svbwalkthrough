@@ -1,0 +1,47 @@
+{
+ "frame": "1324",
+ "arithmetic": "Q",
+ "formula_sha256": "0b3816a914d63f47df519ed368a97700174b23c7e65cb39d2895959983320245",
+ "native_N2": {
+  "nonzero_graph": 288,
+  "nonzero_candidate": 288,
+  "different": 0,
+  "differences": []
+ },
+ "full_native_input": "i233_followup/native_third2.json",
+ "native_double_N4": {
+  "nonzero_graph": 132,
+  "nonzero_candidate": 132,
+  "different": 0,
+  "differences": []
+ },
+ "angular_L3_normalized_10": {
+  "nonzero_graph": 208,
+  "nonzero_candidate": 208,
+  "different": 0,
+  "differences": []
+ },
+ "angular_L4_normalized_10": {
+  "nonzero_graph": 260,
+  "nonzero_candidate": 260,
+  "different": 0,
+  "differences": []
+ },
+ "normalized_degree6_periods": {
+  "nonzero": 767,
+  "different": 0,
+  "differences": []
+ },
+ "native_physical_N2": {
+  "graph_nonzero": 44,
+  "candidate_nonzero": 44,
+  "different": 0,
+  "changes": []
+ },
+ "native_physical_double_N4": {
+  "graph_nonzero": 18,
+  "candidate_nonzero": 18,
+  "different": 0,
+  "changes": []
+ }
+}

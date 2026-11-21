@@ -1,0 +1,13 @@
+{
+	"curve":"z=zz",
+	"rational_prefactors":"all three retained",
+	"coordinate":"z_original=zz-delta",
+	"removed_common_factor":"delta^2(1-U)(1-U+V)",
+	"arithmetic":"Q",
+	"tested":[
+		"constant and all transverse logs at delta^-2",
+		"constant and all transverse logs at delta^-1",
+		"all positive powers of the transverse log at delta^0"
+	],
+	"remaining_formal_monomials":0
+}

@@ -1,0 +1,11 @@
+{
+ "frame": "1324",
+ "native_graph_sha256": "e8ef65573166113afd1ce54f84ec751cbb9129e1815c7b5ad154ffec14a1b8a7",
+ "frozen_forecast_sha256": "8f54bc1da872a4c2b4c21e888fe73dfe9114999a8a7685ef1c14e2e2b36f2680",
+ "arithmetic": "Q",
+ "nonzero_graph_components": 72,
+ "overlapping_N2": 32,
+ "new_nonzero": 40,
+ "wrong": [],
+ "complete_native_polynomial_equal": true
+}

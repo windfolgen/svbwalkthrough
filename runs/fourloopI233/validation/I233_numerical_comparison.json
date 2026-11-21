@@ -1,0 +1,22 @@
+[
+  {
+    "u": "0.3",
+    "v": "0.4",
+    "bootstrap": "74.8792312363172101665934",
+    "imaginary": "4.26102e-23",
+    "trillo": 74.93984588673045,
+    "standard_error": 0.07322901670767036,
+    "samples": 1000000,
+    "bootstrap_minus_trillo_in_standard_errors": -0.8277408756587983
+  },
+  {
+    "u": "0.6",
+    "v": "0.8",
+    "bootstrap": "63.1652249346930704352714",
+    "imaginary": "6.55441e-23",
+    "trillo": 63.18373614886873,
+    "standard_error": 0.023582484708453665,
+    "samples": 1000000,
+    "bootstrap_minus_trillo_in_standard_errors": -0.7849560555009629
+  }
+]

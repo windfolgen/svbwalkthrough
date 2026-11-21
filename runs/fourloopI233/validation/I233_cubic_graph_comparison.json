@@ -1,0 +1,35 @@
+{
+ "prediction_sha256": "5494df010568553d7c467ed32e4423dda5800c7a807d101df2cf0d37a49e931c",
+ "frames": {
+  "1234": {
+   "requested": 13,
+   "graph_degree": 13,
+   "compared_including_zeros": 56,
+   "nonzero": 42,
+   "highest_degree_count": 7,
+   "differences": [],
+   "graph_file": "cubic_233_1234_13.json",
+   "graph_sha256": "685e47ef19c71bbd4fa3cc6db120abfbabc9b65f4b003026f566812129debd94"
+  },
+  "4132": {
+   "requested": 12,
+   "graph_degree": 12,
+   "compared_including_zeros": 49,
+   "nonzero": 36,
+   "highest_degree_count": 7,
+   "differences": [],
+   "graph_file": "cubic_233_4132_12.json",
+   "graph_sha256": "8c99d3afa86c5c9d215e4390c421a4b70081274ff66ad516778e4b7ebdc5f627"
+  },
+  "1324": {
+   "requested": 12,
+   "graph_degree": 12,
+   "compared_including_zeros": 49,
+   "nonzero": 49,
+   "highest_degree_count": 7,
+   "differences": [],
+   "graph_file": "cubic_233_1324_12.json",
+   "graph_sha256": "0390a3d03b73dc1e20940791de0e7ee4687424bd7e7154fb98037cbb9ce87e45"
+  }
+ }
+}

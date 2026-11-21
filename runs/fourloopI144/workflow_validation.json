@@ -1,0 +1,28 @@
+{
+	"finite_fields":[
+		{
+			"prime":1000003,
+			"independent_seed_columns":1578,
+			"fitted_rows":11642,
+			"fitted_discrepancies":0,
+			"check_rows":185,
+			"nonzero_check_rows":40,
+			"check_discrepancies":0
+		},
+		{
+			"prime":1000033,
+			"independent_seed_columns":1578,
+			"fitted_rows":11642,
+			"fitted_discrepancies":0,
+			"check_rows":185,
+			"nonzero_check_rows":40,
+			"check_discrepancies":0
+		}
+	],
+	"word_coordinates":12349,
+	"nonzero_terms":{
+		"A1":310,
+		"A2":614,
+		"B":491
+	}
+}

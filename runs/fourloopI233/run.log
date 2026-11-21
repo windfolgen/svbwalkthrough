@@ -1,0 +1,29 @@
+{
+  "finite_fields": [
+    {
+      "prime": 1000003,
+      "independent_seed_columns": 1030,
+      "fitted_rows": 3002,
+      "fitted_discrepancies": 0,
+      "check_rows": 200,
+      "nonzero_check_rows": 67,
+      "check_discrepancies": 0
+    },
+    {
+      "prime": 1000033,
+      "independent_seed_columns": 1030,
+      "fitted_rows": 3002,
+      "fitted_discrepancies": 0,
+      "check_rows": 200,
+      "nonzero_check_rows": 67,
+      "check_discrepancies": 0
+    }
+  ],
+  "word_coordinates": 9141,
+  "nonzero_terms": {
+    "C1": 677,
+    "C2": 614,
+    "C3": 310,
+    "E": 554
+  }
+}

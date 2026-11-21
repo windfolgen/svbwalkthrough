@@ -1,0 +1,16 @@
+{
+	"curve":"D=0, t=tbar",
+	"coordinate":"t=tbar-delta",
+	"arithmetic":"Q",
+	"numerator_words":{
+		"C1":677,
+		"C2":614,
+		"E":554,
+		"C3":356
+	},
+	"tested":[
+		"constant and all transverse logs at delta^-2 and delta^-1",
+		"all positive powers of the transverse log at delta^0"
+	],
+	"remaining_formal_monomials":0
+}
