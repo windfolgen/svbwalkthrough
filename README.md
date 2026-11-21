@@ -16,7 +16,7 @@ Of the 32 diagram entries in the planar correlator, 10 have bootstrap results, 1
 | [I144](runs/fourloopI144/README.md) | The order-four graph boundary agrees in all 72 nonzero components in frame 1324, including 40 beyond the order-two overlap. |
 | [I233](runs/fourloopI233/README.md) | The cubic logarithm agrees in 154 angular components through degrees 13, 12 and 12 in frames 1234, 4132 and 1324. |
 
-The I144 and I233 run directories contain the Wolfram and Maple expressions, the coefficient reconstruction and two numerical comparisons per integral. I214 remains open. Its current weight-eight symbol ansatz fits three graph boundaries, the leading Laurent pole in frame 1324, the double logarithm in 1234 and the quartic logarithm in 4132. With both cut-derived algebraic letters allowed in entries 6–8 and a maximum of four OPE logarithms, the exact system has rank 409 on 559 columns and leaves 150 symbol coefficients free.
+The I144 and I233 run directories contain the Wolfram and Maple expressions, the coefficient reconstruction and two numerical comparisons per integral. I214 remains open. Its current weight-eight symbol ansatz fits three graph boundaries, the leading Laurent pole in frame 1324, the double logarithm in 1234 and the quartic logarithm in 4132. Both cut-derived algebraic letters are needed in the window spanning entries 6–8 of this ansatz. After imposing Euclidean pole cancellation, the OPE logarithmic bound and the rational cubic logarithm in frame 4132 through spin 22, the exact system has rank 486 on 559 columns. It leaves 73 symbol coefficients free. The predicted cubic logarithm agrees exactly with independent graph coefficients at spins 23–26.
 
 ---
 
