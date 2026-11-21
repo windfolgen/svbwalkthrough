@@ -18,7 +18,7 @@ Of the 32 diagram entries in the planar correlator, 10 have bootstrap results, 1
 
 The I144 and I233 run directories contain the Wolfram and Maple expressions, the coefficient reconstruction and two numerical comparisons per integral.
 
-I214 remains open. Its leading-boundary fit predicts the rational cubic logarithm in frame 4132 at spins 23–26. Comparing unequal powers of the two local variables in frames 1324 and 1234 excludes the earlier 559-column ansatz (coefficient rank 559, augmented rank 560). With the same alphabet, allowing 1−u in entries 6–8 of the rational numerators and both cut-derived algebraic letters in entries 3–8 gives a consistent weight-eight symbol system through graph order 12. Its exact rank is 753 on 1,239 columns, leaving 486 symbol coefficients free.
+I214 remains open. In the 1,239-column symbol ansatz, the coefficient of Y²³ in the leading 4132 cubic logarithm fixes one further combination. The coefficients at Y²⁴, Y²⁵ and Y²⁶ then agree with independent graph values. The corrected system has rank 754 through graph order 12. At order 13 the fourth logarithm in frame 1234 gives a contradiction (coefficient rank 774, augmented rank 775 for both frames together). Allowing 1−u in entries 5–8 of the three rational numerators while keeping both algebraic letters in entries 3–8 gives ranks 843 and 844 on 1,344 columns at the same order. Reversing the external labels reproduces the cubic and quartic graph coefficients through order 14.
 
 ---
 
