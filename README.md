@@ -4,6 +4,20 @@ This project implements a **bootstrap method for computing multi-loop Feynman in
 
 See [summary.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/summary.md) for the full technical overview and [init.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/init.md) for how to start working in this workspace.
 
+## Planar four-loop bootstrap record
+
+Of the 32 diagram entries in the planar correlator, 10 have bootstrap results, 13 have known direct-integration results and 6 are products of lower-loop integrals. The three open entries are I168, I214 and I260. I49 appears twice with different kinematic multipliers. The labels below are indices in the [four-loop ancillary basis](anc/4Loop_int_basis.m).
+
+| Bootstrapped integrals | Result or check |
+|---|---|
+| [I173](runs/fourloopI173/fourloopI173.txt), [I176](anc/fourloopI176.txt), [I181](anc/fourloopI181.txt) | Analytic expressions from the manuscript bootstrap. |
+| [I163](runs/fourloopI163/README.md), [I167](runs/fourloopI167/README.md), [I169](runs/fourloopI169/README.md), [I246](runs/fourloopI246/README.md) | Constrained and weighted runs, including the I167 = I246 identity in the registered conventions. |
+| I212 | The primary double-logarithm predictions at orders 20, 21 and 22 agree with independent graph calculations. |
+| [I144](runs/fourloopI144/README.md) | The order-four graph boundary agrees in all 72 nonzero components in frame 1324, including 40 beyond the order-two overlap. |
+| [I233](runs/fourloopI233/README.md) | The cubic logarithm agrees in 154 angular components through degrees 13, 12 and 12 in frames 1234, 4132 and 1324. |
+
+The I144 and I233 run directories contain the Wolfram and Maple expressions, the coefficient reconstruction and two numerical comparisons per integral. I214 is undergoing a bootstrap with an additional square root.
+
 ---
 
 ## Prerequisites — Dependency Installation
@@ -586,6 +600,12 @@ runs/
 ├── fourloopI42/       multi-component integrand with coeff
 ├── fourloopI117/      4-loop single integrand
 ├── fourloopI120/      4-loop single integrand
+├── fourloopI144/      three leading singularities, period-resolved bootstrap
+├── fourloopI163/      constrained bootstrap
+├── fourloopI167/      weighted bootstrap
+├── fourloopI169/      weighted bootstrap
+├── fourloopI233/      four leading singularities, period-resolved bootstrap
+├── fourloopI246/      weighted bootstrap
 ├── fourloopI173/      multi-LS (odd + even ansatz)
 └── fourloopI6t/       4-loop single integrand
 ```
