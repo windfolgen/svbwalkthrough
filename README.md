@@ -18,7 +18,9 @@ Of the 32 diagram entries in the planar correlator, 10 have bootstrap results, 1
 
 The I144 and I233 run directories contain the Wolfram and Maple expressions, the coefficient reconstruction and two numerical comparisons per integral.
 
-I214 remains open. In the 1,239-column symbol ansatz, the coefficient of Y²³ in the leading 4132 cubic logarithm fixes one further combination. The coefficients at Y²⁴, Y²⁵ and Y²⁶ then agree with independent graph values. The corrected system has rank 754 through graph order 12. At order 13 the fourth logarithm in frame 1234 gives a contradiction (coefficient rank 774, augmented rank 775 for both frames together). Allowing 1−u in entries 5–8 of the three rational numerators while keeping both algebraic letters in entries 3–8 gives ranks 843 and 844 on 1,344 columns at the same order. Reversing the external labels reproduces the cubic and quartic graph coefficients through order 14.
+I214 remains open. A weight-eight symbol with the three rational prefactors passes 2,019 equations with the coefficient of the 1/y prefactor set to zero. Its rational letters are u, v, z/zbar, (1−z)/(1−zbar) and 1−u, with 1−u allowed in every entry after the first. The checks include unequal powers through graph order 14 in frames 1234 and 1324. The fitted conditions also predict the withheld coefficient of u Y²⁷ log³(u) in frame 4132, which agrees exactly with independent angular integration. The boundary data therefore admit a symbol without algebraic letters. Its single-valued completion and period terms remain open.
+
+Earlier trials with the algebraic letters restricted 1−u to the last three or four rational entries. Their coefficient and augmented ranks at graph order 13 are 774 and 775 on 1,239 columns, and 843 and 844 on 1,344 columns, respectively.
 
 ---
 
