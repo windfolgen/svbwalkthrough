@@ -1,0 +1,44 @@
+{
+ "omit_1234": {
+  "training_rows": 6890,
+  "omitted_rows": 2572,
+  "rank_mod_1000003": 827,
+  "exact_function_dimension_upper_bound": 832,
+  "omitted_rows_predicted_by_unique_fit": false
+ },
+ "omit_1324": {
+  "training_rows": 6339,
+  "omitted_rows": 3123,
+  "rank_mod_1000003": 832,
+  "exact_function_dimension_upper_bound": 832,
+  "omitted_rows_predicted_by_unique_fit": true
+ },
+ "omit_4132": {
+  "training_rows": 5695,
+  "omitted_rows": 3767,
+  "rank_mod_1000003": 818,
+  "exact_function_dimension_upper_bound": 832,
+  "omitted_rows_predicted_by_unique_fit": false
+ },
+ "rectangle_4": {
+  "training_rows": 4035,
+  "omitted_rows": 5427,
+  "rank_mod_1000003": 832,
+  "exact_function_dimension_upper_bound": 832,
+  "omitted_rows_predicted_by_unique_fit": true
+ },
+ "rectangle_5": {
+  "training_rows": 5821,
+  "omitted_rows": 3641,
+  "rank_mod_1000003": 832,
+  "exact_function_dimension_upper_bound": 832,
+  "omitted_rows_predicted_by_unique_fit": true
+ },
+ "rectangle_6": {
+  "training_rows": 7797,
+  "omitted_rows": 1665,
+  "rank_mod_1000003": 832,
+  "exact_function_dimension_upper_bound": 832,
+  "omitted_rows_predicted_by_unique_fit": true
+ }
+}

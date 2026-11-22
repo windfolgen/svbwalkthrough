@@ -1,0 +1,22 @@
+{
+ "frame": "1234",
+ "order": 9,
+ "native": 4,
+ "counts": {
+  "1": {
+   "tested": 360,
+   "fresh_angular_rows": {
+    "rational": 72,
+    "period": 4
+   }
+  },
+  "-1": {
+   "tested": 399,
+   "fresh_angular_rows": {
+    "rational": 76,
+    "period": 4
+   }
+  }
+ },
+ "discrepancies": []
+}

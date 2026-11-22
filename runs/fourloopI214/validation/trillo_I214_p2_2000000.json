@@ -1,0 +1,29 @@
+{
+ "index": 214,
+ "u": 0.6,
+ "v": 0.8,
+ "definition": "original basis graph including external distances",
+ "samples": 2000000,
+ "seed": 21402,
+ "threads": 2,
+ "external_factor": 0.8,
+ "gamma_factor": 24,
+ "value": 73.169531554587,
+ "standard_error": 0.019259823070707997,
+ "imaginary": 0.0,
+ "raw": {
+  "prefactor": "gamma(5+4*eps)",
+  "epsilon_terms": [
+   [
+    [
+     3.048730481441125,
+     0.0
+    ],
+    [
+     0.0008024926279461666,
+     0.0
+    ]
+   ]
+  ]
+ }
+}

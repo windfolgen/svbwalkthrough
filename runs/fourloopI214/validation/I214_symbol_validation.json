@@ -1,0 +1,30 @@
+{
+  "uncompressed_sha256": "f98d21e69a6c13c404e9d6c74e4fd1f06b55287c14f95001daf7e972a94a746f",
+  "common_parent_basis": "marks_Delta_d_root1_v_d5to7",
+  "identical_exact_lifts": {
+    "2_native": {
+      "columns": 643,
+      "rows": 2899
+    },
+    "2_diagonal": {
+      "columns": 643,
+      "rows": 3545
+    },
+    "3_native": {
+      "columns": 751,
+      "rows": 3178
+    },
+    "3_diagonal": {
+      "columns": 751,
+      "rows": 3824
+    },
+    "4_native": {
+      "columns": 979,
+      "rows": 3545
+    },
+    "4_diagonal": {
+      "columns": 979,
+      "rows": 4191
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "symbol_columns": 643,
+  "symbol_equations": 2899,
+  "verified_symbol_tensors": 4,
+  "period_columns": 1249,
+  "period_rank": 832,
+  "nonzero_period_coefficients": 173,
+  "fitted_orderings": [
+    "1234",
+    "4132"
+  ],
+  "fitted_period_equations": 6339,
+  "withheld_ordering": "1324",
+  "withheld_period_equations": 3123,
+  "exact_residuals_nonzero": 0
+}

@@ -1,0 +1,11 @@
+{
+ "all_rows_agree": {
+  "1234": 2763,
+  "1324": 3123,
+  "4132": 3839
+ },
+ "columns": 1483,
+ "rank_at_least": 1066,
+ "dimension_at_most": 1066,
+ "unique_in_expanded_space": true
+}

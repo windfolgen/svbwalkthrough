@@ -1,0 +1,59 @@
+{
+ "frozen_sha256": "912c63f595a257b848b381d26393b5ac7ce63ae9dabfc135272633b18009117b",
+ "points": [
+  {
+   "u": 0.3,
+   "v": 0.4,
+   "value": 77.46214058735646,
+   "components": {
+    "rational_lift": 242.60962325504883,
+    "square_root_lift": -10.423307356097208,
+    "zeta7": 21.871237706711796,
+    "z3": -172.76194789986283,
+    "z5": -3.833465118444124
+   },
+   "quadrature_order_difference": 1.0414246220946666e-05,
+   "independent_checks": [
+    {
+     "method": "Trillo",
+     "estimate": 77.45270907719181,
+     "standard_error": 0.0655476044116108,
+     "difference_in_standard_errors": 0.14388794600974272
+    },
+    {
+     "method": "position-space triangles",
+     "estimate": 77.39026269391903,
+     "standard_error": 0.05509462971631115,
+     "difference_in_standard_errors": 1.3046261279463938
+    }
+   ]
+  },
+  {
+   "u": 0.6,
+   "v": 0.8,
+   "value": 73.16851830557201,
+   "components": {
+    "rational_lift": 1021.2706317200282,
+    "square_root_lift": -8.31510306305246,
+    "zeta7": 29.012237651510766,
+    "z3": -970.5913396348196,
+    "z5": 1.7920916319051514
+   },
+   "quadrature_order_difference": 5.076298593742479e-05,
+   "independent_checks": [
+    {
+     "method": "Trillo",
+     "estimate": 73.169531554587,
+     "standard_error": 0.019259823070707997,
+     "difference_in_standard_errors": -0.052609466414548556
+    },
+    {
+     "method": "position-space triangles",
+     "estimate": 73.1854120679543,
+     "standard_error": 0.027999098973477438,
+     "difference_in_standard_errors": -0.6033680726047088
+    }
+   ]
+  }
+ ]
+}
