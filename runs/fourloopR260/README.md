@@ -6,17 +6,17 @@ $$
 R_{260}(u,v)=uI_{260}(u,v)-I_{168}(u/v,1/v)-vI_{168}(v,u).
 $$
 
-The Gram reduction isolates a graph $M$. Write $d=z-\bar z$, $C$ for simultaneous inversion of the two endpoints, and $P_v$ for the numerator multiplying $v/[d(v-1)]$ in $I_{214}$. The tested ansatz is
+The Gram reduction isolates a graph $M$. Write $d=z-\bar z$, $C$ for simultaneous inversion of the two endpoints, and $P_v$ for the function multiplying $v/[d(v-1)]$ in $I_{214}$. The tested ansatz is
 
 $$
 M=p_3 F+p_4 C(F)+p_5 G+p_6 C(G),\qquad G=2P_v,
 $$
 
-with $(p_3,p_4,p_5,p_6)=(v/[d(u-1)],uv/[d(u-1)],v/[d(v-1)],uv/[d(u-v)])$. The original reconstruction inserts the known $I_{214}$ numerator in the last two sectors and fits $F$. An independent reconstruction allows both $F$ and $G$ to vary. In the native chart $F$ is the exchange-odd projection of a seed containing 1,162 weight-eight words, 166 weight-five words multiplied by $\zeta_3$, and the term $-848\zeta_3^2 I[z,0,1,0]$. [Maple formula for the remainder](../../anc/fourloopR260.mpl) · [Original integral](../../anc/fourloopI260.mpl)
+with $(p_3,p_4,p_5,p_6)=(v/[d(u-1)],uv/[d(u-1)],v/[d(v-1)],uv/[d(u-v)])$. The original reconstruction inserts the known $I_{214}$ function in the last two sectors and fits $F$. An independent reconstruction allows both $F$ and $G$ to vary. In the native chart $F$ is the exchange-odd projection of a seed containing 1,162 weight-eight words, 166 weight-five words multiplied by $\zeta_3$, and the term $-848\zeta_3^2 I[z,0,1,0]$. [Maple formula for the remainder](../../anc/fourloopR260.mpl) · [Original integral](../../anc/fourloopI260.mpl)
 
 The four prefactors exhaust every clean start containing eight exterior propagators. This includes all clean starts on twelve or more distinct original propagators. A clean start means that the selected divisors meet transversely at a generic point of the component and that no further polar divisor contains it. The remaining contour classes include starts with only seven exterior propagators and nontransverse intersections. [Cut proof and its scope](../../docs/svMPL-four-loop-bootstrap.pdf)
 
-Within two independent copies of the 1,648-dimensional period-free svMPL space, the graph and regularity equations have full joint rank. At the final stage the fitted numerators match all 290 available graph values modulo 1,000,003 and all 139 available modulo 1,000,033. The selected graph minor is nonsingular at both primes. Higher-weight inputs held fixed, there is also no homogeneous deformation in any of the three explicit-period spaces tested. Global completeness of the prefactors and words, and a rational verification of every inhomogeneous high-spin value, remain open. [Independent two-numerator checks](independent/README.md)
+Within two independent copies of the 1,648-dimensional period-free svMPL space, the graph and regularity equations have full joint rank. At the final stage the fitted functions match all 290 available graph values modulo 1,000,003 and all 139 available modulo 1,000,033. The selected graph minor is nonsingular at both primes. Higher-weight inputs held fixed, there is also no homogeneous deformation in any of the three explicit-period spaces tested. Global completeness of the prefactors and words, and a rational verification of every inhomogeneous high-spin value, remain open. [Independent fit of both functions](independent/README.md)
 
 On a common rational cut, the reduced graph $M$ has residue $p_5/24$ and $I_{214}$ has residue $p_5/48$. [Shared-contour calculation](independent/README.md#shared-rational-cut)
 

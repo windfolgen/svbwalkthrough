@@ -1,0 +1,52 @@
+{
+  "I110": [
+    {
+      "ordinary_terms": 3505,
+      "radial_words_with_period": 6096,
+      "residue_prefixes": 10181,
+      "all_residuals_zero": true
+    }
+  ],
+  "I113": [
+    {
+      "ordinary_terms": 4374,
+      "radial_words_with_period": 4678,
+      "residue_prefixes": 8093,
+      "all_residuals_zero": true
+    },
+    {
+      "ordinary_terms": 1044,
+      "radial_words_with_period": 2204,
+      "residue_prefixes": 3789,
+      "all_residuals_zero": true
+    }
+  ],
+  "I142": [
+    {
+      "ordinary_terms": 2753,
+      "radial_words_with_period": 3700,
+      "residue_prefixes": 6287,
+      "all_residuals_zero": true
+    },
+    {
+      "ordinary_terms": 1044,
+      "radial_words_with_period": 2204,
+      "residue_prefixes": 3789,
+      "all_residuals_zero": true
+    }
+  ],
+  "J112": [
+    {
+      "ordinary_terms": 4865,
+      "radial_words_with_period": 7494,
+      "residue_prefixes": 12303,
+      "all_residuals_zero": true
+    },
+    {
+      "ordinary_terms": 3505,
+      "radial_words_with_period": 6096,
+      "residue_prefixes": 10181,
+      "all_residuals_zero": true
+    }
+  ]
+}

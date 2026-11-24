@@ -25,7 +25,7 @@ The matrix columns follow the pivot order of the released weight-eight change of
 
 The selected residual minor has determinants 174,796 and 305,403 modulo 1,000,003 and 1,000,033. Of its 163 rows, all have an independent graph right-hand side at the first prime and 84 do at the second. Full rank gives uniqueness of a rational solution within the stated space. The fitted pair passes all measured modular comparisons. Identifying the full inhomogeneous rational solution would require exact graph comparisons or sufficient modular information and a height bound on the residuals.
 
-The six explicit-period minors test the $\zeta_3$, $\zeta_5$ and $\zeta_3^2$ graded systems with higher-weight inputs fixed. The joint ranks are 618, 138 and 18. Each file stores the source row indices, the independent words per numerator, the coefficient minor and the graph-minus-reference residual. An alternative 163 finite and single-log coefficients through degree 16 form a reserved test set. Their tabulated values are predictions. [Reserved boundary coefficients](missing_moments.json)
+The six explicit-period minors test the $\zeta_3$, $\zeta_5$ and $\zeta_3^2$ graded systems with higher-weight inputs fixed. The joint ranks are 618, 138 and 18. Each file stores the source row indices, the independent words per function, the coefficient minor and the graph-minus-reference residual. An alternative 163 finite and single-log coefficients through degree 16 form a reserved test set. Their tabulated values are predictions. [Reserved boundary coefficients](missing_moments.json)
 
 ## Exact exterior cuts
 
@@ -39,7 +39,7 @@ Use `--orbit 0` to check one pair of complete graph decompositions. The four-pre
 
 ## Shared rational cut
 
-On exterior orbit 41, cut the propagators joining loops 5, 6, 7 and 8 to external sets $\{1,2,3\}$, $\{2,4\}$, $\{3,4\}$ and $\{4\}$, respectively. The verifier takes the same seven ordered residues of each graph over $\mathbb{Q}(z,\bar z)$. Put $p_5=v/[(z-\bar z)(v-1)]$. On this oriented contour, $M$ has residue $p_5/24$, $I_{214}$ has residue $p_5/48$, and $CI_{214}$ and $Y_0$ vanish. The original $uI_{260}$ and both crossed $I_{168}$ subtraction terms also vanish here. Thus this contour measures a factor of two for the reduced graph. The independent fit and the degree-two OPE equations test its extension to the svMPL numerators. [Ordered residues and graph seeds](check_shared_cut.py) · [Exact OPE normalization](../differential/README.md#an-exact-low-order-test-of-the-factor-of-two)
+On exterior orbit 41, cut the propagators joining loops 5, 6, 7 and 8 to external sets $\{1,2,3\}$, $\{2,4\}$, $\{3,4\}$ and $\{4\}$, respectively. The verifier takes the same seven ordered residues of each graph over $\mathbb{Q}(z,\bar z)$. Put $p_5=v/[(z-\bar z)(v-1)]$. On this oriented contour, $M$ has residue $p_5/24$, $I_{214}$ has residue $p_5/48$, and $CI_{214}$ and $Y_0$ vanish. The original $uI_{260}$ and both crossed $I_{168}$ subtraction terms also vanish here. Thus this contour measures a factor of two for the reduced graph. The independent fit and the degree-two OPE equations test its extension to the svMPL functions. [Ordered residues and graph seeds](check_shared_cut.py) · [Exact OPE normalization](../differential/README.md#an-exact-low-order-test-of-the-factor-of-two)
 
 ~~~sh
 python runs/fourloopR260/independent/check_shared_cut.py

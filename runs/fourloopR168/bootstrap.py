@@ -1,4 +1,4 @@
-"""Fit the four svMPL numerators to the symmetry-reduced OPE equations at two primes."""
+"""Fit the four svMPL functions to the symmetry-reduced OPE equations at two primes."""
 
 import json
 from fractions import Fraction
@@ -20,12 +20,12 @@ PERIODS = {
 }
 
 
-def solve(prime):
-    with np.load(HERE / f"graph_{prime}.npz", allow_pickle=False) as data:
+def solve(prime, directory=HERE, shape=(591, 105), sectors=4):
+    with np.load(directory / f"graph_{prime}.npz", allow_pickle=False) as data:
         graph = data["graph"].astype(np.int64)
         target = data["rhs"].reshape(-1)
         rows, unknowns = graph.shape
-        if (rows, unknowns) != (591, 105):
+        if (rows, unknowns) != shape:
             raise ValueError("Incomplete graph system")
         augmented = np.column_stack((graph, target))
         reduced, rank = nmod_mat(augmented.tolist(), prime).rref()
@@ -34,16 +34,16 @@ def solve(prime):
         fitted = np.array([int(reduced[j, unknowns]) for j in range(rank)])
         if np.any(graph @ fitted % prime != target):
             raise ValueError(f"Graph residual modulo {prime}")
-        sectors = []
+        fitted_sectors = []
         start = 0
-        for j in range(1, 5):
+        for j in range(1, sectors + 1):
             basis = data[f"sector_{j}"].astype(np.int64)
             end = start + basis.shape[1]
-            sectors.append(basis @ fitted[start:end] % prime)
+            fitted_sectors.append(basis @ fitted[start:end] % prime)
             start = end
         if start != unknowns:
             raise ValueError("Incomplete symmetry basis")
-    return sectors
+    return fitted_sectors
 
 
 def reconstruct(a, b):
@@ -80,18 +80,21 @@ def maple_numerator(support, coefficients):
     return "+".join(groups)
 
 
-if __name__ == "__main__":
-    support = json.loads((HERE / "support.json").read_text())
-    first, second = map(solve, PRIMES)
-    ancillary = (HERE.parents[1] / "anc/fourloopR168.mpl").read_text()
-    for j, (sector, left, right) in enumerate(
-        zip(support, first, second, strict=True), 1
-    ):
+def verify_fit(directory, shape, ancillary_file, maple_name):
+    support = json.loads((directory / "support.json").read_text())
+    first, second = [solve(p, directory, shape, len(support)) for p in PRIMES]
+    ancillary = ancillary_file.read_text()
+    word_count = 0
+    for j, (sector, left, right) in enumerate(zip(support, first, second, strict=True), 1):
         fitted = (reconstruct(int(a), int(b)) for a, b in zip(left, right, strict=True))
         result = maple_numerator(sector, fitted)
-        published = ancillary.split(f"R168SVNumerator[{j}] :=", 1)[1].split(":", 1)[0]
+        published = ancillary.split(f"{maple_name}SVNumerator[{j}] :=", 1)[1].split(":", 1)[0]
         if result != "".join(published.split()):
-            raise ValueError(f"Sector {j} differs from the ancillary result")
-    print(
-        "Rank 105 for 591 OPE equations at each prime. All 3,032 rational coefficients agree with anc/fourloopR168.mpl."
-    )
+            raise ValueError(f"Sector {j} differs from {ancillary_file.name}")
+        word_count += len(left)
+    print(f"{directory.name}: rank {shape[1]} for {shape[0]} OPE equations at both primes. "
+          f"All {word_count} rational coefficients agree with {ancillary_file.name}.")
+
+
+if __name__ == "__main__":
+    verify_fit(HERE, (591, 105), HERE.parents[1] / "anc/fourloopR168.mpl", "R168")

@@ -1,0 +1,82 @@
+\subsection{From soft regions to OPE boundary equations}\label{app:boundarymoments}
+For a fixed external ordering put \(U=u,\ Y=1-v,\ L=\log U\). A boundary value
+\(B_{mNk}=[U^mY^NL^k]I\) is a coefficient of the graph in this chart.
+A crossed boundary uses the same definition after relabeling the external
+points and transforming the graph normalization. For a trial function
+\(\sum_j p_j\sum_\alpha c_{j\alpha} f_\alpha\), one graph coefficient supplies one equation,
+\[
+ \sum_{j,\alpha}c_{j\alpha}[U^mY^NL^k]\bigl(p_j f_\alpha\bigr)=B_{mNk}.
+\]
+Expand the complete product. A pole in \(p_j\) can bring a higher power of a
+word into the requested order. In the radial chart \(z=th,\ \bar z=t/h\) one
+has \(U=t^2,\ Y=t(h+h^{-1})-t^2\). Thus a coefficient of \(t^nL^k\) at
+fixed angle is a specified linear combination of the \(B_{mNk}\). This is how
+the graph moments and the svMPL functions enter the same linear system.
+
+\paragraph{Calculating the graph side.}
+Fix \(x_1=0,\ x_3=e,\ e^2=1,\ x_4=\infty\), and take \(x_2=q\) near zero,
+with \(q^2=U\) and \(2e\cdot q=U+Y\). In \(D=4-2\epsilon\) dimensions, assign
+each integration point to the soft region (distance of order \(|q|\) from
+zero) or the hard region (distance of order one). Expand each mixed propagator
+as
+\[
+ \frac1{(x-\xi)^2}=\frac1{x^2}
+ \sum_{\ell\ge0}\left(\frac{2x\cdot\xi-\xi^2}{x^2}\right)^\ell ,
+ \qquad x\ {\rm hard},\quad \xi\ {\rm soft}.
+\]
+Keep soft and hard subgraph propagators exact. Integrate the resulting tensors in
+each subgraph, retain the external normalization, and sum regions before taking
+\(\epsilon\to0\). With \(s\) soft loops the scale factor is \(U^{-s\epsilon}\)
+after extracting the integer power of \(U\). Its expansion generates the OPE
+logarithms. For example, if \(a_s\) is the total quartic-pole coefficient at
+fixed \(m,N\), finiteness gives \(\sum_s s^j a_s=0\) for \(j=0,1,2,3\).
+Consequently \((a_0,\ldots,a_4)=A(1,-4,6,-4,1)\) and
+\(B_{mN4}=\sum_s s^4a_s/4!=a_2/6\). Lower logarithms require the appropriate
+subleading Laurent coefficients.
+
+\needspace{9\baselineskip}
+\paragraph{Two held-out moments of \(I_{212}\).}
+Here \(C_N=[U^0Y^NL^2]I_{212}\) in its primary OPE ordering.
+The fitted primary moments end at \(N=19\). In the two-soft calculation
+relabel the external vertices of basis graph 212 by \((2,4,1,3)\).
+Vertices \(6,8\) are soft and \(5,7\) are hard. Project onto the leading
+traceless part by taking \(q^2=0\) in the Taylor tensors, after the scale
+logarithm has been extracted. Invert the hard coordinates, denoting them
+by \(x,y\), and put \(X=2q\cdot x,\ Z=2q\cdot y\).
+Write \(a=\alpha,\ b=\alpha+(1-\alpha)\tau\). The two-soft residue acts on
+angular monomials as
+\[
+ S_{rs}=\frac12\int_0^1\!\mathrm d\alpha\int_0^1\!\mathrm d\tau\,a^r b^s
+       =\frac1{2(s+1)}\sum_{\ell=0}^{s}\frac1{r+\ell+1}.
+\]
+The mixed denominators \(s_{25},s_{58},s_{67}\) give the three geometric
+series in the following expression. The graph numerator \(s_{27}s_{56}\)
+supplies the polynomial factors in
+\[
+ K(X,Z;a,b)=\frac{(1-Z)(1-aX)}{(1-X)(1-bX)(1-aZ)} .
+\]
+For \(i+j=N\), replace \(a^r b^s\) in \([X^iZ^j]K\) by \(S_{rs}\), and denote
+the result by \(\omega_{ij}\). The remaining integral \(H_{ij}\) is the finite
+hard two-loop propagator moment with tensor \(X^iZ^j\), normalized to
+\(2q\cdot e=1\). With \(A=x^2,B=(x-e)^2,C=y^2,D'=(y-e)^2,E=(x-y)^2\),
+its denominators are \(ABCD'E\). Integrating the total derivative with
+vector \(x-y\) in \(x\) gives
+\[
+ (D-4+i)H_{ij}-iH_{i-1,j+1}
+ =\int\frac{\mathrm d^Dx\,\mathrm d^Dy}{\pi^D}
+ \frac{X^i Z^j}{ABCD'E}\left(\frac{E-C}{A}+\frac{E-D'}{B}\right).
+\]
+The right side reduces to products of one-loop bubbles. At \(i=0\) keep the
+order-\(\epsilon\) term since \(D-4=-2\epsilon\). Then step up in \(i\) at
+fixed \(i+j\). The sum \(C_N=\sum_{i+j=N}\omega_{ij}H_{ij}\) gives
+\begin{align*}
+ C_{22}&=\frac{7436781516927153228656542409054377847}{58972189577941010378035403517542400000}
+       +\frac{1332950097}{62941935056}\,\zeta(3),\\
+ C_{23}&=\frac{1319341114152286490801205455383238191}{10701947447036553868225706498457600000}
+       +\frac{1347822955}{68534129664}\,\zeta(3).
+\end{align*}
+The bootstrap comparison expands the frozen HPL expression at \(Y=0\) with
+kernels \(\mathrm dY/Y,\mathrm dY/(Y-1)\). Its rational and \(\zeta(3)\)
+parts agree separately at both orders. The same graph sum agrees through all
+orders \(0\le N\le23\). The \href{https://github.com/windfolgen/svbwalkthrough/tree/main/runs/fourloopI212}{boundary calculation}
+contains the two independent evaluations.

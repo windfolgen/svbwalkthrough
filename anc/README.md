@@ -53,7 +53,9 @@ For individual files, `Get` returns an expression in `z,zz` for the svMPL result
 | Finite subtraction $J_{112}=I_{112}-I_{26}$ | [J112.m](fourloopJ112.m) · [J112.txt](fourloopJ112.txt) |
 | Auxiliaries for the $I_{176}$ and $I_{181}$ assemblies | [I6t.m](fourloopI6t.m) · [I6t.txt](fourloopI6t.txt) · [I117.m](fourloopI117.m) · [I117.txt](fourloopI117.txt) · [I41.m](fourloopI41.m) · [I41.txt](fourloopI41.txt) · [I42.m](fourloopI42.m) · [I42.txt](fourloopI42.txt) |
 | Auxiliary $I_{120}$ | [I120.m](fourloopI120.m) · [I120.txt](fourloopI120.txt) |
-| Gram numerators, ladder products and subtractions | [GramAuxiliaries.m](fourloopGramAuxiliaries.m) · [GramAuxiliaries.txt](fourloopGramAuxiliaries.txt) |
+| Gram functions, ladder products and subtractions | [GramAuxiliaries.m](fourloopGramAuxiliaries.m) · [GramAuxiliaries.txt](fourloopGramAuxiliaries.txt) |
+
+In the Maple files, names such as `R168SVNumerator[j]` denote the fitted svMPL function multiplying the corresponding leading-singularity prefactor. The four finite auxiliary results have independent graph fits on the stated svMPL supports. [Auxiliary roles and reproducible fits](../runs/fourloopAuxiliaries/README.md)
 
 The Gram file returns an association of functions. For example, `gram = Get["anc/fourloopGramAuxiliaries.m"]` gives `gram["F"][q,b]` and `gram["R260FromI214"][q,b,j,jc]`, where `j,jc` are the independently continued $I_{214}(q,b)$ and $I_{214}(1/b,1/q)$. The [Wolfram regression check](../tests/bootstrap/planar_anc.wls) loads both formats, checks every direct-archive entry in the planar index and tests the scalar and original-basis assemblies.
 
@@ -64,11 +66,11 @@ The Gram file returns an association of functions. For example, `gram = Get["anc
 | $I_{26}$ | `I26Euclidean(z,zz)` | [Scalar onefold and its 54-term weight-seven kernel](fourloopI26.mpl) |
 | $R_{168}$ | `R168SV` | [Four rational prefactors with period-completed svMPL numerators](fourloopR168.mpl) |
 | $I_{168}$ | `I168Euclidean(z,zz)` | [Original basis integral](fourloopI168.mpl) |
-| $R_{260}$ | `R260SVEuclidean(z,zz)` | [Four-cut bootstrap, including the Gram numerator and its periods](fourloopR260.mpl) |
+| $R_{260}$ | `R260SVEuclidean(z,zz)` | [Four-cut bootstrap, including the fitted function and its periods](fourloopR260.mpl) |
 | $I_{260}$ | `I260Euclidean(z,zz)` | [Original basis integral assembled from the bootstrapped remainder](fourloopI260.mpl) |
 | $I_{110},I_{113},I_{142}$ | `I110SV`, `I113SV`, `I142SV` | [I110](fourloopI110.mpl) · [I113](fourloopI113.mpl) · [I142](fourloopI142.mpl) |
 | $J_{112}=I_{112}-I_{26}$, $I_{112}$ | `J112SV`, `I112Euclidean(z,zz)` | [Finite subtraction](fourloopJ112.mpl) · [Original basis integral](fourloopI112.mpl) |
-| $F,M,G,H,K,Y_0,T_0,C_a,L_b,L_c,I_{38}$ | `R260GramF`, `R260GramM`, `R260GramG`, `R260GramH`, `R260GramK`, `R260GramY0`, `R260GramT0`, `R260GramCa`, `R260Lb`, `R260Lc`, `I38Euclidean` | [Four-cut numerators](fourloopR260.mpl) · [Gram auxiliaries and ladder products](fourloopGramAuxiliaries.mpl) |
+| $F,M,G,H,K,Y_0,T_0,C_a,L_b,L_c,I_{38}$ | `R260GramF`, `R260GramM`, `R260GramG`, `R260GramH`, `R260GramK`, `R260GramY0`, `R260GramT0`, `R260GramCa`, `R260Lb`, `R260Lc`, `I38Euclidean` | [Four-cut functions](fourloopR260.mpl) · [Gram auxiliaries and ladder products](fourloopGramAuxiliaries.mpl) |
 
 The worked scalar example rebuilds the elliptic kernel from its graph boundaries. The remainder runs provide coefficient fits, held-out graph tests and numerical comparisons for the formulas above. [Worked $I_{26}$ bootstrap](../runs/fourloopI26/README.md) · [$R_{168}$ benchmark](../runs/fourloopR168/README.md) · [$R_{260}$ benchmark](../runs/fourloopR260/README.md)
 
@@ -79,7 +81,7 @@ I_{168}(u,v)=2vI_{26}(u,v)+R_{168}(u,v),\qquad
 I_{260}(u,v)=\frac{R_{260}(u,v)+I_{168}(u/v,1/v)+v I_{168}(v,u)}{u}.
 $$
 
-The signed $R_{260}$ graph has nine independent leading singularities on the 62 exterior cut classes examined. The reduction of the Gram graph $M$ assumes the four measured cuts are complete, $G=2P_v$ globally for the $I_{214}$ numerator $P_v$, and the specified svMPL word and period spaces. Both $R_{260}$ and $I_{260}$ inherit those assumptions. The report gives the graph integrands, the ansätze, the exact comparisons with the earlier bootstrap and the Euclidean tests against independent graph integrals, including three points for the signed remainder and the original $I_{260}$. [Standalone report with embedded formulas and verification data](../docs/svMPL-four-loop-bootstrap.pdf)
+The signed $R_{260}$ graph has nine independent leading singularities on the 62 exterior cut classes examined. The reduction of the Gram graph $M$ assumes the four measured cuts are complete, $G=2P_v$ globally for the $I_{214}$ function $P_v$, and the specified svMPL word and period spaces. Both $R_{260}$ and $I_{260}$ inherit those assumptions. The report gives the graph integrands, the ansätze, the exact comparisons with the earlier bootstrap and the Euclidean tests against independent graph integrals, including three points for the signed remainder and the original $I_{260}$. [Standalone report with embedded formulas and verification data](../docs/svMPL-four-loop-bootstrap.pdf)
 
 ### Maple usage
 

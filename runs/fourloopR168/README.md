@@ -1,8 +1,8 @@
 # The finite remainder $R_{168}$
 
-The common elliptic integral subtracts as $R_{168}=I_{168}-2vI_{26}$. Put $d=z-\bar z$. Its four svMPL numerators multiply $v/d^2$, $1/d$, and the two prefactors $v[(u-v)^{-1}\pm(1-v)^{-1}]/d$, in that order. Their exchange parities are $(+,-,-,-)$ and their inversion parities are $(+,-,-,+)$. [Ancillary formula](../../anc/fourloopR168.mpl) · [Integrands, ansatz and graph tests](../../docs/svMPL-four-loop-bootstrap.pdf)
+The common elliptic integral subtracts as $R_{168}=I_{168}-2vI_{26}$. Put $d=z-\bar z$. Its four svMPL functions multiply $v/d^2$, $1/d$, and the two prefactors $v[(u-v)^{-1}\pm(1-v)^{-1}]/d$, in that order. Their exchange parities are $(+,-,-,-)$ and their inversion parities are $(+,-,-,+)$. [Ancillary formula](../../anc/fourloopR168.mpl) · [Integrands, ansatz and graph tests](../../docs/svMPL-four-loop-bootstrap.pdf)
 
-The earlier two-variable reconstruction supplies the word support. Freeing all 3,032 coefficients on that support and imposing the function symmetries leaves 34, 2, 38 and 31 directions in the four sectors. At each of the two primes the 591 OPE equations have rank 105. Rational reconstruction reproduces all four ancillary numerators, including the period terms.
+The earlier two-variable reconstruction supplies the word support. Freeing all 3,032 coefficients on that support and imposing the function symmetries leaves 34, 2, 38 and 31 directions in the four sectors. At each of the two primes the 591 OPE equations have rank 105. Rational reconstruction reproduces all four ancillary functions, including the period terms.
 
 From the repository root, use Python 3.10 or later with NumPy, SymPy and python-flint.
 
