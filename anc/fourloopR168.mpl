@@ -1,4 +1,5 @@
 # HyperlogProcedures 0.8, with z and zz unassigned.
+# R168 = I168 - 2*v*I26. The four-numerator fit is in runs/fourloopR168/.
 # Take the limit of the sum at removable prefactor poles.
 R168SVNumerator[1] := (1)*((-4)*I[z,0,0,0,0,1,0,0,1,0]+
 (8)*I[z,0,0,0,0,1,0,1,0,0]+

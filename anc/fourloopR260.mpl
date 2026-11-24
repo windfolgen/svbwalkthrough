@@ -1,5 +1,7 @@
 # Full four-cut candidate. Read fourloopR168.mpl and fourloopI214.mpl first.
-# The fifth numerator is identified with 2*I214Pv on the stated svMPL and period supports.
+# On the stated supports, G multiplying p5 is set to 2*I214Pv.
+# The global four-cut representation and this identification are assumptions.
+# Coefficient fits, withheld graph harmonics and Euclidean tests: runs/fourloopR260/.
 R260GramWeightEightSeed := (2)*I[z,0,0,0,0,1,0,0,0,0] +
   (2)*I[z,0,0,0,0,1,0,0,1,0] +
   (-6)*I[z,0,0,0,0,1,0,1,0,0] +

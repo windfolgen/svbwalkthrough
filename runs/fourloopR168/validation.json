@@ -1,0 +1,52 @@
+{
+  "Euclidean_points": [
+    {
+      "u": 0.3,
+      "v": 0.4,
+      "bootstrap": 37.22504594054444,
+      "graph": 37.1957622303501,
+      "graph_error": 0.03112938026180055,
+      "standard_errors": 0.9407097072946403,
+      "tolerance_shift": 3.587975296416361e-10,
+      "inversion_residual": 1.2435865438489464e-09
+    },
+    {
+      "u": 0.6,
+      "v": 0.8,
+      "bootstrap": 21.91166893057894,
+      "graph": 21.907540423206605,
+      "graph_error": 0.011668267402746178,
+      "standard_errors": 0.35382351379470184,
+      "tolerance_shift": 1.6444405925135866e-10,
+      "inversion_residual": 1.1840484821865795e-09
+    }
+  ],
+  "scrambles": 20,
+  "samples_per_scramble": 524288,
+  "function_checks_by_sector": [
+    {
+      "ordinary_terms": 4804,
+      "radial_words_with_period": 3390,
+      "residue_prefixes": 5749,
+      "all_residuals_zero": true
+    },
+    {
+      "ordinary_terms": 3505,
+      "radial_words_with_period": 6096,
+      "residue_prefixes": 10181,
+      "all_residuals_zero": true
+    },
+    {
+      "ordinary_terms": 6490,
+      "radial_words_with_period": 8866,
+      "residue_prefixes": 14861,
+      "all_residuals_zero": true
+    },
+    {
+      "ordinary_terms": 7017,
+      "radial_words_with_period": 9694,
+      "residue_prefixes": 16057,
+      "all_residuals_zero": true
+    }
+  ]
+}

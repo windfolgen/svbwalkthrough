@@ -15,6 +15,8 @@ The indices refer to the four-loop position-space graphs in `4Loop_int_basis.m`.
 | $J_{112}=I_{112}-I_{26}$, $I_{112}$ | `J112SV`, `I112Euclidean(z,zz)` | [Finite subtraction](fourloopJ112.mpl) · [Original basis integral](fourloopI112.mpl) |
 | $F,M,G,H,K,Y_0,T_0,C_a,L_b,L_c,I_{38}$ | `R260GramF`, `R260GramM`, `R260GramG`, `R260GramH`, `R260GramK`, `R260GramY0`, `R260GramT0`, `R260GramCa`, `R260Lb`, `R260Lc`, `I38Euclidean` | [Four-cut numerators](fourloopR260.mpl) · [Gram auxiliaries and ladder products](fourloopGramAuxiliaries.mpl) |
 
+The worked scalar example rebuilds the elliptic kernel from its graph boundaries. The remainder runs provide coefficient fits, held-out graph tests and numerical comparisons for the formulas above. [Worked $I_{26}$ bootstrap](../runs/fourloopI26/README.md) · [$R_{168}$ benchmark](../runs/fourloopR168/README.md) · [$R_{260}$ benchmark](../runs/fourloopR260/README.md)
+
 The two assembly identities in the original basis are
 
 $$
@@ -22,7 +24,7 @@ I_{168}(u,v)=2vI_{26}(u,v)+R_{168}(u,v),\qquad
 I_{260}(u,v)=\frac{R_{260}(u,v)+I_{168}(u/v,1/v)+v I_{168}(v,u)}{u}.
 $$
 
-The signed $R_{260}$ graph has nine independent leading singularities on the 62 exterior cut classes examined. The reduction of the Gram graph $M$ assumes the four measured cuts are complete, $G=2P_v$ globally for the $I_{214}$ numerator $P_v$, and the specified svMPL word and period spaces. Both $R_{260}$ and $I_{260}$ inherit those assumptions. The report gives the graph integrands, the ansätze, the exact comparisons with the earlier bootstrap and the two-point tests against independent graph integrals. [Standalone report with embedded formulas and verification data](../docs/svMPL-four-loop-bootstrap.pdf)
+The signed $R_{260}$ graph has nine independent leading singularities on the 62 exterior cut classes examined. The reduction of the Gram graph $M$ assumes the four measured cuts are complete, $G=2P_v$ globally for the $I_{214}$ numerator $P_v$, and the specified svMPL word and period spaces. Both $R_{260}$ and $I_{260}$ inherit those assumptions. The report gives the graph integrands, the ansätze, the exact comparisons with the earlier bootstrap and the Euclidean tests against independent graph integrals, including three points for the signed remainder and the original $I_{260}$. [Standalone report with embedded formulas and verification data](../docs/svMPL-four-loop-bootstrap.pdf)
 
 ### Maple usage
 

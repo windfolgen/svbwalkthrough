@@ -4,12 +4,17 @@ This project implements a **bootstrap method for computing multi-loop Feynman in
 
 See [summary.md](summary.md) for the full technical overview and [init.md](init.md) for how to start working in this workspace.
 
+## The elliptic bootstrap of $I_{26}$
+
+The four-loop scalar $I_{26}$ shows how to bootstrap an elliptic integral directly in single-valued multiple polylogarithms (svMPLs). Its cut fixes one final integration on a quartic curve. Graph boundary data and symmetries determine the weight-seven function $P_7$ under that integral. The worked example recovers its 54 terms, including the period terms, from 2,746 rational equations and checks exact equality with the earlier full function. [Reproduce the $I_{26}$ bootstrap](runs/fourloopI26/README.md) · [Load the analytic onefold from `anc/`](anc/fourloopI26.mpl)
+
+The same scalar occurs in $I_{168}=2vI_{26}+R_{168}$. The $R_{168}$ benchmark recovers the four svMPL numerators and tests 56 further graph moments. The $R_{260}$ benchmark recovers the weight-eight Gram numerator and tests its period completion, 182 withheld angular coefficients of the reduced graph and three independent Euclidean integrations of the signed remainder. Its four-cut completeness and the global identification $G=2P_v$ remain assumptions. [Reproduce $R_{168}$](runs/fourloopR168/README.md) · [Reproduce $R_{260}$](runs/fourloopR260/README.md) · [Standalone report (PDF)](docs/svMPL-four-loop-bootstrap.pdf)
+
 ## Planar four-loop bootstrap record
 
 Of the 32 diagram entries in the planar correlator, 12 have bootstrap results, 13 have known direct integrations and 6 are products of lower-loop integrals. Row 14 has a conditional four-cut candidate for I260. I49 appears twice with different kinematic multipliers. [Planar index and diagrams (PDF)](docs/4_loop_integrals_section_4.pdf)
 
-The ancillary collection includes the elliptic scalar I26, R168 and R260, both original basis functions I168 and I260, and their intermediate integrals. The R260 candidate assumes completeness of the four measured cuts for the reduced Gram graph, the global identification of one numerator with twice the I214 numerator, and the stated word and period spaces. [Analytic expressions and usage](anc/README.md) · [Standalone svMPL report and embedded checks (PDF)](docs/svMPL-four-loop-bootstrap.pdf)
-
+The ancillary collection gives the original basis integrals, their finite remainders and the intermediate integrals used in their reconstruction. [Analytic expressions and Maple loading instructions](anc/README.md)
 
 <details>
 <summary>Index of all 32 planar terms</summary>
@@ -46,7 +51,7 @@ The labels below are indices in the [four-loop ancillary basis](anc/4Loop_int_ba
 | [I233](runs/fourloopI233/README.md) | The cubic logarithm agrees in 154 angular components through degrees 13, 12 and 12 in frames 1234, 4132 and 1324. |
 | [I214](runs/fourloopI214/README.md) | The weight-eight symbol and its single-valued period completion are fixed within the tested ansatz. With the symbol fixed, orderings 1234 and 4132 predict all 3,123 omitted period equations in ordering 1324. |
 | [I26](anc/fourloopI26.mpl), [R168](anc/fourloopR168.mpl), [I168](anc/fourloopI168.mpl) | A 54-term svMPL kernel gives the scalar onefold. Four prefactors give the finite subtraction in I168. |
-| [R260](anc/fourloopR260.mpl), [I260](anc/fourloopI260.mpl) | The signed remainder agrees with independent integrations to 0.17 and 0.79 estimated standard errors at the two Euclidean benchmarks. |
+| [R260](anc/fourloopR260.mpl), [I260](anc/fourloopI260.mpl) | The signed remainder agrees with the direct graph within 0.8 estimated standard errors at all three Euclidean points. The original $I_{260}$ agrees within 0.9 at the same points. |
 
 The I144, I214 and I233 run directories contain the Wolfram and Maple expressions, the coefficient reconstruction and two numerical comparisons per integral.
 

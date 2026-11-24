@@ -1,4 +1,5 @@
 # HyperlogProcedures 0.8. Load with z and zz unassigned and as a conjugate pair.
+# Reproduce the direct kernel fit from graph boundaries in runs/fourloopI26/.
 # Weight-seven coefficient of the onefold for I26, with u=z*zz and v=(1-z)*(1-zz).
 # The entries after z are outermost first. The final zero is the base point.
 # In the paper's L notation reverse the intervening integration indices.
