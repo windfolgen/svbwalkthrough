@@ -41,7 +41,7 @@ def normalize(a, b):
     return a / lc, b / lc
 
 
-def graph_form(info):
+def graph_form(info, graph_terms=None):
     z, b, *t = C.gens()
     hs = iter([one, *t])
     def external(v):
@@ -72,7 +72,9 @@ def graph_form(info):
     assert next(hs, None) is None
     ds = {(i+1, j+1): chord(lines[i], lines[j]) for i, j in chords}
     assert cuts == {k for k, v in ds.items() if not v}
-    terms = [(a, {(i, j): k for i, j, k in row}) for a, row in data["graphs"][info["graph"]]]
+    if graph_terms is None:
+        graph_terms = data["graphs"][info["graph"]]
+    terms = [(a, {(i, j): k for i, j, k in row}) for a, row in graph_terms]
     terms = [(a, graph) for a, graph in terms if all(graph.get(k) == -1 for k in cuts)]
     if not terms:
         return zero, one
@@ -119,6 +121,14 @@ def verify_terminal(graph, n, den, variables, coordinates):
     assert found == rows
 
 
+def restrict(poly, var, a, h):
+    """Evaluate a polynomial at variable a/h and return its reduced fraction."""
+    degree = int(poly.degrees()[var])
+    if not degree:
+        return poly, one
+    return normalize((h*C.gen(var)-a).resultant(poly, var), h**degree)
+
+
 def replay(info):
     numerator, denominator = graph_form(info)
     dag = info["decomposition"]
@@ -126,11 +136,6 @@ def replay(info):
         assert not dag and not info["nodes"]
         return
     seen = {}
-    def restrict(poly, var, a, h):
-        degree = int(poly.degrees()[var])
-        if not degree:
-            return poly, one
-        return normalize((h*C.gen(var)-a).resultant(poly, var), h**degree)
     def check(index, n, d, remaining):
         key = str(n), str(d), remaining
         if index in seen:

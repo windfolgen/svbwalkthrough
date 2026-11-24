@@ -18,6 +18,8 @@ The four prefactors exhaust every clean start containing eight exterior propagat
 
 Within two independent copies of the 1,648-dimensional period-free svMPL space, the graph and regularity equations have full joint rank. At the final stage the fitted numerators match all 290 available graph values modulo 1,000,003 and all 139 available modulo 1,000,033. The selected graph minor is nonsingular at both primes. Higher-weight inputs held fixed, there is also no homogeneous deformation in any of the three explicit-period spaces tested. Global completeness of the prefactors and words, and a rational verification of every inhomogeneous high-spin value, remain open. [Independent two-numerator checks](independent/README.md)
 
+On a common rational cut, the reduced graph $M$ has residue $p_5/24$ and $I_{214}$ has residue $p_5/48$. [Shared-contour calculation](independent/README.md#shared-rational-cut)
+
 With the released $F$ and the $P_v$ shapes held fixed, the degree-two cubic and quartic OPE logarithms fix the native and crossed normalizations independently to two. The two residuals have spin zero. Four held-out Euclidean boundary evaluations test the resulting signed graph. A fixed-$u$ differential equation for the uncut reduced graph eliminates the thirteen-propagator sector. The svMPL expression obeys the required diagonal boundary condition. Equality of the integrated source with the derivative of the bootstrapped expression remains open. [Differential identity and independent boundary tests](differential/README.md)
 
 ## Reproduce the coefficient and boundary checks
@@ -29,6 +31,7 @@ python runs/fourloopR260/weight_eight/bootstrap.py
 OPENBLAS_NUM_THREADS=1 python runs/fourloopR260/weight_eight/verify.py
 python runs/fourloopR260/periods/verify.py
 python runs/fourloopR260/check_boundaries.py
+python runs/fourloopR260/independent/check_shared_cut.py
 OPENBLAS_NUM_THREADS=1 python runs/fourloopR260/independent/verify.py
 ~~~
 
