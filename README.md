@@ -2,11 +2,14 @@
 
 This project implements a **bootstrap method for computing multi-loop Feynman integrals** via leading singularities. Given an integrand, a leading singularity, and an ansatz of transcendental functions, the pipeline computes the exact coefficients via series expansion, boundary conditions, and linear solving.
 
-See [summary.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/summary.md) for the full technical overview and [init.md](file:///Users/windfolgen/Documents/AntiGravity/svbwalkthrough/init.md) for how to start working in this workspace.
+See [summary.md](summary.md) for the full technical overview and [init.md](init.md) for how to start working in this workspace.
 
 ## Planar four-loop bootstrap record
 
-Of the 32 diagram entries in the planar correlator, 11 have bootstrap results, 13 have known direct-integration results and 6 are products of lower-loop integrals. The two open entries are I168 and I260. I49 appears twice with different kinematic multipliers. Section 4 lists each planar term with its multiplier, package-drawn diagram, leading singularities and color-coded status. [Section 4 of the four-loop note (PDF)](docs/4_loop_integrals_section_4.pdf)
+Of the 32 diagram entries in the planar correlator, 12 have bootstrap results, 13 have known direct integrations and 6 are products of lower-loop integrals. Row 14 has a conditional four-cut candidate for I260. I49 appears twice with different kinematic multipliers. [Planar index and diagrams (PDF)](docs/4_loop_integrals_section_4.pdf)
+
+The ancillary collection includes the elliptic scalar I26, R168 and R260, both original basis functions I168 and I260, and their intermediate integrals. The R260 candidate assumes completeness of the four measured cuts for the reduced Gram graph, the global identification of one numerator with twice the I214 numerator, and the stated word and period spaces. [Analytic expressions and usage](anc/README.md) · [Standalone svMPL report and embedded checks (PDF)](docs/svMPL-four-loop-bootstrap.pdf)
+
 
 <details>
 <summary>Index of all 32 planar terms</summary>
@@ -26,7 +29,7 @@ Of the 32 diagram entries in the planar correlator, 11 have bootstrap results, 1
 | 11 | I246 | 1 | Bootstrap | 27 | I163 | 1 | Bootstrap |
 | 12 | I212 | 1 | Bootstrap | 28 | I164 | 1 | Known |
 | 13 | I144 | u | Bootstrap | 29 | I133 | u/v | Product |
-| 14 | I260 | u/v | **Unknown** | 30 | I168 | 1 | **Unknown** |
+| 14 | I260 | u/v | Candidate | 30 | I168 | 1 | Bootstrap |
 | 15 | I49 | v²/u | Product | 31 | I169 | u | Bootstrap |
 | 16 | I3 | 1 | Known | 32 | I126 | u/v | Product |
 
@@ -38,10 +41,12 @@ The labels below are indices in the [four-loop ancillary basis](anc/4Loop_int_ba
 |---|---|
 | [I173](runs/fourloopI173/fourloopI173.txt), [I176](anc/fourloopI176.txt), [I181](anc/fourloopI181.txt) | Analytic expressions from the manuscript bootstrap. |
 | [I163](runs/fourloopI163/README.md), [I167](runs/fourloopI167/README.md), [I169](runs/fourloopI169/README.md), [I246](runs/fourloopI246/README.md) | Constrained and weighted runs, including the I167 = I246 identity in the registered conventions. |
-| I212 | The primary double-logarithm predictions at orders 20, 21 and 22 agree with independent graph calculations. |
+| [I212](anc/fourloopI212.mpl) | The primary double-logarithm predictions at orders 20, 21 and 22 agree with independent graph calculations. |
 | [I144](runs/fourloopI144/README.md) | The order-four graph boundary agrees in all 72 nonzero components in frame 1324, including 40 beyond the order-two overlap. |
 | [I233](runs/fourloopI233/README.md) | The cubic logarithm agrees in 154 angular components through degrees 13, 12 and 12 in frames 1234, 4132 and 1324. |
 | [I214](runs/fourloopI214/README.md) | The weight-eight symbol and its single-valued period completion are fixed within the tested ansatz. With the symbol fixed, orderings 1234 and 4132 predict all 3,123 omitted period equations in ordering 1324. |
+| [I26](anc/fourloopI26.mpl), [R168](anc/fourloopR168.mpl), [I168](anc/fourloopI168.mpl) | A 54-term svMPL kernel gives the scalar onefold. Four prefactors give the finite subtraction in I168. |
+| [R260](anc/fourloopR260.mpl), [I260](anc/fourloopI260.mpl) | The signed remainder agrees with independent integrations to 0.17 and 0.79 estimated standard errors at the two Euclidean benchmarks. |
 
 The I144, I214 and I233 run directories contain the Wolfram and Maple expressions, the coefficient reconstruction and two numerical comparisons per integral.
 
@@ -696,6 +701,8 @@ The `anc/` subfolder collects the ancillary files of the paper [arXiv:2607.11645
 | `4Loop_int_basis.m` | The **412-element four-loop integral basis** used in the paper, in the same `{denominator, numerator}` format (same convention as `leadingsingularity/fourloopint.m`) |
 
 ### Analytic Results
+
+The [ancillary index](anc/README.md) lists all bootstrapped integrals, finite remainders and auxiliary functions, with the Maple loader and Wolfram argument conventions.
 
 | File | Content |
 |------|---------|
