@@ -2,26 +2,22 @@
 % Define \PlanarCell{row}{basis index}{gathered math lines} before input.
 % d=z-bar(z); y, y_C and the onefold curve are defined in the Table 4 key.
 \PlanarCell{1}{175}{%
-  \displaystyle \frac1d\\[3pt]
-  \displaystyle \mathrm{ladder}\ F_4^{(4)}}
+  \displaystyle \frac1d}
 \PlanarCell{2}{173}{%
   \displaystyle \frac1d,\quad\frac{u-v-1}{d^2}}
 \PlanarCell{3}{208}{%
-  \displaystyle \frac1d\\[3pt]
-  \displaystyle \mathrm{ladder}\ F_5^{(4)}}
+  \displaystyle \frac1d}
 \PlanarCell{4}{181}{%
   \displaystyle \frac1d,\quad\frac1{d(u-1)}}
 \PlanarCell{5}{174}{%
-  \displaystyle \frac1d\\[3pt]
-  \displaystyle \mathrm{ladder}\ F_3^{(4)}}
+  \displaystyle \frac1d}
 \PlanarCell{6}{176}{%
   \displaystyle \frac1d,\quad\frac1{d(u-1)}}
 \PlanarCell{7}{233}{%
   \displaystyle \frac{1}{d(1-u)},\quad\frac{1}{d(1-v)}\\[3pt]
   \displaystyle \frac1{d(1-u-v)},\quad\frac1{d^2}}
 \PlanarCell{8}{140}{%
-  \displaystyle \frac{v}{d^2}\\[3pt]
-  \displaystyle F^{(1)}\times F_{\rm tennis}^{(3)}}
+  \displaystyle \frac{v}{d^2}}
 \PlanarCell{9}{187}{%
   \displaystyle \frac1d,\quad\frac1{d(v-1)}}
 \PlanarCell{10}{214}{%
@@ -35,25 +31,20 @@
 \PlanarCell{13}{144}{%
   \displaystyle \frac{u}{d(1-u)},\quad\frac{u}{d(1-u+v)}\\[3pt]
   \displaystyle \frac{u}{d^2}}
+% Parentheses in row 14 pair prefactors exchanged by inversion, including 1/u
+% from the planar normalization. The coefficient -2/d occurs twice in the result.
 \PlanarCell{14}{260}{%
-  \tfrac{u}{v}I_{260}(u,v)=\tfrac1v R_{260}(u,v)\\[-1pt]
-  {}+\underbrace{\tfrac1v I_{168}(u/v,1/v)}_{x_1\leftrightarrow x_2}
-    +\underbrace{I_{168}(v,u)}_{x_1\leftrightarrow x_3}\\[2pt]
-  {}=\tfrac{uP_{23}+(v-1)P_{24}+P_{43}}{d^2}\\[1pt]
-  {}+\tfrac{P_{25}+uP_{26}}{d(u-1)}\\[1pt]
-  {}-\tfrac{2uP_{44}}{d\,y}+\tfrac{2P_{45}}{d\,y_C}\\[1pt]
-  {}-\tfrac{2}{d}(P_{47}+P_{48})}
+  \displaystyle \left(\frac1{d^2},\ \frac{u}{d^2}\right),\quad\frac{v-1}{d^2}\\[3pt]
+  \displaystyle \left(\frac1{d(u-1)},\ \frac{u}{d(u-1)}\right)\\[3pt]
+  \displaystyle \left(-\frac{2u}{d\,y},\ \frac{2}{d\,y_C}\right),\quad -\frac2d}
 \PlanarCell{15}{49}{%
-  \displaystyle \frac{v}{d^2}\\[3pt]
-  \displaystyle F^{(2)}\times F^{(2)}}
+  \displaystyle \frac{v}{d^2}}
 \PlanarCell{16}{3}{%
   \displaystyle \frac1d}
 \PlanarCell{17}{5}{%
-  \displaystyle \frac1d\\[3pt]
-  \displaystyle \mathrm{ladder}\ F_g^{(4)}}
+  \displaystyle \frac1d}
 \PlanarCell{18}{39}{%
-  \displaystyle \frac{v}{d^2}\\[3pt]
-  \displaystyle F^{(1)}\times F_g^{(3)}}
+  \displaystyle \frac{v}{d^2}}
 \PlanarCell{19}{38}{%
   \displaystyle \frac{v}{d^2}}
 \PlanarCell{20}{21}{%
@@ -63,11 +54,9 @@
 \PlanarCell{22}{27}{%
   \displaystyle \frac{v}{d(v-1)}}
 \PlanarCell{23}{49}{%
-  \displaystyle \frac1{d^2}\\[3pt]
-  \displaystyle F^{(2)}\times F^{(2)}}
+  \displaystyle \frac1{d^2}}
 \PlanarCell{24}{160}{%
-  \displaystyle \frac1d\\[3pt]
-  \displaystyle \mathrm{ladder}\ F_2^{(4)}}
+  \displaystyle \frac1d}
 \PlanarCell{25}{167}{%
   \displaystyle \frac{v}{d(v-1)},\quad\frac{v}{d^2}}
 \PlanarCell{26}{162}{%
@@ -76,17 +65,14 @@
   \displaystyle \frac1d,\ \frac1{d(u-1)},\ \frac{u}{d(u-v)}\\[3pt]
   \displaystyle \frac1{d(v-1)},\quad\frac{(1,u,v)}{d^2}}
 \PlanarCell{28}{164}{%
-  \displaystyle \frac1d\\[3pt]
-  \displaystyle \mathrm{ladder}\ F_1^{(4)}}
+  \displaystyle \frac1d}
 \PlanarCell{29}{133}{%
-  \displaystyle \frac{u}{d^2}\\[3pt]
-  \displaystyle F^{(1)}\times F^{(3)}}
+  \displaystyle \frac{u}{d^2}}
 \PlanarCell{30}{168}{%
-  \displaystyle 2v I_{26}:\quad\frac{2\,\mathrm{d}x}{d\,y_\rho(x)}\\[3pt]
-  \displaystyle R_{168}:\quad \frac{v}{d^2},\quad\frac1d\\[3pt]
-  \displaystyle \frac{v}{d(u-v)},\quad\frac{v}{d(1-v)}}
+  \displaystyle \frac{v}{d^2},\quad\frac1d\\[3pt]
+  \displaystyle \frac{v}{d(u-v)},\quad\frac{v}{d(1-v)}\\[3pt]
+  \displaystyle \frac{2\,\mathrm{d}x}{d\,y_\rho(x)}}
 \PlanarCell{31}{169}{%
   \displaystyle \frac{v}{d(v-1)},\quad\frac{v}{d^2}}
 \PlanarCell{32}{126}{%
-  \displaystyle \frac{u}{d^2}\\[3pt]
-  \displaystyle F^{(2)}\times F^{(2)}}
+  \displaystyle \frac{u}{d^2}}
