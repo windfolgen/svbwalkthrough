@@ -10,6 +10,14 @@ The four-loop scalar $I_{26}$ shows how to bootstrap an elliptic integral direct
 
 The same scalar occurs in $I_{168}=2vI_{26}+R_{168}$. The $R_{168}$ benchmark recovers the four svMPL numerators and tests 56 further graph moments. The $R_{260}$ benchmark recovers the weight-eight Gram numerator and tests its period completion, 182 withheld angular coefficients of the reduced graph and three independent Euclidean integrations of the signed remainder. Its four-cut completeness and the global identification $G=2P_v$ remain assumptions. [Reproduce $R_{168}$](runs/fourloopR168/README.md) · [Reproduce $R_{260}$](runs/fourloopR260/README.md) · [Standalone report (PDF)](docs/svMPL-four-loop-bootstrap.pdf) A separate fit lets both Gram numerators vary. Its rank is 3,296 in the benchmark svMPL space, and the published fifth numerator passes the independent graph comparisons. [Joint numerator and cut certificates](runs/fourloopR260/independent/)
 
+## Calculation workflows
+
+| Calculation | Project skill and worked example |
+|---|---|
+| Determine an svMPL kernel under a final elliptic integration | [Elliptic onefold](project_skills/elliptic-svmpl-onefold/SKILL.md) · [Worked $I_{26}$ kernel](runs/fourloopI26/README.md) |
+| Test a proposed numerator against exact graph boundaries | [svMPL graph boundaries](project_skills/svmpl-graph-boundaries/SKILL.md) · [Degree-two test of the factor of two in $R_{260}$](runs/fourloopR260/differential/README.md#an-exact-low-order-test-of-the-factor-of-two) |
+| Derive a differential equation for the uncut graph and identify its source | [Uncut graph differential](project_skills/uncut-graph-differential/SKILL.md) · [Equation for the reduced four-loop graph](runs/fourloopR260/differential/README.md#the-uncut-differential-identity) |
+
 ## Planar four-loop bootstrap record
 
 Of the 32 diagram entries in the planar correlator, 12 have bootstrap results, 13 have known direct integrations and 6 are products of lower-loop integrals. Row 14 has a conditional four-cut candidate for I260. I49 appears twice with different kinematic multipliers. [Planar index and diagrams (PDF)](docs/4_loop_integrals_section_4.pdf)
