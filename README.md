@@ -6,7 +6,7 @@ See [summary.md](summary.md) for the full technical overview and [init.md](init.
 
 ## The elliptic bootstrap of $I_{26}$
 
-The four-loop scalar $I_{26}$ shows how to bootstrap an elliptic integral directly in single-valued multiple polylogarithms (svMPLs). Its cut fixes one final integration on a quartic curve. Graph boundary data and symmetries determine the weight-seven function $P_7$ under that integral. The worked example recovers its 54 terms, including the period terms, from 2,746 rational equations and checks exact equality with the earlier full function. [Reproduce the $I_{26}$ bootstrap](runs/fourloopI26/README.md) · [Load the analytic onefold from `anc/`](anc/fourloopI26.mpl)
+The four-loop scalar $I_{26}$ shows how to bootstrap an elliptic integral directly in single-valued multiple polylogarithms (svMPLs). Its cut fixes one final integration on a quartic curve. Graph boundary data and symmetries determine the weight-seven function $P_7$ under that integral. The worked example recovers its 54 terms, including the period terms, from 2,746 rational equations and checks exact equality with the earlier full function. [Reproduce the $I_{26}$ bootstrap](runs/fourloopI26/README.md) · [Maple onefold](anc/fourloopI26.mpl) · [Wolfram .m](anc/fourloopI26.m) · [Plain text](anc/fourloopI26.txt)
 
 The same scalar occurs in $I_{168}=2vI_{26}+R_{168}$. The $R_{168}$ benchmark recovers the four svMPL numerators and tests 56 further graph moments. The $R_{260}$ benchmark recovers the weight-eight Gram numerator and tests its period completion, 182 withheld angular coefficients of the reduced graph and three independent Euclidean integrations of the signed remainder. Its four-cut completeness and the global identification $G=2P_v$ remain assumptions. [Reproduce $R_{168}$](runs/fourloopR168/README.md) · [Reproduce $R_{260}$](runs/fourloopR260/README.md) · [Standalone report (PDF)](docs/svMPL-four-loop-bootstrap.pdf) A separate fit lets both Gram numerators vary. Its rank is 3,296 in the benchmark svMPL space, and the published fifth numerator passes the independent graph comparisons. [Joint numerator and cut certificates](runs/fourloopR260/independent/)
 
@@ -14,7 +14,7 @@ The same scalar occurs in $I_{168}=2vI_{26}+R_{168}$. The $R_{168}$ benchmark re
 
 Of the 32 diagram entries in the planar correlator, 12 have bootstrap results, 13 have known direct integrations and 6 are products of lower-loop integrals. Row 14 has a conditional four-cut candidate for I260. I49 appears twice with different kinematic multipliers. [Planar index and diagrams (PDF)](docs/4_loop_integrals_section_4.pdf)
 
-The ancillary collection gives the original basis integrals, their finite remainders and the intermediate integrals used in their reconstruction. [Analytic expressions and Maple loading instructions](anc/README.md)
+Every planar basis integral has matching `.m` and `.txt` result files under `anc/`. The row index returns all 32 basis functions in the original external ordering, with their correlator multipliers. The collection also includes the common elliptic integral $I_{26}$, the finite remainders and the intermediate integrals. [Wolfram row index](anc/fourloopPlanar32.m) · [Plain-text row index](anc/fourloopPlanar32.txt) · [Individual files and usage](anc/README.md)
 
 <details>
 <summary>Index of all 32 planar terms</summary>
