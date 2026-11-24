@@ -12,9 +12,11 @@ $$
 M=p_3 F+p_4 C(F)+p_5 G+p_6 C(G),\qquad G=2P_v,
 $$
 
-with $(p_3,p_4,p_5,p_6)=(v/[d(u-1)],uv/[d(u-1)],v/[d(v-1)],uv/[d(u-v)])$. Thus the known $I_{214}$ numerator fixes the last two sectors and only $F$ is fitted. In the native chart $F$ is the exchange-odd projection of a seed containing 1,162 weight-eight words, 166 weight-five words multiplied by $\zeta_3$, and the term $-848\zeta_3^2 I[z,0,1,0]$. [Maple formula for the remainder](../../anc/fourloopR260.mpl) · [Original integral](../../anc/fourloopI260.mpl)
+with $(p_3,p_4,p_5,p_6)=(v/[d(u-1)],uv/[d(u-1)],v/[d(v-1)],uv/[d(u-v)])$. The original reconstruction inserts the known $I_{214}$ numerator in the last two sectors and fits $F$. An independent reconstruction allows both $F$ and $G$ to vary. In the native chart $F$ is the exchange-odd projection of a seed containing 1,162 weight-eight words, 166 weight-five words multiplied by $\zeta_3$, and the term $-848\zeta_3^2 I[z,0,1,0]$. [Maple formula for the remainder](../../anc/fourloopR260.mpl) · [Original integral](../../anc/fourloopI260.mpl)
 
-The contour argument covers clean transverse starts with at least 13 distinct propagator cuts. Two exterior profiles already fall outside that argument at 12. Extending the four prefactors and $G=2P_v$ to the whole graph remains a bootstrap assumption. Within the stated svMPL and period spaces the fit makes predictions that can be tested against the graph. [Cut analysis and its scope](../../docs/svMPL-four-loop-bootstrap.pdf)
+The four prefactors exhaust every clean start containing eight exterior propagators. This includes all clean starts on twelve or more distinct original propagators. A clean start means that the selected divisors meet transversely at a generic point of the component and that no further polar divisor contains it. The remaining contour classes include starts with only seven exterior propagators and nontransverse intersections. [Cut proof and its scope](../../docs/svMPL-four-loop-bootstrap.pdf)
+
+Within two independent copies of the 1,648-dimensional period-free svMPL space, the graph and regularity equations have full joint rank. At the final stage the candidate matches all 290 available graph values modulo 1,000,003 and all 139 available modulo 1,000,033. The selected graph minor is nonsingular at both primes. Higher-weight inputs held fixed, there is also no homogeneous deformation in any of the three explicit-period spaces tested. Global completeness of the prefactors and words, and a rational verification of every inhomogeneous high-spin value, remain open. [Independent two-numerator checks](independent/README.md)
 
 ## Reproduce the coefficient and boundary checks
 
@@ -25,6 +27,7 @@ python runs/fourloopR260/weight_eight/bootstrap.py
 OPENBLAS_NUM_THREADS=1 python runs/fourloopR260/weight_eight/verify.py
 python runs/fourloopR260/periods/verify.py
 python runs/fourloopR260/check_boundaries.py
+OPENBLAS_NUM_THREADS=1 python runs/fourloopR260/independent/verify.py
 ~~~
 
 - The **weight-eight fit** starts with 1,356 pivots from the light-cone and angular constraints. Eliminating them leaves 292 directions for the radial conditions. Solving at both primes and lifting to rational numbers reproduces the published function in all 92,885 ordinary product-word coordinates. The solve and the archived fit use different independent subsets of the 4,609 generators. The `ope_*.npz` files contain the kinematic equations in pivot form and the remaining radial equations. Their row labels give the log power, pole or graph constraint, radial degree, and row within that block. Exact substitution in the sparse rational light-cone table checks all 3,772 coordinates of the full generator list.
