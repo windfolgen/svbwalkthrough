@@ -96,12 +96,18 @@ def elliptic_on_ray(K, kinematics):
                 (power * wt[mask].astype(float), (ir[mask], ch[mask])), shape=(n, n)
             )
             mats[pole] = mats[pole] + m if pole in mats else m
+    # Both detours must be homologous to an infinitesimal detour of the real ray.
+    # As the diagonal approaches, the conjugate poles at h and 1/h approach the ray.
+    discriminant_roots = np.roots([1., 0., -6., 4 * tan.real, -3.])
+    poles = [*mats, h, ih, *discriminant_roots]
+    height = min([0.21] + [abs(p.imag) / 2 for p in poles
+                           if r <= p.real <= end and abs(p.imag) > 1e-10])
     getH = {}
     for sense in [1, -1]:
 
         def rhs(x, vec):
-            t = r + (end - r) * x + 1j * sense * 0.21 * np.sin(np.pi * x)
-            dt = end - r + 1j * sense * 0.21 * np.pi * np.cos(np.pi * x)
+            t = r + (end - r) * x + 1j * sense * height * np.sin(np.pi * x)
+            dt = end - r + 1j * sense * height * np.pi * np.cos(np.pi * x)
             zs = vec[:-1]
             u = t * t
             aa, mm = kernel_weights(t, h)

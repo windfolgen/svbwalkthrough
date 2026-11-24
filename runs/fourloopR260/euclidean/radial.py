@@ -133,7 +133,8 @@ def angle(wds, h, order, shrink):
         off.append(len(child))
     arr = [np.array(v, np.int32) for v in (off, child, kr, [1] * len(kr))]
     roots = [[(v / h**2, 1)] for v in (0, 1, -1)]
-    logs = cmath.log(h * h)
+    # Continue the tangential logarithm with h as arg(h) crosses pi/2.
+    logs = 2 * cmath.log(h)
     start = [
         logs ** len(w) / factorial(len(w)) if not w.strip("0") else 0 for w in words
     ]
