@@ -59,6 +59,33 @@ In the Maple files, names such as `R168SVNumerator[j]` denote the fitted svMPL f
 
 The Gram file returns an association of functions. For example, `gram = Get["anc/fourloopGramAuxiliaries.m"]` gives `gram["F"][q,b]` and `gram["R260FromI214"][q,b,j,jc]`, where `j,jc` are the independently continued $I_{214}(q,b)$ and $I_{214}(1/b,1/q)$. The [Wolfram regression check](../tests/bootstrap/planar_anc.wls) loads both formats, checks every direct-archive entry in the planar index and tests the scalar and original-basis assemblies.
 
+## Shared pure functions
+
+All 32 correlator terms have the common representation
+$T_r=\sum_i\mathfrak l_{ri}P_i$, including each row's planar multiplier.
+$P_1,\ldots,P_{43}$ form the rationally independent svMPL basis in the original ordering.
+$P_{44},P_{45}$ are the two algebraic primitives $P_y,CP_y$ of $I_{214}$.
+$P_{46},P_{47},P_{48}$ are $Q,SQ,WQ$ with $Q=(z-\bar z)vI_{26}$,
+$Sz=z/(z-1)$ and $Wz=1-z$. [Maple](fourloopPlanarPure.mpl) · [Wolfram Language](fourloopPlanarPure.m) · [Plain text in Wolfram syntax](fourloopPlanarPure.txt) · [32 explicit formulas and relations](../docs/4_loop_integrals_section_4.pdf#page=7)
+
+In Wolfram Language, keep the package symbols unassigned and use the sparse row directly.
+
+~~~wolfram
+shared = Get["anc/fourloopPlanarPure.m"];
+leading = shared["LeadingSingularities"][[11]];
+Total[KeyValueMap[#2 shared["P"][[#1]][z, zz] &, leading]]
+~~~
+
+In Maple, load the usual four-loop package, then read `fourloopPlanarPure.mpl`.
+`PlanarP[i](z,zz)` gives the normalized function.
+`PlanarLS[r]` lists pairs $[i,\mathfrak l_{ri}]$. Row 11 uses
+$2v/[d(v-1)]$ on $P_{16}$ and $v/d^2$ on $P_{17}$.
+Here $u=z\bar z$, $v=(1-z)(1-\bar z)$, $d=z-\bar z$, $y^2=(1-u)^2-4v$
+and $y_C=u\,y(1/z,1/\bar z)$. The onefolds use the established Euclidean
+chamber and continuation of the corresponding root and primitive. The
+[exact word comparison and rank calculation](../runs/planarPureFunctions/README.md)
+give the normalizations, external permutations and linear dependencies.
+
 ## Elliptic sector and finite auxiliaries
 
 | Integral | Maple entry point | Result file |

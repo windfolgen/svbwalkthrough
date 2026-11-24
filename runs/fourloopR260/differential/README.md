@@ -1,12 +1,12 @@
 # Testing the function multiplying the fifth prefactor of the reduced four-loop graph
 
-The proposed identity is $G=2P_v$. Here $G$ multiplies $p_5=v/[d(v-1)]$ in the reduced graph $M$, $d=z-\bar z$ and $P_v$ is the function multiplying the same prefactor in the independently known $I_{214}$. Inversion $C:(u,v)\mapsto(1/u,v/u)$ supplies the partner $p_6 C(G)$, with $p_6=uv/[d(u-v)]$. Thus the fifth and sixth contributions cancel in $Y_0=M-2(I_{214}+CI_{214})$ if the identity holds. The full graph and the candidate satisfy a common boundary condition. An integrated source from graphs with fewer propagators still needs an independent evaluation to establish equality throughout the Euclidean domain. [Graph definitions and reconstruction](../README.md)
+The proposed identity is $G=2P_v$. Here $G$ multiplies $\mathfrak{l}_5=v/[d(v-1)]$ in the reduced graph $M$, $d=z-\bar z$ and $P_v$ is the function multiplying the same prefactor in the independently known $I_{214}$. Inversion $C:(u,v)\mapsto(1/u,v/u)$ supplies the partner $\mathfrak{l}_6 C(G)$, with $\mathfrak{l}_6=uv/[d(u-v)]$. Thus the fifth and sixth contributions cancel in $Y_0=M-2(I_{214}+CI_{214})$ if the identity holds. The full graph and the candidate satisfy a common boundary condition. An integrated source from graphs with fewer propagators still needs an independent evaluation to establish equality throughout the Euclidean domain. [Graph definitions and reconstruction](../README.md)
 
 ## An exact low-order test of the factor of two
 
-Keep the released $F$ fixed and allow separate constants $a,b$ in $p_5 a P_v+p_6 b C(P_v)$. Set $z=th$, $\bar z=t/h$, $u=t^2$, and $c=(h+h^{-1})/2$. On the Euclidean sheet $c$ is the cosine of the external angle. The table gives the coefficient of $t^2\log^k u$. The graph column is obtained directly from the signed graph monomials.
+Keep the released $F$ fixed and allow separate constants $a,b$ in $\mathfrak{l}_5 a P_v+\mathfrak{l}_6 b C(P_v)$. Set $z=th$, $\bar z=t/h$, $u=t^2$, and $c=(h+h^{-1})/2$. On the Euclidean sheet $c$ is the cosine of the external angle. The table gives the coefficient of $t^2\log^k u$. The graph column is obtained directly from the signed graph monomials.
 
-| $k$ | Graph $M$ | Graph minus $p_3F+p_4CF$ | $p_5P_v$ | $p_6 C(P_v)$ |
+| $k$ | Graph $M$ | Graph minus $p_3F+p_4CF$ | $p_5P_v$ | $\mathfrak{l}_6 C(P_v)$ |
 |---:|---|---:|---:|---:|
 | 4 | $1277/7776-(367/3888)c^2$ | $1/12$ | $0$ | $1/24$ |
 | 3 | $-18791/11664+(9151/5832)c^2$ | $-11/6$ | $-1/12$ | $-5/6$ |
@@ -15,7 +15,7 @@ The quartic logarithm gives $b/24=1/12$. The cubic logarithm then gives $-a/12-5
 
 For the graph column, order the four loop radii between the small external radius and the unit radius. Each term in the expansion of a squared distance has the form $[s^n](1-2s\cos\theta+s^2)^e$, where $e$ is its exponent and $s$ is a ratio of ordered radii. Four resonant radial integrations give the factor $1/24$ in the coefficient of $\log^4 u$. For the cubic coefficient include one freely integrated gap in the ordered interval and the two extensions with one loop outside that interval. A nonzero scaled radial exponent $q$ contributes $-1/(3q)$. This includes the four choices of outside loop through the permutations. The angular integrations pair indices on $S^3$ with denominator $4\cdot6\cdots(2j+2)$ at degree $2j$. The graph computation returns the exact polynomial in $c$ for each log power. [Ordered radial and angular calculation](low_spin_graph.py)
 
-For the function columns the verifier expands the ordinary differential of the released svMPLs through degree four, because $p_5$ starts at $t^{-2}$ at a generic angle. It projects each period sector separately over $\mathbb Q(h)$ and converts $\log t$ to $\log u$. The two surviving nonconstant angular initial states in the cubic calculation evaluate to $+\log h$ and $-\log h$ with equal coefficients. They cancel exactly. All explicit-period columns vanish in these two probes. [Exact comparison for all angles](low_spin.py)
+For the function columns the verifier expands the ordinary differential of the released svMPLs through degree four, because $\mathfrak{l}_5$ starts at $t^{-2}$ at a generic angle. It projects each period sector separately over $\mathbb Q(h)$ and converts $\log t$ to $\log u$. The two surviving nonconstant angular initial states in the cubic calculation evaluate to $+\log h$ and $-\log h$ with equal coefficients. They cancel exactly. All explicit-period columns vanish in these two probes. [Exact comparison for all angles](low_spin.py)
 
 ## What determines the two numerators
 

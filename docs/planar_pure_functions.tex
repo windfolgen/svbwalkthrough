@@ -1,0 +1,218 @@
+\label{app:pure-families}
+Let \(T_r\) be the planar term in diagram row \(r\), including its external multiplier.
+All 32 terms admit one common representation
+\[
+ \boxed{\displaystyle T_r=\sum_{i=1}^{48}\mathfrak{l}_{ri}(z,\bar z)\,P_i(z,\bar z).}
+\]
+Here \(\mathfrak{l}_{ri}\) is the complete leading-singularity prefactor in
+this basis. The functions \(P_1,\ldots,P_{43}\) are a rationally linearly
+independent basis of the weight-eight svMPLs occurring in the fixed external
+ordering. The remaining five labels are normalized onefold primitives,
+\[
+ (P_{44},P_{45},P_{46},P_{47},P_{48})=(P_y,CP_y,Q,SQ,WQ),
+ \qquad Q=(z-\bar z)v I_{26}.
+\]
+The maps \(C,S,W\) are specified below. The weight-seven integrand of \(Q\)
+is denoted by \(\mathcal K_7\); its name in the ancillary Maple file is
+\texttt{I26P7SV}. For example, \(P_{16}=P_v\) occurs in
+\[
+ \frac{I_{214}}v=\frac{P_{14}}d+
+ \frac{P_{15}}{d(u-1)}+\frac{P_{16}}{d(v-1)}+\frac{uP_{44}}{d y},
+ \qquad I_{37}=\frac{vP_{16}}{d(v-1)},\qquad d=z-\bar z .
+\]
+The two functions multiplying \(v/[d(v-1)]\) in \(I_{246}\) and \(I_{167}\)
+are both \(2P_{16}\).
+\begin{center}
+\begin{tabular}{@{}lrrr@{}}\toprule
+Comparison & svMPLs & Onefolds & Total\\\midrule
+Occurrences in the 32 rows & 62 & 6 & 68\\
+Equal in the displayed normalization & 52 & 5 & \textbf{57}\\
+Up to a nonzero rational constant & 47 & 5 & \textbf{52}\\
+Up to that constant and external crossing & 33 & 2 & \textbf{35}\\
+\bottomrule\end{tabular}
+\end{center}
+The second and third lines keep \((z,\bar z)\) fixed. The last line identifies
+functions related by one of the six permutations of the cross ratios. A rational
+constant can be moved into the leading singularity. A change of basis mixing two
+prefactors can also mix their two functions, so the counts refer to the stated
+decomposition. Each product of lower-loop functions counts as the full function
+multiplying its prefactor. The two crossed scalar onefolds in row~14 are kept as
+separate evaluations.
+
+At fixed ordering there are 47 svMPLs up to scale. Four further rational
+linear relations reduce their rank to 43. For instance the pure function in
+row~8 is \(P_{24}+P_{27}/3\), the sum of the square fishnet and a third of the
+two-loop ladder square. Exact elimination gives a \(43\times43\) word minor
+with determinant 514{,}223 modulo \(1{,}000{,}003\). Substitution of the
+43 functions reconstructs all 62 svMPL occurrences over the rationals.
+Crossing gives the 35 families in the last line of the table; their maps
+can change the external arguments, while the 48 labels in the boxed formula
+all use the same external ordering.
+To compare two svMPLs we first resolve their rational prefactors exactly in
+\(z,\bar z\). At each word and period monomial we solve for its coefficient on
+the specified prefactors and substitute back as a rational identity.
+We then transform both endpoints and all moving letters to the same chart.
+The shuffle relations and the period algebra in
+\href{https://github.com/oliverschnetz/HyperlogProcedures}{Schnetz's
+\textsc{HyperlogProcedures} 0.8} put each function in the same word basis.
+Two coefficient vectors agree up to scale precisely when their ratio at one
+nonzero word agrees at every word, including pure periods.
+\clearpage
+
+\paragraph{The 32 planar integrals in the common basis.}
+The middle column includes the correlator multiplier. Its prefactor in front of
+\(P_i\) in the right column is the matrix entry \(\mathfrak{l}_{ri}\).
+Here \(u=z\bar z\), \(v=(1-z)(1-\bar z)\), \(d=z-\bar z\) and
+\(y^2=(1-u)^2-4v\), \(y_C^2=(1-u)^2-4uv\). Both roots follow the sheets of
+their primitives.
+\begin{center}\normalsize\renewcommand{\arraystretch}{2.05}
+\begin{tabular}{@{}r@{\hspace{4mm}}l@{\hspace{5mm}}l@{}}\toprule
+Row & Planar term \(T_r\) & Expansion \(\sum_i\mathfrak{l}_{ri}P_i\)\\\midrule
+1 & \(I_{175}\) & \(\displaystyle \frac{1}{d}P_{1}\)\\
+2 & \(I_{173}\) & \(\displaystyle \frac{1}{d}P_{2} +\frac{u - v - 1}{d^{2}}P_{3}\)\\
+3 & \(I_{208}\) & \(\displaystyle \frac{1}{d}P_{4}\)\\
+4 & \(I_{181}\) & \(\displaystyle \frac{1}{d}P_{5} +\frac{1}{d (u - 1)}P_{6}\)\\
+5 & \(I_{174}\) & \(\displaystyle \frac{1}{d}P_{4}\)\\
+6 & \(I_{176}\) & \(\displaystyle \frac{1}{d}P_{7} +\frac{1}{d (u - 1)}P_{8}\)\\
+7 & \(\tfrac{1}{u}I_{233}\) & \(\displaystyle -\frac{1}{d (u - 1)}P_{9} -\frac{1}{d (v - 1)}P_{10} -\frac{1}{d (u + v - 1)}P_{11}\)\\
+ & & \(\displaystyle\quad +\frac{1}{d^{2}}P_{12}\)\\
+8 & \(vI_{140}\) & \(\displaystyle \frac{v}{d^{2}}P_{24} +\frac{v}{3 d^{2}}P_{27}\)\\
+9 & \(I_{187}\) & \(\displaystyle -\frac{1}{d (v - 1)}P_{10} +\frac{1}{d}P_{13}\)\\
+10 & \(\tfrac{1}{v}I_{214}\) & \(\displaystyle \frac{1}{d}P_{14} +\frac{1}{d (u - 1)}P_{15} +\frac{1}{d (v - 1)}P_{16} +\frac{u}{d y}P_{44}\)\\
+11 & \(I_{246}\) & \(\displaystyle \frac{2 v}{d (v - 1)}P_{16} +\frac{v}{d^{2}}P_{17}\)\\
+12 & \(I_{212}\) & \(\displaystyle \frac{u - v - 1}{d^{2}}P_{3} +\frac{1}{d}P_{18} +\frac{v + 1}{d (v - 1)}P_{19}\)\\
+ & & \(\displaystyle\quad -\frac{u - v - 1}{2 d^{2}}P_{24}\)\\
+13 & \(uI_{144}\) & \(\displaystyle -\frac{u}{d (u - 1)}P_{20} -\frac{u}{d (u - v - 1)}P_{21} +\frac{u}{d^{2}}P_{22}\)\\
+14 & \(\tfrac{u}{v}I_{260}\) & \(\displaystyle \frac{u}{d^{2}}P_{23} +\frac{v - 1}{d^{2}}P_{24} +\frac{1}{d (u - 1)}P_{25}\)\\
+ & & \(\displaystyle\quad +\frac{u}{d (u - 1)}P_{26} +\frac{1}{d^{2}}P_{43} -\frac{2 u}{d y}P_{44}\)\\
+ & & \(\displaystyle\quad +\frac{2}{d y_C}P_{45} -\frac{2}{d}P_{47} -\frac{2}{d}P_{48}\)\\
+15 & \(\tfrac{v^{2}}{u}I_{49}\) & \(\displaystyle \frac{v}{d^{2}}P_{27}\)\\
+16 & \(I_{3}\) & \(\displaystyle \frac{1}{d}P_{28}\)\\
+\bottomrule\end{tabular}
+\end{center}
+\clearpage
+\paragraph{The 32 planar integrals in the common basis (continued).}
+\begin{center}\normalsize\renewcommand{\arraystretch}{2.05}
+\begin{tabular}{@{}r@{\hspace{4mm}}l@{\hspace{5mm}}l@{}}\toprule
+Row & Planar term \(T_r\) & Expansion \(\sum_i\mathfrak{l}_{ri}P_i\)\\\midrule
+17 & \(I_{5}\) & \(\displaystyle \frac{1}{d}P_{29}\)\\
+18 & \(I_{39}\) & \(\displaystyle \frac{v}{d^{2}}P_{30}\)\\
+19 & \(vI_{38}\) & \(\displaystyle \frac{v}{d^{2}}P_{24}\)\\
+20 & \(I_{21}\) & \(\displaystyle \frac{1}{d}P_{31}\)\\
+21 & \(I_{37}\) & \(\displaystyle \frac{v}{d (v - 1)}P_{16}\)\\
+22 & \(\tfrac{v}{u}I_{27}\) & \(\displaystyle \frac{v}{d (v - 1)}P_{32}\)\\
+23 & \(\tfrac{v}{u}I_{49}\) & \(\displaystyle \frac{1}{d^{2}}P_{27}\)\\
+24 & \(I_{160}\) & \(\displaystyle \frac{1}{d}P_{1}\)\\
+25 & \(I_{167}\) & \(\displaystyle \frac{2 v}{d (v - 1)}P_{16} +\frac{v}{d^{2}}P_{17}\)\\
+26 & \(I_{162}\) & \(\displaystyle \frac{1}{d (v - 1)}P_{32} +\frac{1}{d}P_{33}\)\\
+27 & \(I_{163}\) & \(\displaystyle -\frac{2}{d^{2}}P_{3} +\frac{2}{d (v - 1)}P_{19} +\frac{v}{d^{2}}P_{24}\)\\
+ & & \(\displaystyle\quad +\frac{1}{d}P_{34} +\frac{1}{d (u - 1)}P_{35} +\frac{u}{d (u - v)}P_{36}\)\\
+ & & \(\displaystyle\quad +\frac{u}{d^{2}}P_{37}\)\\
+28 & \(I_{164}\) & \(\displaystyle \frac{1}{d}P_{4}\)\\
+29 & \(\tfrac{u}{v}I_{133}\) & \(\displaystyle \frac{u}{d^{2}}P_{37} +\frac{u}{3 d^{2}}P_{43}\)\\
+30 & \(I_{168}\) & \(\displaystyle \frac{v}{d^{2}}P_{38} +\frac{1}{d}P_{39} +\frac{v}{d (u - v)}P_{40}\)\\
+ & & \(\displaystyle\quad -\frac{v}{d (v - 1)}P_{41} +\frac{2}{d}P_{46}\)\\
+31 & \(uI_{169}\) & \(\displaystyle \frac{8 v}{d (v - 1)}P_{19} +\frac{v}{d^{2}}P_{42}\)\\
+32 & \(\tfrac{u}{v}I_{126}\) & \(\displaystyle \frac{u}{d^{2}}P_{43}\)\\
+\bottomrule\end{tabular}
+\end{center}
+Rows~15 and~23 contain the same two-loop ladder square \(P_{27}\) with
+different prefactors. Rows~11 and~25 agree term by term. In row~27,
+\(P_{19}\) appears on a simple pole and \(P_{24}\) on a double pole; their
+other occurrences can be read directly from the same column. The attached
+\texttt{fourloopPlanarPure.mpl} gives each \(P_i\) and the sparse list of
+\(\mathfrak{l}_{ri}\). The \href{https://github.com/windfolgen/svbwalkthrough/tree/main/anc}{ancillary index}
+includes its onefold dependencies and the Wolfram Language version.
+
+\clearpage
+\paragraph{All repeated functions.}
+Write \(WH=H(1-z,1-\bar z)\), \(CH=H(1/z,1/\bar z)\) and
+\(SH=H(z/(z-1),\bar z/(\bar z-1))\). The other maps have first arguments
+\(1/(1-z)\) and \((z-1)/z\). Let \(F_{r,j}\) denote the coefficient of the \(j\)-th prefactor in Table~4 order, before reduction to the common \(P_i\) basis. The second index in row~14 follows the nine terms on the next page; the elliptic function in row~30 is fifth. The table gives one equation for every further
+occurrence. Within a row of this table, \(H\) denotes the representative in the
+left column. An unadorned \(H\) therefore indicates literal equality in the
+same chart and normalization. Relations involving several sectors of one
+integral are included.
+\begin{center}\small\renewcommand{\arraystretch}{1.28}
+\begin{tabular}{@{}l@{\hspace{5mm}}l@{}}\toprule
+Representative \(H\) & Other occurrences in the 32 planar rows\\\midrule
+\(P_{1}=F_{1,1}\) & \(F_{3,1}=F_{5,1}=F_{28,1}=-WH,\quad F_{24,1}=H\)\\
+\(P_{3}=F_{2,2}\) & \(F_{14,3}=F_{19,1}=F_{27,7}=-2SH,\quad F_{27,5}=-2H,\quad F_{27,6}=-2CH\)\\
+\(P_{10}=F_{7,2}\) & \(F_{9,2}=-H,\quad F_{13,1}=-WH,\quad F_{22,1}=F_{26,2}=-SH\)\\
+\(P_{11}=F_{7,3}\) & \(F_{13,2}=-CH\)\\
+\(P_{24}+\tfrac13 P_{27}=F_{8,1}\) & \(F_{29,1}=WH\)\\
+\(P_{16}=F_{10,3}\) & \(F_{11,1}=F_{25,1}=2H,\quad F_{21,1}=H\)\\
+\(P_{44}=F_{10,4}\) & \(F_{14,6}=H,\quad F_{14,7}=CH\)\\
+\(P_{17}=F_{11,2}\) & \(F_{25,2}=H\)\\
+\(P_{19}=F_{12,2}\) & \(F_{27,2}=-2WH,\quad F_{27,3}=2CH,\quad F_{27,4}=2H,\quad F_{31,1}=8H\)\\
+\(-P_{24}+P_{43}=F_{14,1}\) & \(F_{14,2}=CH\)\\
+\(P_{25}=F_{14,4}\) & \(F_{14,5}=CH\)\\
+\(P_{27}=F_{15,1}\) & \(F_{23,1}=H,\quad F_{32,1}=WH\)\\
+\(P_{28}=F_{16,1}\) & \(F_{17,1}=-CH\)\\
+\(P_{40}=F_{30,3}\) & \(F_{30,4}=-CH\)\\
+\(P_{46}=F_{30,5}\) & \(F_{14,8}=SH,\quad F_{14,9}=WH\)\\
+\bottomrule\end{tabular}
+\end{center}
+For example, \(I_{214}, I_{37}, I_{246}\) and \(I_{167}\) all use
+\(P_v\). The odd function in the last two is \(2P_v\). Their even functions
+also agree with each other, and the two prefactors coincide, giving the
+full magic identity \(I_{246}=I_{167}\). A different shared function links
+\(I_{212}, I_{163}\) and \(I_{169}\) through the identities
+\[
+ F_{12,2}=\tfrac12 F_{27,4}=\tfrac18 F_{31,1}.
+\]
+The \href{https://github.com/windfolgen/svbwalkthrough/tree/main/runs/planarPureFunctions}{coefficient
+vectors and comparison} give every match, all equivalent permutations, and
+the sectors that occur only once.
+\clearpage
+
+\paragraph{Which functions survive in \(I_{260}\).}
+In the four-cut benchmark let \(F\) be the odd function fitted in the reduced
+graph \(M\) and \(P_0,P_u,P_v,P_y\) the four functions in \(I_{214}\), so that
+\[
+ \frac{I_{214}}{v}=\frac1d
+ \left(P_0+\frac{P_u}{u-1}+\frac{P_v}{v-1}+\frac{uP_y}{y}\right),
+ \qquad y^2=(1-u)^2-4v .
+\]
+Set \(D=(d\Phi_2)^2\), where \(\Phi_2\) is the native two-loop ladder, and
+\(H=d^2 I_{38}\) for the square fishnet. In particular \(D=F_{15,1}=F_{23,1}\)
+and \(WD=F_{32,1}\). Put \(y_C=u\,Cy\), so
+\(y_C^2=(1-u)^2-4uv\), and take the primitive and its square root on the same sheet.
+Define
+\[
+ A=F-2P_u+2(P_0-CP_0).
+\]
+Adding back the two crossed \(I_{168}\) integrals cancels both \(R_{168}\)
+terms in \(R_{260}\). The two \(P_v\) terms of \(M\) cancel those of
+\(2(I_{214}+CI_{214})\) because the fitted function is \(G=2P_v\).
+In the planar normalization the result is
+\begin{align*}
+ \frac{u}{v} I_{260}
+ &=\frac{WD-H+u(SD-H)+vH}{d^2}
+   +\frac{A+u\,CA}{d(u-1)}\\
+ &\quad-\frac{2u}{d y}P_y+\frac{2}{d y_C}CP_y
+     -\frac{2}{d}\big(SQ+WQ\big).
+\end{align*}
+Reading each summand in order gives
+\[
+ (F_{14,1},\ldots,F_{14,9})=
+ (WD-H,\ SD-H,\ H,\ A,\ CA,\ P_y,\ CP_y,\ SQ,\ WQ).
+\]
+This explains why row~14 shares a square-fishnet function with rows~19
+and~27 and a scalar elliptic primitive with row~30. The factor of two on
+the common \(I_{214}\) cut is also visible in \(M\), although \(P_v\) cancels
+from the final expression. These identifications of row~14 have the same
+scope as the four-cut bootstrap of \(M\).
+
+The onefold column counts the completed primitives. For \(P_y\) the two
+sheets are exchanged by the sign of \(y\); \(CP_y\) is odd in the independent
+root \(y_C\). Thus the two displayed algebraic functions are distinct in the
+fixed ordering. For the scalar primitive, \(CQ=-Q\) follows from inversion
+of \(I_{26}\). To distinguish its three images, divide by \(d\) and take the
+native OPE limit. The native \(vI_{26}\) has quartic-log coefficient \(1/24\)
+at leading degree, whereas \((WQ)/d=-uI_{26}(v,u)\) starts at order
+\(u\log u\). The three inversion cosets carry the natural permutation action on three points,
+so equality up to scale of any two would identify all three. These
+boundary values exclude that possibility. The remaining possible linear relation among the three images would be proportional to \(Q-WQ-SQ\), the alternating projection of the three images. In the upper half-plane \(Q\) has positive imaginary part and \(WQ,SQ\) have negative imaginary part by positivity of the Euclidean scalar graph. Thus the alternating projection also survives. Under crossing the five distinct
+onefolds reduce to \(P_y\) and \(Q\). The weight-seven functions used inside
+their last integrations occur at a different stage of the bootstrap.

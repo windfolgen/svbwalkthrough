@@ -24,6 +24,15 @@ Of the 32 diagram entries in the planar correlator, 13 have bootstrap results, 1
 
 Every planar basis integral has matching `.m` and `.txt` result files under `anc/`. The row index returns all 32 basis functions in the original external ordering, with their correlator multipliers. The collection also includes the common elliptic integral $I_{26}$, the finite remainders and the intermediate integrals. [Wolfram row index](anc/fourloopPlanar32.m) · [Plain-text row index](anc/fourloopPlanar32.txt) · [Individual files and usage](anc/README.md)
 
+The 32 planar terms are also tabulated as $T_r=\sum_i\mathfrak l_{ri}P_i$.
+In the original external ordering, the 62 svMPL contributions span 43 independent
+pure functions over the rationals. Five further $P_i$ give the algebraic and elliptic
+onefolds. For example, $I_{214}$ and $I_{37}$ share $P_{16}=P_v$, and the same
+function enters $I_{246}$ and $I_{167}$ with coefficient two on the odd prefactor.
+[Pure-function appendix](docs/4_loop_integrals_section_4.pdf#page=7) ·
+[Functions and leading singularities](anc/README.md#shared-pure-functions) ·
+[Exact comparison in six orderings](runs/planarPureFunctions/README.md)
+
 <details>
 <summary>Index of all 32 planar terms</summary>
 
