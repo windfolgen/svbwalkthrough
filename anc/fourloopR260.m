@@ -1,4 +1,4 @@
-(* Conditional four-cut candidate for R260. Get this file and apply it to
+(* Four-cut bootstrap of R260 in the stated svMPL space. Get this file and apply it to
    [q,qb]. Use the Euclidean continuation of both I214 primitives. For
    separately continued primitives see GramAuxiliaries["R260FromI214"]. *)
 Module[{file, i214, fromI214},

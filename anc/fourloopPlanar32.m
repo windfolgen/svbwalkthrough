@@ -23,7 +23,7 @@ Module[{directory=DirectoryName[$InputFileName], ext=FileExtension[$InputFileNam
     {11,246,1,"Bootstrap"},
     {12,212,1,"Bootstrap"},
     {13,144,u,"Bootstrap"},
-    {14,260,u/v,"Candidate"},
+    {14,260,u/v,"Bootstrap"},
     {15,49,v^2/u,"Product"},
     {16,3,1,"Known"},
     {17,5,1,"Known"},

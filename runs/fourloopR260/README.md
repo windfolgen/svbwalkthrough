@@ -1,4 +1,4 @@
-# The four-cut benchmark for $R_{260}$
+# Four-cut bootstrap of $R_{260}$
 
 The signed remainder in the original basis is
 
@@ -16,9 +16,9 @@ with $(p_3,p_4,p_5,p_6)=(v/[d(u-1)],uv/[d(u-1)],v/[d(v-1)],uv/[d(u-v)])$. The or
 
 The four prefactors exhaust every clean start containing eight exterior propagators. This includes all clean starts on twelve or more distinct original propagators. A clean start means that the selected divisors meet transversely at a generic point of the component and that no further polar divisor contains it. The remaining contour classes include starts with only seven exterior propagators and nontransverse intersections. [Cut proof and its scope](../../docs/svMPL-four-loop-bootstrap.pdf)
 
-Within two independent copies of the 1,648-dimensional period-free svMPL space, the graph and regularity equations have full joint rank. At the final stage the candidate matches all 290 available graph values modulo 1,000,003 and all 139 available modulo 1,000,033. The selected graph minor is nonsingular at both primes. Higher-weight inputs held fixed, there is also no homogeneous deformation in any of the three explicit-period spaces tested. Global completeness of the prefactors and words, and a rational verification of every inhomogeneous high-spin value, remain open. [Independent two-numerator checks](independent/README.md)
+Within two independent copies of the 1,648-dimensional period-free svMPL space, the graph and regularity equations have full joint rank. At the final stage the fitted numerators match all 290 available graph values modulo 1,000,003 and all 139 available modulo 1,000,033. The selected graph minor is nonsingular at both primes. Higher-weight inputs held fixed, there is also no homogeneous deformation in any of the three explicit-period spaces tested. Global completeness of the prefactors and words, and a rational verification of every inhomogeneous high-spin value, remain open. [Independent two-numerator checks](independent/README.md)
 
-With the released $F$ and the $P_v$ shapes held fixed, the degree-two cubic and quartic OPE logarithms fix the native and crossed normalizations independently to two. The two residuals have spin zero. Four held-out Euclidean boundary evaluations test the resulting signed graph. A fixed-$u$ differential equation for the uncut reduced graph eliminates the thirteen-propagator sector. The svMPL candidate obeys the required diagonal boundary condition. Equality of the integrated source with the derivative of the candidate remains open. [Differential identity and independent boundary tests](differential/README.md)
+With the released $F$ and the $P_v$ shapes held fixed, the degree-two cubic and quartic OPE logarithms fix the native and crossed normalizations independently to two. The two residuals have spin zero. Four held-out Euclidean boundary evaluations test the resulting signed graph. A fixed-$u$ differential equation for the uncut reduced graph eliminates the thirteen-propagator sector. The svMPL expression obeys the required diagonal boundary condition. Equality of the integrated source with the derivative of the bootstrapped expression remains open. [Differential identity and independent boundary tests](differential/README.md)
 
 ## Reproduce the coefficient and boundary checks
 

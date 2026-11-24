@@ -4,7 +4,7 @@ The indices refer to the four-loop position-space graphs in `4Loop_int_basis.m`.
 
 ## Wolfram results for all 32 planar terms
 
-Each of the 31 distinct basis integrals has a pair of files with identical Wolfram Language source. Rows 15 and 23 use the same $I_{49}$ with different multipliers. The loader returns a list in diagram order. Each entry gives the row, basis index, correlator multiplier, status, filename and a two-argument basis function. It supplies the $1-z$ change of arguments for the legacy $I_{212}$ file. Row 14 carries the conditional four-cut candidate for $I_{260}$. [Load all rows (.m)](fourloopPlanar32.m) · [Load all rows (.txt)](fourloopPlanar32.txt)
+Each of the 31 distinct basis integrals has a pair of files with identical Wolfram Language source. Rows 15 and 23 use the same $I_{49}$ with different multipliers. The loader returns a list in diagram order. Each entry gives the row, basis index, correlator multiplier, status, filename and a two-argument basis function. It supplies the $1-z$ change of arguments for the legacy $I_{212}$ file. Row 14 gives $I_{260}$ assembled from the four-cut bootstrap of $R_{260}$ and two crossed $I_{168}$ terms. [Load all rows (.m)](fourloopPlanar32.m) · [Load all rows (.txt)](fourloopPlanar32.txt)
 
 From the repository root in a fresh Wolfram kernel, keep `z, zz, u, v` unassigned and load either index. For example, the following returns the full row-15 term at exact conjugate endpoints as a symbolic svMPL expression.
 
@@ -64,8 +64,8 @@ The Gram file returns an association of functions. For example, `gram = Get["anc
 | $I_{26}$ | `I26Euclidean(z,zz)` | [Scalar onefold and its 54-term weight-seven kernel](fourloopI26.mpl) |
 | $R_{168}$ | `R168SV` | [Four rational prefactors with period-completed svMPL numerators](fourloopR168.mpl) |
 | $I_{168}$ | `I168Euclidean(z,zz)` | [Original basis integral](fourloopI168.mpl) |
-| $R_{260}$ | `R260SVEuclidean(z,zz)` | [Conditional four-cut result, including the Gram numerator and its periods](fourloopR260.mpl) |
-| $I_{260}$ | `I260Euclidean(z,zz)` | [Original basis integral assembled from the four-cut candidate](fourloopI260.mpl) |
+| $R_{260}$ | `R260SVEuclidean(z,zz)` | [Four-cut bootstrap, including the Gram numerator and its periods](fourloopR260.mpl) |
+| $I_{260}$ | `I260Euclidean(z,zz)` | [Original basis integral assembled from the bootstrapped remainder](fourloopI260.mpl) |
 | $I_{110},I_{113},I_{142}$ | `I110SV`, `I113SV`, `I142SV` | [I110](fourloopI110.mpl) · [I113](fourloopI113.mpl) · [I142](fourloopI142.mpl) |
 | $J_{112}=I_{112}-I_{26}$, $I_{112}$ | `J112SV`, `I112Euclidean(z,zz)` | [Finite subtraction](fourloopJ112.mpl) · [Original basis integral](fourloopI112.mpl) |
 | $F,M,G,H,K,Y_0,T_0,C_a,L_b,L_c,I_{38}$ | `R260GramF`, `R260GramM`, `R260GramG`, `R260GramH`, `R260GramK`, `R260GramY0`, `R260GramT0`, `R260GramCa`, `R260Lb`, `R260Lc`, `I38Euclidean` | [Four-cut numerators](fourloopR260.mpl) · [Gram auxiliaries and ladder products](fourloopGramAuxiliaries.mpl) |

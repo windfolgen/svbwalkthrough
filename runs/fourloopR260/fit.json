@@ -1,5 +1,5 @@
 {
-  "scope": "Conditional four-cut solution with G=2*I214Pv, the indicated word support and unramified periods in the four charts. The exterior contour survey does not establish global completeness.",
+  "scope": "Four-cut bootstrap with G=2*I214Pv, the indicated word support and unramified periods in the four charts. The exterior contour survey does not establish global completeness.",
   "formula": "F=(1-E)/2 applied to the native weight-eight seed plus the lower weight seeds. Outer factors on labels 3, 5, 33, 7 are zeta(3), zeta(5), zeta(3)^2, zeta(7).",
   "lower_native_word_coefficients": {
     "3": [

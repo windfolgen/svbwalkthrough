@@ -1,4 +1,4 @@
-(* Conditional four-cut candidate in the original basis. Get this file and
+(* Basis integral assembled from the four-cut bootstrap of R260. Get this file and
    apply it to [q,qb]. The correlator multiplier u/v is external. *)
 Module[{file, r260, i168},
   file[name_] := FileNameJoin[{DirectoryName[$InputFileName],

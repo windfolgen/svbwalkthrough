@@ -1,4 +1,4 @@
-# Full four-cut candidate. Read fourloopR168.mpl and fourloopI214.mpl first.
+# Four-cut bootstrap of R260 in the stated svMPL space. Read fourloopR168.mpl and fourloopI214.mpl first.
 # On the stated supports, G multiplying p5 is set to 2*I214Pv.
 # The global four-cut representation and this identification are assumptions.
 # Coefficient fits, withheld graph harmonics and Euclidean tests: runs/fourloopR260/.
