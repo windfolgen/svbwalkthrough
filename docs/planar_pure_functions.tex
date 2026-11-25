@@ -23,31 +23,32 @@ is denoted by \(\mathcal K_7\); its name in the ancillary Maple file is
 The two functions multiplying \(v/[d(v-1)]\) in \(I_{246}\) and \(I_{167}\)
 are both \(2P_{16}\).
 \begin{center}
-\begin{tabular}{@{}lrrr@{}}\toprule
-Comparison & svMPLs & Onefolds & Total\\\midrule
-Occurrences in the 32 rows & 62 & 6 & 68\\
-Equal in the displayed normalization & 52 & 5 & \textbf{57}\\
-Up to a nonzero rational constant & 47 & 5 & \textbf{52}\\
-Up to that constant and external crossing & 33 & 2 & \textbf{35}\\
+\begin{tabular}{@{}llrrr@{}}\toprule
+Functions & Comparison & svMPLs & Onefolds & Total\\\midrule
+\(F_{r,j}\) & Occurrences in the 32 rows & 62 & 6 & 68\\
+ & Equal in the displayed normalization & 52 & 5 & \textbf{57}\\
+ & Up to a nonzero rational constant & 47 & 5 & \textbf{52}\\
+ & Up to that constant and external crossing & 33 & 2 & \textbf{35}\\\midrule
+\(P_i\) & Named functions at fixed arguments & 43 & 5 & \textbf{48}\\
+ & Up to rational rescaling and external crossing & 31 & 2 & \textbf{33}\\
 \bottomrule\end{tabular}
 \end{center}
-The second and third lines keep \((z,\bar z)\) fixed. The last line identifies
-functions related by one of the six permutations of the cross ratios. A rational
-constant can be moved into the leading singularity. A change of basis mixing two
-prefactors can also mix their two functions, so the counts refer to the stated
-decomposition. Each product of lower-loop functions counts as the full function
-multiplying its prefactor. The two crossed scalar onefolds in row~14 are kept as
-separate evaluations.
+\(F_{r,j}\) is the complete function multiplying the \(j\)-th original prefactor
+in row \(r\), while \(P_i\) labels a member of the common basis. For example,
+\(F_{19,1}=P_{24}\) (the square fishnet), \(F_{15,1}=P_{27}\) (the two-loop ladder
+square) and \(F_{8,1}=P_{24}+P_{27}/3\) give three coefficients built from two
+basis functions. A product counts as one coefficient, and the two crossed scalar
+terms in row~14 count separately at fixed arguments. Two functions share a crossing
+family if one equals a nonzero rational multiple of the other after one of the six
+permutations of the cross ratios. Two coefficient families, represented by
+\(F_{8,1}\) and \(F_{12,3}=P_{24}/2-P_3\), contain no individual \(P_i\).
+They account for the difference between 35 families of row coefficients and 33
+families of named functions.
 
 At fixed ordering there are 47 svMPLs up to scale. Four further rational
-linear relations reduce their rank to 43. For instance the pure function in
-row~8 is \(P_{24}+P_{27}/3\), the sum of the square fishnet and a third of the
-two-loop ladder square. Exact elimination gives a \(43\times43\) word minor
+linear relations reduce their rank to 43. Exact elimination gives a \(43\times43\) word minor
 with determinant 514{,}223 modulo \(1{,}000{,}003\). Substitution of the
 43 functions reconstructs all 62 svMPL occurrences over the rationals.
-Crossing gives the 35 families in the last line of the table; their maps
-can change the external arguments, while the 48 labels in the boxed formula
-all use the same external ordering.
 To compare two svMPLs we first resolve their rational prefactors exactly in
 \(z,\bar z\). At each word and period monomial we solve for its coefficient on
 the specified prefactors and substitute back as a rational identity.
