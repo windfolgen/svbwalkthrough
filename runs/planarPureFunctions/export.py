@@ -73,7 +73,9 @@ Module[{directory=DirectoryName[$InputFileName], ext=FileExtension[$InputFileNam
 ]
 ''')
     wolfram_source = '\n'.join(wl)
-    for filename in ('pure_function_basis.m', 'fourloopPlanarPure.m', 'fourloopPlanarPure.txt'):
+    for filename in (
+        'fourloopPlanarPureBasis.m', 'fourloopPlanarPure.m', 'fourloopPlanarPure.txt', 'pure_function_basis.m',
+    ):
         (dest/filename).write_text(wolfram_source)
     mp=['''# Read HyperlogProcedures and fourloopBootstrap.mpl dependencies first.
 # PlanarP[i] is callable on two endpoints. PlanarLS[r] lists [i, l_ri].

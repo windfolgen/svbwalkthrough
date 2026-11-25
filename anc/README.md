@@ -66,12 +66,12 @@ $T_r=\sum_i\mathfrak l_{ri}P_i$, including each row's planar multiplier.
 $P_1,\ldots,P_{43}$ form the rationally independent svMPL basis in the original ordering.
 $P_{44},P_{45}$ are the two algebraic primitives $P_y,CP_y$ of $I_{214}$.
 $P_{46},P_{47},P_{48}$ are $Q,SQ,WQ$ with $Q=(z-\bar z)vI_{26}$,
-$Sz=z/(z-1)$ and $Wz=1-z$. [Maple](fourloopPlanarPure.mpl) · [Wolfram Language](pure_function_basis.m) · [Plain text in Wolfram syntax](fourloopPlanarPure.txt) · [32 explicit formulas and relations](../docs/4_loop_integrals_section_4.pdf#page=7)
+$Sz=z/(z-1)$ and $Wz=1-z$. [Maple](fourloopPlanarPure.mpl) · [Wolfram Language](fourloopPlanarPureBasis.m) · [Plain text in Wolfram syntax](fourloopPlanarPure.txt) · [32 explicit formulas and relations](../docs/4_loop_integrals_section_4.pdf#page=7)
 
 In Wolfram Language, keep the package symbols unassigned. Load the basis from the repository root with the adjacent files `fourloopI26.m` and `fourloopI214.m` in place. The original filename also contains the same definitions. [fourloopPlanarPure.m](fourloopPlanarPure.m)
 
 ~~~wolfram
-shared = Get["anc/pure_function_basis.m"];
+shared = Get["anc/fourloopPlanarPureBasis.m"];
 leading = shared["LeadingSingularities"][[11]];
 Total[KeyValueMap[#2 shared["P"][[#1]][z, zz] &, leading]]
 ~~~
