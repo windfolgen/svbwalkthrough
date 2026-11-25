@@ -6,7 +6,7 @@ See [summary.md](summary.md) for the full technical overview and [init.md](init.
 
 ## The elliptic bootstrap of $I_{26}$
 
-The four-loop scalar $I_{26}$ shows how to bootstrap an elliptic integral directly in single-valued multiple polylogarithms (svMPLs). Its cut fixes one final integration on a quartic curve. Graph boundary data and symmetries determine the weight-seven function $P_7$ under that integral. The worked example recovers its 54 terms, including the period terms, from 2,746 rational equations and checks exact equality with the earlier full function. [Reproduce the $I_{26}$ bootstrap](runs/fourloopI26/README.md) · [Maple onefold](anc/fourloopI26.mpl) · [Wolfram .m](anc/fourloopI26.m) · [Plain text](anc/fourloopI26.txt)
+The four-loop scalar $I_{26}$ shows how to bootstrap an elliptic integral directly in single-valued multiple polylogarithms (svMPLs). Its cut fixes one final integration on a quartic curve. Graph boundary data and symmetries determine the weight-seven kernel $\mathcal K_7$ under that integral. The worked example recovers its 54 terms, including the period terms, from 2,746 rational equations and checks exact equality with the earlier full function. [Reproduce the $I_{26}$ bootstrap](runs/fourloopI26/README.md) · [Maple onefold](anc/fourloopI26.mpl) · [Wolfram .m](anc/fourloopI26.m) · [Plain text](anc/fourloopI26.txt)
 
 The same scalar occurs in $I_{168}=2vI_{26}+R_{168}$. The $R_{168}$ benchmark recovers the four svMPL functions and tests 56 further graph moments. The $R_{260}$ bootstrap recovers the weight-eight function in the Gram reduction and tests its period completion, 182 withheld angular coefficients of the reduced graph and three independent Euclidean integrations of the signed remainder. With the fitted $F$ and the $P_v$ shapes fixed, the degree-two cubic and quartic graph logarithms give the factor of two independently in both channels. A proof that the four prefactors and the svMPL space suffice for the uncut graph remains open. [Reproduce $R_{168}$](runs/fourloopR168/README.md) · [Reproduce $R_{260}$](runs/fourloopR260/README.md) · [Standalone report (PDF)](docs/svMPL-four-loop-bootstrap.pdf) A separate fit lets both functions in the Gram ansatz vary. Its rank is 3,296 in the benchmark svMPL space, and the function multiplying the fifth prefactor passes the independent graph comparisons. [Joint fit and cut certificates](runs/fourloopR260/independent/)
 
@@ -20,42 +20,52 @@ The same scalar occurs in $I_{168}=2vI_{26}+R_{168}$. The $R_{168}$ benchmark re
 
 ## Planar four-loop bootstrap record
 
-Of the 32 diagram entries in the planar correlator, 13 have bootstrap results, 13 have known direct integrations and 6 are products of lower-loop integrals. Row 14 uses the four-cut bootstrap of $R_{260}$ to assemble $I_{260}$. Throughout the index, “Bootstrap” means that the coefficients were determined within the stated ansatz. I49 appears twice with different kinematic multipliers. [Planar index and diagrams (PDF)](docs/4_loop_integrals_section_4.pdf) · [Table 4 prefactors in ancillary order (TeX)](docs/table4_prefactors.tex)
+Of the 32 diagram entries in the planar correlator, 13 have bootstrap results, 13 have known direct integrations and 6 are products of lower-loop integrals. Row 14 uses the four-cut bootstrap of $R_{260}$ to assemble $I_{260}$. Throughout the index, “Bootstrap” means that the coefficients were determined within the stated ansatz. $I_{49}$ appears twice with different kinematic multipliers. [Planar index and diagrams (PDF)](docs/4_loop_integrals_section_4.pdf) · [Table 4 prefactors in ancillary order (TeX)](docs/table4_prefactors.tex)
 
 Every planar basis integral has matching `.m` and `.txt` result files under `anc/`. The row index returns all 32 basis functions in the original external ordering, with their correlator multipliers. The collection also includes the common elliptic integral $I_{26}$, the finite remainders and the intermediate integrals. [Wolfram row index](anc/fourloopPlanar32.m) · [Plain-text row index](anc/fourloopPlanar32.txt) · [Individual files and usage](anc/README.md)
 
-The 32 planar terms are also tabulated as $T_r=\sum_i\mathfrak l_{ri}P_i$.
-In the original external ordering, the 62 svMPL contributions span 43 independent
-pure functions over the rationals. Five further $P_i$ give the algebraic and elliptic
-onefolds. For example, $I_{214}$ and $I_{37}$ share $P_{16}=P_v$, and the same
-function enters $I_{246}$ and $I_{167}$ with coefficient two on the odd prefactor.
-[Pure-function appendix](docs/4_loop_integrals_section_4.pdf#page=7) ·
-[Functions and leading singularities](anc/README.md#shared-pure-functions) ·
-[Exact comparison in six orderings](runs/planarPureFunctions/README.md)
+### Results in the pure-function basis
 
-<details>
-<summary>Index of all 32 planar terms</summary>
+Each planar term $T_r$ includes the multiplier shown in the second column. In the expansion $T_r=\sum_i\mathfrak{l}_{ri}P_i$, the coefficient of each $P_i$ is its leading-singularity prefactor in the original external ordering. We use $u=z\bar z$, $v=(1-z)(1-\bar z)$ and $d=z-\bar z$. The roots $y^2=(1-u)^2-4v$ and $y_C^2=(1-u)^2-4uv$ follow the sheets of their respective primitives, with $y_C(z,\bar z)=u\,y(1/z,1/\bar z)$. [All 48 functions and prefactors (Wolfram)](anc/fourloopPlanarPureBasis.m) · [Typeset results, PDF pages 8–9](docs/4_loop_integrals_section_4.pdf#page=8)
 
-| Row | Basis integral | Multiplier | Status | Row | Basis integral | Multiplier | Status |
-|---:|---|---:|---|---:|---|---:|---|
-| 1 | I175 | 1 | Known | 17 | I5 | 1 | Known |
-| 2 | I173 | 1 | Bootstrap | 18 | I39 | 1 | Product |
-| 3 | I208 | 1 | Known | 19 | I38 | v | Known |
-| 4 | I181 | 1 | Bootstrap | 20 | I21 | 1 | Known |
-| 5 | I174 | 1 | Known | 21 | I37 | 1 | Known |
-| 6 | I176 | 1 | Bootstrap | 22 | I27 | v/u | Known |
-| 7 | I233 | 1/u | Bootstrap | 23 | I49 | v/u | Product |
-| 8 | I140 | v | Product | 24 | I160 | 1 | Known |
-| 9 | I187 | 1 | Known | 25 | I167 | 1 | Bootstrap |
-| 10 | I214 | 1/v | Bootstrap | 26 | I162 | 1 | Known |
-| 11 | I246 | 1 | Bootstrap | 27 | I163 | 1 | Bootstrap |
-| 12 | I212 | 1 | Bootstrap | 28 | I164 | 1 | Known |
-| 13 | I144 | u | Bootstrap | 29 | I133 | u/v | Product |
-| 14 | I260 | u/v | Bootstrap | 30 | I168 | 1 | Bootstrap |
-| 15 | I49 | v²/u | Product | 31 | I169 | u | Bootstrap |
-| 16 | I3 | 1 | Known | 32 | I126 | u/v | Product |
+| Row | Planar term $T_r$ | Expansion $\sum_i\mathfrak{l}_{ri}P_i$ | Status |
+|---:|---|---|---|
+| 1 | $I_{175}$ | $\frac{P_{1}}{d}$ | Known |
+| 2 | $I_{173}$ | $\frac{P_{2}}{d}+\frac{(u-v-1)P_{3}}{d^2}$ | Bootstrap |
+| 3 | $I_{208}$ | $\frac{P_{4}}{d}$ | Known |
+| 4 | $I_{181}$ | $\frac{P_{5}}{d}+\frac{P_{6}}{d(u-1)}$ | Bootstrap |
+| 5 | $I_{174}$ | $\frac{P_{4}}{d}$ | Known |
+| 6 | $I_{176}$ | $\frac{P_{7}}{d}+\frac{P_{8}}{d(u-1)}$ | Bootstrap |
+| 7 | $\frac{1}{u}I_{233}$ | $\frac{P_{9}}{d(1-u)}+\frac{P_{10}}{d(1-v)}$<br>$+\frac{P_{11}}{d(1-u-v)}+\frac{P_{12}}{d^2}$ | Bootstrap |
+| 8 | $vI_{140}$ | $\frac{v}{d^2}\left(P_{24}+\frac{P_{27}}{3}\right)$ | Product |
+| 9 | $I_{187}$ | $\frac{P_{13}}{d}-\frac{P_{10}}{d(v-1)}$ | Known |
+| 10 | $\frac{1}{v}I_{214}$ | $\frac{P_{14}}{d}+\frac{P_{15}}{d(u-1)}+\frac{P_{16}}{d(v-1)}+\frac{uP_{44}}{d\,y}$ | Bootstrap |
+| 11 | $I_{246}$ | $\frac{2vP_{16}}{d(v-1)}+\frac{vP_{17}}{d^2}$ | Bootstrap |
+| 12 | $I_{212}$ | $\frac{P_{18}}{d}+\frac{(v+1)P_{19}}{d(v-1)}$<br>$+\frac{u-v-1}{d^2}\left(P_{3}-\frac{P_{24}}{2}\right)$ | Bootstrap |
+| 13 | $uI_{144}$ | $\frac{uP_{20}}{d(1-u)}+\frac{uP_{21}}{d(1-u+v)}+\frac{uP_{22}}{d^2}$ | Bootstrap |
+| 14 | $\frac{u}{v}I_{260}$ | $\frac{uP_{23}+(v-1)P_{24}+P_{43}}{d^2}+\frac{P_{25}+uP_{26}}{d(u-1)}$<br>$-\frac{2uP_{44}}{d\,y}+\frac{2P_{45}}{d\,y_C}-\frac{2(P_{47}+P_{48})}{d}$ | Bootstrap |
+| 15 | $\frac{v^2}{u}I_{49}$ | $\frac{vP_{27}}{d^2}$ | Product |
+| 16 | $I_{3}$ | $\frac{P_{28}}{d}$ | Known |
+| 17 | $I_{5}$ | $\frac{P_{29}}{d}$ | Known |
+| 18 | $I_{39}$ | $\frac{vP_{30}}{d^2}$ | Product |
+| 19 | $vI_{38}$ | $\frac{vP_{24}}{d^2}$ | Known |
+| 20 | $I_{21}$ | $\frac{P_{31}}{d}$ | Known |
+| 21 | $I_{37}$ | $\frac{vP_{16}}{d(v-1)}$ | Known |
+| 22 | $\frac{v}{u}I_{27}$ | $\frac{vP_{32}}{d(v-1)}$ | Known |
+| 23 | $\frac{v}{u}I_{49}$ | $\frac{P_{27}}{d^2}$ | Product |
+| 24 | $I_{160}$ | $\frac{P_{1}}{d}$ | Known |
+| 25 | $I_{167}$ | $\frac{2vP_{16}}{d(v-1)}+\frac{vP_{17}}{d^2}$ | Bootstrap |
+| 26 | $I_{162}$ | $\frac{P_{33}}{d}+\frac{P_{32}}{d(v-1)}$ | Known |
+| 27 | $I_{163}$ | $\frac{P_{34}}{d}+\frac{P_{35}}{d(u-1)}+\frac{uP_{36}}{d(u-v)}$<br>$+\frac{2P_{19}}{d(v-1)}+\frac{-2P_{3}+vP_{24}+uP_{37}}{d^2}$ | Bootstrap |
+| 28 | $I_{164}$ | $\frac{P_{4}}{d}$ | Known |
+| 29 | $\frac{u}{v}I_{133}$ | $\frac{u}{d^2}\left(P_{37}+\frac{P_{43}}{3}\right)$ | Product |
+| 30 | $I_{168}$ | $\frac{vP_{38}}{d^2}+\frac{P_{39}}{d}+\frac{vP_{40}}{d(u-v)}$<br>$-\frac{vP_{41}}{d(v-1)}+\frac{2P_{46}}{d}$ | Bootstrap |
+| 31 | $uI_{169}$ | $\frac{8vP_{19}}{d(v-1)}+\frac{vP_{42}}{d^2}$ | Bootstrap |
+| 32 | $\frac{u}{v}I_{126}$ | $\frac{uP_{43}}{d^2}$ | Product |
 
-</details>
+At fixed external ordering, the 62 svMPL contributions span the 43 independent functions $P_1,\ldots,P_{43}$. Rows 10 and 21 share $P_{16}=P_v$. Rows 11 and 25 have identical expansions, giving $I_{246}=I_{167}$. [Exact comparison in six external orderings](runs/planarPureFunctions/README.md)
+
+The five remaining functions $P_{44},\ldots,P_{48}$ are onefold primitives. The common scalar is $I_{26}=P_{46}/(dv)$. Removing $2P_{46}/d$ from row 30 gives $R_{168}$. For the signed remainder in row 14, $R_{260}(u,v)=vT_{14}(u,v)-T_{30}(u/v,1/v)-vT_{30}(v,u)$. [Definitions and evaluation conventions](anc/README.md#shared-pure-functions)
 
 The labels below are indices in the [four-loop ancillary basis](anc/4Loop_int_basis.m).
 
