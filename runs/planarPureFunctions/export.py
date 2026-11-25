@@ -72,8 +72,9 @@ Module[{directory=DirectoryName[$InputFileName], ext=FileExtension[$InputFileNam
  <|"P"->pure,"LeadingSingularities"->singularities|>
 ]
 ''')
-    for ext in ('m','txt'):
-        (dest/f'fourloopPlanarPure.{ext}').write_text('\n'.join(wl))
+    wolfram_source = '\n'.join(wl)
+    for filename in ('pure_function_basis.m', 'fourloopPlanarPure.m', 'fourloopPlanarPure.txt'):
+        (dest/filename).write_text(wolfram_source)
     mp=['''# Read HyperlogProcedures and fourloopBootstrap.mpl dependencies first.
 # PlanarP[i] is callable on two endpoints. PlanarLS[r] lists [i, l_ri].
 # y and yC must continue with their corresponding algebraic primitives.
