@@ -16,6 +16,8 @@ row = rows[[15]];
 (row["Multiplier"] /. {u -> q*b, v -> (1-q)*(1-b)}) * row["BasisFunction"][q,b]
 ```
 
+The additional elliptic graph $I_{29}$ has a fixed-$v$ onefold with a 92-term svMPL kernel. Its original ancillary normalization equals $u$ times the graphical function in Borinsky and Schnetz, Eq. (20). [Wolfram .m](fourloopI29.m) · [Plain text](fourloopI29.txt) · [Maple](fourloopI29.mpl) · [Derivation and checks](../runs/fourloopI29/README.md)
+
 The extra scalar $I_{26}$ can be loaded on its own. Both copies contain all 54 kernel terms, the quartic curve, integration endpoints, inversion chart and real-diagonal prescription. The integral head is `Inactive[Integrate]`. [I26.m](fourloopI26.m) · [I26.txt](fourloopI26.txt)
 
 ```wl
