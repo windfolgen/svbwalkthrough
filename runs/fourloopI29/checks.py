@@ -2,6 +2,7 @@
 import argparse
 from collections import defaultdict
 import json
+from math import comb
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -45,6 +46,19 @@ def main(folder=None):
                   and dict(k).get("z",0)+dict(k).get("zz",0)==1}
     assert linear_log=={common.mon({x:1,"lg":1,"f[5]":1}):Q(20) for x in ("z","zz")}
     assert all(dict(k).get("lg",0)<3 for k in cross)
+    # On |w|=sqrt(v), integrating K/|1-w| between the two real
+    # diagonals extracts its zero Fourier mode. It must vanish.
+    for n in range(5):
+        mode = defaultdict(Q)
+        for key, c in cross.items():
+            powers = dict(key)
+            i,j = powers.pop("z",0), powers.pop("zz",0)
+            if i>n or j>n:
+                continue
+            bi = Q(comb(2*(n-i),n-i),4**(n-i))
+            bj = Q(comb(2*(n-j),n-j),4**(n-j))
+            mode[tuple(sorted(powers.items()))] += c*bi*bj
+        assert not any(mode.values())
     # H_101 and H_011 have Y^m coefficients H_(m-1)^(2)/m and H_(m-1)/m^2.
     graph=graph_series(32,0)
     h1=h2=Q(0)
