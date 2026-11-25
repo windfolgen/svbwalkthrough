@@ -99,3 +99,5 @@ python euclidean.py --power 21 --scrambles 32
 The default solve uses archived HyperlogProcedures 0.8 projections. To regenerate all 476 columns, set `I29_LIBRARY` to the directory containing `HyperlogProcedures` and `I29_WORK` to an existing local scratch directory. Run `python bootstrap.py --words "$I29_WORK/words.mpl"`, then `maple -q projections.mpl`, then `python bootstrap.py --projections "$I29_WORK"`.
 
 For a fresh held-out test, also set `I29_ANC` to the absolute path of `anc/fourloopI29.mpl`. Run `maple -q check_kernel.mpl` followed by `python checks.py --projections "$I29_WORK"`. This compares the actual 92-term function with the spectral jet and the crossed graph boundary.
+
+With the same `I29_LIBRARY` and `I29_ANC`, `maple -q check_onefold.mpl` evaluates the final integration at 12 and 20 quadrature nodes and compares it with the spectral value above.
