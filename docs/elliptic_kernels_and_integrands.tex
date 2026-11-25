@@ -1,0 +1,134 @@
+\section{Elliptic kernels and basis integrands}\label{app:kernel}
+
+\paragraph{The kernel of \(P_{46}=vdI_{26}\).}
+The cut of \(I_{26}\) fixes \(\rho=u/v^2\). Integrating from the regular real
+diagonal determines the primitive that enters Appendix~\ref{app:pure-families},
+\[
+ P_{46}=\int_{x_0}^{v}\frac{\dd x}{y_\rho(x)}\,
+    \mathcal K_7\big(q_+(x),q_-(x)\big),
+ \qquad y_\rho(x)^2=(1+x-\rho x^2)^2-4x,
+\]
+\[
+ x_0=\frac{4}{(1+\sqrt{1+4\sqrt\rho})^2},
+ \qquad q_\pm(x)=\tfrac12\big(1-x+\rho x^2\pm y_\rho(x)\big).
+\]
+Here \(y_\rho(v)=d=z-\bar z\) on the upper half-plane sheet. This chart
+covers \(u\leq 1\). For \(u>1\), use \(I_{26}(u,v)=u^{-2}I_{26}(1/u,v/u)\).
+The table gives all 54 terms of \(\mathcal K_7=\sum_w c_w\sv_w\). Each
+word denotes the single-valued iterated integral \(\sv_w=\sv_{z,w,0}\)
+with endpoint \(z\), base point zero and outermost integration first.
+The letter \(\bar z\) denotes the conjugate endpoint, and
+\(\zeta_3=\zeta(3)\).
+
+\begin{center}\small\begin{tabular}{@{}r l@{}}\toprule $c$ & $w$ (outermost first)\\\midrule
+$-8$ & \(\mathtt{0010011}\)\quad \(\mathtt{0010100}\)\quad \(\mathtt{0110101}\)\quad \(\mathtt{1010110}\)\quad \(\mathtt{1011001}\)\\
+$-4$ & \(\mathtt{0011010}\)\quad \(\mathtt{0100110}\)\quad \(\mathtt{0101001}\)\quad \(\mathtt{0110010}\)\quad \(\mathtt{1001010}\)\\
+ & \(\mathtt{1010010}\)\\
+$-2$ & \(\mathtt{0000110}\)\quad \(\mathtt{0001000}\)\quad \(\mathtt{0100001}\)\quad \(\mathtt{0100100}\)\quad \(\mathtt{0110000}\)\\
+ & \(\mathtt{1000010}\)\\
+$1$ & \(\mathtt{0000100}\)\quad \(\mathtt{0010000}\)\\
+$2$ & \(\mathtt{0000101}\)\quad \(\mathtt{0001010}\)\quad \(\mathtt{0101000}\)\quad \(\mathtt{1010000}\)\\
+$4$ & \(\mathtt{0010101}\)\quad \(\mathtt{0010110}\)\quad \(\mathtt{0011001}\)\quad \(\mathtt{0100010}\)\quad \(\mathtt{0100101}\)\\
+ & \(\mathtt{0101100}\)\quad \(\mathtt{0110100}\)\quad \(\mathtt{1001100}\)\quad \(\mathtt{1010100}\)\\
+$6$ & \(\mathtt{0010010}\)\\
+$8$ & \(\mathtt{0110011}\)\quad \(\mathtt{1010011}\)\quad \(\mathtt{1011010}\)\\
+\midrule
+$-8$ & \(\mathtt{00}\,\bar z\,\mathtt{0110}\)\quad \(\mathtt{00}\,\bar z\,\mathtt{1001}\)\quad \(\mathtt{01}\,\bar z\,\mathtt{0011}\)\quad \(\mathtt{01}\,\bar z\,\mathtt{1100}\)\quad \(\mathtt{10}\,\bar z\,\mathtt{0011}\)\\
+ & \(\mathtt{10}\,\bar z\,\mathtt{1100}\)\\
+$8$ & \(\mathtt{00}\,\bar z\,\mathtt{0011}\)\quad \(\mathtt{00}\,\bar z\,\mathtt{1100}\)\quad \(\mathtt{01}\,\bar z\,\mathtt{0110}\)\quad \(\mathtt{01}\,\bar z\,\mathtt{1001}\)\quad \(\mathtt{10}\,\bar z\,\mathtt{0110}\)\\
+ & \(\mathtt{10}\,\bar z\,\mathtt{1001}\)\\
+\midrule
+$-48\zeta_3$ & \(\mathtt{1011}\)\\
+$-24\zeta_3$ & \(\mathtt{0110}\)\\
+$12\zeta_3$ & \(\mathtt{0010}\)\\
+$24\zeta_3$ & \(\mathtt{0011}\)\quad \(\mathtt{1001}\)\quad \(\mathtt{1010}\)\\
+\bottomrule\end{tabular}\end{center}
+
+\clearpage
+\paragraph{The kernel of \(P_{49}=dI_{29}/\sqrt u\).}\label{app:i29kernel}
+Holding \(v\) fixed instead gives the primitive
+\[
+ P_{49}=\int_{(1-\sqrt v)^2}^{u}\!
+ \frac{\dd x}{\sqrt{x}\,y_v(x)}\,K_{29}\big(q_+(x),q_-(x)\big),
+ \qquad y_v(x)^2=(1+x-v)^2-4x,
+\]
+where \(q_\pm(x)=(1+x-v\pm y_v(x))/2\) and \(y_v(u)=d\) on the
+upper half-plane sheet. The lower endpoint is the regular real diagonal,
+where \(P_{49}=0\). At \(v=1\) the endpoint coalesces with \(x=0\)
+and the formula is read by continuity. In the table each seven-letter
+word contributes \(c_w\sv_w\) to \(K_{29}\) and each four-letter word
+contributes \(\zeta(3)c_w\sv_w\). The moving letters are
+\(B=\bar z\) and \(C=\bar z/(\bar z-1)\).
+
+\begin{center}\small\renewcommand{\arraystretch}{1.01}
+\begin{tabular}{@{}lr@{\hspace{1.7em}}lr@{\hspace{1.7em}}lr@{\hspace{1.7em}}lr@{}}\toprule
+\(w\)&\(c_w\)&\(w\)&\(c_w\)&\(w\)&\(c_w\)&\(w\)&\(c_w\)\\\midrule
+\(\mathtt{0000101}\) & \(8\) & \(\mathtt{0101100}\) & \(-16\) & \(\mathtt{00B0110}\) & \(48\) & \(\mathtt{C100001}\) & \(8\) \\
+\(\mathtt{0000110}\) & \(-8\) & \(\mathtt{0101101}\) & \(16\) & \(\mathtt{00B1001}\) & \(48\) & \(\mathtt{C100011}\) & \(-8\) \\
+\(\mathtt{0001001}\) & \(8\) & \(\mathtt{0110000}\) & \(-16\) & \(\mathtt{00B1100}\) & \(-48\) & \(\mathtt{C100100}\) & \(-16\) \\
+\(\mathtt{0001010}\) & \(-8\) & \(\mathtt{0110001}\) & \(16\) & \(\mathtt{01B0011}\) & \(24\) & \(\mathtt{C100101}\) & \(4\) \\
+\(\mathtt{0001100}\) & \(16\) & \(\mathtt{0110010}\) & \(24\) & \(\mathtt{01B0110}\) & \(-24\) & \(\mathtt{C100110}\) & \(12\) \\
+\(\mathtt{0001101}\) & \(-16\) & \(\mathtt{0110011}\) & \(-24\) & \(\mathtt{01B1001}\) & \(-24\) & \(\mathtt{C101001}\) & \(4\) \\
+\(\mathtt{0010001}\) & \(-8\) & \(\mathtt{0110100}\) & \(-8\) & \(\mathtt{01B1100}\) & \(24\) & \(\mathtt{C101011}\) & \(-4\) \\
+\(\mathtt{0010010}\) & \(-40\) & \(\mathtt{0110101}\) & \(8\) & \(\mathtt{10B0011}\) & \(24\) & \(\mathtt{C101100}\) & \(4\) \\
+\(\mathtt{0010011}\) & \(48\) & \(\mathtt{1000010}\) & \(-8\) & \(\mathtt{10B0110}\) & \(-24\) & \(\mathtt{C101101}\) & \(-4\) \\
+\(\mathtt{0010100}\) & \(8\) & \(\mathtt{1000100}\) & \(-8\) & \(\mathtt{10B1001}\) & \(-24\) & \(\mathtt{C110000}\) & \(8\) \\
+\(\mathtt{0010101}\) & \(-4\) & \(\mathtt{1000110}\) & \(16\) & \(\mathtt{10B1100}\) & \(24\) & \(\mathtt{C110001}\) & \(-8\) \\
+\(\mathtt{0010110}\) & \(-4\) & \(\mathtt{1001000}\) & \(8\) & \(\mathtt{C000011}\) & \(8\) & \(\mathtt{C110010}\) & \(-12\) \\
+\(\mathtt{0011000}\) & \(24\) & \(\mathtt{1001010}\) & \(4\) & \(\mathtt{C000110}\) & \(-8\) & \(\mathtt{C110011}\) & \(12\) \\
+\(\mathtt{0011001}\) & \(-36\) & \(\mathtt{1001100}\) & \(-12\) & \(\mathtt{C001001}\) & \(-16\) & \(\mathtt{C110100}\) & \(4\) \\
+\(\mathtt{0011010}\) & \(12\) & \(\mathtt{1010000}\) & \(8\) & \(\mathtt{C001011}\) & \(4\) & \(\mathtt{C110101}\) & \(-4\) \\
+\(\mathtt{0100001}\) & \(-8\) & \(\mathtt{1010010}\) & \(12\) & \(\mathtt{C001100}\) & \(8\) & \(\mathtt{0011}\) & \(-120\) \\
+\(\mathtt{0100010}\) & \(8\) & \(\mathtt{1010011}\) & \(-24\) & \(\mathtt{C001101}\) & \(4\) & \(\mathtt{0101}\) & \(40\) \\
+\(\mathtt{0100100}\) & \(24\) & \(\mathtt{1010100}\) & \(-4\) & \(\mathtt{C010010}\) & \(16\) & \(\mathtt{0110}\) & \(80\) \\
+\(\mathtt{0100101}\) & \(-12\) & \(\mathtt{1010110}\) & \(8\) & \(\mathtt{C010011}\) & \(-12\) & \(\mathtt{1001}\) & \(-40\) \\
+\(\mathtt{0100110}\) & \(-12\) & \(\mathtt{1011000}\) & \(-16\) & \(\mathtt{C010110}\) & \(-4\) & \(\mathtt{1010}\) & \(-40\) \\
+\(\mathtt{0101000}\) & \(-8\) & \(\mathtt{1011001}\) & \(24\) & \(\mathtt{C011000}\) & \(-8\) & \(\mathtt{1011}\) & \(80\) \\
+\(\mathtt{0101001}\) & \(4\) & \(\mathtt{1011010}\) & \(-8\) & \(\mathtt{C011001}\) & \(12\) & \(\mathtt{C011}\) & \(40\) \\
+\(\mathtt{0101010}\) & \(4\) & \(\mathtt{00B0011}\) & \(-48\) & \(\mathtt{C011010}\) & \(-4\) & \(\mathtt{C110}\) & \(-40\) \\
+\bottomrule\end{tabular}\end{center}
+Gromov, Kazakov and Korchemsky's
+\href{https://arxiv.org/pdf/1808.02688v1\#page=30}{two-magnon conformal-block sum
+(arXiv:1808.02688v1, PDF Eqs.~(4.60)--(4.61))}
+provides the native boundary data. The coefficient of \(\xi^8\) in their
+reduced correlator is \(uI_{29}\), where \(\xi\) is the fishnet coupling.
+The 3,141 rational equations have rank 476. The kernel reproduces 315 further nonzero Taylor coefficients, including periods, beyond the fitted orders. In the crossed limit \(w=1-z\to0\), the soft subgraph is the four-spoke wheel, giving \(I_{29}/u=-20\zeta(5)\log v+O(1)\). The crossed expansion of \(K_{29}\) gives the corresponding \(20\zeta(5)(w+\bar w)\) at linear order in the coefficient of \(\log v\). At \(z=0.35+0.25i\), the onefold and the fishnet expansion give \(I_{29}/u=142.993952659006\). Direct integration of the graph gives \(143.0050\pm0.0094\) (one standard error).
+
+\clearpage
+\paragraph{Basis integrand definitions.}
+With \(s_{ij}=(x_i-x_j)^2\) and \(N=s_{13}s_{24}\), the four-loop
+basis integrals used for the elliptic scalars, the finite remainders and
+the Gram reduction have the normalization
+\[
+ I_k=N\int\prod_{j=5}^{8}\frac{\dd^4x_j}{\pi^2}\,
+       \frac{n_k}{\prod_{ij\in E_k}s_{ij}},\qquad
+ u=\frac{s_{12}s_{34}}{N},\quad v=\frac{s_{14}s_{23}}{N}.
+\]
+The last two columns together specify \(E_k\). Each pair \(ij\) denotes
+one propagator \(1/s_{ij}\). In particular, legs 1 and 2 of \(I_{29}\)
+both attach to vertices 7 and 8, and legs 3 and 4 both attach to 5 and 6.
+Its graph numerator \(n_{29}=s_{12}s_{34}=uN\) supplies the factor \(u\)
+in the conversion from the graphical function \(I_{29}/u\) drawn by Borinsky and Schnetz
+in \href{https://arxiv.org/pdf/2206.10460v2\#page=30}{arXiv:2206.10460v2,
+PDF Eq.~(20), p.~30} to the basis integral in Appendix~\ref{app:pure-families}.
+
+\begin{center}\small\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}r l l l@{}}\toprule
+\(k\) & \(n_k\) & External-to-internal pairs & Internal pairs\\\midrule
+$26$ & $s_{13}s_{24}$ & $17\;18\;26\;28\;35\;37\;45\;46$ & $57\;58\;67\;68$ \\
+$29$ & $s_{12}s_{34}$ & $17\;18\;27\;28\;35\;36\;45\;46$ & $57\;58\;67\;68$ \\
+$110$ & $s_{13}s_{15}s_{24}$ & $16\;17\;18\;25\;28\;35\;37\;45\;46$ & $57\;58\;67\;68$ \\
+$112$ & $s_{12}s_{13}s_{24}s_{56}$ & $16\;17\;18\;25\;26\;28\;35\;37\;45\;46$ & $57\;58\;67\;68$ \\
+$113$ & $s_{13}s_{14}s_{23}s_{56}$ & $15\;16\;18\;26\;28\;35\;36\;37\;45\;47$ & $57\;58\;67\;68$ \\
+$142$ & $s_{12}s_{14}s_{23}s_{56}$ & $15\;16\;18\;25\;26\;28\;36\;37\;45\;47$ & $57\;58\;67\;68$ \\
+$168$ & $s_{12}s_{13}s_{14}s_{23}s_{56}^2$ & $15\;16\;17\;18\;25\;26\;28\;35\;36\;37\;45\;46$ & $57\;58\;67\;68$ \\
+$214$ & $s_{14}s_{16}s_{23}s_{25}s_{34}$ & $15\;17\;18\;26\;27\;28\;35\;36\;38\;45\;46\;47$ & $56\;58\;67$ \\
+$260$ & $s_{13}s_{14}s_{23}s_{24}s_{58}s_{67}$ & $16\;17\;18\;25\;27\;28\;35\;36\;38\;45\;46\;47$ & $56\;57\;68\;78$ \\
+\bottomrule\end{tabular}
+\end{center}
+For the single-prefactor decomposition of \(I_{181}\), the auxiliary
+integral \(I_{41}\) has numerator \(s_{47}s_{56}-s_{45}s_{67}-s_{46}s_{57}\)
+and propagator set
+\(15,16,25,27,36,37,45,46,48,57,58,67,68,78\).
+The \href{https://github.com/windfolgen/svbwalkthrough/blob/main/anc/4Loop_int_basis.m}{ancillary integrand basis}
+gives the full list in the same ordering.
